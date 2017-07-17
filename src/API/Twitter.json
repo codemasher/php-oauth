@@ -1,0 +1,1341 @@
+{
+    "account_remove_profile_banner": {
+        "path": "\/account\/remove_profile_banner.json",
+        "method": "POST",
+        "query": [],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "account_settings": {
+        "path": "\/account\/settings.json",
+        "method": "GET",
+        "query": [],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "account_update_profile": {
+        "path": "\/account\/update_profile.json",
+        "method": "POST",
+        "query": [],
+        "path_elements": [],
+        "body": [
+            "name",
+            "url",
+            "location",
+            "description",
+            "profile_link_color",
+            "include_entities",
+            "skip_status"
+        ],
+        "headers": []
+    },
+    "account_update_settings": {
+        "path": "\/account\/settings.json",
+        "method": "POST",
+        "query": [],
+        "path_elements": [],
+        "body": [
+            "sleep_time_enabled",
+            "start_sleep_time",
+            "end_sleep_time",
+            "time_zone",
+            "trend_location_woeid",
+            "lang"
+        ],
+        "headers": []
+    },
+    "block": {
+        "path": "\/blocks\/create.json",
+        "method": "POST",
+        "query": [],
+        "path_elements": [],
+        "body": [
+            "user_id",
+            "screen_name",
+            "include_entities",
+            "skip_status"
+        ],
+        "headers": []
+    },
+    "blocks_ids": {
+        "path": "\/blocks\/ids.json",
+        "method": "GET",
+        "query": [
+            "cursor",
+            "stringify_ids"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "blocks_list": {
+        "path": "\/blocks\/list.json",
+        "method": "GET",
+        "query": [
+            "cursor",
+            "include_entities",
+            "skip_status"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "collections_create": {
+        "path": "\/collections\/create.json",
+        "method": "POST",
+        "query": [],
+        "path_elements": [],
+        "body": [
+            "name",
+            "description",
+            "url",
+            "timeline_order"
+        ],
+        "headers": []
+    },
+    "collections_destroy": {
+        "path": "\/collections\/destroy.json",
+        "method": "POST",
+        "query": [],
+        "path_elements": [],
+        "body": [
+            "id"
+        ],
+        "headers": []
+    },
+    "collections_entries": {
+        "path": "\/collections\/entries.json",
+        "method": "GET",
+        "query": [
+            "id",
+            "count",
+            "max_position",
+            "min_position"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "collections_entries_add": {
+        "path": "\/collections\/entries\/add.json",
+        "method": "POST",
+        "query": [],
+        "path_elements": [],
+        "body": [
+            "id",
+            "tweet_id",
+            "relative_to",
+            "above"
+        ],
+        "headers": []
+    },
+    "collections_entries_curate": {
+        "path": "\/collections\/entries\/curate.json",
+        "method": "POST",
+        "query": [],
+        "path_elements": [],
+        "body": true,
+        "headers": {
+            "Content-type": "application\/json"
+        }
+    },
+    "collections_entries_move": {
+        "path": "\/collections\/entries\/move.json",
+        "method": "POST",
+        "query": [],
+        "path_elements": [],
+        "body": [
+            "id",
+            "tweet_id",
+            "relative_to",
+            "above"
+        ],
+        "headers": []
+    },
+    "collections_entries_remove": {
+        "path": "\/collections\/entries\/remove.json",
+        "method": "POST",
+        "query": [],
+        "path_elements": [],
+        "body": [
+            "id",
+            "tweet_id"
+        ],
+        "headers": []
+    },
+    "collections_list": {
+        "path": "\/collections\/list.json",
+        "method": "GET",
+        "query": [
+            "user_id",
+            "screen_name",
+            "tweet_id",
+            "cursor",
+            "count"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "collections_show": {
+        "path": "\/collections\/show.json",
+        "method": "GET",
+        "query": [
+            "id"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "collections_update": {
+        "path": "\/collections\/update.json",
+        "method": "POST",
+        "query": [],
+        "path_elements": [],
+        "body": [
+            "id",
+            "name",
+            "description",
+            "url"
+        ],
+        "headers": []
+    },
+    "direct_messages": {
+        "path": "\/direct_messages.json",
+        "method": "GET",
+        "query": [
+            "since_id",
+            "max_id",
+            "count",
+            "trim_user",
+            "include_entities",
+            "skip_status"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "direct_messages_destroy": {
+        "path": "\/direct_messages\/destroy.json",
+        "method": "POST",
+        "query": [],
+        "path_elements": [],
+        "body": [
+            "id",
+            "include_entities"
+        ],
+        "headers": []
+    },
+    "direct_messages_events_list": {
+        "path": "\/direct_messages\/events\/list.json",
+        "method": "GET",
+        "query": [
+            "cursor"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "direct_messages_events_new": {
+        "path": "\/direct_messages\/events\/new.json",
+        "method": "POST",
+        "query": [],
+        "path_elements": [],
+        "body": true,
+        "headers": {
+            "Content-type": "application\/json"
+        }
+    },
+    "direct_messages_events_show": {
+        "path": "\/direct_messages\/events\/show.json",
+        "method": "GET",
+        "query": [
+            "id"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "direct_messages_sent": {
+        "path": "\/direct_messages\/sent.json",
+        "method": "GET",
+        "query": [
+            "since_id",
+            "max_id",
+            "count",
+            "page",
+            "trim_user",
+            "include_entities"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "direct_messages_show": {
+        "path": "\/direct_messages\/show.json",
+        "method": "GET",
+        "query": [
+            "id",
+            "trim_user",
+            "include_entities"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "direct_messages_welcome_messages_list": {
+        "path": "\/direct_messages\/welcome_messages\/list.json",
+        "method": "GET",
+        "query": [
+            "cursor"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "direct_messages_welcome_messages_new": {
+        "path": "\/direct_messages\/welcome_messages\/new.json",
+        "method": "POST",
+        "query": [],
+        "path_elements": [],
+        "body": true,
+        "headers": {
+            "Content-type": "application\/json"
+        }
+    },
+    "direct_messages_welcome_messages_rules_list": {
+        "path": "\/direct_messages\/welcome_messages\/rules\/list.json",
+        "method": "GET",
+        "query": [
+            "cursor"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "direct_messages_welcome_messages_rules_new": {
+        "path": "\/direct_messages\/welcome_messages\/rules\/new.json",
+        "method": "POST",
+        "query": [],
+        "path_elements": [],
+        "body": true,
+        "headers": {
+            "Content-type": "application\/json"
+        }
+    },
+    "direct_messages_welcome_messages_rules_show": {
+        "path": "\/direct_messages\/welcome_messages\/rules\/show.json",
+        "method": "GET",
+        "query": [
+            "id"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "direct_messages_welcome_messages_show": {
+        "path": "\/direct_messages\/welcome_messages\/show.json",
+        "method": "GET",
+        "query": [
+            "id"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "dm": {
+        "path": "\/direct_messages\/new.json",
+        "method": "POST",
+        "query": [],
+        "path_elements": [],
+        "body": [
+            "user_id",
+            "screen_name",
+            "text"
+        ],
+        "headers": []
+    },
+    "favorite": {
+        "path": "\/favorites\/create.json",
+        "method": "POST",
+        "query": [],
+        "path_elements": [],
+        "body": [
+            "id",
+            "include_entities"
+        ],
+        "headers": []
+    },
+    "favorites": {
+        "path": "\/favorites\/list.json",
+        "method": "GET",
+        "query": [
+            "user_id",
+            "screen_name",
+            "count",
+            "since_id",
+            "max_id",
+            "skip_status",
+            "include_entities"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "follow": {
+        "path": "\/friendships\/create.json",
+        "method": "POST",
+        "query": [],
+        "path_elements": [],
+        "body": [
+            "user_id",
+            "screen_name",
+            "follow"
+        ],
+        "headers": []
+    },
+    "followers_ids": {
+        "path": "\/followers\/ids.json",
+        "method": "GET",
+        "query": [
+            "user_id",
+            "screen_name",
+            "stringify_ids",
+            "cursor",
+            "count"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "followers_list": {
+        "path": "\/followers\/list.json",
+        "method": "GET",
+        "query": [
+            "user_id",
+            "screen_name",
+            "cursor",
+            "count",
+            "include_entities",
+            "skip_status"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "friends_ids": {
+        "path": "\/friends\/ids.json",
+        "method": "GET",
+        "query": [
+            "user_id",
+            "screen_name",
+            "stringify_ids",
+            "cursor",
+            "count"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "friends_list": {
+        "path": "\/friends\/list.json",
+        "method": "GET",
+        "query": [
+            "user_id",
+            "screen_name",
+            "cursor",
+            "count",
+            "include_entities",
+            "skip_status"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "friendships_incoming": {
+        "path": "\/friendships\/incoming.json",
+        "method": "GET",
+        "query": [
+            "cursor",
+            "stringify_ids"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "friendships_lookup": {
+        "path": "\/friendships\/lookup.json",
+        "method": "GET",
+        "query": [
+            "user_id",
+            "screen_name"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "friendships_no_retweets_ids": {
+        "path": "\/friendships\/no_retweets\/ids.json",
+        "method": "GET",
+        "query": [
+            "stringify_ids"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "friendships_outgoing": {
+        "path": "\/friendships\/outgoing.json",
+        "method": "GET",
+        "query": [
+            "cursor",
+            "stringify_ids"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "friendships_show": {
+        "path": "\/friendships\/show.json",
+        "method": "GET",
+        "query": [
+            "source_id",
+            "source_screen_name",
+            "target_id",
+            "target_screen_name"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "friendships_update": {
+        "path": "\/friendships\/update.json",
+        "method": "POST",
+        "query": [],
+        "path_elements": [],
+        "body": [
+            "user_id",
+            "screen_name",
+            "device",
+            "retweets"
+        ],
+        "headers": []
+    },
+    "geo_reverse_geocode": {
+        "path": "\/geo\/reverse_geocode.json",
+        "method": "GET",
+        "query": [
+            "lat",
+            "long",
+            "accuracy",
+            "granularity",
+            "max_results"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "geo_search": {
+        "path": "\/geo\/search.json",
+        "method": "GET",
+        "query": [
+            "query",
+            "lat",
+            "long",
+            "ip",
+            "accuracy",
+            "granularity",
+            "max_results",
+            "contained_within"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "help_configuration": {
+        "path": "\/help\/configuration.json",
+        "method": "GET",
+        "query": [],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "help_privacy": {
+        "path": "\/help\/privacy.json",
+        "method": "GET",
+        "query": [],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "home": {
+        "path": "\/statuses\/home_timeline.json",
+        "method": "GET",
+        "query": [
+            "exclude_replies",
+            "trim_user",
+            "count",
+            "until",
+            "since_id",
+            "max_id",
+            "skip_status",
+            "include_entities"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "languages": {
+        "path": "\/help\/languages.json",
+        "method": "GET",
+        "query": [],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "lists": {
+        "path": "\/lists\/list.json",
+        "method": "GET",
+        "query": [
+            "user_id",
+            "screen_name",
+            "reverse"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "lists_create": {
+        "path": "\/lists\/create.json",
+        "method": "POST",
+        "query": [],
+        "path_elements": [],
+        "body": [
+            "name",
+            "mode",
+            "description"
+        ],
+        "headers": []
+    },
+    "lists_destroy": {
+        "path": "\/lists\/destroy.json",
+        "method": "POST",
+        "query": [],
+        "path_elements": [],
+        "body": [
+            "list_id",
+            "slug",
+            "owner_screen_name",
+            "owner_id"
+        ],
+        "headers": []
+    },
+    "lists_members": {
+        "path": "\/lists\/members.json",
+        "method": "GET",
+        "query": [
+            "list_id",
+            "slug",
+            "owner_screen_name",
+            "owner_id",
+            "count",
+            "cursor",
+            "include_entities",
+            "skip_status"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "lists_members_create": {
+        "path": "\/lists\/members\/create.json",
+        "method": "POST",
+        "query": [],
+        "path_elements": [],
+        "body": [
+            "list_id",
+            "slug",
+            "user_id",
+            "screen_name",
+            "owner_screen_name",
+            "owner_id"
+        ],
+        "headers": []
+    },
+    "lists_members_create_all": {
+        "path": "\/lists\/members\/create_all.json",
+        "method": "POST",
+        "query": [],
+        "path_elements": [],
+        "body": [
+            "list_id",
+            "slug",
+            "user_id",
+            "screen_name",
+            "owner_screen_name",
+            "owner_id"
+        ],
+        "headers": []
+    },
+    "lists_members_destroy": {
+        "path": "\/lists\/members\/destroy.json",
+        "method": "POST",
+        "query": [],
+        "path_elements": [],
+        "body": [
+            "list_id",
+            "slug",
+            "user_id",
+            "screen_name",
+            "owner_screen_name",
+            "owner_id"
+        ],
+        "headers": []
+    },
+    "lists_members_destroy_all": {
+        "path": "\/lists\/members\/destroy_all.json",
+        "method": "POST",
+        "query": [],
+        "path_elements": [],
+        "body": [
+            "list_id",
+            "slug",
+            "user_id",
+            "screen_name",
+            "owner_screen_name",
+            "owner_id"
+        ],
+        "headers": []
+    },
+    "lists_members_show": {
+        "path": "\/lists\/members\/show.json",
+        "method": "GET",
+        "query": [
+            "list_id",
+            "slug",
+            "user_id",
+            "screen_name",
+            "owner_screen_name",
+            "owner_id",
+            "include_entities",
+            "skip_status"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "lists_memberships": {
+        "path": "\/lists\/memberships.json",
+        "method": "GET",
+        "query": [
+            "user_id",
+            "screen_name",
+            "count",
+            "cursor",
+            "filter_to_owned_lists"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "lists_ownerships": {
+        "path": "\/lists\/ownerships.json",
+        "method": "GET",
+        "query": [
+            "user_id",
+            "screen_name",
+            "count",
+            "cursor"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "lists_show": {
+        "path": "\/lists\/show.json",
+        "method": "GET",
+        "query": [
+            "list_id",
+            "slug",
+            "owner_screen_name",
+            "owner_id"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "lists_statuses": {
+        "path": "\/lists\/statuses.json",
+        "method": "GET",
+        "query": [
+            "list_id",
+            "slug",
+            "owner_screen_name",
+            "owner_id",
+            "count",
+            "since_id",
+            "max_id",
+            "trim_user",
+            "include_rts",
+            "include_entities"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "lists_subscribers": {
+        "path": "\/lists\/subscribers.json",
+        "method": "GET",
+        "query": [
+            "list_id",
+            "slug",
+            "owner_screen_name",
+            "owner_id",
+            "count",
+            "cursor",
+            "trim_user",
+            "skip_status",
+            "include_entities"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "lists_subscribers_create": {
+        "path": "\/lists\/subscribers\/create.json",
+        "method": "POST",
+        "query": [],
+        "path_elements": [],
+        "body": [
+            "list_id",
+            "slug",
+            "owner_screen_name",
+            "owner_id"
+        ],
+        "headers": []
+    },
+    "lists_subscribers_destroy": {
+        "path": "\/lists\/subscribers\/destroy.json",
+        "method": "POST",
+        "query": [],
+        "path_elements": [],
+        "body": [
+            "list_id",
+            "slug",
+            "owner_screen_name",
+            "owner_id"
+        ],
+        "headers": []
+    },
+    "lists_subscribers_show": {
+        "path": "\/lists\/subscribers\/show.json",
+        "method": "GET",
+        "query": [
+            "owner_screen_name",
+            "owner_id",
+            "list_id",
+            "slug",
+            "user_id",
+            "screen_name",
+            "skip_status",
+            "include_entities"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "lists_subscriptions": {
+        "path": "\/lists\/subscriptions.json",
+        "method": "GET",
+        "query": [
+            "user_id",
+            "screen_name",
+            "count",
+            "cursor"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "lists_update": {
+        "path": "\/lists\/update.json",
+        "method": "POST",
+        "query": [],
+        "path_elements": [],
+        "body": [
+            "list_id",
+            "slug",
+            "name",
+            "mode",
+            "description",
+            "owner_screen_name",
+            "owner_id"
+        ],
+        "headers": []
+    },
+    "mentions": {
+        "path": "\/statuses\/mentions_timeline.json",
+        "method": "GET",
+        "query": [
+            "count",
+            "since_id",
+            "max_id",
+            "trim_user",
+            "skip_status",
+            "include_entities"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "mute": {
+        "path": "\/mutes\/users\/create.json",
+        "method": "POST",
+        "query": [],
+        "path_elements": [],
+        "body": [
+            "user_id",
+            "screen_name",
+            "include_entities",
+            "skip_status"
+        ],
+        "headers": []
+    },
+    "mutes_users_ids": {
+        "path": "\/mutes\/users\/ids.json",
+        "method": "GET",
+        "query": [
+            "cursor",
+            "stringify_ids"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "mutes_users_list": {
+        "path": "\/mutes\/users\/list.json",
+        "method": "GET",
+        "query": [
+            "cursor",
+            "include_entities",
+            "skip_status"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "place": {
+        "path": "\/geo\/id\/%1$s.json",
+        "method": "GET",
+        "query": [],
+        "path_elements": [
+            "place_id"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "rate_limit_status": {
+        "path": "\/application\/rate_limit_status.json",
+        "method": "GET",
+        "query": [],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "report": {
+        "path": "\/users\/report_spam.json",
+        "method": "POST",
+        "query": [],
+        "path_elements": [],
+        "body": [
+            "user_id",
+            "screen_name",
+            "perform_block"
+        ],
+        "headers": []
+    },
+    "retweet": {
+        "path": "\/statuses\/retweet.json",
+        "method": "POST",
+        "query": [],
+        "path_elements": [],
+        "body": [
+            "id",
+            "trim_user"
+        ],
+        "headers": []
+    },
+    "saved_searches_create": {
+        "path": "\/saved_searches\/create.json",
+        "method": "POST",
+        "query": [],
+        "path_elements": [],
+        "body": [
+            "query"
+        ],
+        "headers": []
+    },
+    "saved_searches_destroy": {
+        "path": "\/saved_searches\/destroy\/%1$s.json",
+        "method": "POST",
+        "query": [],
+        "path_elements": [
+            "id"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "saved_searches_list": {
+        "path": "\/saved_searches\/list.json",
+        "method": "GET",
+        "query": [],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "saved_searches_show": {
+        "path": "\/saved_searches\/show\/%1$s.json",
+        "method": "GET",
+        "query": [],
+        "path_elements": [
+            "id"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "search_tweets": {
+        "path": "\/search\/tweets.json",
+        "method": "GET",
+        "query": [
+            "q",
+            "geocode",
+            "lang",
+            "locale",
+            "result_type",
+            "count",
+            "until",
+            "since_id",
+            "max_id",
+            "skip_status",
+            "include_entities"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "statuses_destroy": {
+        "path": "\/statuses\/destroy.json",
+        "method": "POST",
+        "query": [],
+        "path_elements": [],
+        "body": [
+            "id",
+            "trim_user"
+        ],
+        "headers": []
+    },
+    "statuses_lookup": {
+        "path": "\/statuses\/lookup.json",
+        "method": "GET",
+        "query": [
+            "id",
+            "trim_user",
+            "map",
+            "include_ext_alt_text",
+            "skip_status",
+            "include_entities"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "statuses_retweeters_ids": {
+        "path": "\/statuses\/retweeters\/ids.json",
+        "method": "GET",
+        "query": [
+            "id",
+            "stringify_ids",
+            "cursor"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "statuses_retweets": {
+        "path": "\/statuses\/retweets.json",
+        "method": "GET",
+        "query": [
+            "id",
+            "trim_user",
+            "include_my_retweet",
+            "include_entities",
+            "include_ext_alt_text"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "statuses_retweets_of_me": {
+        "path": "\/statuses\/retweets_of_me.json",
+        "method": "GET",
+        "query": [
+            "count",
+            "since_id",
+            "max_id",
+            "trim_user",
+            "skip_status",
+            "include_entities",
+            "include_user_entities"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "statuses_show": {
+        "path": "\/statuses\/show.json",
+        "method": "GET",
+        "query": [
+            "id",
+            "trim_user",
+            "include_my_retweet",
+            "include_entities",
+            "include_ext_alt_text"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "tos": {
+        "path": "\/help\/tos.json",
+        "method": "GET",
+        "query": [],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "trends_available": {
+        "path": "\/trends\/available.json",
+        "method": "GET",
+        "query": [],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "trends_closest": {
+        "path": "\/trends\/closest.json",
+        "method": "GET",
+        "query": [
+            "lat",
+            "long"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "trends_place": {
+        "path": "\/trends\/place.json",
+        "method": "GET",
+        "query": [
+            "id",
+            "exclude"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "tweet": {
+        "path": "\/statuses\/update.json",
+        "method": "POST",
+        "query": [],
+        "path_elements": [],
+        "body": [
+            "status",
+            "in_reply_to_status_id",
+            "possibly_sensitive",
+            "lat",
+            "long",
+            "place_id",
+            "display_coordinates",
+            "trim_user",
+            "media_ids",
+            "enable_dm_commands",
+            "fail_dm_commands"
+        ],
+        "headers": []
+    },
+    "unblock": {
+        "path": "\/blocks\/destroy.json",
+        "method": "POST",
+        "query": [],
+        "path_elements": [],
+        "body": [
+            "user_id",
+            "screen_name",
+            "include_entities",
+            "skip_status"
+        ],
+        "headers": []
+    },
+    "unfavorite": {
+        "path": "\/favorites\/destroy.json",
+        "method": "POST",
+        "query": [],
+        "path_elements": [],
+        "body": [
+            "id",
+            "include_entities"
+        ],
+        "headers": []
+    },
+    "unfollow": {
+        "path": "\/friendships\/destroy.json",
+        "method": "POST",
+        "query": [],
+        "path_elements": [],
+        "body": [
+            "user_id",
+            "screen_name"
+        ],
+        "headers": []
+    },
+    "unmute": {
+        "path": "\/mutes\/users\/destroy.json",
+        "method": "POST",
+        "query": [],
+        "path_elements": [],
+        "body": [
+            "user_id",
+            "screen_name",
+            "include_entities",
+            "skip_status"
+        ],
+        "headers": []
+    },
+    "unretweet": {
+        "path": "\/statuses\/unretweet.json",
+        "method": "POST",
+        "query": [],
+        "path_elements": [],
+        "body": [
+            "id",
+            "trim_user"
+        ],
+        "headers": []
+    },
+    "user": {
+        "path": "\/statuses\/user_timeline.json",
+        "method": "GET",
+        "query": [
+            "user_id",
+            "screen_name",
+            "since_id",
+            "count",
+            "max_id",
+            "trim_user",
+            "exclude_replies",
+            "include_rts",
+            "include_entities"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "users_lookup": {
+        "path": "\/users\/lookup.json",
+        "method": "GET",
+        "query": [
+            "user_id",
+            "screen_name",
+            "include_entities",
+            "skip_status"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "users_profile_banner": {
+        "path": "\/users\/profile_banner.json",
+        "method": "GET",
+        "query": [
+            "user_id",
+            "screen_name"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "users_search": {
+        "path": "\/users\/search.json",
+        "method": "GET",
+        "query": [
+            "q",
+            "page",
+            "count",
+            "include_entities",
+            "skip_status"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "users_show": {
+        "path": "\/users\/show.json",
+        "method": "GET",
+        "query": [
+            "user_id",
+            "screen_name",
+            "include_entities",
+            "skip_status"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "users_suggestions": {
+        "path": "\/users\/suggestions.json",
+        "method": "GET",
+        "query": [
+            "lang"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "users_suggestions_slug": {
+        "path": "\/users\/suggestions\/%1$s.json",
+        "method": "GET",
+        "query": [
+            "lang"
+        ],
+        "path_elements": [
+            "slug"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "users_suggestions_slug_members": {
+        "path": "\/users\/suggestions\/%1$s\/members.json",
+        "method": "GET",
+        "query": [
+            "lang"
+        ],
+        "path_elements": [
+            "slug"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "verify": {
+        "path": "\/account\/verify_credentials.json",
+        "method": "GET",
+        "query": [
+            "include_entities",
+            "skip_status"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    }
+}
