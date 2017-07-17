@@ -93,7 +93,7 @@ abstract class TokenStorageTestAbstract extends TestCase{
 			$this->assertFalse($this->storage->hasAuthorizationState($k));
 		}
 
-#		$this->storage->clearAllAccessTokens();
+		$this->storage->clearAllAccessTokens();
 
 		foreach($range as $k){
 			$this->assertFalse($this->storage->hasAccessToken($k));
