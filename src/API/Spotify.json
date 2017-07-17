@@ -1,0 +1,721 @@
+{
+    "album": {
+        "path": "\/albums\/%1$s",
+        "method": "GET",
+        "query": [
+            "market"
+        ],
+        "path_elements": [
+            "id"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "albumTracks": {
+        "path": "\/albums\/%1$s\/tracks",
+        "method": "GET",
+        "query": [
+            "limit",
+            "offset",
+            "market"
+        ],
+        "path_elements": [
+            "id"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "albums": {
+        "path": "\/albums",
+        "method": "GET",
+        "query": [
+            "ids",
+            "market"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "artist": {
+        "path": "\/artists\/%1$s",
+        "method": "GET",
+        "query": [],
+        "path_elements": [
+            "id"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "artistAlbums": {
+        "path": "\/artists\/%1$s\/albums",
+        "method": "GET",
+        "query": [
+            "album_type",
+            "limit",
+            "offset",
+            "market"
+        ],
+        "path_elements": [
+            "id"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "artistRelatedArtists": {
+        "path": "\/artists\/%1$s\/related-artists",
+        "method": "GET",
+        "query": [],
+        "path_elements": [
+            "id"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "artistTopTracks": {
+        "path": "\/artists\/%1$s\/top-tracks",
+        "method": "GET",
+        "query": [
+            "country"
+        ],
+        "path_elements": [
+            "id"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "artists": {
+        "path": "\/artists",
+        "method": "GET",
+        "query": [
+            "ids"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "audioAnalysis": {
+        "path": "\/audio-analysis\/%1$s",
+        "method": "GET",
+        "query": [],
+        "path_elements": [
+            "id"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "audioFeatures": {
+        "path": "\/audio-features\/%1$s",
+        "method": "GET",
+        "query": [],
+        "path_elements": [
+            "id"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "audioFeaturesAll": {
+        "path": "\/audio-features",
+        "method": "GET",
+        "query": [
+            "ids"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "categories": {
+        "path": "\/browse\/categories",
+        "method": "GET",
+        "query": [
+            "locale",
+            "country",
+            "limit",
+            "offset"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "category": {
+        "path": "\/browse\/categories\/%1$s",
+        "method": "GET",
+        "query": [
+            "locale",
+            "country"
+        ],
+        "path_elements": [
+            "category_id"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "categoryPlaylists": {
+        "path": "\/browse\/categories\/%1$s\/playlists",
+        "method": "GET",
+        "query": [
+            "locale",
+            "country"
+        ],
+        "path_elements": [
+            "category_id"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "createPlaylist": {
+        "path": "\/users\/%1$s\/playlists",
+        "method": "POST",
+        "query": [],
+        "path_elements": [
+            "user_id"
+        ],
+        "body": true,
+        "headers": {
+            "Content-Type": "application\/json"
+        }
+    },
+    "devices": {
+        "path": "\/me\/player\/devices",
+        "method": "GET",
+        "query": [],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "featuredPlaylists": {
+        "path": "\/browse\/featured-playlists",
+        "method": "GET",
+        "query": [
+            "locale",
+            "country",
+            "timestamp",
+            "limit",
+            "offset"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "follow": {
+        "path": "\/me\/following",
+        "method": "PUT",
+        "query": [
+            "type",
+            "ids"
+        ],
+        "path_elements": [],
+        "body": true,
+        "headers": {
+            "Content-Type": "application\/json"
+        }
+    },
+    "followPlaylist": {
+        "path": "\/users\/%1$s\/playlists\/%2$s\/followers",
+        "method": "PUT",
+        "query": [],
+        "path_elements": [
+            "owner_id",
+            "playlist_id"
+        ],
+        "body": true,
+        "headers": {
+            "Content-Type": "application\/json"
+        }
+    },
+    "me": {
+        "path": "\/me",
+        "method": "GET",
+        "query": [],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "meFollowersContains": {
+        "path": "\/me\/following\/contains",
+        "method": "GET",
+        "query": [
+            "type",
+            "ids"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "meFollowing": {
+        "path": "\/me\/following",
+        "method": "GET",
+        "query": [
+            "type",
+            "after",
+            "limit"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "mePlaylists": {
+        "path": "\/me\/playlists",
+        "method": "GET",
+        "query": [
+            "limit",
+            "offset"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "meSavedAlbums": {
+        "path": "\/me\/albums",
+        "method": "GET",
+        "query": [
+            "market",
+            "limit",
+            "offset"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "meSavedAlbumsContains": {
+        "path": "\/me\/albums\/contains",
+        "method": "GET",
+        "query": [
+            "ids"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "meSavedTracks": {
+        "path": "\/me\/tracks",
+        "method": "GET",
+        "query": [
+            "market",
+            "limit",
+            "offset"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "meSavedTracksContains": {
+        "path": "\/me\/tracks\/contains",
+        "method": "GET",
+        "query": [
+            "ids"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "meTop": {
+        "path": "\/me\/top\/%1$s",
+        "method": "GET",
+        "query": [
+            "time_range",
+            "limit",
+            "offset"
+        ],
+        "path_elements": [
+            "type"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "newReleases": {
+        "path": "\/browse\/new-releases",
+        "method": "GET",
+        "query": [
+            "locale",
+            "country",
+            "limit",
+            "offset"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "next": {
+        "path": "\/me\/player\/next",
+        "method": "POST",
+        "query": [
+            "device_id"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "nowPlaying": {
+        "path": "\/me\/player\/currently-playing",
+        "method": "GET",
+        "query": [
+            "market"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "pause": {
+        "path": "\/me\/player\/pause",
+        "method": "PUT",
+        "query": [
+            "device_id"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "play": {
+        "path": "\/me\/player\/play",
+        "method": "PUT",
+        "query": [
+            "device_id"
+        ],
+        "path_elements": [],
+        "body": true,
+        "headers": {
+            "Content-Type": "application\/json"
+        }
+    },
+    "playlistAddTracks": {
+        "path": "\/users\/%1$s\/playlists\/%2$s\/tracks",
+        "method": "POST",
+        "query": [
+            "uris",
+            "position"
+        ],
+        "path_elements": [
+            "user_id",
+            "playlist_id"
+        ],
+        "body": true,
+        "headers": {
+            "Content-Type": "application\/json"
+        }
+    },
+    "playlistRemoveTracks": {
+        "path": "\/users\/%1$s\/playlists\/%2$s\/tracks",
+        "method": "DELETE",
+        "query": [
+            "tracks"
+        ],
+        "path_elements": [
+            "user_id",
+            "playlist_id"
+        ],
+        "body": true,
+        "headers": {
+            "Content-Type": "application\/json"
+        }
+    },
+    "playlistReorderTracks": {
+        "path": "\/users\/%1$s\/playlists\/%2$s\/tracks",
+        "method": "PUT",
+        "query": [],
+        "path_elements": [
+            "user_id",
+            "playlist_id"
+        ],
+        "body": true,
+        "headers": {
+            "Content-Type": "application\/json"
+        }
+    },
+    "playlistReplaceTracks": {
+        "path": "\/users\/%1$s\/playlists\/%2$s\/tracks",
+        "method": "PUT",
+        "query": [],
+        "path_elements": [
+            "user_id",
+            "playlist_id"
+        ],
+        "body": true,
+        "headers": {
+            "Content-Type": "application\/json"
+        }
+    },
+    "playlistUpdateDetails": {
+        "path": "\/users\/%1$s\/playlists\/%2$s",
+        "method": "PUT",
+        "query": [],
+        "path_elements": [
+            "user_id",
+            "playlist_id"
+        ],
+        "body": true,
+        "headers": {
+            "Content-Type": "application\/json"
+        }
+    },
+    "previous": {
+        "path": "\/me\/player\/previous",
+        "method": "POST",
+        "query": [
+            "device_id"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "recentlyPlayed": {
+        "path": "\/me\/player\/recently-played",
+        "method": "GET",
+        "query": [
+            "limit",
+            "offset",
+            "after",
+            "before"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "recommendations": {
+        "path": "\/recommendations",
+        "method": "GET",
+        "query": [
+            "limit",
+            "market",
+            "seed_artists",
+            "seed_genres",
+            "seed_tracks",
+            "max_*",
+            "min_*",
+            "target_*"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "removeSavedAlbums": {
+        "path": "\/me\/albums",
+        "method": "DELETE",
+        "query": [
+            "ids"
+        ],
+        "path_elements": [],
+        "body": true,
+        "headers": {
+            "Content-Type": "application\/json"
+        }
+    },
+    "removeSavedTracks": {
+        "path": "\/me\/tracks",
+        "method": "DELETE",
+        "query": [
+            "ids"
+        ],
+        "path_elements": [],
+        "body": true,
+        "headers": {
+            "Content-Type": "application\/json"
+        }
+    },
+    "repeat": {
+        "path": "\/me\/player\/repeat",
+        "method": "PUT",
+        "query": [
+            "state",
+            "device_id"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "saveAlbums": {
+        "path": "\/me\/albums",
+        "method": "PUT",
+        "query": [
+            "ids"
+        ],
+        "path_elements": [],
+        "body": true,
+        "headers": {
+            "Content-Type": "application\/json"
+        }
+    },
+    "saveTracks": {
+        "path": "\/me\/tracks",
+        "method": "PUT",
+        "query": [
+            "ids"
+        ],
+        "path_elements": [],
+        "body": true,
+        "headers": {
+            "Content-Type": "application\/json"
+        }
+    },
+    "search": {
+        "path": "\/search",
+        "method": "GET",
+        "query": [
+            "q",
+            "type",
+            "market",
+            "limit",
+            "offset"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "seek": {
+        "path": "\/me\/player\/seek",
+        "method": "PUT",
+        "query": [
+            "position_ms",
+            "device_id"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "shuffle": {
+        "path": "\/me\/player\/shuffle",
+        "method": "PUT",
+        "query": [
+            "state",
+            "device_id"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "track": {
+        "path": "\/tracks\/%1$s",
+        "method": "GET",
+        "query": [
+            "market"
+        ],
+        "path_elements": [
+            "id"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "tracks": {
+        "path": "\/tracks",
+        "method": "GET",
+        "query": [
+            "ids",
+            "market"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "transfer": {
+        "path": "\/me\/player",
+        "method": "PUT",
+        "query": [],
+        "path_elements": [],
+        "body": true,
+        "headers": {
+            "Content-Type": "application\/json"
+        }
+    },
+    "unfollow": {
+        "path": "\/me\/following",
+        "method": "DELETE",
+        "query": [
+            "type",
+            "ids"
+        ],
+        "path_elements": [],
+        "body": true,
+        "headers": {
+            "Content-Type": "application\/json"
+        }
+    },
+    "unfollowPlaylist": {
+        "path": "\/users\/%1$s\/playlists\/%2$s\/followers",
+        "method": "DELETE",
+        "query": [],
+        "path_elements": [
+            "owner_id",
+            "playlist_id"
+        ],
+        "body": true,
+        "headers": {
+            "Content-Type": "application\/json"
+        }
+    },
+    "user": {
+        "path": "\/users\/%1$s",
+        "method": "GET",
+        "query": [],
+        "path_elements": [
+            "user_id"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "userPlaylist": {
+        "path": "\/users\/%1$s\/playlists\/%2$s",
+        "method": "GET",
+        "query": [
+            "fields",
+            "market"
+        ],
+        "path_elements": [
+            "user_id",
+            "playlist_id"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "userPlaylistFollowersContains": {
+        "path": "\/users\/%1$s\/playlists\/%2$s\/followers\/contains",
+        "method": "GET",
+        "query": [
+            "ids"
+        ],
+        "path_elements": [
+            "owner_id",
+            "playlist_id"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "userPlaylistTracks": {
+        "path": "\/users\/%1$s\/playlists\/%2$s\/tracks",
+        "method": "GET",
+        "query": [
+            "fields",
+            "market",
+            "limit",
+            "offset"
+        ],
+        "path_elements": [
+            "user_id",
+            "playlist_id"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "userPlaylists": {
+        "path": "\/users\/%1$s\/playlists",
+        "method": "GET",
+        "query": [
+            "limit",
+            "offset"
+        ],
+        "path_elements": [
+            "user_id"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "volume": {
+        "path": "\/me\/player\/volume",
+        "method": "PUT",
+        "query": [
+            "volume_percent",
+            "device_id"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    }
+}
