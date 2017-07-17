@@ -1,0 +1,37 @@
+{
+	"name": "chillerlan/php-oauth",
+	"description": "An Oauth library for PHP7+.",
+	"license": "MIT",
+	"type": "library",
+	"keywords": [
+		"oauth", "oauth2", "client", "spotify", "last.fm", "twitter", "discogs", "soundcloud", "gitter", "instagram", "github", "twitch", "vimeo"
+	],
+	"authors": [
+		{
+			"name": "smiley",
+			"email": "smiley@chillerlan.net"
+		}
+	],
+	"require": {
+		"php": ">=7.0.7",
+		"chillerlan/php-curl": "dev-master",
+		"psr/simple-cache": "1.0.0",
+		"chillerlan/php-cache": "1.0.*",
+		"vlucas/phpdotenv": "2.*"
+	},
+	"require-dev": {
+		"chillerlan/database": "dev-master",
+		"phpunit/phpunit": "6.2.*"
+	},
+	"autoload": {
+		"psr-4": {
+			"chillerlan\\OAuth\\": "src/"
+		}
+	},
+	"autoload-dev": {
+		"psr-4": {
+			"chillerlan\\OAuthTest\\": "tests/",
+			"chillerlan\\OAuthExamples\\": "examples/"
+		}
+	}
+}
