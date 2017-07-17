@@ -1,0 +1,580 @@
+{
+    "artist": {
+        "path": "\/artists\/%1$s",
+        "method": "GET",
+        "query": [],
+        "path_elements": [
+            "artist_id"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "artistReleases": {
+        "path": "\/artists\/%1$s\/releases",
+        "method": "GET",
+        "query": [
+            "sort",
+            "sort_order"
+        ],
+        "path_elements": [
+            "artist_id"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "collectionCreateFolder": {
+        "path": "\/users\/%1$s\/collection\/folders",
+        "method": "POST",
+        "query": [],
+        "path_elements": [
+            "username"
+        ],
+        "body": true,
+        "headers": {
+            "Content-Type": "application\/json"
+        }
+    },
+    "collectionDeleteFolder": {
+        "path": "\/users\/%1$s\/collection\/folders\/%2$s",
+        "method": "DELETE",
+        "query": [],
+        "path_elements": [
+            "username",
+            "folder_id"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "collectionFields": {
+        "path": "\/users\/%1$s\/collection\/fields",
+        "method": "GET",
+        "query": [],
+        "path_elements": [
+            "username"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "collectionFolder": {
+        "path": "\/users\/%1$s\/collection\/folders\/%2$s",
+        "method": "GET",
+        "query": [],
+        "path_elements": [
+            "username",
+            "folder_id"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "collectionFolderAddRelease": {
+        "path": "\/users\/%1$s\/collection\/folders\/%2$s\/releases\/%3$s",
+        "method": "POST",
+        "query": [],
+        "path_elements": [
+            "username",
+            "folder_id",
+            "release_id"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "collectionFolderRateRelease": {
+        "path": "\/users\/%1$s\/collection\/folders\/%2$s\/releases\/%3$s\/instances\/%4$s",
+        "method": "POST",
+        "query": [],
+        "path_elements": [
+            "username",
+            "folder_id",
+            "release_id",
+            "instance_id"
+        ],
+        "body": true,
+        "headers": {
+            "Content-Type": "application\/json"
+        }
+    },
+    "collectionFolderReleases": {
+        "path": "\/users\/%1$s\/collection\/folders\/%2$s\/releases",
+        "method": "GET",
+        "query": [],
+        "path_elements": [
+            "username",
+            "folder_id"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "collectionFolderRemoveRelease": {
+        "path": "\/users\/%1$s\/collection\/folders\/%2$s\/releases\/%3$s\/instances\/%4$s",
+        "method": "DELETE",
+        "query": [],
+        "path_elements": [
+            "username",
+            "folder_id",
+            "release_id",
+            "instance_id"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "collectionFolderUpdateReleaseField": {
+        "path": "\/users\/%1$s\/collection\/folders\/%2$s\/releases\/%3$s\/instances\/%4$s\/fields\/%5$s",
+        "method": "POST",
+        "query": [
+            "value"
+        ],
+        "path_elements": [
+            "username",
+            "folder_id",
+            "release_id",
+            "instance_id",
+            "field_id"
+        ],
+        "body": true,
+        "headers": {
+            "Content-Type": "application\/json"
+        }
+    },
+    "collectionFolders": {
+        "path": "\/users\/%1$s\/collection\/folders",
+        "method": "GET",
+        "query": [],
+        "path_elements": [
+            "username"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "collectionRelease": {
+        "path": "\/users\/%1$s\/collection\/releases\/%2$s",
+        "method": "GET",
+        "query": [],
+        "path_elements": [
+            "username",
+            "release_id"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "collectionUpdateFolder": {
+        "path": "\/users\/%1$s\/collection\/folders\/%2$s",
+        "method": "POST",
+        "query": [],
+        "path_elements": [
+            "username",
+            "folder_id"
+        ],
+        "body": true,
+        "headers": {
+            "Content-Type": "application\/json"
+        }
+    },
+    "collectionValue": {
+        "path": "\/users\/%1$s\/collection\/value",
+        "method": "GET",
+        "query": [],
+        "path_elements": [
+            "username"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "contributions": {
+        "path": "\/users\/%1$s\/contributions",
+        "method": "GET",
+        "query": [
+            "sort",
+            "sort_order"
+        ],
+        "path_elements": [
+            "username"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "identity": {
+        "path": "\/oauth\/identity",
+        "method": "GET",
+        "query": [],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "inventory": {
+        "path": "\/users\/%1$s\/inventory",
+        "method": "GET",
+        "query": [
+            "status",
+            "sort",
+            "sort_order"
+        ],
+        "path_elements": [
+            "username"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "label": {
+        "path": "\/labels\/%1$s",
+        "method": "GET",
+        "query": [],
+        "path_elements": [
+            "label_id"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "labelReleases": {
+        "path": "\/labels\/%1$s\/releases",
+        "method": "GET",
+        "query": [
+            "page",
+            "per_page"
+        ],
+        "path_elements": [
+            "label_id"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "list": {
+        "path": "\/lists\/%1$s",
+        "method": "GET",
+        "query": [],
+        "path_elements": [
+            "list_id"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "lists": {
+        "path": "\/users\/%1$s\/lists",
+        "method": "GET",
+        "query": [],
+        "path_elements": [
+            "username"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "marketplaceCreateListing": {
+        "path": "\/marketplace\/listings",
+        "method": "POST",
+        "query": [],
+        "path_elements": [],
+        "body": true,
+        "headers": {
+            "Content-Type": "application\/json"
+        }
+    },
+    "marketplaceFee": {
+        "path": "\/marketplace\/fee\/%1$s",
+        "method": "GET",
+        "query": [],
+        "path_elements": [
+            "price"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "marketplaceFeeCurrency": {
+        "path": "\/marketplace\/fee\/%1$s\/%2$s",
+        "method": "GET",
+        "query": [],
+        "path_elements": [
+            "price",
+            "currency"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "marketplaceListing": {
+        "path": "\/marketplace\/listings\/%1$s",
+        "method": "GET",
+        "query": [
+            "curr_abbr"
+        ],
+        "path_elements": [
+            "listing_id"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "marketplaceOrder": {
+        "path": "\/marketplace\/orders\/%1$s",
+        "method": "GET",
+        "query": [],
+        "path_elements": [
+            "order_id"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "marketplaceOrderAddMessage": {
+        "path": "\/marketplace\/orders\/%1$s\/messages",
+        "method": "POST",
+        "query": [],
+        "path_elements": [
+            "order_id"
+        ],
+        "body": true,
+        "headers": {
+            "Content-Type": "application\/json"
+        }
+    },
+    "marketplaceOrderMessages": {
+        "path": "\/marketplace\/orders\/%1$s\/messages",
+        "method": "GET",
+        "query": [],
+        "path_elements": [
+            "order_id"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "marketplaceOrders": {
+        "path": "\/marketplace\/orders",
+        "method": "GET",
+        "query": [
+            "status",
+            "sort",
+            "sort_order"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "marketplaceRemoveListing": {
+        "path": "\/marketplace\/listings\/%1$s",
+        "method": "DELETE",
+        "query": [],
+        "path_elements": [
+            "listing_id"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "marketplaceUpdateListing": {
+        "path": "\/marketplace\/listings\/%1$s",
+        "method": "POST",
+        "query": [
+            "curr_abbr"
+        ],
+        "path_elements": [
+            "listing_id"
+        ],
+        "body": true,
+        "headers": {
+            "Content-Type": "application\/json"
+        }
+    },
+    "marketplaceUpdateOrder": {
+        "path": "\/marketplace\/orders\/%1$s",
+        "method": "POST",
+        "query": [],
+        "path_elements": [
+            "order_id"
+        ],
+        "body": true,
+        "headers": {
+            "Content-Type": "application\/json"
+        }
+    },
+    "master": {
+        "path": "\/masters\/%1$s",
+        "method": "GET",
+        "query": [],
+        "path_elements": [
+            "master_id"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "masterVersions": {
+        "path": "\/masters\/%1$s\/versions",
+        "method": "GET",
+        "query": [
+            "page",
+            "per_page"
+        ],
+        "path_elements": [
+            "master_id"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "profile": {
+        "path": "\/users\/%1$s",
+        "method": "GET",
+        "query": [],
+        "path_elements": [
+            "username"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "profileUpdate": {
+        "path": "\/users\/%1$s",
+        "method": "POST",
+        "query": [],
+        "path_elements": [
+            "username"
+        ],
+        "body": true,
+        "headers": {
+            "Content-Type": "application\/json"
+        }
+    },
+    "release": {
+        "path": "\/releases\/%1$s",
+        "method": "GET",
+        "query": [
+            "curr_abbr"
+        ],
+        "path_elements": [
+            "release_id"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "releasePriceSuggestion": {
+        "path": "\/marketplace\/price_suggestions\/%1$s",
+        "method": "GET",
+        "query": [],
+        "path_elements": [
+            "release_id"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "releaseRating": {
+        "path": "\/releases\/%1$s\/rating",
+        "method": "GET",
+        "query": [],
+        "path_elements": [
+            "release_id"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "releaseRemoveUserRating": {
+        "path": "\/releases\/%1$s\/rating\/%2$s",
+        "method": "DELETE",
+        "query": [],
+        "path_elements": [
+            "release_id",
+            "username"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "releaseUpdateUserRating": {
+        "path": "\/releases\/%1$s\/rating\/%2$s",
+        "method": "PUT",
+        "query": [],
+        "path_elements": [
+            "release_id",
+            "username"
+        ],
+        "body": true,
+        "headers": {
+            "Content-Type": "application\/json"
+        }
+    },
+    "releaseUserRating": {
+        "path": "\/releases\/%1$s\/rating\/%2$s",
+        "method": "GET",
+        "query": [],
+        "path_elements": [
+            "release_id",
+            "username"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "search": {
+        "path": "\/database\/search",
+        "method": "GET",
+        "query": [
+            "q",
+            "query",
+            "type",
+            "title",
+            "release_title",
+            "credit",
+            "artist",
+            "anv",
+            "label",
+            "genre",
+            "style",
+            "country",
+            "year",
+            "format",
+            "catno",
+            "barcode",
+            "track",
+            "submitter",
+            "contributor"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "submissions": {
+        "path": "\/users\/%1$s\/submissions",
+        "method": "GET",
+        "query": [],
+        "path_elements": [
+            "username"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "wantlist": {
+        "path": "\/users\/%1$s\/wants",
+        "method": "GET",
+        "query": [],
+        "path_elements": [
+            "username"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "wantlistAdd": {
+        "path": "\/users\/%1$s\/wants\/%2$s",
+        "method": "PUT",
+        "query": [],
+        "path_elements": [
+            "username",
+            "release_id"
+        ],
+        "body": true,
+        "headers": {
+            "Content-Type": "application\/json"
+        }
+    },
+    "wantlistRemove": {
+        "path": "\/users\/%1$s\/wants\/%2$s",
+        "method": "DELETE",
+        "query": [],
+        "path_elements": [
+            "username",
+            "release_id"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "wantlistUpdate": {
+        "path": "\/users\/%1$s\/wants\/%2$s",
+        "method": "POST",
+        "query": [],
+        "path_elements": [
+            "username",
+            "release_id"
+        ],
+        "body": true,
+        "headers": {
+            "Content-Type": "application\/json"
+        }
+    }
+}
