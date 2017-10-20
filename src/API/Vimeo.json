@@ -1,0 +1,437 @@
+{
+    "meLikeVideo": {
+        "path": "\/me\/likes\/%1$s",
+        "method": "PUT",
+        "query": [],
+        "path_elements": [
+            "video_id"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "meLikes": {
+        "path": "\/me\/likes",
+        "method": "GET",
+        "query": [
+            "filter",
+            "filter_embeddable",
+            "query",
+            "page",
+            "per_page",
+            "sort",
+            "direction"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "meLikesContains": {
+        "path": "\/me\/likes\/%1$s",
+        "method": "GET",
+        "query": [],
+        "path_elements": [
+            "video_id"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "meUnlikeVideo": {
+        "path": "\/me\/likes\/%1$s",
+        "method": "DELETE",
+        "query": [],
+        "path_elements": [
+            "video_id"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "ondemandLikes": {
+        "path": "\/ondemand\/pages\/%1$s\/likes",
+        "method": "GET",
+        "query": [
+            "filter",
+            "query",
+            "page",
+            "per_page",
+            "sort",
+            "direction"
+        ],
+        "path_elements": [
+            "ondemand_id"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "user": {
+        "path": "\/users\/%1$s",
+        "method": "GET",
+        "query": [],
+        "path_elements": [
+            "user_id"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "userActivities": {
+        "path": "\/users\/%1$s\/activities",
+        "method": "GET",
+        "query": [],
+        "path_elements": [
+            "user_id"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "userAlbums": {
+        "path": "\/users\/%1$s\/albums",
+        "method": "GET",
+        "query": [],
+        "path_elements": [
+            "user_id"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "userAppearances": {
+        "path": "\/users\/%1$s\/appearances",
+        "method": "GET",
+        "query": [],
+        "path_elements": [
+            "user_id"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "userCategories": {
+        "path": "\/users\/%1$s\/categories",
+        "method": "GET",
+        "query": [],
+        "path_elements": [
+            "user_id"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "userChannels": {
+        "path": "\/users\/%1$s\/channels",
+        "method": "GET",
+        "query": [
+            "moderated"
+        ],
+        "path_elements": [
+            "user_id"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "userFeed": {
+        "path": "\/users\/%1$s\/feed",
+        "method": "GET",
+        "query": [],
+        "path_elements": [
+            "user_id"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "userFollowers": {
+        "path": "\/users\/%1$s\/followers",
+        "method": "GET",
+        "query": [],
+        "path_elements": [
+            "user_id"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "userFollowing": {
+        "path": "\/users\/%1$s\/following",
+        "method": "GET",
+        "query": [],
+        "path_elements": [
+            "user_id"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "userFollowingContains": {
+        "path": "\/users\/%1$s\/following\/%2$s",
+        "method": "GET",
+        "query": [],
+        "path_elements": [
+            "user_id",
+            "follow_user_id"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "userGroups": {
+        "path": "\/users\/%1$s\/groups",
+        "method": "GET",
+        "query": [],
+        "path_elements": [
+            "user_id"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "userLikeVideo": {
+        "path": "\/users\/%1$s\/likes\/%2$s",
+        "method": "PUT",
+        "query": [],
+        "path_elements": [
+            "user_id",
+            "video_id"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "userLikes": {
+        "path": "\/users\/%1$s\/likes",
+        "method": "GET",
+        "query": [
+            "filter",
+            "filter_embeddable",
+            "query",
+            "page",
+            "per_page",
+            "sort",
+            "direction"
+        ],
+        "path_elements": [
+            "user_id"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "userLikesContains": {
+        "path": "\/users\/%1$s\/likes\/%2$s",
+        "method": "GET",
+        "query": [],
+        "path_elements": [
+            "user_id",
+            "video_id"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "userPicture": {
+        "path": "\/users\/%1$s\/pictures\/%2$s",
+        "method": "GET",
+        "query": [],
+        "path_elements": [
+            "user_id",
+            "portraitset_id"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "userPictures": {
+        "path": "\/users\/%1$s\/pictures",
+        "method": "GET",
+        "query": [],
+        "path_elements": [
+            "user_id"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "userPortfolio": {
+        "path": "\/users\/%1$s\/portfolios\/%2$s",
+        "method": "GET",
+        "query": [],
+        "path_elements": [
+            "user_id",
+            "portfolio_id"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "userPortfolioContains": {
+        "path": "\/users\/%1$s\/portfolios\/%2$s\/videos\/%3$s",
+        "method": "GET",
+        "query": [],
+        "path_elements": [
+            "user_id",
+            "portfolio_id",
+            "video_id"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "userPortfolioVideos": {
+        "path": "\/users\/%1$s\/portfolios\/%2$s\/videos",
+        "method": "GET",
+        "query": [],
+        "path_elements": [
+            "user_id",
+            "portfolio_id"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "userPortfolios": {
+        "path": "\/users\/%1$s\/portfolios",
+        "method": "GET",
+        "query": [],
+        "path_elements": [
+            "user_id"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "userPreset": {
+        "path": "\/users\/%1$s\/presets\/%2$s",
+        "method": "GET",
+        "query": [],
+        "path_elements": [
+            "user_id",
+            "preset_id"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "userPresetVideos": {
+        "path": "\/users\/%1$s\/presets\/%2$s\/videos",
+        "method": "GET",
+        "query": [],
+        "path_elements": [
+            "user_id",
+            "preset_id"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "userPresets": {
+        "path": "\/users\/%1$s\/presets",
+        "method": "GET",
+        "query": [],
+        "path_elements": [
+            "user_id"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "userSearch": {
+        "path": "\/users",
+        "method": "GET",
+        "query": [
+            "query",
+            "page",
+            "per_page",
+            "sort",
+            "direction"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "userServiceConnection": {
+        "path": "\/users\/%1$s\/services\/%2$s\/%3$s",
+        "method": "GET",
+        "query": [],
+        "path_elements": [
+            "user_id",
+            "service_type",
+            "service_id"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "userServices": {
+        "path": "\/users\/%1$s\/services",
+        "method": "GET",
+        "query": [],
+        "path_elements": [
+            "user_id"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "userSharedVideos": {
+        "path": "\/users\/%1$s\/shared\/videos",
+        "method": "GET",
+        "query": [],
+        "path_elements": [
+            "user_id"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "userTriggers": {
+        "path": "\/users\/%1$s\/triggers",
+        "method": "GET",
+        "query": [],
+        "path_elements": [
+            "user_id"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "userUnlikeVideo": {
+        "path": "\/users\/%1$s\/likes\/%2$s",
+        "method": "DELETE",
+        "query": [],
+        "path_elements": [
+            "user_id",
+            "video_id"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "userVideos": {
+        "path": "\/users\/%1$s\/videos",
+        "method": "GET",
+        "query": [],
+        "path_elements": [
+            "user_id"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "userWatchlater": {
+        "path": "\/users\/%1$s\/watchlater",
+        "method": "GET",
+        "query": [],
+        "path_elements": [
+            "user_id"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "userWatchlaterContains": {
+        "path": "\/users\/%1$s\/watchlater\/%2$s",
+        "method": "GET",
+        "query": [],
+        "path_elements": [
+            "user_id",
+            "video_id"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "verify": {
+        "path": "\/oauth\/verify",
+        "method": "GET",
+        "query": [],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "videoLikes": {
+        "path": "\/videos\/%1$s\/likes",
+        "method": "GET",
+        "query": [
+            "query",
+            "page",
+            "per_page",
+            "sort",
+            "direction"
+        ],
+        "path_elements": [
+            "video_id"
+        ],
+        "body": null,
+        "headers": []
+    }
+}
