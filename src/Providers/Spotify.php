@@ -125,22 +125,6 @@ class Spotify extends OAuth2Provider{
 	protected $accessTokenEndpoint = 'https://accounts.spotify.com/api/token';
 	protected $accessTokenExpires  = true;
 	protected $authMethod          = self::HEADER_BEARER;
-	protected $authHeaders;
-
-	/**
-	 * Spotify constructor.
-	 *
-	 * @param \chillerlan\OAuth\HTTP\HTTPClientInterface      $http
-	 * @param \chillerlan\OAuth\Storage\TokenStorageInterface $storage
-	 * @param \chillerlan\OAuth\OAuthOptions                  $options
-	 * @param array                                           $scopes
-	 * @param bool                                            $stateInAuthUrl
-	 */
-	public function __construct(HTTPClientInterface $http, TokenStorageInterface $storage, OAuthOptions $options, array $scopes = [], bool $stateInAuthUrl = false){
-		parent::__construct($http, $storage, $options, $scopes, $stateInAuthUrl);
-
-		$this->authHeaders = ['Authorization' => 'Basic '.base64_encode($this->options->key.':'.$this->options->secret)];
-	}
 
 	/**
 	 * @link https://developer.spotify.com/web-api/authorization-guide/#client-credentials-flow
@@ -148,6 +132,7 @@ class Spotify extends OAuth2Provider{
 	 * @param array $scopes
 	 *
 	 * @return \chillerlan\OAuth\Token
+	 * @throws \chillerlan\OAuth\OAuthException
 	 */
 	public function requestCredentialsToken(array $scopes = []){
 
@@ -160,7 +145,9 @@ class Spotify extends OAuth2Provider{
 					'grant_type'    => 'client_credentials',
 					'scope'         => implode($this->scopesDelimiter, $scopes),
 				],
-				$this->authHeaders
+				[
+					'Authorization' => 'Basic '.base64_encode($this->options->key.':'.$this->options->secret),
+				]
 			)
 		);
 
