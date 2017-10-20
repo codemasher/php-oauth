@@ -12,10 +12,6 @@
 
 namespace chillerlan\OAuth\Providers;
 
-use chillerlan\OAuth\HTTP\HTTPClientInterface;
-use chillerlan\OAuth\OAuthOptions;
-use chillerlan\OAuth\Storage\TokenStorageInterface;
-
 /**
  * @link https://developer.spotify.com/web-api/authorization-guide/#authorization-code-flow
  * @link https://developer.spotify.com/web-api/
