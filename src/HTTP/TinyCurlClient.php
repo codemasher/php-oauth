@@ -45,9 +45,7 @@ class TinyCurlClient extends HTTPClientAbstract{
 
 		parse_str(parse_url($url, PHP_URL_QUERY), $query);
 
-		if(!empty($query)){
-			$params = array_merge($query, $params);
-		}
+		$params = array_merge($query, $params);
 
 		try{
 			$url = new URL(explode('?', $url)[0], $params, $method, $body, $headers);
@@ -55,7 +53,7 @@ class TinyCurlClient extends HTTPClientAbstract{
 			$response = $this->http->fetch($url);
 
 			return new OAuthResponse([
-				'headers' => $response->headers_array,
+				'headers' => $response->headers,
 				'body'    => $response->body->content,
 			]);
 
