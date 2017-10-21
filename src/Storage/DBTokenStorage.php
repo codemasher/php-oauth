@@ -19,20 +19,40 @@ class DBTokenStorage extends TokenStorageAbstract{
 
 	const LABEL_HASH_ALGO = 'md5';
 
+	/**
+	 * @var \chillerlan\Database\Connection
+	 */
 	protected $db;
+
+	/**
+	 * @var string
+	 */
 	protected $token_table;
+
+	/**
+	 * @var int
+	 */
 	protected $user_id;
 
+	/**
+	 * DBTokenStorage constructor.
+	 *
+	 * @param \chillerlan\Database\Connection $db
+	 * @param string                          $token_table
+	 * @param int                             $user_id
+	 */
 	public function __construct(Connection $db, string $token_table, int $user_id){
 		$this->db          = $db;
 		$this->token_table = $token_table;
 		$this->user_id     = $user_id;
+
+		$this->db->connect();
 	}
 
 	protected function getProviders():array {
 		return $this->db->select
 			->cached()
-			->from([$this->token_table.'_providers'])
+			->from([$this->token_table.'_providers']) // todo: optional names
 			->execute('servicename')
 			->__toArray();
 	}
@@ -264,6 +284,9 @@ class DBTokenStorage extends TokenStorageAbstract{
 			['provider_id' => 8,  'servicename' => 'SoundCloud',],
 			['provider_id' => 9,  'servicename' => 'Twitch',],
 			['provider_id' => 10, 'servicename' => 'GuildWars2',],
+			['provider_id' => 11, 'servicename' => 'GitHub',],
+			['provider_id' => 12, 'servicename' => 'Discord',],
+			['provider_id' => 13, 'servicename' => 'Flickr',],
 		];
 
 		$this->db->insert->into($this->token_table.'_providers')->values($providers)->execute();
