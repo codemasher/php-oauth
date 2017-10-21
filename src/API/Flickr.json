@@ -1,0 +1,2595 @@
+{
+    "activityUserComments": {
+        "path": "flickr.activity.userComments",
+        "method": "POST",
+        "query": [
+            "per_page",
+            "page"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "activityUserPhotos": {
+        "path": "flickr.activity.userPhotos",
+        "method": "POST",
+        "query": [
+            "timeframe",
+            "per_page",
+            "page"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "authCheckToken": {
+        "path": "flickr.auth.checkToken",
+        "method": "POST",
+        "query": [
+            "auth_token"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "authGetFrob": {
+        "path": "flickr.auth.getFrob",
+        "method": "POST",
+        "query": [],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "authGetFullToken": {
+        "path": "flickr.auth.getFullToken",
+        "method": "POST",
+        "query": [
+            "mini_token"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "authGetToken": {
+        "path": "flickr.auth.getToken",
+        "method": "POST",
+        "query": [
+            "frob"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "authOauthCheckToken": {
+        "path": "flickr.auth.oauth.checkToken",
+        "method": "POST",
+        "query": [
+            "oauth_token"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "authOauthGetAccessToken": {
+        "path": "flickr.auth.oauth.getAccessToken",
+        "method": "POST",
+        "query": [],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "blogsGetList": {
+        "path": "flickr.blogs.getList",
+        "method": "POST",
+        "query": [
+            "service"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "blogsGetServices": {
+        "path": "flickr.blogs.getServices",
+        "method": "POST",
+        "query": [],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "blogsPostPhoto": {
+        "path": "flickr.blogs.postPhoto",
+        "method": "POST",
+        "query": [
+            "blog_id",
+            "photo_id",
+            "title",
+            "description",
+            "blog_password",
+            "service"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "camerasGetBrandModels": {
+        "path": "flickr.cameras.getBrandModels",
+        "method": "POST",
+        "query": [
+            "brand"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "camerasGetBrands": {
+        "path": "flickr.cameras.getBrands",
+        "method": "POST",
+        "query": [],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "collectionsGetInfo": {
+        "path": "flickr.collections.getInfo",
+        "method": "POST",
+        "query": [
+            "collection_id"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "collectionsGetTree": {
+        "path": "flickr.collections.getTree",
+        "method": "POST",
+        "query": [
+            "collection_id",
+            "user_id"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "commonsGetInstitutions": {
+        "path": "flickr.commons.getInstitutions",
+        "method": "POST",
+        "query": [],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "contactsGetList": {
+        "path": "flickr.contacts.getList",
+        "method": "POST",
+        "query": [
+            "filter",
+            "page",
+            "per_page",
+            "sort"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "contactsGetListRecentlyUploaded": {
+        "path": "flickr.contacts.getListRecentlyUploaded",
+        "method": "POST",
+        "query": [
+            "date_lastupload",
+            "filter"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "contactsGetPublicList": {
+        "path": "flickr.contacts.getPublicList",
+        "method": "POST",
+        "query": [
+            "user_id",
+            "page",
+            "per_page"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "contactsGetTaggingSuggestions": {
+        "path": "flickr.contacts.getTaggingSuggestions",
+        "method": "POST",
+        "query": [
+            "per_page",
+            "page"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "favoritesAdd": {
+        "path": "flickr.favorites.add",
+        "method": "POST",
+        "query": [
+            "photo_id"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "favoritesGetContext": {
+        "path": "flickr.favorites.getContext",
+        "method": "POST",
+        "query": [
+            "photo_id",
+            "user_id"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "favoritesGetList": {
+        "path": "flickr.favorites.getList",
+        "method": "POST",
+        "query": [
+            "user_id",
+            "min_fave_date",
+            "max_fave_date",
+            "extras",
+            "per_page",
+            "page"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "favoritesGetPublicList": {
+        "path": "flickr.favorites.getPublicList",
+        "method": "POST",
+        "query": [
+            "user_id",
+            "min_fave_date",
+            "max_fave_date",
+            "extras",
+            "per_page",
+            "page"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "favoritesRemove": {
+        "path": "flickr.favorites.remove",
+        "method": "POST",
+        "query": [
+            "photo_id"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "galleriesAddPhoto": {
+        "path": "flickr.galleries.addPhoto",
+        "method": "POST",
+        "query": [
+            "gallery_id",
+            "photo_id",
+            "comment",
+            "full_response"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "galleriesCreate": {
+        "path": "flickr.galleries.create",
+        "method": "POST",
+        "query": [
+            "title",
+            "description",
+            "primary_photo_id",
+            "full_result"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "galleriesEditMeta": {
+        "path": "flickr.galleries.editMeta",
+        "method": "POST",
+        "query": [
+            "gallery_id",
+            "title",
+            "description"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "galleriesEditPhoto": {
+        "path": "flickr.galleries.editPhoto",
+        "method": "POST",
+        "query": [
+            "gallery_id",
+            "photo_id",
+            "comment"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "galleriesEditPhotos": {
+        "path": "flickr.galleries.editPhotos",
+        "method": "POST",
+        "query": [
+            "gallery_id",
+            "primary_photo_id",
+            "photo_ids"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "galleriesGetInfo": {
+        "path": "flickr.galleries.getInfo",
+        "method": "POST",
+        "query": [
+            "gallery_id"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "galleriesGetList": {
+        "path": "flickr.galleries.getList",
+        "method": "POST",
+        "query": [
+            "user_id",
+            "per_page",
+            "page",
+            "primary_photo_extras"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "galleriesGetListForPhoto": {
+        "path": "flickr.galleries.getListForPhoto",
+        "method": "POST",
+        "query": [
+            "photo_id",
+            "per_page",
+            "page"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "galleriesGetPhotos": {
+        "path": "flickr.galleries.getPhotos",
+        "method": "POST",
+        "query": [
+            "gallery_id",
+            "extras",
+            "per_page",
+            "page"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "galleriesRemovePhoto": {
+        "path": "flickr.galleries.removePhoto",
+        "method": "POST",
+        "query": [
+            "gallery_id",
+            "photo_id",
+            "full_response"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "groupsBrowse": {
+        "path": "flickr.groups.browse",
+        "method": "POST",
+        "query": [
+            "cat_id"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "groupsDiscussRepliesAdd": {
+        "path": "flickr.groups.discuss.replies.add",
+        "method": "POST",
+        "query": [
+            "group_id",
+            "topic_id",
+            "message"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "groupsDiscussRepliesDelete": {
+        "path": "flickr.groups.discuss.replies.delete",
+        "method": "POST",
+        "query": [
+            "group_id",
+            "topic_id",
+            "reply_id"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "groupsDiscussRepliesEdit": {
+        "path": "flickr.groups.discuss.replies.edit",
+        "method": "POST",
+        "query": [
+            "group_id",
+            "topic_id",
+            "reply_id",
+            "message"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "groupsDiscussRepliesGetInfo": {
+        "path": "flickr.groups.discuss.replies.getInfo",
+        "method": "POST",
+        "query": [
+            "group_id",
+            "topic_id",
+            "reply_id"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "groupsDiscussRepliesGetList": {
+        "path": "flickr.groups.discuss.replies.getList",
+        "method": "POST",
+        "query": [
+            "group_id",
+            "topic_id",
+            "per_page",
+            "page"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "groupsDiscussTopicsAdd": {
+        "path": "flickr.groups.discuss.topics.add",
+        "method": "POST",
+        "query": [
+            "group_id",
+            "subject",
+            "message"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "groupsDiscussTopicsGetInfo": {
+        "path": "flickr.groups.discuss.topics.getInfo",
+        "method": "POST",
+        "query": [
+            "group_id",
+            "topic_id"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "groupsDiscussTopicsGetList": {
+        "path": "flickr.groups.discuss.topics.getList",
+        "method": "POST",
+        "query": [
+            "group_id",
+            "per_page",
+            "page"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "groupsGetInfo": {
+        "path": "flickr.groups.getInfo",
+        "method": "POST",
+        "query": [
+            "group_id",
+            "group_path_alias",
+            "lang"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "groupsJoin": {
+        "path": "flickr.groups.join",
+        "method": "POST",
+        "query": [
+            "group_id",
+            "accept_rules"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "groupsJoinRequest": {
+        "path": "flickr.groups.joinRequest",
+        "method": "POST",
+        "query": [
+            "group_id",
+            "message",
+            "accept_rules"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "groupsLeave": {
+        "path": "flickr.groups.leave",
+        "method": "POST",
+        "query": [
+            "group_id",
+            "delete_photos"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "groupsMembersGetList": {
+        "path": "flickr.groups.members.getList",
+        "method": "POST",
+        "query": [
+            "group_id",
+            "membertypes",
+            "per_page",
+            "page"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "groupsPoolsAdd": {
+        "path": "flickr.groups.pools.add",
+        "method": "POST",
+        "query": [
+            "photo_id",
+            "group_id"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "groupsPoolsGetContext": {
+        "path": "flickr.groups.pools.getContext",
+        "method": "POST",
+        "query": [
+            "photo_id",
+            "group_id"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "groupsPoolsGetGroups": {
+        "path": "flickr.groups.pools.getGroups",
+        "method": "POST",
+        "query": [
+            "page",
+            "per_page"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "groupsPoolsGetPhotos": {
+        "path": "flickr.groups.pools.getPhotos",
+        "method": "POST",
+        "query": [
+            "group_id",
+            "tags",
+            "user_id",
+            "extras",
+            "per_page",
+            "page"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "groupsPoolsRemove": {
+        "path": "flickr.groups.pools.remove",
+        "method": "POST",
+        "query": [
+            "photo_id",
+            "group_id"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "groupsSearch": {
+        "path": "flickr.groups.search",
+        "method": "POST",
+        "query": [
+            "text",
+            "per_page",
+            "page"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "interestingnessGetList": {
+        "path": "flickr.interestingness.getList",
+        "method": "POST",
+        "query": [
+            "date",
+            "extras",
+            "per_page",
+            "page"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "machinetagsGetNamespaces": {
+        "path": "flickr.machinetags.getNamespaces",
+        "method": "POST",
+        "query": [
+            "predicate",
+            "per_page",
+            "page"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "machinetagsGetPairs": {
+        "path": "flickr.machinetags.getPairs",
+        "method": "POST",
+        "query": [
+            "namespace",
+            "predicate",
+            "per_page",
+            "page"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "machinetagsGetPredicates": {
+        "path": "flickr.machinetags.getPredicates",
+        "method": "POST",
+        "query": [
+            "namespace",
+            "per_page",
+            "page"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "machinetagsGetRecentValues": {
+        "path": "flickr.machinetags.getRecentValues",
+        "method": "POST",
+        "query": [
+            "namespace",
+            "predicate",
+            "added_since"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "machinetagsGetValues": {
+        "path": "flickr.machinetags.getValues",
+        "method": "POST",
+        "query": [
+            "namespace",
+            "predicate",
+            "per_page",
+            "page"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "pandaGetList": {
+        "path": "flickr.panda.getList",
+        "method": "POST",
+        "query": [],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "pandaGetPhotos": {
+        "path": "flickr.panda.getPhotos",
+        "method": "POST",
+        "query": [
+            "panda_name",
+            "extras",
+            "per_page",
+            "page"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "peopleFindByEmail": {
+        "path": "flickr.people.findByEmail",
+        "method": "POST",
+        "query": [
+            "find_email"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "peopleFindByUsername": {
+        "path": "flickr.people.findByUsername",
+        "method": "POST",
+        "query": [
+            "username"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "peopleGetGroups": {
+        "path": "flickr.people.getGroups",
+        "method": "POST",
+        "query": [
+            "user_id",
+            "extras"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "peopleGetInfo": {
+        "path": "flickr.people.getInfo",
+        "method": "POST",
+        "query": [
+            "user_id"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "peopleGetLimits": {
+        "path": "flickr.people.getLimits",
+        "method": "POST",
+        "query": [],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "peopleGetPhotos": {
+        "path": "flickr.people.getPhotos",
+        "method": "POST",
+        "query": [
+            "user_id",
+            "safe_search",
+            "min_upload_date",
+            "max_upload_date",
+            "min_taken_date",
+            "max_taken_date",
+            "content_type",
+            "privacy_filter",
+            "extras",
+            "per_page",
+            "page"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "peopleGetPhotosOf": {
+        "path": "flickr.people.getPhotosOf",
+        "method": "POST",
+        "query": [
+            "user_id",
+            "owner_id",
+            "extras",
+            "per_page",
+            "page"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "peopleGetPublicGroups": {
+        "path": "flickr.people.getPublicGroups",
+        "method": "POST",
+        "query": [
+            "user_id",
+            "invitation_only"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "peopleGetPublicPhotos": {
+        "path": "flickr.people.getPublicPhotos",
+        "method": "POST",
+        "query": [
+            "user_id",
+            "safe_search",
+            "extras",
+            "per_page",
+            "page"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "peopleGetUploadStatus": {
+        "path": "flickr.people.getUploadStatus",
+        "method": "POST",
+        "query": [],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "photosAddTags": {
+        "path": "flickr.photos.addTags",
+        "method": "POST",
+        "query": [
+            "photo_id",
+            "tags"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "photosCommentsAddComment": {
+        "path": "flickr.photos.comments.addComment",
+        "method": "POST",
+        "query": [
+            "photo_id",
+            "comment_text"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "photosCommentsDeleteComment": {
+        "path": "flickr.photos.comments.deleteComment",
+        "method": "POST",
+        "query": [
+            "comment_id"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "photosCommentsEditComment": {
+        "path": "flickr.photos.comments.editComment",
+        "method": "POST",
+        "query": [
+            "comment_id",
+            "comment_text"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "photosCommentsGetList": {
+        "path": "flickr.photos.comments.getList",
+        "method": "POST",
+        "query": [
+            "photo_id",
+            "min_comment_date",
+            "max_comment_date"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "photosCommentsGetRecentForContacts": {
+        "path": "flickr.photos.comments.getRecentForContacts",
+        "method": "POST",
+        "query": [
+            "date_lastcomment",
+            "contacts_filter",
+            "extras",
+            "per_page",
+            "page"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "photosDelete": {
+        "path": "flickr.photos.delete",
+        "method": "POST",
+        "query": [
+            "photo_id"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "photosGeoBatchCorrectLocation": {
+        "path": "flickr.photos.geo.batchCorrectLocation",
+        "method": "POST",
+        "query": [
+            "lat",
+            "lon",
+            "accuracy",
+            "place_id",
+            "woe_id"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "photosGeoCorrectLocation": {
+        "path": "flickr.photos.geo.correctLocation",
+        "method": "POST",
+        "query": [
+            "photo_id",
+            "place_id",
+            "woe_id",
+            "foursquare_id"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "photosGeoGetLocation": {
+        "path": "flickr.photos.geo.getLocation",
+        "method": "POST",
+        "query": [
+            "photo_id",
+            "extras"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "photosGeoGetPerms": {
+        "path": "flickr.photos.geo.getPerms",
+        "method": "POST",
+        "query": [
+            "photo_id"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "photosGeoPhotosForLocation": {
+        "path": "flickr.photos.geo.photosForLocation",
+        "method": "POST",
+        "query": [
+            "lat",
+            "lon",
+            "accuracy",
+            "extras",
+            "per_page",
+            "page"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "photosGeoRemoveLocation": {
+        "path": "flickr.photos.geo.removeLocation",
+        "method": "POST",
+        "query": [
+            "photo_id"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "photosGeoSetContext": {
+        "path": "flickr.photos.geo.setContext",
+        "method": "POST",
+        "query": [
+            "photo_id",
+            "context"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "photosGeoSetLocation": {
+        "path": "flickr.photos.geo.setLocation",
+        "method": "POST",
+        "query": [
+            "photo_id",
+            "lat",
+            "lon",
+            "accuracy",
+            "context"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "photosGeoSetPerms": {
+        "path": "flickr.photos.geo.setPerms",
+        "method": "POST",
+        "query": [
+            "is_public",
+            "is_contact",
+            "is_friend",
+            "is_family",
+            "photo_id"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "photosGetAllContexts": {
+        "path": "flickr.photos.getAllContexts",
+        "method": "POST",
+        "query": [
+            "photo_id"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "photosGetContactsPhotos": {
+        "path": "flickr.photos.getContactsPhotos",
+        "method": "POST",
+        "query": [
+            "count",
+            "just_friends",
+            "single_photo",
+            "include_self",
+            "extras"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "photosGetContactsPublicPhotos": {
+        "path": "flickr.photos.getContactsPublicPhotos",
+        "method": "POST",
+        "query": [
+            "user_id",
+            "count",
+            "just_friends",
+            "single_photo",
+            "include_self",
+            "extras"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "photosGetContext": {
+        "path": "flickr.photos.getContext",
+        "method": "POST",
+        "query": [
+            "photo_id"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "photosGetCounts": {
+        "path": "flickr.photos.getCounts",
+        "method": "POST",
+        "query": [
+            "dates",
+            "taken_dates"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "photosGetExif": {
+        "path": "flickr.photos.getExif",
+        "method": "POST",
+        "query": [
+            "photo_id",
+            "secret"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "photosGetFavorites": {
+        "path": "flickr.photos.getFavorites",
+        "method": "POST",
+        "query": [
+            "photo_id",
+            "page",
+            "per_page"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "photosGetInfo": {
+        "path": "flickr.photos.getInfo",
+        "method": "POST",
+        "query": [
+            "photo_id",
+            "secret"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "photosGetNotInSet": {
+        "path": "flickr.photos.getNotInSet",
+        "method": "POST",
+        "query": [
+            "max_upload_date",
+            "min_taken_date",
+            "max_taken_date",
+            "privacy_filter",
+            "media",
+            "min_upload_date",
+            "extras",
+            "per_page",
+            "page"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "photosGetPerms": {
+        "path": "flickr.photos.getPerms",
+        "method": "POST",
+        "query": [
+            "photo_id"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "photosGetPopular": {
+        "path": "flickr.photos.getPopular",
+        "method": "POST",
+        "query": [
+            "user_id",
+            "sort",
+            "extras",
+            "per_page",
+            "page"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "photosGetRecent": {
+        "path": "flickr.photos.getRecent",
+        "method": "POST",
+        "query": [
+            "extras",
+            "per_page",
+            "page"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "photosGetSizes": {
+        "path": "flickr.photos.getSizes",
+        "method": "POST",
+        "query": [
+            "photo_id"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "photosGetUntagged": {
+        "path": "flickr.photos.getUntagged",
+        "method": "POST",
+        "query": [
+            "min_upload_date",
+            "max_upload_date",
+            "min_taken_date",
+            "max_taken_date",
+            "privacy_filter",
+            "media",
+            "extras",
+            "per_page",
+            "page"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "photosGetWithGeoData": {
+        "path": "flickr.photos.getWithGeoData",
+        "method": "POST",
+        "query": [
+            "min_upload_date",
+            "max_upload_date",
+            "min_taken_date",
+            "max_taken_date",
+            "privacy_filter",
+            "sort",
+            "media",
+            "extras",
+            "per_page",
+            "page"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "photosGetWithoutGeoData": {
+        "path": "flickr.photos.getWithoutGeoData",
+        "method": "POST",
+        "query": [
+            "max_upload_date",
+            "min_taken_date",
+            "max_taken_date",
+            "privacy_filter",
+            "sort",
+            "media",
+            "min_upload_date",
+            "extras",
+            "per_page",
+            "page"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "photosLicensesGetInfo": {
+        "path": "flickr.photos.licenses.getInfo",
+        "method": "POST",
+        "query": [],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "photosLicensesSetLicense": {
+        "path": "flickr.photos.licenses.setLicense",
+        "method": "POST",
+        "query": [
+            "photo_id",
+            "license_id"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "photosNotesAdd": {
+        "path": "flickr.photos.notes.add",
+        "method": "POST",
+        "query": [
+            "photo_id",
+            "note_x",
+            "note_y",
+            "note_w",
+            "note_h",
+            "note_text"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "photosNotesDelete": {
+        "path": "flickr.photos.notes.delete",
+        "method": "POST",
+        "query": [
+            "note_id"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "photosNotesEdit": {
+        "path": "flickr.photos.notes.edit",
+        "method": "POST",
+        "query": [
+            "note_id",
+            "note_x",
+            "note_y",
+            "note_w",
+            "note_h",
+            "note_text"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "photosPeopleAdd": {
+        "path": "flickr.photos.people.add",
+        "method": "POST",
+        "query": [
+            "photo_id",
+            "user_id",
+            "person_x",
+            "person_y",
+            "person_w",
+            "person_h"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "photosPeopleDelete": {
+        "path": "flickr.photos.people.delete",
+        "method": "POST",
+        "query": [
+            "photo_id",
+            "user_id"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "photosPeopleDeleteCoords": {
+        "path": "flickr.photos.people.deleteCoords",
+        "method": "POST",
+        "query": [
+            "photo_id",
+            "user_id"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "photosPeopleEditCoords": {
+        "path": "flickr.photos.people.editCoords",
+        "method": "POST",
+        "query": [
+            "photo_id",
+            "user_id",
+            "person_x",
+            "person_y",
+            "person_w",
+            "person_h"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "photosPeopleGetList": {
+        "path": "flickr.photos.people.getList",
+        "method": "POST",
+        "query": [
+            "photo_id"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "photosRecentlyUpdated": {
+        "path": "flickr.photos.recentlyUpdated",
+        "method": "POST",
+        "query": [
+            "min_date",
+            "extras",
+            "per_page",
+            "page"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "photosRemoveTag": {
+        "path": "flickr.photos.removeTag",
+        "method": "POST",
+        "query": [
+            "tag_id"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "photosSearch": {
+        "path": "flickr.photos.search",
+        "method": "POST",
+        "query": [
+            "user_id",
+            "tags",
+            "tag_mode",
+            "text",
+            "min_upload_date",
+            "max_upload_date",
+            "min_taken_date",
+            "max_taken_date",
+            "license",
+            "sort",
+            "privacy_filter",
+            "bbox",
+            "accuracy",
+            "safe_search",
+            "content_type",
+            "machine_tags",
+            "machine_tag_mode",
+            "group_id",
+            "contacts",
+            "woe_id",
+            "place_id",
+            "media",
+            "has_geo",
+            "geo_context",
+            "lat",
+            "lon",
+            "radius",
+            "radius_units",
+            "is_commons",
+            "in_gallery",
+            "is_getty",
+            "extras",
+            "per_page",
+            "page"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "photosSetContentType": {
+        "path": "flickr.photos.setContentType",
+        "method": "POST",
+        "query": [
+            "photo_id",
+            "content_type"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "photosSetDates": {
+        "path": "flickr.photos.setDates",
+        "method": "POST",
+        "query": [
+            "photo_id",
+            "date_posted",
+            "date_taken",
+            "date_taken_granularity"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "photosSetMeta": {
+        "path": "flickr.photos.setMeta",
+        "method": "POST",
+        "query": [
+            "photo_id",
+            "title",
+            "description"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "photosSetPerms": {
+        "path": "flickr.photos.setPerms",
+        "method": "POST",
+        "query": [
+            "photo_id",
+            "is_public",
+            "is_friend",
+            "is_family",
+            "perm_comment",
+            "perm_addmeta"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "photosSetSafetyLevel": {
+        "path": "flickr.photos.setSafetyLevel",
+        "method": "POST",
+        "query": [
+            "photo_id",
+            "safety_level",
+            "hidden"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "photosSetTags": {
+        "path": "flickr.photos.setTags",
+        "method": "POST",
+        "query": [
+            "photo_id",
+            "tags"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "photosSuggestionsApproveSuggestion": {
+        "path": "flickr.photos.suggestions.approveSuggestion",
+        "method": "POST",
+        "query": [
+            "suggestion_id"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "photosSuggestionsGetList": {
+        "path": "flickr.photos.suggestions.getList",
+        "method": "POST",
+        "query": [
+            "photo_id",
+            "status_id"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "photosSuggestionsRejectSuggestion": {
+        "path": "flickr.photos.suggestions.rejectSuggestion",
+        "method": "POST",
+        "query": [
+            "suggestion_id"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "photosSuggestionsRemoveSuggestion": {
+        "path": "flickr.photos.suggestions.removeSuggestion",
+        "method": "POST",
+        "query": [
+            "suggestion_id"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "photosSuggestionsSuggestLocation": {
+        "path": "flickr.photos.suggestions.suggestLocation",
+        "method": "POST",
+        "query": [
+            "photo_id",
+            "lat",
+            "lon",
+            "accuracy",
+            "woe_id",
+            "place_id",
+            "note"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "photosTransformRotate": {
+        "path": "flickr.photos.transform.rotate",
+        "method": "POST",
+        "query": [
+            "photo_id",
+            "degrees"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "photosUploadCheckTickets": {
+        "path": "flickr.photos.upload.checkTickets",
+        "method": "POST",
+        "query": [
+            "tickets"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "photosetsAddPhoto": {
+        "path": "flickr.photosets.addPhoto",
+        "method": "POST",
+        "query": [
+            "photoset_id",
+            "photo_id"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "photosetsCommentsAddComment": {
+        "path": "flickr.photosets.comments.addComment",
+        "method": "POST",
+        "query": [
+            "photoset_id",
+            "comment_text"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "photosetsCommentsDeleteComment": {
+        "path": "flickr.photosets.comments.deleteComment",
+        "method": "POST",
+        "query": [
+            "comment_id"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "photosetsCommentsEditComment": {
+        "path": "flickr.photosets.comments.editComment",
+        "method": "POST",
+        "query": [
+            "comment_id",
+            "comment_text"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "photosetsCommentsGetList": {
+        "path": "flickr.photosets.comments.getList",
+        "method": "POST",
+        "query": [
+            "photoset_id"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "photosetsCreate": {
+        "path": "flickr.photosets.create",
+        "method": "POST",
+        "query": [
+            "title",
+            "description",
+            "primary_photo_id"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "photosetsDelete": {
+        "path": "flickr.photosets.delete",
+        "method": "POST",
+        "query": [
+            "photoset_id"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "photosetsEditMeta": {
+        "path": "flickr.photosets.editMeta",
+        "method": "POST",
+        "query": [
+            "photoset_id",
+            "title",
+            "description"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "photosetsEditPhotos": {
+        "path": "flickr.photosets.editPhotos",
+        "method": "POST",
+        "query": [
+            "photoset_id",
+            "primary_photo_id",
+            "photo_ids"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "photosetsGetContext": {
+        "path": "flickr.photosets.getContext",
+        "method": "POST",
+        "query": [
+            "photo_id",
+            "photoset_id"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "photosetsGetInfo": {
+        "path": "flickr.photosets.getInfo",
+        "method": "POST",
+        "query": [
+            "photoset_id",
+            "user_id"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "photosetsGetList": {
+        "path": "flickr.photosets.getList",
+        "method": "POST",
+        "query": [
+            "user_id",
+            "page",
+            "per_page",
+            "primary_photo_extras"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "photosetsGetPhotos": {
+        "path": "flickr.photosets.getPhotos",
+        "method": "POST",
+        "query": [
+            "photoset_id",
+            "user_id",
+            "extras",
+            "per_page",
+            "page",
+            "privacy_filter",
+            "media"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "photosetsOrderSets": {
+        "path": "flickr.photosets.orderSets",
+        "method": "POST",
+        "query": [
+            "photoset_ids"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "photosetsRemovePhoto": {
+        "path": "flickr.photosets.removePhoto",
+        "method": "POST",
+        "query": [
+            "photoset_id",
+            "photo_id"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "photosetsRemovePhotos": {
+        "path": "flickr.photosets.removePhotos",
+        "method": "POST",
+        "query": [
+            "photoset_id",
+            "photo_ids"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "photosetsReorderPhotos": {
+        "path": "flickr.photosets.reorderPhotos",
+        "method": "POST",
+        "query": [
+            "photoset_id",
+            "photo_ids"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "photosetsSetPrimaryPhoto": {
+        "path": "flickr.photosets.setPrimaryPhoto",
+        "method": "POST",
+        "query": [
+            "photoset_id",
+            "photo_id"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "placesFind": {
+        "path": "flickr.places.find",
+        "method": "POST",
+        "query": [
+            "query"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "placesFindByLatLon": {
+        "path": "flickr.places.findByLatLon",
+        "method": "POST",
+        "query": [
+            "lat",
+            "lon",
+            "accuracy"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "placesGetChildrenWithPhotosPublic": {
+        "path": "flickr.places.getChildrenWithPhotosPublic",
+        "method": "POST",
+        "query": [
+            "place_id",
+            "woe_id"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "placesGetInfo": {
+        "path": "flickr.places.getInfo",
+        "method": "POST",
+        "query": [
+            "place_id",
+            "woe_id"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "placesGetInfoByUrl": {
+        "path": "flickr.places.getInfoByUrl",
+        "method": "POST",
+        "query": [
+            "url"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "placesGetPlaceTypes": {
+        "path": "flickr.places.getPlaceTypes",
+        "method": "POST",
+        "query": [],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "placesGetShapeHistory": {
+        "path": "flickr.places.getShapeHistory",
+        "method": "POST",
+        "query": [
+            "place_id",
+            "woe_id"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "placesGetTopPlacesList": {
+        "path": "flickr.places.getTopPlacesList",
+        "method": "POST",
+        "query": [
+            "place_type_id",
+            "date",
+            "woe_id",
+            "place_id"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "placesPlacesForBoundingBox": {
+        "path": "flickr.places.placesForBoundingBox",
+        "method": "POST",
+        "query": [
+            "bbox",
+            "place_type",
+            "place_type_id"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "placesPlacesForContacts": {
+        "path": "flickr.places.placesForContacts",
+        "method": "POST",
+        "query": [
+            "place_type",
+            "place_type_id",
+            "woe_id",
+            "place_id",
+            "threshold",
+            "contacts",
+            "min_upload_date",
+            "max_upload_date",
+            "min_taken_date",
+            "max_taken_date"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "placesPlacesForTags": {
+        "path": "flickr.places.placesForTags",
+        "method": "POST",
+        "query": [
+            "place_type_id",
+            "woe_id",
+            "place_id",
+            "threshold",
+            "tags",
+            "tag_mode",
+            "machine_tags",
+            "machine_tag_mode",
+            "min_upload_date",
+            "max_upload_date",
+            "min_taken_date",
+            "max_taken_date"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "placesPlacesForUser": {
+        "path": "flickr.places.placesForUser",
+        "method": "POST",
+        "query": [
+            "place_type_id",
+            "place_type",
+            "woe_id",
+            "place_id",
+            "threshold",
+            "min_upload_date",
+            "max_upload_date",
+            "min_taken_date",
+            "max_taken_date"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "placesResolvePlaceId": {
+        "path": "flickr.places.resolvePlaceId",
+        "method": "POST",
+        "query": [
+            "place_id"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "placesResolvePlaceURL": {
+        "path": "flickr.places.resolvePlaceURL",
+        "method": "POST",
+        "query": [
+            "url"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "placesTagsForPlace": {
+        "path": "flickr.places.tagsForPlace",
+        "method": "POST",
+        "query": [
+            "woe_id",
+            "place_id",
+            "min_upload_date",
+            "max_upload_date",
+            "min_taken_date",
+            "max_taken_date"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "prefsGetContentType": {
+        "path": "flickr.prefs.getContentType",
+        "method": "POST",
+        "query": [],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "prefsGetGeoPerms": {
+        "path": "flickr.prefs.getGeoPerms",
+        "method": "POST",
+        "query": [],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "prefsGetHidden": {
+        "path": "flickr.prefs.getHidden",
+        "method": "POST",
+        "query": [],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "prefsGetPrivacy": {
+        "path": "flickr.prefs.getPrivacy",
+        "method": "POST",
+        "query": [],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "prefsGetSafetyLevel": {
+        "path": "flickr.prefs.getSafetyLevel",
+        "method": "POST",
+        "query": [],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "profileGetProfile": {
+        "path": "flickr.profile.getProfile",
+        "method": "POST",
+        "query": [
+            "user_id"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "pushGetSubscriptions": {
+        "path": "flickr.push.getSubscriptions",
+        "method": "POST",
+        "query": [],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "pushGetTopics": {
+        "path": "flickr.push.getTopics",
+        "method": "POST",
+        "query": [],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "pushSubscribe": {
+        "path": "flickr.push.subscribe",
+        "method": "POST",
+        "query": [
+            "topic",
+            "callback",
+            "verify",
+            "verify_token",
+            "lease_seconds",
+            "woe_ids",
+            "place_ids",
+            "lat",
+            "lon",
+            "radius",
+            "radius_units",
+            "accuracy",
+            "nsids",
+            "tags"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "pushUnsubscribe": {
+        "path": "flickr.push.unsubscribe",
+        "method": "POST",
+        "query": [
+            "topic",
+            "callback",
+            "verify",
+            "verify_token"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "reflectionGetMethodInfo": {
+        "path": "flickr.reflection.getMethodInfo",
+        "method": "POST",
+        "query": [
+            "method_name"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "reflectionGetMethods": {
+        "path": "flickr.reflection.getMethods",
+        "method": "POST",
+        "query": [],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "statsGetCSVFiles": {
+        "path": "flickr.stats.getCSVFiles",
+        "method": "POST",
+        "query": [],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "statsGetCollectionDomains": {
+        "path": "flickr.stats.getCollectionDomains",
+        "method": "POST",
+        "query": [
+            "date",
+            "collection_id",
+            "per_page",
+            "page"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "statsGetCollectionReferrers": {
+        "path": "flickr.stats.getCollectionReferrers",
+        "method": "POST",
+        "query": [
+            "date",
+            "domain",
+            "collection_id",
+            "per_page",
+            "page"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "statsGetCollectionStats": {
+        "path": "flickr.stats.getCollectionStats",
+        "method": "POST",
+        "query": [
+            "date",
+            "collection_id"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "statsGetPhotoDomains": {
+        "path": "flickr.stats.getPhotoDomains",
+        "method": "POST",
+        "query": [
+            "date",
+            "photo_id",
+            "per_page",
+            "page"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "statsGetPhotoReferrers": {
+        "path": "flickr.stats.getPhotoReferrers",
+        "method": "POST",
+        "query": [
+            "date",
+            "domain",
+            "photo_id",
+            "per_page",
+            "page"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "statsGetPhotoStats": {
+        "path": "flickr.stats.getPhotoStats",
+        "method": "POST",
+        "query": [
+            "date",
+            "photo_id"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "statsGetPhotosetDomains": {
+        "path": "flickr.stats.getPhotosetDomains",
+        "method": "POST",
+        "query": [
+            "date",
+            "photoset_id",
+            "per_page",
+            "page"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "statsGetPhotosetReferrers": {
+        "path": "flickr.stats.getPhotosetReferrers",
+        "method": "POST",
+        "query": [
+            "date",
+            "domain",
+            "photoset_id",
+            "per_page",
+            "page"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "statsGetPhotosetStats": {
+        "path": "flickr.stats.getPhotosetStats",
+        "method": "POST",
+        "query": [
+            "date",
+            "photoset_id"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "statsGetPhotostreamDomains": {
+        "path": "flickr.stats.getPhotostreamDomains",
+        "method": "POST",
+        "query": [
+            "date",
+            "per_page",
+            "page"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "statsGetPhotostreamReferrers": {
+        "path": "flickr.stats.getPhotostreamReferrers",
+        "method": "POST",
+        "query": [
+            "date",
+            "domain",
+            "per_page",
+            "page"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "statsGetPhotostreamStats": {
+        "path": "flickr.stats.getPhotostreamStats",
+        "method": "POST",
+        "query": [
+            "date"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "statsGetPopularPhotos": {
+        "path": "flickr.stats.getPopularPhotos",
+        "method": "POST",
+        "query": [
+            "date",
+            "sort",
+            "per_page",
+            "page"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "statsGetTotalViews": {
+        "path": "flickr.stats.getTotalViews",
+        "method": "POST",
+        "query": [
+            "date"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "tagsGetClusterPhotos": {
+        "path": "flickr.tags.getClusterPhotos",
+        "method": "POST",
+        "query": [
+            "tag",
+            "cluster_id"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "tagsGetClusters": {
+        "path": "flickr.tags.getClusters",
+        "method": "POST",
+        "query": [
+            "tag"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "tagsGetHotList": {
+        "path": "flickr.tags.getHotList",
+        "method": "POST",
+        "query": [
+            "period",
+            "count"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "tagsGetListPhoto": {
+        "path": "flickr.tags.getListPhoto",
+        "method": "POST",
+        "query": [
+            "photo_id"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "tagsGetListUser": {
+        "path": "flickr.tags.getListUser",
+        "method": "POST",
+        "query": [
+            "user_id"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "tagsGetListUserPopular": {
+        "path": "flickr.tags.getListUserPopular",
+        "method": "POST",
+        "query": [
+            "user_id",
+            "count"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "tagsGetListUserRaw": {
+        "path": "flickr.tags.getListUserRaw",
+        "method": "POST",
+        "query": [
+            "tag"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "tagsGetMostFrequentlyUsed": {
+        "path": "flickr.tags.getMostFrequentlyUsed",
+        "method": "POST",
+        "query": [],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "tagsGetRelated": {
+        "path": "flickr.tags.getRelated",
+        "method": "POST",
+        "query": [
+            "tag"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "testEcho": {
+        "path": "flickr.test.echo",
+        "method": "POST",
+        "query": [],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "testLogin": {
+        "path": "flickr.test.login",
+        "method": "POST",
+        "query": [],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "testNull": {
+        "path": "flickr.test.null",
+        "method": "POST",
+        "query": [],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "testimonialsAddTestimonial": {
+        "path": "flickr.testimonials.addTestimonial",
+        "method": "POST",
+        "query": [
+            "user_id",
+            "testimonial_text"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "testimonialsApproveTestimonial": {
+        "path": "flickr.testimonials.approveTestimonial",
+        "method": "POST",
+        "query": [
+            "testimonial_id"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "testimonialsDeleteTestimonial": {
+        "path": "flickr.testimonials.deleteTestimonial",
+        "method": "POST",
+        "query": [
+            "testimonial_id"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "testimonialsEditTestimonial": {
+        "path": "flickr.testimonials.editTestimonial",
+        "method": "POST",
+        "query": [
+            "user_id",
+            "testimonial_id",
+            "testimonial_text"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "testimonialsGetAllTestimonialsAbout": {
+        "path": "flickr.testimonials.getAllTestimonialsAbout",
+        "method": "POST",
+        "query": [
+            "page",
+            "per_page"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "testimonialsGetAllTestimonialsAboutBy": {
+        "path": "flickr.testimonials.getAllTestimonialsAboutBy",
+        "method": "POST",
+        "query": [
+            "user_id"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "testimonialsGetAllTestimonialsBy": {
+        "path": "flickr.testimonials.getAllTestimonialsBy",
+        "method": "POST",
+        "query": [
+            "page",
+            "per_page"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "testimonialsGetPendingTestimonialsAbout": {
+        "path": "flickr.testimonials.getPendingTestimonialsAbout",
+        "method": "POST",
+        "query": [
+            "page",
+            "per_page"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "testimonialsGetPendingTestimonialsAboutBy": {
+        "path": "flickr.testimonials.getPendingTestimonialsAboutBy",
+        "method": "POST",
+        "query": [
+            "user_id"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "testimonialsGetPendingTestimonialsBy": {
+        "path": "flickr.testimonials.getPendingTestimonialsBy",
+        "method": "POST",
+        "query": [
+            "page",
+            "per_page"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "testimonialsGetTestimonialsAbout": {
+        "path": "flickr.testimonials.getTestimonialsAbout",
+        "method": "POST",
+        "query": [
+            "user_id",
+            "page",
+            "per_page"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "testimonialsGetTestimonialsAboutBy": {
+        "path": "flickr.testimonials.getTestimonialsAboutBy",
+        "method": "POST",
+        "query": [
+            "user_id"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "testimonialsGetTestimonialsBy": {
+        "path": "flickr.testimonials.getTestimonialsBy",
+        "method": "POST",
+        "query": [
+            "user_id",
+            "page",
+            "per_page"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "urlsGetGroup": {
+        "path": "flickr.urls.getGroup",
+        "method": "POST",
+        "query": [
+            "group_id"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "urlsGetUserPhotos": {
+        "path": "flickr.urls.getUserPhotos",
+        "method": "POST",
+        "query": [
+            "user_id"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "urlsGetUserProfile": {
+        "path": "flickr.urls.getUserProfile",
+        "method": "POST",
+        "query": [
+            "user_id"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "urlsLookupGallery": {
+        "path": "flickr.urls.lookupGallery",
+        "method": "POST",
+        "query": [
+            "url"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "urlsLookupGroup": {
+        "path": "flickr.urls.lookupGroup",
+        "method": "POST",
+        "query": [
+            "url"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    },
+    "urlsLookupUser": {
+        "path": "flickr.urls.lookupUser",
+        "method": "POST",
+        "query": [
+            "url"
+        ],
+        "path_elements": [],
+        "body": [],
+        "headers": []
+    }
+}
