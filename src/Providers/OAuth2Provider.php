@@ -211,8 +211,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 			throw new OAuthException(sprintf('Token expired on %s at %s', date('m/d/Y', $token->expires), date('h:i:s A', $token->expires))); // @codeCoverageIgnore
 		}
 
-		$url = parse_url($this->apiURL.$path);
-		parse_str($url['query'] ?? '', $query);
+		parse_str(parse_url($this->apiURL.$path, PHP_URL_QUERY), $query);
 
 		$query = array_merge($query, $params);
 
@@ -227,7 +226,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 		}
 
 		return $this->http->request(
-			$this->apiURL.($url['path'] ?? ''),
+			$this->apiURL.explode('?', $path)[0],
 			$query,
 			$method,
 			$body,
