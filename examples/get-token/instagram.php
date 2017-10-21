@@ -21,7 +21,7 @@ $scopes = [
 ];
 
 /** @var \chillerlan\OAuth\Providers\Instagram $provider */
-$provider = getProvider('Instagram', $scopes);
+$provider = getProvider('Instagram', $scopes, true);
 
 if(!empty($_GET['code'])){
 	$token = $provider->getAccessToken($_GET['code'], isset($_GET['state']) ? $_GET['state'] : null);
