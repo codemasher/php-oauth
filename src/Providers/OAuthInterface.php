@@ -14,7 +14,6 @@ namespace chillerlan\OAuth\Providers;
 
 use chillerlan\OAuth\HTTP\OAuthResponse;
 use chillerlan\OAuth\Storage\TokenStorageInterface;
-use chillerlan\OAuth\Token;
 
 /**
  * @property string $serviceName

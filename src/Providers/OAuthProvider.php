@@ -163,10 +163,13 @@ abstract class OAuthProvider implements OAuthInterface{
 	public function __call(string $name, array $arguments){
 		if(array_key_exists($name, $this->apiMethods)){
 
-			$endpoint      = $this->apiMethods->{$name}->path ?? '/';
-			$method        = $this->apiMethods->{$name}->method ?? 'GET';
-			$headers       = (array)$this->apiMethods->{$name}->headers ?? [];
-			$params_in_url = count($this->apiMethods->{$name}->path_elements);
+			$m = $this->apiMethods->{$name};
+
+			$endpoint      = $m->path ?? '/';
+			$method        = $m->method ?? 'GET';
+
+			$p = $m->path_elements ?? [];
+			$params_in_url = count($p);
 
 			$body      = null;
 			$params    = $arguments[$params_in_url] ?? null;
@@ -175,7 +178,7 @@ abstract class OAuthProvider implements OAuthInterface{
 			if($params_in_url > 0){
 
 				if(count($urlparams) < $params_in_url){
-					throw new OAuthAPIClientException('too few URL params, required: '.implode(', ', $this->apiMethods->{$name}->path_elements));
+					throw new OAuthAPIClientException('too few URL params, required: '.implode(', ', $p));
 				}
 
 				$endpoint = sprintf($endpoint, ...$urlparams);
@@ -186,9 +189,14 @@ abstract class OAuthProvider implements OAuthInterface{
 				$params = $params === $body ? null : $params;
 			}
 
-			$r = $this->request($endpoint, $this->checkParams($params ?? []), $method, $this->checkParams($body), $headers);
+			return $this->request(
+				$endpoint,
+				$this->checkParams($params ?? []),
+				$method,
+				$this->checkParams($body),
+				(array)$m->headers ?? []
+			)->json;
 
-			return $r->json;
 		}
 
 		return null;

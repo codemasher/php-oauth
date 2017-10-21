@@ -211,21 +211,23 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 			throw new OAuthException(sprintf('Token expired on %s at %s', date('m/d/Y', $token->expires), date('h:i:s A', $token->expires))); // @codeCoverageIgnore
 		}
 
-		parse_str(parse_url($this->apiURL.$path, PHP_URL_QUERY), $query);
+		$url = parse_url($this->apiURL.$path);
+		parse_str($url['query'] ?? '', $query);
+
 		$query = array_merge($query, $params);
 
-		if(array_key_exists($this->authMethod, self::AUTH_METHODS_QUERY)){
-			$query[self::AUTH_METHODS_QUERY[$this->authMethod]] = $token->accessToken;
-		}
-		elseif(array_key_exists($this->authMethod, self::AUTH_METHODS_HEADER)){
+		if(array_key_exists($this->authMethod, self::AUTH_METHODS_HEADER)){
 			$headers = array_merge(['Authorization' => self::AUTH_METHODS_HEADER[$this->authMethod].$token->accessToken], $headers);
+		}
+		elseif(array_key_exists($this->authMethod, self::AUTH_METHODS_QUERY)){
+			$query[self::AUTH_METHODS_QUERY[$this->authMethod]] = $token->accessToken;
 		}
 		else{
 			throw new OAuthException('invalid auth type'); // @codeCoverageIgnore
 		}
 
 		return $this->http->request(
-			$this->apiURL.explode('?', $path)[0],
+			$this->apiURL.($url['path'] ?? ''),
 			$query,
 			$method,
 			$body,
