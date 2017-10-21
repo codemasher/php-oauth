@@ -15,7 +15,7 @@ namespace chillerlan\OAuth\HTTP;
 use chillerlan\OAuth\Traits\Container;
 
 /**
- * @property array     $headers
+ * @property \stdClass $headers
  * @property string    $body
  * @property \stdClass $json
  * @property array     $json_array
@@ -24,9 +24,9 @@ class OAuthResponse{
 	use Container;
 
 	/**
-	 * @var array
+	 * @var \stdClass
 	 */
-	protected $headers = [];
+	protected $headers;
 
 	/**
 	 * @var string
