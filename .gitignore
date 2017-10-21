@@ -1,0 +1,5 @@
+vendor
+.idea
+tokenstorage/*.token
+config/.env
+composer.lock
