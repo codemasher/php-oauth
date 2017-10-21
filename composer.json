@@ -21,7 +21,7 @@
 	},
 	"require-dev": {
 		"chillerlan/database": "dev-master",
-		"phpunit/phpunit": "6.2.*"
+		"phpunit/phpunit": "6.3.*"
 	},
 	"autoload": {
 		"psr-4": {
