@@ -1,4 +1,12 @@
 {
+    "me": {
+        "path": "\/me",
+        "method": "GET",
+        "query": [],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
     "meLikeVideo": {
         "path": "\/me\/likes\/%1$s",
         "method": "PUT",
