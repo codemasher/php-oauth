@@ -22,7 +22,7 @@ $scopes = [
 $provider = getProvider('Google', $scopes);
 
 if(isset($_GET['login']) && $_GET['login'] === $provider->serviceName){
-	header('Location: '.$provider->getAuthURL());
+	header('Location: '.$provider->getAuthURL(['access_type' => 'online']));
 }
 elseif(isset($_GET['code']) && isset($_GET['state'])){
 	$token = $provider->getAccessToken($_GET['code'], $_GET['state']);
