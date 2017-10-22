@@ -78,10 +78,6 @@ class StreamClient extends HTTPClientAbstract{
 			$headers['Host']           = 'Host: '.$parsedURL['host'].(!empty($parsedURL['port']) ? ':'.$parsedURL['port'] : '');
 			$headers['Connection']     = 'Connection: close';
 
-			parse_str($parsedURL['query'] ?? '', $query);
-
-			$params = array_merge($query, $params);
-
 			$url = $url.(!empty($params) ? '?'.http_build_query($params) : '');
 
 			$context = stream_context_create([

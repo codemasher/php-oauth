@@ -51,9 +51,6 @@ class TinyCurlClient extends HTTPClientAbstract{
 				trigger_error('invalid URL');
 			}
 
-			parse_str($parsedURL['query'] ?? '', $query);
-
-			$params   = array_merge($query, $params);
 			$url      = new URL(explode('?', $url)[0], $params, $method, $body, $headers);
 			$response = $this->http->fetch($url);
 

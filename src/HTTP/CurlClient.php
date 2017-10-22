@@ -107,10 +107,6 @@ class CurlClient extends HTTPClientAbstract{
 				'Connection: close',
 			];
 
-			parse_str($parsedURL['query'] ?? '', $query);
-
-			$params = array_merge($query, $params);
-
 			$url = $url.(!empty($params) ? '?'.http_build_query($params) : '');
 
 			$options += [
