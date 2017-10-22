@@ -43,13 +43,18 @@ class TinyCurlClient extends HTTPClientAbstract{
 	 */
 	public function request(string $url, array $params = [], string $method = 'POST', $body = null, array $headers = []):OAuthResponse{
 
-		parse_str(parse_url($url, PHP_URL_QUERY), $query);
-
-		$params = array_merge($query, $params);
-
 		try{
-			$url = new URL(explode('?', $url)[0], $params, $method, $body, $headers);
 
+			$parsedURL = parse_url($url);
+
+			if(!isset($parsedURL['host']) || !in_array($parsedURL['scheme'], ['http', 'https'])){
+				trigger_error('invalid URL');
+			}
+
+			parse_str($parsedURL['query'] ?? '', $query);
+
+			$params   = array_merge($query, $params);
+			$url      = new URL(explode('?', $url)[0], $params, $method, $body, $headers);
 			$response = $this->http->fetch($url);
 
 			return new OAuthResponse([

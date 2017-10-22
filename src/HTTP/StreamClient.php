@@ -58,13 +58,13 @@ class StreamClient extends HTTPClientAbstract{
 	 */
 	public function request(string $url, array $params = [], string $method = 'POST', $body = null, array $headers = []):OAuthResponse{
 
-		$parsedURL = parse_url($url);
-
-		if(!isset($parsedURL['host']) || !in_array($parsedURL['scheme'], ['http', 'https'])){
-			throw new OAuthException('invalid URL');
-		}
-
 		try{
+			$parsedURL = parse_url($url);
+
+			if(!isset($parsedURL['host']) || !in_array($parsedURL['scheme'], ['http', 'https'])){
+				trigger_error('invalid URL');
+			}
+
 			$method = strtoupper($method);
 			$headers = $this->normalizeRequestHeaders($headers);
 

@@ -34,6 +34,8 @@ class OAuthResponse{
 	protected $body;
 
 	/**
+	 * @codeCoverageIgnore
+	 *
 	 * @param string $property
 	 *
 	 * @return null|mixed
