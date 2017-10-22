@@ -29,7 +29,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	/**
 	 * @var bool
 	 */
-	protected $stateInAuthUrl;
+	protected $checkState = false;
 
 	/**
 	 * @var bool
@@ -48,13 +48,11 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	 * @param \chillerlan\OAuth\Storage\TokenStorageInterface $storage
 	 * @param \chillerlan\OAuth\OAuthOptions                  $options
 	 * @param array                                           $scopes
-	 * @param bool                                            $stateInAuthUrl
 	 */
-	public function __construct(HTTPClientInterface $http, TokenStorageInterface $storage, OAuthOptions $options, array $scopes = [], bool $stateInAuthUrl = false){
+	public function __construct(HTTPClientInterface $http, TokenStorageInterface $storage, OAuthOptions $options, array $scopes = []){
 		parent::__construct($http, $storage, $options);
 
 		$this->scopes         = $scopes;
-		$this->stateInAuthUrl = $stateInAuthUrl;
 	}
 
 	/**
@@ -72,7 +70,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 			'scope'         => implode($this->scopesDelimiter, $this->scopes),
 		]);
 
-		if($this->stateInAuthUrl){
+		if($this->checkState){
 
 			if(!isset($parameters['state'])){
 				$parameters['state'] = sha1(random_bytes(256));
@@ -93,7 +91,10 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	 */
 	public function getAccessToken(string $code, string $state = null):Token{
 
-		if(!is_null($state) && (!$this->storage->hasAuthorizationState($this->serviceName) || $this->storage->retrieveAuthorizationState($this->serviceName) !== $state)){
+		if(is_string($state) && (
+			!$this->storage->hasAuthorizationState($this->serviceName)
+			|| $this->storage->retrieveAuthorizationState($this->serviceName) !== $state
+		)){
 			throw new OAuthException('invalid authorization state');
 		}
 
@@ -213,13 +214,15 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 
 		parse_str(parse_url($this->apiURL.$path, PHP_URL_QUERY), $query);
 
-		$query = array_merge($query, $params);
+		$params = array_merge($query, $params);
 
 		if(array_key_exists($this->authMethod, self::AUTH_METHODS_HEADER)){
-			$headers = array_merge(['Authorization' => self::AUTH_METHODS_HEADER[$this->authMethod].$token->accessToken], $headers);
+			$headers = array_merge($headers, [
+				'Authorization' => self::AUTH_METHODS_HEADER[$this->authMethod].$token->accessToken
+			]);
 		}
 		elseif(array_key_exists($this->authMethod, self::AUTH_METHODS_QUERY)){
-			$query[self::AUTH_METHODS_QUERY[$this->authMethod]] = $token->accessToken;
+			$params[self::AUTH_METHODS_QUERY[$this->authMethod]] = $token->accessToken;
 		}
 		else{
 			throw new OAuthException('invalid auth type'); // @codeCoverageIgnore
@@ -227,10 +230,10 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 
 		return $this->http->request(
 			$this->apiURL.explode('?', $path)[0],
-			$query,
+			$params,
 			$method,
 			$body,
-			!empty($headers) ? array_merge($this->apiHeaders, $headers) : $this->apiHeaders
+			array_merge($this->apiHeaders, $headers)
 		);
 	}
 
