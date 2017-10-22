@@ -29,6 +29,6 @@ class SoundCloud extends OAuth2Provider{
 	protected $userRevokeURL       = 'https://soundcloud.com/settings/connections';
 	protected $accessTokenEndpoint = 'https://api.soundcloud.com/oauth2/token';
 	protected $accessTokenExpires  = true;
-	protected $checkState          = false;
+	protected $csrfToken           = false;
 
 }

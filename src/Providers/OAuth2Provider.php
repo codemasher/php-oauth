@@ -29,7 +29,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	/**
 	 * @var bool
 	 */
-	protected $checkState = true;
+	protected $csrfToken = true;
 
 	/**
 	 * @var bool
@@ -70,7 +70,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 			'scope'         => implode($this->scopesDelimiter, $this->scopes),
 		]);
 
-		if($this->checkState){
+		if($this->csrfToken){
 
 			if(!isset($parameters['state'])){
 				$parameters['state'] = sha1(random_bytes(256));
@@ -91,7 +91,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	 */
 	public function getAccessToken(string $code, string $state = null):Token{
 
-		if(is_string($state) && (
+		if($this->csrfToken && is_string($state) && (
 			!$this->storage->hasAuthorizationState($this->serviceName)
 			|| $this->storage->retrieveAuthorizationState($this->serviceName) !== $state
 		)){

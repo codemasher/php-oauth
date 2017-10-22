@@ -26,7 +26,7 @@ class Foursquare extends OAuth2Provider{
 	protected $authURL             = 'https://foursquare.com/oauth2/authenticate';
 	protected $userRevokeURL       = 'https://foursquare.com/settings/connections';
 	protected $accessTokenEndpoint = 'https://foursquare.com/oauth2/access_token';
-	protected $checkState          = false;
+	protected $csrfToken           = false;
 
 	/**
 	 * @param string $path
