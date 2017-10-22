@@ -19,7 +19,7 @@ use chillerlan\OAuth\Storage\DBTokenStorage;
 use chillerlan\OAuth\Token;
 use Dotenv\Dotenv;
 
-class DBTest extends TokenStorageTestAbstract{
+abstract class DBTest extends TokenStorageTestAbstract{
 
 	protected $FQCN = DBTokenStorage::class;
 
@@ -36,12 +36,10 @@ class DBTest extends TokenStorageTestAbstract{
 			'username'     => getenv('MYSQL_USERNAME'),
 			'password'     => getenv('MYSQL_PASSWORD'),
 		]));
-		$db->connect();
 
 
-		$this->storage = new DBTokenStorage($db, 'musicdb_token', 1);
+		$this->storage = new DBTokenStorage($db, 'tokentest', 1);
 		$this->token   = new Token(['accessToken' => 'foobar']);
-
 	}
 
 
