@@ -7,10 +7,8 @@
  * @license      MIT
  */
 
-require_once __DIR__.'/../vendor/autoload.php';
-
 use chillerlan\OAuth\{
-	OAuthOptions, HTTP\TinyCurlClient, Storage\SessionTokenStorage, Token
+	OAuthOptions, HTTP\CurlClient, Storage\SessionTokenStorage, Token
 };
 use chillerlan\TinyCurl\{Request, RequestOptions};
 use Dotenv\Dotenv;
@@ -19,6 +17,8 @@ error_reporting(E_ALL);
 ini_set('display_errors', 1);
 ini_set('date.timezone', 'Europe/Amsterdam');
 
+require_once __DIR__.'/../vendor/autoload.php';
+
 (new Dotenv(__DIR__.'/../config', '.env'))->load();
 
 $storage = new SessionTokenStorage;
@@ -26,26 +26,27 @@ $storage = new SessionTokenStorage;
 /**
  * @param string $name
  * @param array  $scopes
- * @param bool   $stateparam
  *
  * @return mixed
  */
-function getProvider(string $name, array $scopes = [], bool $stateparam = false){
+function getProvider(string $name, array $scopes = []){
 	global $storage;
 
 	$envvar = strtoupper($name);
 	$provider = '\\chillerlan\\OAuth\\Providers\\'.$name;
 
 	return new $provider(
-		new TinyCurlClient(new Request(new RequestOptions(['ca_info' => __DIR__.'/../config/cacert.pem']))),
+		new CurlClient([
+			CURLOPT_CAINFO => __DIR__.'/../config/cacert.pem',
+			CURLOPT_USERAGENT => 'chillerlan-php-oauth-test',
+		]),
 		$storage,
 		new OAuthOptions([
 			'key'         => getenv($envvar.'_KEY'),
 			'secret'      => getenv($envvar.'_SECRET'),
 			'callbackURL' => getenv($envvar.'_CALLBACK_URL'),
 		]),
-		$scopes,
-		$stateparam
+		$scopes
 	);
 }
 

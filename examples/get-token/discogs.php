@@ -12,22 +12,19 @@ require_once __DIR__.'/../bootstrap.php';
 /** @var \chillerlan\OAuth\Providers\Discogs $provider */
 $provider = getProvider('Discogs');
 
-if(!empty($_GET['oauth_token'])){
-
-	$token = $provider->getAccessToken(
-		$_GET['oauth_token'],
-		$_GET['oauth_verifier'],
-		$storage->retrieveAccessToken($provider->serviceName)->requestTokenSecret
-	);
+if(isset($_GET['login']) && $_GET['login'] === $provider->serviceName){
+	header('Location: '.$provider->getAuthURL([
+		'oauth_token' => $provider->getRequestToken()->requestToken,
+	]));
+}
+elseif(isset($_GET['oauth_token']) && isset($_GET['oauth_verifier'])){
+	$token = $provider->getAccessToken($_GET['oauth_token'], $_GET['oauth_verifier']);
 
 	// save the token & redirect
 	saveToken($token, $provider->serviceName);
 }
-elseif(!empty($_GET['granted']) && $_GET['granted'] === $provider->serviceName){
-	echo '<pre>'.print_r($provider->request('/oauth/identity')->json,true).'</pre>';
-}
-elseif(!empty($_GET['login']) && $_GET['login'] === $provider->serviceName){
-	header('Location: '.$provider->getAuthURL(['oauth_token' => $provider->getRequestToken()->requestToken]));
+elseif(isset($_GET['granted']) && $_GET['granted'] === $provider->serviceName){
+	echo '<pre>'.print_r($provider->identity(),true).'</pre>';
 }
 else{
 	echo '<a href="?login='.$provider->serviceName.'">Login with '.$provider->serviceName.'!</a>';

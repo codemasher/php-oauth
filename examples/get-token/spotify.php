@@ -35,17 +35,17 @@ $scopes =  [
 /** @var \chillerlan\OAuth\Providers\Spotify $provider */
 $provider = getProvider('Spotify', $scopes);
 
-if(!empty($_GET['code'])){
+if(isset($_GET['login']) && $_GET['login'] === $provider->serviceName){
+	header('Location: '.$provider->getAuthURL());
+}
+elseif(isset($_GET['code'])){
 	$token = $provider->getAccessToken($_GET['code']);
 
 	// save the token
 	saveToken($token, $provider->serviceName);
 }
-elseif(!empty($_GET['granted']) && $_GET['granted'] === $provider->serviceName){
-	echo '<pre>'.print_r($provider->request('/me')->json,true).'</pre>';
-}
-elseif(!empty($_GET['login']) && $_GET['login'] === $provider->serviceName){
-	header('Location: '.$provider->getAuthURL());
+elseif(isset($_GET['granted']) && $_GET['granted'] === $provider->serviceName){
+	echo '<pre>'.print_r($provider->me(),true).'</pre>';
 }
 else{
 	echo '<a href="?login='.$provider->serviceName.'">Login with '.$provider->serviceName.'!</a>';

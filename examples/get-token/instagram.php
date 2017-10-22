@@ -21,19 +21,19 @@ $scopes = [
 ];
 
 /** @var \chillerlan\OAuth\Providers\Instagram $provider */
-$provider = getProvider('Instagram', $scopes, true);
+$provider = getProvider('Instagram', $scopes);
 
-if(!empty($_GET['code'])){
-	$token = $provider->getAccessToken($_GET['code'], isset($_GET['state']) ? $_GET['state'] : null);
+if(isset($_GET['login']) && $_GET['login'] === $provider->serviceName){
+	header('Location: '.$provider->getAuthURL());
+}
+elseif(isset($_GET['code']) && isset($_GET['state'])){
+	$token = $provider->getAccessToken($_GET['code'], $_GET['state']);
 
 	// save the token & redirect
 	saveToken($token, $provider->serviceName);
 }
-elseif(!empty($_GET['granted']) && $_GET['granted'] === $provider->serviceName){
-	echo '<pre>'.print_r($provider->request('/users/self')->json,true).'</pre>';
-}
-elseif(!empty($_GET['login']) && $_GET['login'] === $provider->serviceName){
-	header('Location: '.$provider->getAuthURL());
+elseif(isset($_GET['granted']) && $_GET['granted'] === $provider->serviceName){
+	echo '<pre>'.print_r($provider->profile('self'),true).'</pre>';
 }
 else{
 	echo '<a href="?login='.$provider->serviceName.'">Login with '.$provider->serviceName.'!</a>';
