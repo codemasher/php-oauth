@@ -35,7 +35,6 @@ class Discord extends OAuth2Provider{
 	protected $userRevokeURL       = 'https://discordapp.com/api/oauth2/token/revoke';
 	protected $accessTokenEndpoint = 'https://discordapp.com/api/oauth2/token';
 	protected $accessTokenExpires  = true;
-	protected $checkState          = true;
 	protected $authMethod          = self::HEADER_BEARER;
 
 	/**

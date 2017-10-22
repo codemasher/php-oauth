@@ -79,7 +79,6 @@ class Vimeo extends OAuth2Provider{
 	protected $revokeURL           = 'https://api.vimeo.com/tokens';
 	protected $accessTokenEndpoint = 'https://api.vimeo.com/oauth/access_token';
 	protected $accessTokenExpires  = true;
-	protected $checkState          = true;
 	protected $authHeaders         = ['Accept' => 'application/vnd.vimeo.*+json;version='.self::VERSION];
 	protected $apiHeaders          = ['Accept' => 'application/vnd.vimeo.*+json;version='.self::VERSION];
 	protected $authMethod          = self::HEADER_BEARER;

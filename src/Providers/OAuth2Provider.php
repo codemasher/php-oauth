@@ -29,7 +29,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	/**
 	 * @var bool
 	 */
-	protected $checkState = false;
+	protected $checkState = true;
 
 	/**
 	 * @var bool

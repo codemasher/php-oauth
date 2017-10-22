@@ -55,6 +55,5 @@ class Instagram extends OAuth2Provider{
 	protected $userRevokeURL       = 'https://www.instagram.com/accounts/manage_access/';
 	protected $accessTokenEndpoint = 'https://api.instagram.com/oauth/access_token';
 	protected $authMethod          = self::QUERY_ACCESS_TOKEN;
-	protected $checkState          = true;
 
 }

@@ -38,8 +38,8 @@ $provider = getProvider('Spotify', $scopes);
 if(isset($_GET['login']) && $_GET['login'] === $provider->serviceName){
 	header('Location: '.$provider->getAuthURL());
 }
-elseif(isset($_GET['code'])){
-	$token = $provider->getAccessToken($_GET['code']);
+elseif(isset($_GET['code']) && isset($_GET['state'])){
+	$token = $provider->getAccessToken($_GET['code'], $_GET['state']);
 
 	// save the token
 	saveToken($token, $provider->serviceName);
