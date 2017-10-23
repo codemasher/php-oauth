@@ -53,6 +53,12 @@ class GuzzleClient extends HTTPClientAbstract{
 				trigger_error('invalid URL');
 			}
 
+			// @link http://docs.guzzlephp.org/en/stable/request-options.html
+			$options = [
+				'query' => $params,
+				'headers' => $headers
+			];
+
 			if(in_array($method, ['PATCH', 'POST', 'PUT', 'DELETE'], true)){
 
 				if(in_array($method, ['PATCH', 'POST', 'PUT'], true) && is_array($body)){
@@ -64,13 +70,7 @@ class GuzzleClient extends HTTPClientAbstract{
 
 			}
 
-			// @link http://docs.guzzlephp.org/en/stable/request-options.html
-			$options = [
-				'query' => $params,
-				'headers' => $headers
-			];
-
-				$r = $this->http->request($method, explode('?', $url)[0], $options);
+			$r = $this->http->request($method, explode('?', $url)[0], $options);
 
 			return new OAuthResponse([
 				'headers' => $this->parseResponseHeaders($r->getHeaders()),
