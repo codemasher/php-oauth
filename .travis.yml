@@ -12,8 +12,10 @@ before_install:
   - pip install --user codecov
 
 install:
+  - cp config/.env_travis config/.env
   - mysql -e 'create database dbtest;'
   - travis_retry composer install --no-interaction --prefer-source
+  - php cli/dbstorage_create.php
 
 script:
   - vendor/bin/phpunit --configuration phpunit.xml --coverage-clover clover.xml
