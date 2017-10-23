@@ -194,7 +194,7 @@ abstract class OAuthProvider implements OAuthInterface{
 				$this->checkParams($params ?? []),
 				$method,
 				$this->checkParams($body),
-				(array)$m->headers ?? []
+				$m->headers ?? []
 			)->json;
 
 		}
