@@ -12,6 +12,9 @@
 
 namespace chillerlan\OAuth\Providers;
 
+use chillerlan\OAuth\OAuthException;
+use chillerlan\OAuth\Token;
+
 /**
  * @link https://api.guildwars2.com/v2
  *
@@ -220,5 +223,30 @@ class GuildWars2 extends OAuth2Provider{
 	protected $authURL       = 'https://account.arena.net/applications/create';
 	protected $userRevokeURL = 'https://account.arena.net/applications';
 	protected $authMethod    = self::HEADER_BEARER;
+
+	/**
+	 * @param string $access_token
+	 *
+	 * @return \chillerlan\OAuth\Token
+	 * @throws \chillerlan\OAuth\OAuthException
+	 */
+	public function storeGW2Token(string $access_token):Token{
+		$tokeninfo = $this->tokeninfo(['access_token' => $access_token]);
+
+		if(isset($tokeninfo->id) && strpos($access_token, $tokeninfo->id) === 0){
+
+			$token = new Token([
+				'accessToken' => $access_token,
+				'extraParams' => $tokeninfo,
+				'expires'     => Token::EOL_NEVER_EXPIRES,
+			]);
+
+			$this->storage->storeAccessToken($this->serviceName, $token);
+
+			return $token;
+		}
+
+		throw new OAuthException('invalid/unverified token');
+	}
 
 }
