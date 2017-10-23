@@ -12,10 +12,8 @@ before_install:
   - pip install --user codecov
 
 install:
-  - travis_retry composer install --no-interaction --prefer-source
-
-before_script:
   - mysql -e 'create database dbtest;'
+  - travis_retry composer install --no-interaction --prefer-source
 
 script:
   - vendor/bin/phpunit --configuration phpunit.xml --coverage-clover clover.xml
