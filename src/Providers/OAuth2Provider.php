@@ -128,7 +128,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 		$refreshToken = $token->refreshToken;
 
 		if(empty($refreshToken)){
-			throw new OAuthException('no refresh token available'); // @codeCoverageIgnore
+			throw new OAuthException(sprintf('Token expired on %s, no refresh token available.', date('Y-m-d h:i:s A', $token->expires))); // @codeCoverageIgnore
 		}
 
 		$body = [
@@ -209,7 +209,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 		$token = $this->storage->retrieveAccessToken($this->serviceName);
 
 		if($this->accessTokenExpires && $token->isExpired()){
-			throw new OAuthException(sprintf('Token expired on %s at %s', date('m/d/Y', $token->expires), date('h:i:s A', $token->expires))); // @codeCoverageIgnore
+			$token = $this->refreshAccessToken($token);
 		}
 
 		parse_str(parse_url($this->apiURL.$path, PHP_URL_QUERY), $query);
