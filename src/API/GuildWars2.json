@@ -1,0 +1,1234 @@
+{
+    "account": {
+        "path": "\/account",
+        "method": "GET",
+        "query": [
+            "access_token"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "accountAchievements": {
+        "path": "\/account\/achievements",
+        "method": "GET",
+        "query": [
+            "access_token"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "accountBank": {
+        "path": "\/account\/bank",
+        "method": "GET",
+        "query": [
+            "access_token"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "accountDungeons": {
+        "path": "\/account\/dungeons",
+        "method": "GET",
+        "query": [
+            "access_token"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "accountDyes": {
+        "path": "\/account\/dyes",
+        "method": "GET",
+        "query": [
+            "access_token"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "accountFinishers": {
+        "path": "\/account\/finishers",
+        "method": "GET",
+        "query": [
+            "access_token"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "accountGliders": {
+        "path": "\/account\/gliders",
+        "method": "GET",
+        "query": [
+            "access_token"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "accountHomeCats": {
+        "path": "\/account\/home\/cats",
+        "method": "GET",
+        "query": [
+            "access_token"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "accountHomeNodes": {
+        "path": "\/account\/home\/nodes",
+        "method": "GET",
+        "query": [
+            "access_token"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "accountInventory": {
+        "path": "\/account\/inventory",
+        "method": "GET",
+        "query": [
+            "access_token"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "accountMailcarriers": {
+        "path": "\/account\/mailcarriers",
+        "method": "GET",
+        "query": [
+            "access_token"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "accountMasteries": {
+        "path": "\/account\/masteries",
+        "method": "GET",
+        "query": [
+            "access_token"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "accountMasteryPoints": {
+        "path": "\/account\/mastery\/points",
+        "method": "GET",
+        "query": [
+            "access_token"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "accountMaterials": {
+        "path": "\/account\/materials",
+        "method": "GET",
+        "query": [
+            "access_token"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "accountMinis": {
+        "path": "\/account\/minis",
+        "method": "GET",
+        "query": [
+            "access_token"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "accountOutfits": {
+        "path": "\/account\/outfits",
+        "method": "GET",
+        "query": [
+            "access_token"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "accountPvpHeroes": {
+        "path": "\/account\/pvp\/heroes",
+        "method": "GET",
+        "query": [
+            "access_token"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "accountRaids": {
+        "path": "\/account\/raids",
+        "method": "GET",
+        "query": [
+            "access_token"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "accountRecipes": {
+        "path": "\/account\/recipes",
+        "method": "GET",
+        "query": [
+            "access_token"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "accountSkins": {
+        "path": "\/account\/skins",
+        "method": "GET",
+        "query": [
+            "access_token"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "accountTitles": {
+        "path": "\/account\/titles",
+        "method": "GET",
+        "query": [
+            "access_token"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "accountWallet": {
+        "path": "\/account\/wallet",
+        "method": "GET",
+        "query": [
+            "access_token"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "achievements": {
+        "path": "\/achievements",
+        "method": "GET",
+        "query": [
+            "lang"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "achievementsCategories": {
+        "path": "\/achievements\/categories",
+        "method": "GET",
+        "query": [
+            "lang"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "achievementsDaily": {
+        "path": "\/achievements\/daily",
+        "method": "GET",
+        "query": [],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "achievementsDailyTomorrow": {
+        "path": "\/achievements\/daily\/tomorrow",
+        "method": "GET",
+        "query": [],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "achievementsGroups": {
+        "path": "\/achievements\/groups",
+        "method": "GET",
+        "query": [
+            "lang"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "backstoryAnswers": {
+        "path": "\/backstory\/answers",
+        "method": "GET",
+        "query": [
+            "lang"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "backstoryQuestions": {
+        "path": "\/backstory\/questions",
+        "method": "GET",
+        "query": [
+            "lang"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "build": {
+        "path": "\/build",
+        "method": "GET",
+        "query": [],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "cats": {
+        "path": "\/cats",
+        "method": "GET",
+        "query": [],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "characters": {
+        "path": "\/characters",
+        "method": "GET",
+        "query": [
+            "access_token"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "charactersIdBackstory": {
+        "path": "\/characters\/%1$s\/backstory",
+        "method": "GET",
+        "query": [
+            "access_token"
+        ],
+        "path_elements": [
+            "id"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "charactersIdCore": {
+        "path": "\/characters\/%1$s\/core",
+        "method": "GET",
+        "query": [
+            "access_token"
+        ],
+        "path_elements": [
+            "id"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "charactersIdCrafting": {
+        "path": "\/characters\/%1$s\/crafting",
+        "method": "GET",
+        "query": [
+            "access_token"
+        ],
+        "path_elements": [
+            "id"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "charactersIdEquipment": {
+        "path": "\/characters\/%1$s\/equipment",
+        "method": "GET",
+        "query": [
+            "access_token"
+        ],
+        "path_elements": [
+            "id"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "charactersIdHeropoints": {
+        "path": "\/characters\/%1$s\/heropoints",
+        "method": "GET",
+        "query": [
+            "access_token"
+        ],
+        "path_elements": [
+            "id"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "charactersIdInventory": {
+        "path": "\/characters\/%1$s\/inventory",
+        "method": "GET",
+        "query": [
+            "access_token"
+        ],
+        "path_elements": [
+            "id"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "charactersIdRecipes": {
+        "path": "\/characters\/%1$s\/recipes",
+        "method": "GET",
+        "query": [
+            "access_token"
+        ],
+        "path_elements": [
+            "id"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "charactersIdSab": {
+        "path": "\/characters\/%1$s\/sab",
+        "method": "GET",
+        "query": [
+            "access_token"
+        ],
+        "path_elements": [
+            "id"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "charactersIdSkills": {
+        "path": "\/characters\/%1$s\/skills",
+        "method": "GET",
+        "query": [
+            "access_token"
+        ],
+        "path_elements": [
+            "id"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "charactersIdSpecializations": {
+        "path": "\/characters\/%1$s\/specializations",
+        "method": "GET",
+        "query": [
+            "access_token"
+        ],
+        "path_elements": [
+            "id"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "charactersIdTraining": {
+        "path": "\/characters\/%1$s\/training",
+        "method": "GET",
+        "query": [
+            "access_token"
+        ],
+        "path_elements": [
+            "id"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "commerceDelivery": {
+        "path": "\/commerce\/delivery",
+        "method": "GET",
+        "query": [
+            "access_token"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "commerceExchange": {
+        "path": "\/commerce\/exchange",
+        "method": "GET",
+        "query": [],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "commerceListings": {
+        "path": "\/commerce\/listings",
+        "method": "GET",
+        "query": [],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "commercePrices": {
+        "path": "\/commerce\/prices",
+        "method": "GET",
+        "query": [],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "commerceTransactions": {
+        "path": "\/commerce\/transactions",
+        "method": "GET",
+        "query": [
+            "access_token"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "continents": {
+        "path": "\/continents",
+        "method": "GET",
+        "query": [
+            "lang"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "continentsContinentId": {
+        "path": "\/continents\/%1$s",
+        "method": "GET",
+        "query": [
+            "lang"
+        ],
+        "path_elements": [
+            "continent_id"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "continentsContinentIdFloors": {
+        "path": "\/continents\/%1$s\/floors",
+        "method": "GET",
+        "query": [],
+        "path_elements": [
+            "continent_id"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "continentsContinentIdFloorsFloorId": {
+        "path": "\/continents\/%1$s\/floors\/%2$s",
+        "method": "GET",
+        "query": [
+            "lang"
+        ],
+        "path_elements": [
+            "continent_id",
+            "floor_id"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "continentsContinentIdFloorsFloorIdRegions": {
+        "path": "\/continents\/%1$s\/floors\/%2$s\/regions",
+        "method": "GET",
+        "query": [],
+        "path_elements": [
+            "continent_id",
+            "floor_id"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "continentsContinentIdFloorsFloorIdRegionsRegionId": {
+        "path": "\/continents\/%1$s\/floors\/%2$s\/regions\/%3$s",
+        "method": "GET",
+        "query": [
+            "lang"
+        ],
+        "path_elements": [
+            "continent_id",
+            "floor_id",
+            "region_id"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "continentsContinentIdFloorsFloorIdRegionsRegionIdMaps": {
+        "path": "\/continents\/%1$s\/floors\/%2$s\/regions\/%3$s\/maps",
+        "method": "GET",
+        "query": [],
+        "path_elements": [
+            "continent_id",
+            "floor_id",
+            "region_id"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "continentsContinentIdFloorsFloorIdRegionsRegionIdMapsMapId": {
+        "path": "\/continents\/%1$s\/floors\/%2$s\/regions\/%3$s\/maps\/%4$s",
+        "method": "GET",
+        "query": [
+            "lang"
+        ],
+        "path_elements": [
+            "continent_id",
+            "floor_id",
+            "region_id",
+            "map_id"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "currencies": {
+        "path": "\/currencies",
+        "method": "GET",
+        "query": [
+            "lang"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "dungeons": {
+        "path": "\/dungeons",
+        "method": "GET",
+        "query": [
+            "lang"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "emblem": {
+        "path": "\/emblem",
+        "method": "GET",
+        "query": [],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "files": {
+        "path": "\/files",
+        "method": "GET",
+        "query": [],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "finishers": {
+        "path": "\/finishers",
+        "method": "GET",
+        "query": [
+            "lang"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "gliders": {
+        "path": "\/gliders",
+        "method": "GET",
+        "query": [
+            "lang"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "guildId": {
+        "path": "\/guild\/%1$s",
+        "method": "GET",
+        "query": [
+            "access_token"
+        ],
+        "path_elements": [
+            "id"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "guildIdLog": {
+        "path": "\/guild\/%1$s\/log",
+        "method": "GET",
+        "query": [
+            "access_token"
+        ],
+        "path_elements": [
+            "id"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "guildIdMembers": {
+        "path": "\/guild\/%1$s\/members",
+        "method": "GET",
+        "query": [
+            "access_token"
+        ],
+        "path_elements": [
+            "id"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "guildIdRanks": {
+        "path": "\/guild\/%1$s\/ranks",
+        "method": "GET",
+        "query": [
+            "access_token"
+        ],
+        "path_elements": [
+            "id"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "guildIdStash": {
+        "path": "\/guild\/%1$s\/stash",
+        "method": "GET",
+        "query": [
+            "access_token"
+        ],
+        "path_elements": [
+            "id"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "guildIdStorage": {
+        "path": "\/guild\/%1$s\/storage",
+        "method": "GET",
+        "query": [
+            "access_token"
+        ],
+        "path_elements": [
+            "id"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "guildIdTeams": {
+        "path": "\/guild\/%1$s\/teams",
+        "method": "GET",
+        "query": [
+            "access_token"
+        ],
+        "path_elements": [
+            "id"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "guildIdTreasury": {
+        "path": "\/guild\/%1$s\/treasury",
+        "method": "GET",
+        "query": [
+            "access_token"
+        ],
+        "path_elements": [
+            "id"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "guildIdUpgrades": {
+        "path": "\/guild\/%1$s\/upgrades",
+        "method": "GET",
+        "query": [
+            "access_token"
+        ],
+        "path_elements": [
+            "id"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "guildPermissions": {
+        "path": "\/guild\/permissions",
+        "method": "GET",
+        "query": [
+            "lang"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "guildSearch": {
+        "path": "\/guild\/search",
+        "method": "GET",
+        "query": [],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "guildUpgrades": {
+        "path": "\/guild\/upgrades",
+        "method": "GET",
+        "query": [
+            "lang"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "items": {
+        "path": "\/items",
+        "method": "GET",
+        "query": [
+            "lang"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "itemstats": {
+        "path": "\/itemstats",
+        "method": "GET",
+        "query": [
+            "lang"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "legends": {
+        "path": "\/legends",
+        "method": "GET",
+        "query": [],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "mailcarriers": {
+        "path": "\/mailcarriers",
+        "method": "GET",
+        "query": [
+            "lang"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "maps": {
+        "path": "\/maps",
+        "method": "GET",
+        "query": [
+            "lang"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "masteries": {
+        "path": "\/masteries",
+        "method": "GET",
+        "query": [
+            "lang"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "materials": {
+        "path": "\/materials",
+        "method": "GET",
+        "query": [
+            "lang"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "minis": {
+        "path": "\/minis",
+        "method": "GET",
+        "query": [
+            "lang"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "nodes": {
+        "path": "\/nodes",
+        "method": "GET",
+        "query": [],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "outfits": {
+        "path": "\/outfits",
+        "method": "GET",
+        "query": [
+            "lang"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "pets": {
+        "path": "\/pets",
+        "method": "GET",
+        "query": [
+            "lang"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "professions": {
+        "path": "\/professions",
+        "method": "GET",
+        "query": [
+            "lang"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "pvp": {
+        "path": "\/pvp",
+        "method": "GET",
+        "query": [],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "pvpAmulets": {
+        "path": "\/pvp\/amulets",
+        "method": "GET",
+        "query": [
+            "lang"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "pvpGames": {
+        "path": "\/pvp\/games",
+        "method": "GET",
+        "query": [
+            "access_token"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "pvpHeroes": {
+        "path": "\/pvp\/heroes",
+        "method": "GET",
+        "query": [
+            "lang"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "pvpRanks": {
+        "path": "\/pvp\/ranks",
+        "method": "GET",
+        "query": [
+            "lang"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "pvpSeasons": {
+        "path": "\/pvp\/seasons",
+        "method": "GET",
+        "query": [
+            "lang"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "pvpSeasonsIdLeaderboards": {
+        "path": "\/pvp\/seasons\/%1$s\/leaderboards",
+        "method": "GET",
+        "query": [],
+        "path_elements": [
+            "id"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "pvpSeasonsIdLeaderboardsBoardIdRegionId": {
+        "path": "\/pvp\/seasons\/%1$s\/leaderboards\/%2$s\/%3$s",
+        "method": "GET",
+        "query": [],
+        "path_elements": [
+            "id",
+            "board",
+            "region"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "pvpStandings": {
+        "path": "\/pvp\/standings",
+        "method": "GET",
+        "query": [
+            "access_token"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "pvpStats": {
+        "path": "\/pvp\/stats",
+        "method": "GET",
+        "query": [
+            "access_token"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "quaggans": {
+        "path": "\/quaggans",
+        "method": "GET",
+        "query": [],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "races": {
+        "path": "\/races",
+        "method": "GET",
+        "query": [
+            "lang"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "raids": {
+        "path": "\/raids",
+        "method": "GET",
+        "query": [
+            "lang"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "recipes": {
+        "path": "\/recipes",
+        "method": "GET",
+        "query": [],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "recipesSearch": {
+        "path": "\/recipes\/search",
+        "method": "GET",
+        "query": [],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "skills": {
+        "path": "\/skills",
+        "method": "GET",
+        "query": [
+            "lang"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "skins": {
+        "path": "\/skins",
+        "method": "GET",
+        "query": [
+            "lang"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "specializations": {
+        "path": "\/specializations",
+        "method": "GET",
+        "query": [
+            "lang"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "stories": {
+        "path": "\/stories",
+        "method": "GET",
+        "query": [
+            "lang"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "storiesSeasons": {
+        "path": "\/stories\/seasons",
+        "method": "GET",
+        "query": [
+            "lang"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "titles": {
+        "path": "\/titles",
+        "method": "GET",
+        "query": [
+            "lang"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "tokeninfo": {
+        "path": "\/tokeninfo",
+        "method": "GET",
+        "query": [
+            "access_token"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "traits": {
+        "path": "\/traits",
+        "method": "GET",
+        "query": [
+            "lang"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "worlds": {
+        "path": "\/worlds",
+        "method": "GET",
+        "query": [
+            "lang"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "wvwAbilities": {
+        "path": "\/wvw\/abilities",
+        "method": "GET",
+        "query": [
+            "lang"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "wvwMatches": {
+        "path": "\/wvw\/matches",
+        "method": "GET",
+        "query": [],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "wvwMatchesOverview": {
+        "path": "\/wvw\/matches\/overview",
+        "method": "GET",
+        "query": [],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "wvwMatchesScores": {
+        "path": "\/wvw\/matches\/scores",
+        "method": "GET",
+        "query": [],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "wvwMatchesStats": {
+        "path": "\/wvw\/matches\/stats",
+        "method": "GET",
+        "query": [],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "wvwMatchesStatsIdGuildsGuildId": {
+        "path": "\/wvw\/matches\/stats\/%1$s\/guilds\/%2$s",
+        "method": "GET",
+        "query": [],
+        "path_elements": [
+            "id",
+            "guild_id"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "wvwMatchesStatsIdTeamsTeamIdTopKdr": {
+        "path": "\/wvw\/matches\/stats\/%1$s\/teams\/%2$s\/top\/kdr",
+        "method": "GET",
+        "query": [],
+        "path_elements": [
+            "id",
+            "team"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "wvwMatchesStatsIdTeamsTeamIdTopKills": {
+        "path": "\/wvw\/matches\/stats\/%1$s\/teams\/%2$s\/top\/kills",
+        "method": "GET",
+        "query": [],
+        "path_elements": [
+            "id",
+            "team"
+        ],
+        "body": null,
+        "headers": []
+    },
+    "wvwObjectives": {
+        "path": "\/wvw\/objectives",
+        "method": "GET",
+        "query": [
+            "lang"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "wvwRanks": {
+        "path": "\/wvw\/ranks",
+        "method": "GET",
+        "query": [
+            "lang"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "wvwUpgrades": {
+        "path": "\/wvw\/upgrades",
+        "method": "GET",
+        "query": [
+            "lang"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    }
+}
