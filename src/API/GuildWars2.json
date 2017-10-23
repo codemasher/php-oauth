@@ -425,6 +425,24 @@
             "id"
         ]
     },
+    "colors": {
+        "path": "\/colors",
+        "method": "GET",
+        "query": [
+            "lang"
+        ],
+        "path_elements": []
+    },
+    "colorsId": {
+        "path": "\/colors\/%1$s",
+        "method": "GET",
+        "query": [
+            "lang"
+        ],
+        "path_elements": [
+            "id"
+        ]
+    },
     "commerceDelivery": {
         "path": "\/commerce\/delivery",
         "method": "GET",

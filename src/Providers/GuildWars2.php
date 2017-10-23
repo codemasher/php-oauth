@@ -70,6 +70,8 @@ use chillerlan\OAuth\Token;
  * @method mixed charactersIdSkills($id, array $params = ['access_token'])
  * @method mixed charactersIdSpecializations($id, array $params = ['access_token'])
  * @method mixed charactersIdTraining($id, array $params = ['access_token'])
+ * @method mixed colors(array $params = ['lang'])
+ * @method mixed colorsId($id, array $params = ['lang'])
  * @method mixed commerceDelivery(array $params = ['access_token'])
  * @method mixed commerceExchange()
  * @method mixed commerceExchangeCoins?quantity(array $params = ['quantity'])
@@ -236,9 +238,15 @@ class GuildWars2 extends OAuth2Provider{
 		if(isset($tokeninfo->id) && strpos($access_token, $tokeninfo->id) === 0){
 
 			$token = new Token([
-				'accessToken' => $access_token,
-				'extraParams' => $tokeninfo,
-				'expires'     => Token::EOL_NEVER_EXPIRES,
+				'accessToken'       => $access_token,
+				'accessTokenSecret' => substr($access_token, 36, 36), // the actual token
+				'expires'           => Token::EOL_NEVER_EXPIRES,
+				'extraParams'       => [
+					'token_type' => 'Bearer',
+					'id'         => $tokeninfo->id,
+					'name'       => $tokeninfo->name,
+					'scope'      => implode($this->scopesDelimiter, $tokeninfo->permissions),
+				],
 			]);
 
 			$this->storage->storeAccessToken($this->serviceName, $token);
