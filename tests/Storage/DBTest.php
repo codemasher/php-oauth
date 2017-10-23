@@ -22,15 +22,16 @@ use chillerlan\OAuth\{
 use Dotenv\Dotenv;
 
 class DBTest extends TokenStorageTestAbstract{
-
+	const CFGDIR = __DIR__.'/../../config';
 	const TABLE_TOKEN    = 'storagetest';
 	const TABLE_PROVIDER = 'storagetest_providers';
 
 	protected $FQCN = DBTokenStorage::class;
 
 	public function setUp(){
+		$env = file_exists(self::CFGDIR.'/.env') ? '.env' : '.env_travis'; // ugh
 
-		(new Dotenv(__DIR__.'/../../config', '.env'))->load();
+		(new Dotenv(self::CFGDIR, $env))->load();
 
 		$db = new Connection(new Options([
 			'driver'       => MySQLiDriver::class,

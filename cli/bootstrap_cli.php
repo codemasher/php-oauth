@@ -20,7 +20,11 @@ use chillerlan\Database\{
 };
 use Dotenv\Dotenv;
 
-(new Dotenv(__DIR__.'/../config', '.env'))->load();
+const CFGDIR = __DIR__.'/../config';
+
+$env = file_exists(CFGDIR.'/.env') ? '.env' : '.env_travis';
+
+(new Dotenv(CFGDIR, $env))->load();
 
 $db = new Connection(new Options([
 	'driver'       => MySQLiDriver::class,
