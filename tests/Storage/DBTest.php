@@ -11,15 +11,20 @@
 
 namespace chillerlan\OAuthTest\Storage;
 
-use chillerlan\Database\Connection;
-use chillerlan\Database\Drivers\Native\MySQLiDriver;
-use chillerlan\Database\Options;
-use chillerlan\Database\Query\Dialects\MySQLQueryBuilder;
-use chillerlan\OAuth\Storage\DBTokenStorage;
-use chillerlan\OAuth\Token;
+use chillerlan\Database\{
+	Connection, Options, Drivers\Native\MySQLiDriver, Query\Dialects\MySQLQueryBuilder
+};
+
+use chillerlan\OAuth\{
+	Storage\DBTokenStorage, Token
+};
+
 use Dotenv\Dotenv;
 
-abstract class DBTest extends TokenStorageTestAbstract{
+class DBTest extends TokenStorageTestAbstract{
+
+	const TABLE_TOKEN    = 'storagetest';
+	const TABLE_PROVIDER = 'storagetest_providers';
 
 	protected $FQCN = DBTokenStorage::class;
 
@@ -37,10 +42,16 @@ abstract class DBTest extends TokenStorageTestAbstract{
 			'password'     => getenv('MYSQL_PASSWORD'),
 		]));
 
-
-		$this->storage = new DBTokenStorage($db, 'tokentest', 1);
+		$this->storage = new DBTokenStorage($db, self::TABLE_TOKEN, self::TABLE_PROVIDER, 1);
 		$this->token   = new Token(['accessToken' => 'foobar']);
 	}
 
+	/**
+	 * @expectedException \chillerlan\OAuth\OAuthException
+	 * @expectedExceptionMessage unknown service
+	 */
+	public function testStoreAccessTokenUnkownServiceException(){
+		$this->storage->storeAccessToken('foo', $this->token);
+	}
 
 }

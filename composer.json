@@ -31,8 +31,15 @@
 	},
 	"autoload-dev": {
 		"psr-4": {
+			"chillerlan\\OAuthCLI\\": "cli/",
 			"chillerlan\\OAuthTest\\": "tests/",
 			"chillerlan\\OAuthExamples\\": "examples/"
 		}
+	},
+	"scripts": {
+		"post-install-cmd": [
+			"php -r \"is_file('config/.env') || copy('config/.env_travis', 'config/.env');\"",
+			"php cli/dbstorage_create.php"
+		]
 	}
 }

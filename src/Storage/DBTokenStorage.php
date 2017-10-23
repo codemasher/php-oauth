@@ -30,6 +30,11 @@ class DBTokenStorage extends TokenStorageAbstract{
 	protected $token_table;
 
 	/**
+	 * @var string
+	 */
+	protected $provider_table;
+
+	/**
 	 * @var int
 	 */
 	protected $user_id;
@@ -39,20 +44,25 @@ class DBTokenStorage extends TokenStorageAbstract{
 	 *
 	 * @param \chillerlan\Database\Connection $db
 	 * @param string                          $token_table
+	 * @param string                          $provider_table
 	 * @param int                             $user_id
 	 */
-	public function __construct(Connection $db, string $token_table, int $user_id){
-		$this->db          = $db;
-		$this->token_table = $token_table;
-		$this->user_id     = $user_id;
+	public function __construct(Connection $db, string $token_table, string $provider_table, int $user_id){
+		$this->db             = $db;
+		$this->token_table    = $token_table;
+		$this->provider_table = $provider_table;
+		$this->user_id        = $user_id;
 
 		$this->db->connect();
 	}
 
+	/**
+	 * @return array
+	 */
 	protected function getProviders():array {
 		return $this->db->select
 			->cached()
-			->from([$this->token_table.'_providers']) // todo: optional names
+			->from([$this->provider_table])
 			->execute('servicename')
 			->__toArray();
 	}
@@ -78,11 +88,19 @@ class DBTokenStorage extends TokenStorageAbstract{
 		];
 
 		if($this->hasAccessToken($service) === true){
-			$this->db->update->table($this->token_table)->set($values)->where('label', $this->getLabel($service))->execute();
+			$this->db->update
+				->table($this->token_table)
+				->set($values)
+				->where('label', $this->getLabel($service))
+				->execute();
 		}
 		else{
 			$values['label'] = $this->getLabel($service);
-			$this->db->insert->into($this->token_table)->values($values)->execute();
+
+			$this->db->insert
+				->into($this->token_table)
+				->values($values)
+				->execute();
 		}
 
 		return $this;
@@ -246,51 +264,6 @@ class DBTokenStorage extends TokenStorageAbstract{
 	 */
 	protected function getLabel(string $service):string{
 		return hash(self::LABEL_HASH_ALGO, $this->user_id.'#'.$service);
-	}
-
-	/**
-	 * @todo: WIP
-	 */
-	public function createTable(){
-
-		$this->db->raw('DROP TABLE IF EXISTS '.$this->token_table);
-		$this->db->create
-			->table($this->token_table)
-			->primaryKey('label')
-			->varchar('label', 32, null, false)
-			->int('user_id',10, null, false)
-			->varchar('provider_id', 30, '', false)
-			->text('token', null, true)
-			->text('state')
-			->int('expires',10, null, false)
-			->execute();
-
-		$this->db->raw('DROP TABLE IF EXISTS '.$this->token_table.'_providers');
-		$this->db->create
-			->table($this->token_table.'_providers')
-			->primaryKey('provider_id')
-			->tinyint('provider_id',10, null, false, 'UNSIGNED AUTO_INCREMENT')
-			->varchar('servicename', 30, '', false)
-			->execute();
-
-		$providers = [
-			['provider_id' => 1,  'servicename' => 'Spotify',],
-			['provider_id' => 2,  'servicename' => 'LastFM',],
-			['provider_id' => 3,  'servicename' => 'Discogs',],
-			['provider_id' => 4,  'servicename' => 'Twitter',],
-			['provider_id' => 5,  'servicename' => 'Instagram',],
-			['provider_id' => 6,  'servicename' => 'Vimeo',],
-			['provider_id' => 7,  'servicename' => 'MusicBrainz',],
-			['provider_id' => 8,  'servicename' => 'SoundCloud',],
-			['provider_id' => 9,  'servicename' => 'Twitch',],
-			['provider_id' => 10, 'servicename' => 'GuildWars2',],
-			['provider_id' => 11, 'servicename' => 'GitHub',],
-			['provider_id' => 12, 'servicename' => 'Discord',],
-			['provider_id' => 13, 'servicename' => 'Flickr',],
-		];
-
-		$this->db->insert->into($this->token_table.'_providers')->values($providers)->execute();
-
 	}
 
 }
