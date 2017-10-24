@@ -67,6 +67,7 @@ function createTable(Connection $db, string $token_table, string $provider_table
 		['provider_id' => 14, 'servicename' => 'Vimeo'],
 		['provider_id' => 15, 'servicename' => 'LastFM'],
 		['provider_id' => 16, 'servicename' => 'GuildWars2'],
+		['provider_id' => 17, 'servicename' => 'Tumblr'],
 	];
 
 	return $db->insert
