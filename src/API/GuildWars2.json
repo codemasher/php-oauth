@@ -457,16 +457,16 @@
         "query": [],
         "path_elements": []
     },
-    "commerceExchangeCoins?quantity": {
-        "path": "\/commerce\/exchange\/coins?quantity",
+    "commerceExchangeCoins": {
+        "path": "\/commerce\/exchange\/coins",
         "method": "GET",
         "query": [
             "quantity"
         ],
         "path_elements": []
     },
-    "commerceExchangeGems?quantity": {
-        "path": "\/commerce\/exchange\/gems?quantity",
+    "commerceExchangeGems": {
+        "path": "\/commerce\/exchange\/gems",
         "method": "GET",
         "query": [
             "quantity"
