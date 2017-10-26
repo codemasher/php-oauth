@@ -45,6 +45,7 @@
   - GuildWars2 (no authentication)
   - Instagram
   - MusicBrainz
+  - Patreon
   - SoundCloud
 - Oauth2 & client credentials
   - Discord
