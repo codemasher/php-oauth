@@ -128,11 +128,11 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 
 		switch(true){
 			case !is_array($data):
-				throw new OAuthException(sprintf('unable to parse access token response: %$1s', $response->body));
+				throw new OAuthException('unable to parse access token response: '.$response->body);
 			case isset($data['error_description']):
-				throw new OAuthException(sprintf('error retrieving access token #1: "%$1s" %$2s', $data['error_description'], $response->body));
+				throw new OAuthException('error retrieving access token #1: "'.$data['error'].'": %$2s'.$response->body);
 			case isset($data['error']):
-				throw new OAuthException(sprintf('error retrieving access token #2: "%$1s" %$2s', $data['error'], $response->body));
+				throw new OAuthException('error retrieving access token #2: "'.$data['error'].'": '.$response->body);
 		}
 
 		$token = new Token([
@@ -170,7 +170,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 				[],
 				'POST',
 				$this->getAccessTokenBody($code),
-				$this->authHeaders
+				$this->getAccessTokenHeaders()
 			)
 		);
 
@@ -192,6 +192,13 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 			'grant_type'    => 'authorization_code',
 			'redirect_uri'  => $this->options->callbackURL,
 		];
+	}
+
+	/**
+	 * @return array
+	 */
+	protected function getAccessTokenHeaders():array {
+		return $this->authHeaders;
 	}
 
 	/**
