@@ -47,6 +47,7 @@
   - MusicBrainz
   - Patreon
   - SoundCloud
+  - Wordpress
 - Oauth2 & client credentials
   - Discord
   - Spotify
@@ -224,7 +225,7 @@ class MyOauth1Provider extends Oauth1Provider{
 ```
 
 #### `OAuth2Interface`
-OAuth2 is a very straightforward mess. Please refer to your provider's docs for implementation details.
+[OAuth2 is a very straightforward mess](https://hueniverse.com/oauth-2-0-and-the-road-to-hell-8eec45921529). Please refer to your provider's docs for implementation details.
 ```php
 use chillerlan\OAuth\Providers\OAuth2Provider;
 

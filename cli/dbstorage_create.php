@@ -70,6 +70,7 @@ function createTable(Connection $db, string $token_table, string $provider_table
 		['provider_id' => 17, 'servicename' => 'Tumblr'],
 		['provider_id' => 18, 'servicename' => 'Patreon'],
 		['provider_id' => 19, 'servicename' => 'Twitter2'],
+		['provider_id' => 20, 'servicename' => 'Wordpress'],
 	];
 
 	return $db->insert
