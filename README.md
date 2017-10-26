@@ -6,6 +6,7 @@
 [![Coverage][coverage-badge]][coverage]
 [![Scrunitizer][scrutinizer-badge]][scrutinizer]
 [![Code Climate][codeclimate-badge]][codeclimate]
+[![packagist][downloads-badge]][downloads]
 
 [packagist-badge]: https://img.shields.io/packagist/v/chillerlan/php-oauth.svg
 [packagist]: https://packagist.org/packages/chillerlan/php-oauth
@@ -19,6 +20,8 @@
 [scrutinizer]: https://scrutinizer-ci.com/g/codemasher/php-oauth
 [codeclimate-badge]: https://img.shields.io/codeclimate/github/codemasher/php-oauth.svg
 [codeclimate]: https://codeclimate.com/github/codemasher/php-oauth
+[downloads-badge]: https://img.shields.io/packagist/dt/chillerlan/php-oauth.svg
+[downloads]: https://packagist.org/packages/chillerlan/php-oauth/stats
 
 
 # Documentation

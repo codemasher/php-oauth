@@ -6,8 +6,6 @@ engines:
     config:
       file_extensions: "php"
       rulesets: "phpmd.xml"
-  markdownlint:
-    enabled: true
 ratings:
   paths:
   - "**.php"
