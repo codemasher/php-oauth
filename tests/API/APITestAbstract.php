@@ -21,6 +21,7 @@ use chillerlan\OAuth\HTTP\GuzzleClient;
 use chillerlan\OAuth\HTTP\StreamClient;
 use chillerlan\OAuth\HTTP\TinyCurlClient;
 use chillerlan\OAuth\OAuthOptions;
+use chillerlan\OAuth\Providers\OAuth2Interface;
 use chillerlan\OAuth\Providers\OAuthInterface;
 use chillerlan\OAuth\Storage\DBTokenStorage;
 use chillerlan\OAuth\Token;
@@ -101,6 +102,43 @@ abstract class APITestAbstract extends TestCase{
 	public function testInstance(){
 		$this->assertInstanceOf(OAuthInterface::class, $this->provider);
 		$this->assertInstanceOf($this->providerClass, $this->provider);
+	}
+
+	public function testRequestCredentialsToken(){
+
+
+		if(!$this->provider instanceof OAuth2Interface){
+			$this->markTestSkipped('OAuth2 only');
+		}
+
+		if(!$this->provider->supportsClientCredentials){
+			$this->markTestSkipped('not supported');
+		}
+
+		$token = $this->provider->getClientCredentialsToken();
+
+		$this->assertInstanceOf(Token::class, $token);
+		$this->assertGreaterThan(time(), $token->expires);
+		$this->assertInternalType('string', $token->accessToken);
+		print_r($token);
+
+	}
+
+	/**
+	 * @expectedException \chillerlan\OAuth\OAuthException
+	 * @expectedExceptionMessage not supported
+	 */
+	public function testRequestCredentialsTokenNotSupportedException(){
+
+		if(!$this->provider instanceof OAuth2Interface){
+			$this->markTestSkipped('OAuth2 only');
+		}
+
+		if($this->provider->supportsClientCredentials){
+			$this->markTestSkipped('does not apply');
+		}
+
+		$this->provider->getClientCredentialsToken();
 	}
 
 }

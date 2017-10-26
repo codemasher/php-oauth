@@ -125,14 +125,13 @@ class LastFM extends OAuthProvider{
 
 		$response = $this->http->request($this->apiURL, $params)->json_array;
 
-		if(!is_array($response)){
-			throw new OAuthException('unable to parse access token response');
-		}
-		elseif(isset($response['error'])){
-			throw new OAuthException('access token error: '.$response['message']);
-		}
-		elseif(!isset($response['session']['key'])){
-			throw new OAuthException('access token missing');
+		switch(true){
+			case !is_array($response):
+				throw new OAuthException('unable to parse access token response');
+			case isset($response['error']):
+				throw new OAuthException('access token error: '.$response['message']);
+			case !isset($response['session']['key']):
+				throw new OAuthException('access token missing');
 		}
 
 		$token = new Token([
@@ -174,8 +173,6 @@ class LastFM extends OAuthProvider{
 			$body = $params;
 			$params = [];
 		}
-
-#		var_dump(['$endpoint' => $path, '$params' => $params, '$method' => $method, '$body' => $body, '$headers' => $headers]);
 
 		return $this->http->request($this->apiURL, $params, $method, $body, $headers);
 	}

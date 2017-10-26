@@ -12,6 +12,7 @@
 
 namespace chillerlan\OAuth\Providers;
 
+use DateTime;
 
 /**
  * @link https://www.discogs.com/developers/
@@ -79,20 +80,15 @@ class Discogs extends OAuth1Provider{
 	/**
 	 * @inheritdoc
 	 */
-	protected function tokenHeader(array $extraParameters = []):string{
-
-		$parameters = array_merge(
-			[
-				'oauth_callback'         => $this->options->callbackURL,
-				'oauth_consumer_key'     => $this->options->key,
-				'oauth_nonce'            => bin2hex(random_bytes(32)),
-				'oauth_signature'        => $this->options->secret.'&',
-				'oauth_signature_method' => 'PLAINTEXT',
-				'oauth_timestamp'        => (new \DateTime())->format('U'),
-			], $extraParameters
-		);
-
-		return $this->buildAuthHeader($parameters);
+	protected function getRequestTokenHeaderParams():array{
+		return [
+			'oauth_callback'         => $this->options->callbackURL,
+			'oauth_consumer_key'     => $this->options->key,
+			'oauth_nonce'            => bin2hex(random_bytes(32)),
+			'oauth_signature'        => $this->options->secret.'&',
+			'oauth_signature_method' => 'PLAINTEXT',
+			'oauth_timestamp'        => (new DateTime())->format('U'),
+		];
 	}
 
 }

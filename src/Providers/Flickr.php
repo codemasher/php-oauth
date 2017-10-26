@@ -271,9 +271,13 @@ class Flickr extends OAuth1Provider{
 			'nojsoncallback' => true,
 		]);
 
-		$auth = $this->apiHeader($method, $this->apiURL, $this->storage->retrieveAccessToken($this->serviceName), $params);
-
-		$headers = array_merge(['Authorization' => $auth], array_merge($this->apiHeaders, $headers));
+		$headers = $this->getApiHeaders(
+			$this->apiURL,
+			$params,
+			$method,
+			$headers,
+			$this->storage->retrieveAccessToken($this->serviceName)
+		);
 
 		return $this->http->request($this->apiURL, $params, $method, $body, $headers);
 	}

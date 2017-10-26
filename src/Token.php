@@ -88,14 +88,9 @@ class Token{
 	public function __set(string $property, $value){
 
 		if(property_exists($this, $property)){
-
-			if($property === 'expires'){
-				$this->setExpiry($value);
-			}
-			else{
-				$this->{$property} = $value;
-			}
-
+			$property === 'expires'
+				? $this->setExpiry($value)
+				: $this->{$property} = $value;
 		}
 
 	}
@@ -108,17 +103,18 @@ class Token{
 	public function setExpiry(int $expires = null):Token{
 		$now = time();
 
-		if($expires === 0 || $expires === self::EOL_NEVER_EXPIRES){
-			$this->expires = self::EOL_NEVER_EXPIRES;
-		}
-		elseif((int)$expires >= $now){
-			$this->expires = $expires; // @codeCoverageIgnore
-		}
-		elseif((int)$expires > 0 && (int)$expires < $now){
-			$this->expires = $now + $expires; // @codeCoverageIgnore
-		}
-		else{
-			$this->expires = self::EOL_UNKNOWN;
+		switch(true){
+			case $expires === 0 || $expires === self::EOL_NEVER_EXPIRES:
+				$this->expires = self::EOL_NEVER_EXPIRES;
+				break;
+			case (int)$expires >= $now:
+				$this->expires = $expires; // @codeCoverageIgnore
+				break;
+			case (int)$expires > 0 && (int)$expires < $now:
+				$this->expires = $now + $expires; // @codeCoverageIgnore
+				break;
+			default:
+				$this->expires = self::EOL_UNKNOWN;
 		}
 
 		return $this;

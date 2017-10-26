@@ -12,13 +12,14 @@
 
 namespace chillerlan\OAuth\Providers;
 
-use chillerlan\OAuth\API\OAuthAPIClientException;
-use chillerlan\OAuth\HTTP\HTTPClientInterface;
-use chillerlan\OAuth\OAuthOptions;
-use chillerlan\OAuth\Storage\TokenStorageInterface;
-use chillerlan\OAuth\Token;
-use chillerlan\OAuth\Traits\ClassLoader;
-use chillerlan\OAuth\Traits\Magic;
+use chillerlan\OAuth\{
+	API\OAuthAPIClientException,
+	HTTP\HTTPClientInterface,
+	OAuthOptions,
+	Storage\TokenStorageInterface,
+	Traits\ClassLoader,
+	Traits\Magic
+};
 
 /**
  * @property string $serviceName
@@ -59,12 +60,12 @@ abstract class OAuthProvider implements OAuthInterface{
 	/**
 	 * @var string
 	 */
-	protected $userRevokeURL = '';
+	protected $userRevokeURL;
 
 	/**
 	 * @var string
 	 */
-	protected $revokeURL = '';
+	protected $revokeURL;
 
 	/**
 	 * @var string
@@ -85,11 +86,6 @@ abstract class OAuthProvider implements OAuthInterface{
 	 * @var \stdClass method => [url, method, mandatory_params, params_in_url]
 	 */
 	protected $apiMethods;
-
-	/**
-	 * @var string
-	 */
-	protected $scopesDelimiter = ' ';
 
 	/**
 	 * OAuthProvider constructor.
@@ -153,6 +149,7 @@ abstract class OAuthProvider implements OAuthInterface{
 
 	/**
 	 * ugly, isn't it?
+	 * @todo WIP
 	 *
 	 * @param string $name
 	 * @param array  $arguments
@@ -202,7 +199,13 @@ abstract class OAuthProvider implements OAuthInterface{
 		return null;
 	}
 
-	// todo: filter allowed params
+	/**
+	 * @todo: filter allowed params?
+	 *
+	 * @param $params
+	 *
+	 * @return array
+	 */
 	protected function checkParams($params){
 
 		if(is_array($params)){
@@ -223,6 +226,5 @@ abstract class OAuthProvider implements OAuthInterface{
 
 		return $params;
 	}
-
 
 }

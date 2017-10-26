@@ -50,32 +50,28 @@ class Twitch extends OAuth2Provider{
 	protected $authMethod          = self::HEADER_OAUTH; // -> https://api.twitch.tv/kraken
 #	protected $authMethod          = self::HEADER_BEARER; // -> https://api.twitch.tv/helix
 
+	// https://dev.twitch.tv/docs/authentication#oauth-client-credentials-flow-app-access-tokens
+	protected $clientCredentials   = true;
+
 	/**
-	 * @link https://dev.twitch.tv/docs/authentication#oauth-client-credentials-flow-app-access-tokens
-	 *
 	 * @param array $scopes
 	 *
-	 * @return \chillerlan\OAuth\Token
-	 * @throws \chillerlan\OAuth\OAuthException
+	 * @return array
 	 */
-	public function requestCredentialsToken(array $scopes = []){
+	protected function getClientCredentialsTokenBody(array $scopes):array {
+		return [
+			'client_id'     => $this->options->key,
+			'client_secret' => $this->options->secret,
+			'grant_type'    => 'client_credentials',
+			'scope'         => implode($this->scopesDelimiter, $scopes),
+		];
+	}
 
-		$token = $this->parseResponse(
-			$this->http->request(
-				$this->accessTokenEndpoint,
-				[],
-				'POST',
-				[
-					'client_id'     => $this->options->key,
-					'client_secret' => $this->options->secret,
-					'grant_type'    => 'client_credentials',
-					'scope'         => implode($this->scopesDelimiter, $scopes),
-				])
-		);
-
-		$this->storage->storeAccessToken($this->serviceName, $token);
-
-		return $token;
+	/**
+	 * @return array
+	 */
+	protected function getClientCredentialsTokenHeaders():array {
+		return $this->authHeaders;
 	}
 
 }

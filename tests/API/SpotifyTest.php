@@ -27,15 +27,6 @@ class SpotifyTest extends APITestAbstract{
 	 */
 	protected $provider;
 
-	public function testRequestCredentialsToken(){
-		$token = $this->provider->requestCredentialsToken();
-
-		$this->assertInstanceOf(Token::class, $token);
-		$this->assertGreaterThan(time(), $token->expires);
-		$this->assertInternalType('string', $token->accessToken);
-		print_r($token);
-	}
-
 	public function searchDataProvider():array {
 		return  [
 			[['q' => 'sleater-kinney', 'type' => 'artist'], 'artists', '4wLIbcoqmqI4WZHDiBxeCB'],

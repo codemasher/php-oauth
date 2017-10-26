@@ -83,34 +83,8 @@ class Vimeo extends OAuth2Provider{
 	protected $apiHeaders          = ['Accept' => 'application/vnd.vimeo.*+json;version='.self::VERSION];
 	protected $authMethod          = self::HEADER_BEARER;
 
-	/**
-	 * @link https://developer.vimeo.com/api/authentication#generate-unauthenticated-tokens
-	 *
-	 * @param array $scopes
-	 *
-	 * @return \chillerlan\OAuth\Token
-	 * @throws \chillerlan\OAuth\OAuthException
-	 */
-	public function requestCredentialsToken(array $scopes = []){
-
-		$token = $this->parseResponse(
-			$this->http->request(
-				$this->authURL.'/client',
-				[],
-				'POST',
-				[
-					'grant_type'    => 'client_credentials',
-					'scope'         => implode($this->scopesDelimiter, $scopes),
-				],
-				array_merge($this->authHeaders, [
-					'Authorization' => 'Basic '.base64_encode($this->options->key.':'.$this->options->secret),
-				])
-			)
-		);
-
-		$this->storage->storeAccessToken($this->serviceName, $token);
-
-		return $token;
-	}
+	// https://developer.vimeo.com/api/authentication#generate-unauthenticated-tokens
+	protected $clientCredentials   = true;
+	protected $ccTokenEndpoint     = 'https://api.vimeo.com/oauth/authorize/client';
 
 }

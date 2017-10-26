@@ -82,24 +82,21 @@ class CurlClient extends HTTPClientAbstract{
 
 			$method    = strtoupper($method);
 			$headers   = $this->normalizeRequestHeaders($headers);
-
-			$options   = [];
+			$options   = [CURLOPT_CUSTOMREQUEST => $method];
 
 			if(in_array($method, ['PATCH', 'POST', 'PUT', 'DELETE'], true)){
 
-				$options += in_array($method, ['PATCH', 'PUT', 'DELETE'], true)
-					? [CURLOPT_CUSTOMREQUEST => $method]
-					: [CURLOPT_POST => true];
+				if($method === 'POST'){
+					$options = [CURLOPT_POST => true];
 
-				if(!isset($headers['Content-type']) && $method === 'POST' && is_array($body)){
-					$headers += ['Content-type: application/x-www-form-urlencoded'];
-					$body = http_build_query($body, '', '&', PHP_QUERY_RFC1738);
+					if(!isset($headers['Content-type']) && is_array($body)){
+						$headers += ['Content-type: application/x-www-form-urlencoded'];
+						$body = http_build_query($body, '', '&', PHP_QUERY_RFC1738);
+					}
+
 				}
 
 				$options += [CURLOPT_POSTFIELDS => $body];
-			}
-			else{
-				$options += [CURLOPT_CUSTOMREQUEST => $method];
 			}
 
 			$headers += [

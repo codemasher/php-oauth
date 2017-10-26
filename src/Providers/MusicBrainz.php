@@ -38,6 +38,18 @@ class MusicBrainz extends OAuth2Provider{
 	protected $authMethod          = self::HEADER_BEARER;
 
 	/**
+	 * @inheritdoc
+	 */
+	public function refreshAccessTokenBody(Token $token):array{
+		return [
+			'client_id'     => $this->options->key,
+			'client_secret' => $this->options->secret,
+			'grant_type'    => 'refresh_token',
+			'refresh_token' => $token->refreshToken,
+		];
+	}
+
+	/**
 	 * @param string $path
 	 * @param array  $params
 	 * @param string $method
@@ -65,42 +77,6 @@ class MusicBrainz extends OAuth2Provider{
 		$headers = array_merge($this->apiHeaders, $headers, ['Authorization' => 'Bearer '.$token->accessToken]);
 
 		return $this->http->request($this->apiURL.explode('?', $path)[0], $params, $method, $body, $headers);
-	}
-
-	/**
-	 * @param \chillerlan\OAuth\Token $token
-	 *
-	 * @return \chillerlan\OAuth\Token
-	 * @throws \chillerlan\OAuth\OAuthException
-	 */
-	public function refreshAccessToken(Token $token = null):Token{
-
-		if(is_null($token)){
-			$token = $this->storage->retrieveAccessToken($this->serviceName);
-		}
-
-		$refreshToken = $token->refreshToken;
-
-		if(empty($refreshToken)){
-			throw new OAuthException('no refresh token available'); // @codeCoverageIgnore
-		}
-
-		$body = [
-			'grant_type'    => 'refresh_token',
-			'client_id'     => $this->options->key,
-			'client_secret' => $this->options->secret,
-			'refresh_token' => $refreshToken,
-		];
-
-		$token = $this->parseResponse($this->http->request($this->accessTokenEndpoint, [], 'POST', $body, $this->authHeaders));
-
-		if(!$token->refreshToken){
-			$token->refreshToken = $refreshToken;
-		}
-
-		$this->storage->storeAccessToken($this->serviceName, $token);
-
-		return $token;
 	}
 
 }

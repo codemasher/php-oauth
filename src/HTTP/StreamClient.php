@@ -65,7 +65,7 @@ class StreamClient extends HTTPClientAbstract{
 				trigger_error('invalid URL');
 			}
 
-			$method = strtoupper($method);
+			$method  = strtoupper($method);
 			$headers = $this->normalizeRequestHeaders($headers);
 
 			if(in_array($method, ['PATCH', 'POST', 'PUT', 'DELETE']) && is_array($body)){
@@ -131,10 +131,11 @@ class StreamClient extends HTTPClientAbstract{
 				$h->httpversion = explode('/', $status[0], 2)[1];
 				$h->statuscode  = intval($status[1]);
 				$h->statustext  = trim($status[2]);
+
+				continue;
 			}
-			else{
-				$h->{strtolower($k)} = $v;
-			}
+
+			$h->{strtolower($k)} = $v;
 
 		}
 

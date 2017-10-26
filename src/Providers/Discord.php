@@ -37,34 +37,7 @@ class Discord extends OAuth2Provider{
 	protected $accessTokenExpires  = true;
 	protected $authMethod          = self::HEADER_BEARER;
 
-	/**
-	 * @link https://discordapp.com/developers/docs/topics/oauth2#client-credentials-grant
-	 *
-	 * @param array $scopes
-	 *
-	 * @return \chillerlan\OAuth\Token
-	 * @throws \chillerlan\OAuth\OAuthException
-	 */
-	public function requestCredentialsToken(array $scopes = []){
-
-		$token = $this->parseResponse(
-			$this->http->request(
-				$this->accessTokenEndpoint,
-				[],
-				'POST',
-				[
-					'grant_type'    => 'client_credentials',
-					'scope'         => implode($this->scopesDelimiter, $scopes),
-				],
-				[
-					'Authorization' => 'Basic '.base64_encode($this->options->key.':'.$this->options->secret),
-				]
-			)
-		);
-
-		$this->storage->storeAccessToken($this->serviceName, $token);
-
-		return $token;
-	}
+	// https://discordapp.com/developers/docs/topics/oauth2#client-credentials-grant
+	protected $clientCredentials   = true;
 
 }

@@ -32,13 +32,12 @@ abstract class HTTPClientAbstract implements HTTPClientInterface{
 			if(is_numeric($key)){
 				$header = explode(':', $val, 2);
 
-				if(count($header) === 2){
-					$key = $header[0];
-					$val = $header[1];
-				}
-				else{
+				if(count($header) !== 2){
 					continue;
 				}
+
+				$key = $header[0];
+				$val = $header[1];
 			}
 
 			$key = ucfirst(strtolower($key));

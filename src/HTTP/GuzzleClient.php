@@ -45,9 +45,8 @@ class GuzzleClient extends HTTPClientAbstract{
 	public function request(string $url, array $params = [], string $method = 'POST', $body = null, array $headers = []):OAuthResponse{
 
 		try{
-
 			$parsedURL = parse_url($url);
-			$method = strtoupper($method);
+			$method    = strtoupper($method);
 
 			if(!isset($parsedURL['host']) || !in_array($parsedURL['scheme'], ['http', 'https'], true)){
 				trigger_error('invalid URL');
@@ -55,26 +54,27 @@ class GuzzleClient extends HTTPClientAbstract{
 
 			// @link http://docs.guzzlephp.org/en/stable/request-options.html
 			$options = [
-				'query' => $params,
+				'query'   => $params,
 				'headers' => $headers
 			];
 
 			if(in_array($method, ['PATCH', 'POST', 'PUT', 'DELETE'], true)){
 
-				if(in_array($method, ['PATCH', 'POST', 'PUT'], true) && is_array($body)){
-					$options['form_params'] = $body;
-				}
-				elseif(is_string($body) || $body instanceof StreamInterface){
-					$options['body'] = $body;
+				switch(true){
+					case in_array($method, ['PATCH', 'POST', 'PUT'], true) && is_array($body):
+						$options['form_params'] = $body;
+						break;
+					case is_string($body) || $body instanceof StreamInterface:
+						$options['body'] = $body;
 				}
 
 			}
 
-			$r = $this->http->request($method, explode('?', $url)[0], $options);
+			$response = $this->http->request($method, explode('?', $url)[0], $options);
 
 			return new OAuthResponse([
-				'headers' => $this->parseResponseHeaders($r->getHeaders()),
-				'body'    => $r->getBody(),
+				'headers' => $this->parseResponseHeaders($response->getHeaders()),
+				'body'    => $response->getBody(),
 			]);
 
 		}
