@@ -67,11 +67,11 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 
 		switch(true){
 			case !$data || !is_array($data):
-				throw new OAuthException(sprintf('unable to parse access token response: %$1s', print_r($response, true) ?? ''));
+				throw new OAuthException('unable to parse access token response: '.print_r($response, true));
 			case !isset($data['oauth_callback_confirmed']) || $data['oauth_callback_confirmed'] !== 'true':
 				throw new OAuthException('error retrieving request token: '.print_r($response, true));
 			case !isset($data['oauth_token']) || !isset($data['oauth_token_secret']):
-				throw new OAuthException(sprintf('request token missing:  %$1s', print_r($response, true) ?? ''));
+				throw new OAuthException('request token missing: '.print_r($response, true));
 		}
 
 		$token = $this->getOauth1Token($data['oauth_token'], $data['oauth_token_secret']);
