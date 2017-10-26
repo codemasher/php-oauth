@@ -51,6 +51,7 @@
   - Discord
   - Spotify
   - Twitch
+  - Twitter2 (client credentials only)
   - Vimeo
 - Native
   - Last.fm

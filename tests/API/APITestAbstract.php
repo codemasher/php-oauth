@@ -106,7 +106,6 @@ abstract class APITestAbstract extends TestCase{
 
 	public function testRequestCredentialsToken(){
 
-
 		if(!$this->provider instanceof OAuth2Interface){
 			$this->markTestSkipped('OAuth2 only');
 		}
@@ -118,10 +117,13 @@ abstract class APITestAbstract extends TestCase{
 		$token = $this->provider->getClientCredentialsToken();
 
 		$this->assertInstanceOf(Token::class, $token);
-		$this->assertGreaterThan(time(), $token->expires);
 		$this->assertInternalType('string', $token->accessToken);
-		print_r($token);
 
+		if($token->expires !== Token::EOL_NEVER_EXPIRES){
+			$this->assertGreaterThan(time(), $token->expires);
+		}
+
+		print_r($token);
 	}
 
 	/**
