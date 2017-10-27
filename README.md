@@ -49,6 +49,7 @@
   - SoundCloud
   - Wordpress
 - Oauth2 & client credentials
+  - DeviantArt
   - Discord
   - Spotify
   - Twitch
