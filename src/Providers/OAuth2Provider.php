@@ -123,17 +123,8 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	 * @return \chillerlan\OAuth\Token
 	 * @throws \chillerlan\OAuth\OAuthException
 	 */
-	protected function parseResponse(OAuthResponse $response):Token{
-		$data = $response->json_array;
-
-		switch(true){
-			case !is_array($data):
-				throw new OAuthException('unable to parse access token response: '.$response->body);
-			case isset($data['error_description']):
-				throw new OAuthException('error retrieving access token #1: "'.$data['error'].'": %$2s'.$response->body);
-			case isset($data['error']):
-				throw new OAuthException('error retrieving access token #2: "'.$data['error'].'": '.$response->body);
-		}
+	protected function  parseResponse(OAuthResponse $response):Token{
+		$data = $this->checkResponse($response);
 
 		$token = new Token([
 			'accessToken'  => $data['access_token'],
@@ -146,6 +137,36 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 		$token->extraParams = $data;
 
 		return $token;
+	}
+
+	/**
+	 * @param \chillerlan\OAuth\HTTP\OAuthResponse $response
+	 *
+	 * @return array
+	 * @throws \chillerlan\OAuth\OAuthException
+	 */
+	protected function checkResponse(OAuthResponse $response):array {
+		$data = $response->json_array;
+
+		switch(true){
+			case !is_array($data):
+				$error = 'unable to parse access token response';
+				break;
+			case isset($data['error_description']):
+				$error = 'error retrieving access token #1: "'.$data['error_description'].'"';
+				break;
+			case isset($data['error']):
+				$error = 'error retrieving access token #2: "'.$data['error'].'"';
+				break;
+			default:
+				$error = null;
+		}
+
+		if($error !== null){
+			throw new OAuthException($error.PHP_EOL.print_r($response, true));
+		}
+
+		return $data;
 	}
 
 	/**
