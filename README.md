@@ -38,6 +38,7 @@
   - Tumblr
   - Flickr
 - Oauth2
+  - Deezer
   - Foursquare
   - Github
   - Gitter
@@ -48,6 +49,7 @@
   - Patreon
   - SoundCloud
   - Wordpress
+  - Yahoo
 - Oauth2 & client credentials
   - DeviantArt
   - Discord
