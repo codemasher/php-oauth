@@ -45,8 +45,10 @@
   - Google
   - GuildWars2 (no authentication)
   - Instagram
+  - Mixcloud
   - MusicBrainz
   - Patreon
+  - Slack
   - SoundCloud
   - Wordpress
   - Yahoo
@@ -243,27 +245,9 @@ class MyOauth2Provider extends Oauth2Provider{
 	protected $authHeaders         = ['Accept' => 'application/json'];
 	protected $apiHeaders          = ['Accept' => 'application/json'];
 	protected $scopesDelimiter     = ',';
-	protected $accessTokenExpires  = true; // a token refresh will be performed
+	protected $accessTokenExpires  = true;  // a token refresh will be performed
 	protected $csrfToken           = false; // disables <state> parameter creation & check.
-
-	// optional, depends on provider support
-	public function requestCredentialsToken(array $scopes = []):Token {
-
-		$body = [
-			'grant_type' => 'client_credentials',
-			'scope'      => implode($this->scopesDelimiter, $scopes),
-		];
-		
-		$headers = [
-			'Authorization' => 'Basic '.base64_encode($this->options->key.':'.$this->options->secret),
-		];
-		
-		$token = $this->parseResponse($this->http->request($this->accessTokenEndpoint, [], 'POST', $body, $headers));
-
-		$this->storage->storeAccessToken($this->serviceName, $token);
-
-		return $token;
-	}
+	protected $clientCredentials   = true;  // enables/allows fetching of Client Credentials Token
 
 }
 ```
