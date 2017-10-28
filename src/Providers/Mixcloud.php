@@ -13,6 +13,7 @@
 namespace chillerlan\OAuth\Providers;
 
 /**
+ * @link https://www.mixcloud.com/developers/
  */
 class Mixcloud extends OAuth2Provider{
 
