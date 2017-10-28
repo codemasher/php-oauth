@@ -78,6 +78,5 @@ class Slack extends OAuth2Provider{
 	protected $apiURL              = 'https://slack.com/api';
 	protected $authURL             = 'https://slack.com/oauth/authorize';
 	protected $accessTokenEndpoint = 'https://slack.com/api/oauth.access';
-	protected $authMethod          = self::HEADER_BEARER;
 
 }

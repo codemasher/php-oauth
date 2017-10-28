@@ -27,6 +27,5 @@ class Gitter extends OAuth2Provider{
 	protected $accessTokenEndpoint = 'https://gitter.im/login/oauth/token';
 	protected $accessTokenExpires  = true;
 	protected $scopesDelimiter     = ',';
-	protected $authMethod          = self::HEADER_BEARER;
 
 }

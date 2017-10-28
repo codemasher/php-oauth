@@ -25,7 +25,5 @@ class Patreon extends OAuth2Provider{
 	protected $authURL             = 'https://www.patreon.com/oauth2/authorize';
 	protected $accessTokenEndpoint = 'https://www.patreon.com/api/oauth2/token';
 	protected $accessTokenExpires  = true;
-	protected $authMethod          = self::HEADER_BEARER;
-
 
 }

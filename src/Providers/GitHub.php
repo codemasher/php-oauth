@@ -50,6 +50,5 @@ class GitHub extends OAuth2Provider{
 	protected $accessTokenEndpoint = 'https://github.com/login/oauth/access_token';
 	protected $authHeaders         = ['Accept' => 'application/json'];
 	protected $apiHeaders          = ['Accept' => 'application/vnd.github.beta+json'];
-	protected $authMethod          = self::HEADER_BEARER;
 
 }

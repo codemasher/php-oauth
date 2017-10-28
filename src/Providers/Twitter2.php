@@ -25,7 +25,6 @@ class Twitter2 extends OAuth2Provider{
 	protected $apiURL              = 'https://api.twitter.com/1.1';
 	protected $ccTokenEndpoint     = 'https://api.twitter.com/oauth2/token';
 	protected $clientCredentials   = true;
-	protected $authMethod          = self::HEADER_BEARER;
 
 	/**
 	 * @throws \chillerlan\OAuth\OAuthException

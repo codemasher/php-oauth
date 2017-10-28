@@ -49,7 +49,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	/**
 	 * @var int
 	 */
-	protected $authMethod = self::HEADER_OAUTH;
+	protected $authMethod = self::HEADER_BEARER;
 
 	/**
 	 * @var bool

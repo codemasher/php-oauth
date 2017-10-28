@@ -81,7 +81,6 @@ class Vimeo extends OAuth2Provider{
 	protected $accessTokenExpires  = true;
 	protected $authHeaders         = ['Accept' => 'application/vnd.vimeo.*+json;version='.self::VERSION];
 	protected $apiHeaders          = ['Accept' => 'application/vnd.vimeo.*+json;version='.self::VERSION];
-	protected $authMethod          = self::HEADER_BEARER;
 
 	// https://developer.vimeo.com/api/authentication#generate-unauthenticated-tokens
 	protected $clientCredentials   = true;

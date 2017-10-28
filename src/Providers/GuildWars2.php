@@ -224,7 +224,6 @@ class GuildWars2 extends OAuth2Provider{
 	protected $apiURL        = 'https://api.guildwars2.com/v2';
 	protected $authURL       = 'https://account.arena.net/applications/create';
 	protected $userRevokeURL = 'https://account.arena.net/applications';
-	protected $authMethod    = self::HEADER_BEARER;
 
 	/**
 	 * @param string $access_token

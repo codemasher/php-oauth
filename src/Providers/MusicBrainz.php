@@ -35,7 +35,6 @@ class MusicBrainz extends OAuth2Provider{
 	protected $userRevokeURL       = 'https://musicbrainz.org/account/applications';
 	protected $accessTokenEndpoint = 'https://musicbrainz.org/oauth2/token';
 	protected $accessTokenExpires  = true;
-	protected $authMethod          = self::HEADER_BEARER;
 
 	/**
 	 * @inheritdoc

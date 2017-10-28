@@ -120,7 +120,6 @@ class Spotify extends OAuth2Provider{
 	protected $userRevokeURL       = 'https://www.spotify.com/account/apps/';
 	protected $accessTokenEndpoint = 'https://accounts.spotify.com/api/token';
 	protected $accessTokenExpires  = true;
-	protected $authMethod          = self::HEADER_BEARER;
 
 	// https://developer.spotify.com/web-api/authorization-guide/#client-credentials-flow
 	protected $clientCredentials   = true;

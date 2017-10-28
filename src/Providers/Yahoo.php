@@ -19,7 +19,6 @@ abstract class Yahoo extends OAuth2Provider{
 
 	protected $authURL             = 'https://api.login.yahoo.com/oauth2/request_auth';
 	protected $accessTokenEndpoint = 'https://api.login.yahoo.com/oauth2/get_token';
-	protected $authMethod          = self::HEADER_BEARER;
 	protected $accessTokenExpires  = true;
 
 }

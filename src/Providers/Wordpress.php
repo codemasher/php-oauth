@@ -23,6 +23,5 @@ class Wordpress extends OAuth2Provider{
 	protected $apiURL              = 'https://public-api.wordpress.com/rest/v1';
 	protected $authURL             = 'https://public-api.wordpress.com/oauth2/authorize';
 	protected $accessTokenEndpoint = 'https://public-api.wordpress.com/oauth2/token';
-	protected $authMethod          = self::HEADER_BEARER;
 
 }
