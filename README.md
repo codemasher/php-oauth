@@ -124,25 +124,23 @@ $scopes = [
 $provider = new Provider($http, $storage, $options, $scopes);
 ```
 
-You can display a <login with PROVIDER> link on your site which redirects to the provider's authorization page:
-```php
-// step 1 (optional): display a login link
-echo '<a href="?login='.$provider->serviceName.'">Login with '.$provider->serviceName.'!</a>';
-```
+#### Authentication
 
 The application flow may differ slightly depending on the provider; there's a working authentication example for each supported provider in the 
 [examples folder](https://github.com/codemasher/php-oauth/tree/master/examples/get-token).
 
-#### OAuth1
 ```php
+// step 1 (optional): display a login link
+echo '<a href="?login='.$provider->serviceName.'">Login with '.$provider->serviceName.'!</a>';
+
 // step 2: redirect to the provider's login screen
 if(isset($_GET['login']) && $_GET['login'] === $provider->serviceName){
-	// fetch a request token
-	$rt = $provider->getRequestToken();
-
-	header('Location: '.$provider->getAuthURL(['oauth_token' => $rt->requestToken]));
+	header('Location: '.$provider->getAuthURL());
 }
+```
 
+#### OAuth1
+```php
 // step 3: receive the access token
 elseif(isset($_GET['oauth_token']) && isset($_GET['oauth_verifier'])){
 	$token = $provider->getAccessToken($_GET['oauth_token'], $_GET['oauth_verifier']);
@@ -155,11 +153,6 @@ elseif(isset($_GET['oauth_token']) && isset($_GET['oauth_verifier'])){
 
 #### OAuth2
 ```php
-// step 2: redirect to the provider's login screen
-if(isset($_GET['login']) && $_GET['login'] === $provider->serviceName){
-	header('Location: '.$provider->getAuthURL());
-}
-
 // step 3: receive the access token
 elseif(isset($_GET['code'])){
 	// usage of the <state> parameter depends on the provider
@@ -170,6 +163,7 @@ elseif(isset($_GET['code'])){
 }
 ```
 
+#### Auth granted
 After receiving the access token, go on and verify it then use the API.
 ```php
 // step 4: verify the token and use the API
@@ -189,7 +183,7 @@ The general method scheme looks as follows:
    - the actual API method name if available
    - substituted from the path element names
  - `:path` elements become required parameters
- - query parameters become a k => v array
+ - query parameters become a `[$k => $v]` array
 
 ```php
 // https://example.com/api/endpoint/:id/subendpoint/:name?param1=foo&param2=bar
@@ -221,10 +215,10 @@ use chillerlan\OAuth\Providers\OAuth1Provider;
 
 class MyOauth1Provider extends Oauth1Provider{
 	
-	protected $apiURL               = 'https://api.example.com';
-	protected $requestTokenEndpoint = 'https://example.com/oauth/request_token';
-	protected $authURL              = 'https://example.com/oauth/authorize';
-	protected $accessTokenEndpoint  = 'https://example.com/oauth/access_token';
+	protected $apiURL          = 'https://api.example.com';
+	protected $requestTokenURL = 'https://example.com/oauth/request_token';
+	protected $authURL         = 'https://example.com/oauth/authorize';
+	protected $accessTokenURL  = 'https://example.com/oauth/access_token';
 	
 }
 ```
@@ -238,16 +232,17 @@ class MyOauth2Provider extends Oauth2Provider{
 
 	const SCOPE_WHATEVER = 'whatever';
 
-	protected $apiURL              = 'https://api.example.com';
-	protected $authURL             = 'https://example.com/oauth2/authorize';
-	protected $accessTokenEndpoint = 'https://example.com/oauth2/token';
-	protected $authMethod          = self::HEADER_BEARER;
-	protected $authHeaders         = ['Accept' => 'application/json'];
-	protected $apiHeaders          = ['Accept' => 'application/json'];
-	protected $scopesDelimiter     = ',';
-	protected $accessTokenExpires  = true;  // a token refresh will be performed
-	protected $csrfToken           = false; // disables <state> parameter creation & check.
-	protected $clientCredentials   = true;  // enables/allows fetching of Client Credentials Token
+	protected $apiURL                    = 'https://api.example.com';
+	protected $authURL                   = 'https://example.com/oauth2/authorize';
+	protected $accessTokenURL            = 'https://example.com/oauth2/token';
+	protected $clientCredentialsTokenURL = 'https://example.com/oauth2/client_credentials';
+	protected $authMethod                = self::HEADER_BEARER;
+	protected $authHeaders               = ['Accept' => 'application/json'];
+	protected $apiHeaders                = ['Accept' => 'application/json'];
+	protected $scopesDelimiter           = ',';
+	protected $accessTokenExpires        = true;  // a token refresh will be performed
+	protected $csrfToken                 = false; // disables <state> parameter creation & check.
+	protected $clientCredentials         = true;  // enables/allows fetching of Client Credentials Token
 
 }
 ```
