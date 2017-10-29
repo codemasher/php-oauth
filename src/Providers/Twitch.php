@@ -39,15 +39,15 @@ class Twitch extends OAuth2Provider{
 	const SCOPE_USER_SUBSCRIPTIONS         = 'user_subscriptions';
 	const SCOPE_VIEWING_ACTIVITY_READ      = 'viewing_activity_read';
 
-	protected $apiURL              = 'https://api.twitch.tv/kraken';
-	protected $authURL             = 'https://api.twitch.tv/kraken/oauth2/authorize';
-	protected $userRevokeURL       = 'https://www.twitch.tv/settings/connections';
-	protected $revokeURL           = 'https://api.twitch.tv/kraken/oauth2/revoke';
-	protected $accessTokenEndpoint = 'https://api.twitch.tv/kraken/oauth2/token';
-	protected $accessTokenExpires  = true;
-	protected $authHeaders         = ['Accept' => 'application/vnd.twitchtv.v5+json'];
-	protected $apiHeaders          = ['Accept' => 'application/vnd.twitchtv.v5+json'];
-	protected $authMethod          = self::HEADER_OAUTH; // -> https://api.twitch.tv/kraken
+	protected $apiURL             = 'https://api.twitch.tv/kraken';
+	protected $authURL            = 'https://api.twitch.tv/kraken/oauth2/authorize';
+	protected $accessTokenURL     = 'https://api.twitch.tv/kraken/oauth2/token';
+	protected $userRevokeURL      = 'https://www.twitch.tv/settings/connections';
+	protected $revokeURL          = 'https://api.twitch.tv/kraken/oauth2/revoke';
+	protected $accessTokenExpires = true;
+	protected $authHeaders        = ['Accept' => 'application/vnd.twitchtv.v5+json'];
+	protected $apiHeaders         = ['Accept' => 'application/vnd.twitchtv.v5+json'];
+	protected $authMethod         = self::HEADER_OAUTH; // -> https://api.twitch.tv/kraken
 #	protected $authMethod          = self::HEADER_BEARER; // -> https://api.twitch.tv/helix
 
 	// https://dev.twitch.tv/docs/authentication#oauth-client-credentials-flow-app-access-tokens

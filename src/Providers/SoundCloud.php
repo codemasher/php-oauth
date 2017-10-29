@@ -24,11 +24,12 @@ class SoundCloud extends OAuth2Provider{
 	const SCOPE_NONEXPIRING = 'non-expiring';
 #	const SCOPE_EMAIL       = 'email'; // ???
 
-	protected $apiURL              = 'https://api.soundcloud.com';
-	protected $authURL             = 'https://soundcloud.com/connect';
-	protected $userRevokeURL       = 'https://soundcloud.com/settings/connections';
-	protected $accessTokenEndpoint = 'https://api.soundcloud.com/oauth2/token';
-	protected $accessTokenExpires  = true;
-	protected $csrfToken           = false;
+	protected $apiURL             = 'https://api.soundcloud.com';
+	protected $authURL            = 'https://soundcloud.com/connect';
+	protected $accessTokenURL     = 'https://api.soundcloud.com/oauth2/token';
+	protected $userRevokeURL      = 'https://soundcloud.com/settings/connections';
+	protected $authMethod         = self::HEADER_OAUTH;
+	protected $accessTokenExpires = true;
+	protected $useCsrfToken       = false;
 
 }

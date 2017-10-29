@@ -22,12 +22,12 @@ class Foursquare extends OAuth2Provider{
 
 	const API_VERSIONDATE = '20171022';
 
-	protected $apiURL              = 'https://api.foursquare.com/v2';
-	protected $authURL             = 'https://foursquare.com/oauth2/authenticate';
-	protected $userRevokeURL       = 'https://foursquare.com/settings/connections';
-	protected $accessTokenEndpoint = 'https://foursquare.com/oauth2/access_token';
-	protected $authMethod          = self::QUERY_ACCESS_TOKEN;
-	protected $csrfToken           = false;
+	protected $apiURL         = 'https://api.foursquare.com/v2';
+	protected $authURL        = 'https://foursquare.com/oauth2/authenticate';
+	protected $accessTokenURL = 'https://foursquare.com/oauth2/access_token';
+	protected $userRevokeURL  = 'https://foursquare.com/settings/connections';
+	protected $authMethod     = self::QUERY_OAUTH_TOKEN;
+	protected $useCsrfToken   = false;
 
 	/**
 	 * @param string $path

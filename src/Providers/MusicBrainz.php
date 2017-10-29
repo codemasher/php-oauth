@@ -30,11 +30,11 @@ class MusicBrainz extends OAuth2Provider{
 	const SCOPE_SUBMIT_ISRC    = 'submit_isrc';
 	const SCOPE_SUBMIT_BARCODE = 'submit_barcode';
 
-	protected $apiURL              = 'https://musicbrainz.org/ws/2';
-	protected $authURL             = 'https://musicbrainz.org/oauth2/authorize';
-	protected $userRevokeURL       = 'https://musicbrainz.org/account/applications';
-	protected $accessTokenEndpoint = 'https://musicbrainz.org/oauth2/token';
-	protected $accessTokenExpires  = true;
+	protected $apiURL             = 'https://musicbrainz.org/ws/2';
+	protected $authURL            = 'https://musicbrainz.org/oauth2/authorize';
+	protected $accessTokenURL     = 'https://musicbrainz.org/oauth2/token';
+	protected $userRevokeURL      = 'https://musicbrainz.org/account/applications';
+	protected $accessTokenExpires = true;
 
 	/**
 	 * @inheritdoc

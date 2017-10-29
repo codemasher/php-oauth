@@ -13,7 +13,7 @@
 namespace chillerlan\OAuth\Providers;
 
 /**
- * @link https://developer.spotify.com/web-api/authorization-guide/#authorization-code-flow
+ * @link https://developer.spotify.com/web-api/authorization-guide/
  * @link https://developer.spotify.com/web-api/
  *
  * @method mixed album(string $id, array $params = ['market'])
@@ -115,13 +115,11 @@ class Spotify extends OAuth2Provider{
 		'valence',
 	];
 
-	protected $apiURL              = 'https://api.spotify.com/v1';
-	protected $authURL             = 'https://accounts.spotify.com/authorize';
-	protected $userRevokeURL       = 'https://www.spotify.com/account/apps/';
-	protected $accessTokenEndpoint = 'https://accounts.spotify.com/api/token';
-	protected $accessTokenExpires  = true;
-
-	// https://developer.spotify.com/web-api/authorization-guide/#client-credentials-flow
+	protected $apiURL             = 'https://api.spotify.com/v1';
+	protected $authURL            = 'https://accounts.spotify.com/authorize';
+	protected $accessTokenURL     = 'https://accounts.spotify.com/api/token';
+	protected $userRevokeURL      = 'https://www.spotify.com/account/apps/';
+	protected $accessTokenExpires = true;
 	protected $clientCredentials   = true;
 
 }

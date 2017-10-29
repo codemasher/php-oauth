@@ -70,7 +70,7 @@ abstract class OAuthProvider implements OAuthInterface{
 	/**
 	 * @var string
 	 */
-	protected $accessTokenEndpoint;
+	protected $accessTokenURL;
 
 	/**
 	 * @var array
@@ -118,16 +118,15 @@ abstract class OAuthProvider implements OAuthInterface{
 	}
 
 	/**
-	 * @param array $additionalParameters
+	 * @param array $params
 	 *
 	 * @return string
 	 */
-	public function getAuthURL(array $additionalParameters = []):string {
-
+	public function getAuthURL(array $params = []):string {
 		$url = $this->authURL;
 
-		if(!empty($additionalParameters)){
-			$url .= '?'.http_build_query($additionalParameters);
+		if(!empty($params)){
+			$url .= '?'.http_build_query($params);
 		}
 
 		return $url;

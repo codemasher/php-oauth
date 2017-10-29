@@ -7,9 +7,9 @@
  * @license      MIT
  */
 
-use chillerlan\OAuth\Providers\Google;
-
 require_once __DIR__.'/../bootstrap.php';
+
+use chillerlan\OAuth\Providers\Google;
 
 $scopes = [
 	Google::SCOPE_EMAIL,

@@ -29,10 +29,11 @@ class DeviantArt extends OAuth2Provider{
 	const SCOPE_USER         = 'user';
 	const SCOPE_USER_MANAGE  = 'user.manage';
 
-	protected $apiURL              = 'https://www.deviantart.com/api/v1/oauth2';
-	protected $authURL             = 'https://www.deviantart.com/oauth2/authorize';
-	protected $accessTokenEndpoint = 'https://www.deviantart.com/oauth2/token';
-	protected $accessTokenExpires  = true;
-	protected $clientCredentials   = true;
+	protected $apiURL             = 'https://www.deviantart.com/api/v1/oauth2';
+	protected $authURL            = 'https://www.deviantart.com/oauth2/authorize';
+	protected $accessTokenURL     = 'https://www.deviantart.com/oauth2/token';
+	protected $userRevokeURL      = 'https://www.deviantart.com/settings/applications';
+	protected $accessTokenExpires = true;
+	protected $clientCredentials  = true;
 
 }

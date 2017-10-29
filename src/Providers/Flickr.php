@@ -247,11 +247,11 @@ class Flickr extends OAuth1Provider{
 	const PERM_WRITE  = 'write';
 	const PERM_DELETE = 'delete';
 
-	protected $apiURL               = 'https://api.flickr.com/services/rest';
-	protected $requestTokenEndpoint = 'https://www.flickr.com/services/oauth/request_token';
-	protected $authURL              = 'https://www.flickr.com/services/oauth/authorize';
-	protected $userRevokeURL        = 'https://www.flickr.com/services/auth/list.gne';
-	protected $accessTokenEndpoint  = 'https://www.flickr.com/services/oauth/access_token';
+	protected $apiURL          = 'https://api.flickr.com/services/rest';
+	protected $requestTokenURL = 'https://www.flickr.com/services/oauth/request_token';
+	protected $authURL         = 'https://www.flickr.com/services/oauth/authorize';
+	protected $accessTokenURL  = 'https://www.flickr.com/services/oauth/access_token';
+	protected $userRevokeURL   = 'https://www.flickr.com/services/auth/list.gne';
 
 	/**
 	 * @param string $path

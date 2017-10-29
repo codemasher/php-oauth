@@ -30,13 +30,11 @@ class Discord extends OAuth2Provider{
 	const SCOPE_RPC_NOTIFICATIONS_READ = 'rpc.notifications.read';
 	const SCOPE_WEBHOOK_INCOMING       = 'webhook.incoming';
 
-	protected $apiURL              = 'https://discordapp.com/api/v6';
-	protected $authURL             = 'https://discordapp.com/api/oauth2/authorize';
-	protected $userRevokeURL       = 'https://discordapp.com/api/oauth2/token/revoke';
-	protected $accessTokenEndpoint = 'https://discordapp.com/api/oauth2/token';
-	protected $accessTokenExpires  = true;
-
-	// https://discordapp.com/developers/docs/topics/oauth2#client-credentials-grant
-	protected $clientCredentials   = true;
+	protected $apiURL             = 'https://discordapp.com/api/v6';
+	protected $authURL            = 'https://discordapp.com/api/oauth2/authorize';
+	protected $accessTokenURL     = 'https://discordapp.com/api/oauth2/token';
+	protected $revokeURL          = 'https://discordapp.com/api/oauth2/token/revoke';
+	protected $accessTokenExpires = true;
+	protected $clientCredentials  = true;
 
 }

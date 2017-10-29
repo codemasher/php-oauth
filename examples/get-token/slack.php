@@ -8,6 +8,8 @@
  * @license      MIT
  */
 
+require_once __DIR__.'/../bootstrap.php';
+
 use chillerlan\OAuth\Providers\Slack;
 
 $scopes = [

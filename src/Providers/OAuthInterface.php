@@ -21,11 +21,11 @@ use chillerlan\OAuth\Storage\TokenStorageInterface;
 interface OAuthInterface{
 
 	/**
-	 * @param array $additionalParameters
+	 * @param array $params
 	 *
 	 * @return string
 	 */
-	public function getAuthURL(array $additionalParameters = []):string;
+	public function getAuthURL(array $params = []):string;
 
 	/**
 	 * @return string

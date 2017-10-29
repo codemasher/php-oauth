@@ -7,9 +7,9 @@
  * @license      MIT
  */
 
-use chillerlan\OAuth\Providers\Instagram;
-
 require_once __DIR__.'/../bootstrap.php';
+
+use chillerlan\OAuth\Providers\Instagram;
 
 $scopes = [
 	Instagram::SCOPE_BASIC,

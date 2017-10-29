@@ -7,16 +7,15 @@
  * @license      MIT
  */
 
-use chillerlan\OAuth\Providers\Flickr;
-
 require_once __DIR__.'/../bootstrap.php';
+
+use chillerlan\OAuth\Providers\Flickr;
 
 /** @var \chillerlan\OAuth\Providers\Flickr $provider */
 $provider = getProvider('Flickr');
 
 if(isset($_GET['login']) && $_GET['login'] === $provider->serviceName){
 	header('Location: '.$provider->getAuthURL([
-		'oauth_token' => $provider->getRequestToken()->requestToken,
 		'perms' => Flickr::PERM_DELETE,
 	]));
 }

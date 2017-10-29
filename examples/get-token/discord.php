@@ -7,9 +7,9 @@
  * @license      MIT
  */
 
-use chillerlan\OAuth\Providers\Discord;
-
 require_once __DIR__.'/../bootstrap.php';
+
+use chillerlan\OAuth\Providers\Discord;
 
 $scopes = [
 #	Discord::SCOPE_BOT,
@@ -46,8 +46,3 @@ else{
 }
 
 exit;
-
-
-
-
-

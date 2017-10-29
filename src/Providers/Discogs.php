@@ -70,12 +70,12 @@ use DateTime;
  */
 class Discogs extends OAuth1Provider{
 
-	protected $requestTokenEndpoint = 'https://api.discogs.com/oauth/request_token';
-	protected $apiURL               = 'https://api.discogs.com';
-	protected $authURL              = 'https://www.discogs.com/oauth/authorize';
-	protected $userRevokeURL        = 'https://www.discogs.com/settings/applications';
-	protected $accessTokenEndpoint  = 'https://api.discogs.com/oauth/access_token';
-	protected $apiHeaders           = ['Accept' => 'application/vnd.discogs.v2.discogs+json'];
+	protected $apiURL          = 'https://api.discogs.com';
+	protected $requestTokenURL = 'https://api.discogs.com/oauth/request_token';
+	protected $authURL         = 'https://www.discogs.com/oauth/authorize';
+	protected $accessTokenURL  = 'https://api.discogs.com/oauth/access_token';
+	protected $userRevokeURL   = 'https://www.discogs.com/settings/applications';
+	protected $apiHeaders      = ['Accept' => 'application/vnd.discogs.v2.discogs+json'];
 
 	/**
 	 * @inheritdoc

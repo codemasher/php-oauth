@@ -20,8 +20,9 @@ class Wordpress extends OAuth2Provider{
 	const SCOPE_AUTH   = 'auth';
 	const SCOPE_GLOBAL = 'global';
 
-	protected $apiURL              = 'https://public-api.wordpress.com/rest/v1';
-	protected $authURL             = 'https://public-api.wordpress.com/oauth2/authorize';
-	protected $accessTokenEndpoint = 'https://public-api.wordpress.com/oauth2/token';
+	protected $apiURL         = 'https://public-api.wordpress.com/rest/v1';
+	protected $authURL        = 'https://public-api.wordpress.com/oauth2/authorize';
+	protected $accessTokenURL = 'https://public-api.wordpress.com/oauth2/token';
+	protected $userRevokeURL  = 'https://wordpress.com/me/security/connected-applications';
 
 }

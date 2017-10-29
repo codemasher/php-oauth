@@ -17,10 +17,11 @@ namespace chillerlan\OAuth\Providers;
  */
 class Mixcloud extends OAuth2Provider{
 
-	protected $apiURL              = 'https://api.mixcloud.com';
-	protected $authURL             = 'https://www.mixcloud.com/oauth/authorize';
-	protected $accessTokenEndpoint = 'https://www.mixcloud.com/oauth/access_token';
-	protected $authMethod          = self::QUERY_ACCESS_TOKEN;
-	protected $csrfToken           = false;
+	protected $apiURL         = 'https://api.mixcloud.com';
+	protected $authURL        = 'https://www.mixcloud.com/oauth/authorize';
+	protected $accessTokenURL = 'https://www.mixcloud.com/oauth/access_token';
+	protected $userRevokeURL  = 'https://www.mixcloud.com/settings/applications/';
+	protected $authMethod     = self::QUERY_ACCESS_TOKEN;
+	protected $useCsrfToken   = false;
 
 }

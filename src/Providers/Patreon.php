@@ -21,9 +21,9 @@ class Patreon extends OAuth2Provider{
 	const SCOPE_PLEDGES_TO_ME = 'pledges-to-me';
 	const SCOPE_MY_CAMPAIGN   = 'my-campaign';
 
-	protected $apiURL              = 'https://www.patreon.com/api/oauth2/api';
-	protected $authURL             = 'https://www.patreon.com/oauth2/authorize';
-	protected $accessTokenEndpoint = 'https://www.patreon.com/api/oauth2/token';
-	protected $accessTokenExpires  = true;
+	protected $apiURL             = 'https://www.patreon.com/api/oauth2/api';
+	protected $authURL            = 'https://www.patreon.com/oauth2/authorize';
+	protected $accessTokenURL     = 'https://www.patreon.com/api/oauth2/token';
+	protected $accessTokenExpires = true;
 
 }

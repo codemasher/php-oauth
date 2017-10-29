@@ -22,9 +22,9 @@ class Twitter2 extends OAuth2Provider{
 
 	protected $AUTH_ERRMSG = 'Twitter2 only supports Client Credentials Grant, use the Twitter OAuth1 class for authentication instead.';
 
-	protected $apiURL              = 'https://api.twitter.com/1.1';
-	protected $ccTokenEndpoint     = 'https://api.twitter.com/oauth2/token';
-	protected $clientCredentials   = true;
+	protected $apiURL                    = 'https://api.twitter.com/1.1';
+	protected $clientCredentialsTokenURL = 'https://api.twitter.com/oauth2/token';
+	protected $clientCredentials         = true;
 
 	/**
 	 * @throws \chillerlan\OAuth\OAuthException
@@ -51,7 +51,7 @@ class Twitter2 extends OAuth2Provider{
 		];
 
 		$token = $this->parseResponse(
-			$this->http->request($this->accessTokenEndpoint, [], 'POST', $body, $this->authHeaders)
+			$this->http->request($this->accessTokenEndpoint, [], 'POST', $body, [])
 		);
 
 		$this->storage->storeAccessToken($this->serviceName, $token);

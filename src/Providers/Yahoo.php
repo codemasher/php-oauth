@@ -17,8 +17,9 @@ namespace chillerlan\OAuth\Providers;
  */
 abstract class Yahoo extends OAuth2Provider{
 
-	protected $authURL             = 'https://api.login.yahoo.com/oauth2/request_auth';
-	protected $accessTokenEndpoint = 'https://api.login.yahoo.com/oauth2/get_token';
-	protected $accessTokenExpires  = true;
+	protected $authURL            = 'https://api.login.yahoo.com/oauth2/request_auth';
+	protected $accessTokenURL     = 'https://api.login.yahoo.com/oauth2/get_token';
+	protected $userRevokeURL      = 'https://login.yahoo.com/account/activity';
+	protected $accessTokenExpires = true;
 
 }

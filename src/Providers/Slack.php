@@ -75,8 +75,9 @@ class Slack extends OAuth2Provider{
 	const SCOPE_USERS_READ_EMAIL    = 'users:read.email';
 	const SCOPE_USERS_WRITE         = 'users:write';
 
-	protected $apiURL              = 'https://slack.com/api';
-	protected $authURL             = 'https://slack.com/oauth/authorize';
-	protected $accessTokenEndpoint = 'https://slack.com/api/oauth.access';
+	protected $apiURL         = 'https://slack.com/api';
+	protected $authURL        = 'https://slack.com/oauth/authorize';
+	protected $accessTokenURL = 'https://slack.com/api/oauth.access';
+	protected $userRevokeURL  = 'https://{WORKSPACE}.slack.com/apps/manage';
 
 }

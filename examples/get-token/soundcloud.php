@@ -7,12 +7,16 @@
  * @license      MIT
  */
 
-use chillerlan\OAuth\Providers\SoundCloud;
-
 require_once __DIR__.'/../bootstrap.php';
 
+use chillerlan\OAuth\Providers\SoundCloud;
+
+$scopes = [
+	SoundCloud::SCOPE_NONEXPIRING,
+];
+
 /** @var \chillerlan\OAuth\Providers\SoundCloud $provider */
-$provider = getProvider('SoundCloud', [SoundCloud::SCOPE_NONEXPIRING]);
+$provider = getProvider('SoundCloud', $scopes);
 
 if(isset($_GET['login']) && $_GET['login'] === $provider->serviceName){
 	header('Location: '.$provider->getAuthURL());

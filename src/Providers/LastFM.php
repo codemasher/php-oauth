@@ -94,16 +94,17 @@ class LastFM extends OAuthProvider{
 	protected $authURL   = 'https://www.last.fm/api/auth';
 
 	/**
-	 * @param array $additionalParameters
+	 * @param array $params
 	 *
 	 * @return string
 	 */
-	public function getAuthURL(array $additionalParameters = []):string {
-		$additionalParameters = array_merge($additionalParameters, [
+	public function getAuthURL(array $params = []):string {
+
+		$params = array_merge($params, [
 			'api_key' => $this->options->key,
 		]);
 
-		return $this->authURL.'?'.http_build_query($additionalParameters);
+		return $this->authURL.'?'.http_build_query($params);
 	}
 
 	/**
@@ -125,13 +126,20 @@ class LastFM extends OAuthProvider{
 
 		$response = $this->http->request($this->apiURL, $params)->json_array;
 
-		switch(true){
-			case !is_array($response):
-				throw new OAuthException('unable to parse access token response');
-			case isset($response['error']):
-				throw new OAuthException('access token error: '.$response['message']);
-			case !isset($response['session']['key']):
-				throw new OAuthException('access token missing');
+		$error = null;
+
+		if(!$response || !is_array($response)){
+			$error = 'unable to parse access token response';
+		}
+		elseif(isset($response['error'])){
+			$error = 'access token error: '.$response['message'];
+		}
+		elseif(!isset($response['session']['key'])){
+			$error = 'access token missing';
+		}
+
+		if($error){
+			throw new OAuthException($error);
 		}
 
 		$token = new Token([

@@ -8,12 +8,17 @@
  * @license      MIT
  */
 
-use chillerlan\OAuth\Providers\Gitter;
-
 require_once __DIR__.'/../bootstrap.php';
 
+use chillerlan\OAuth\Providers\Gitter;
+
+$scopes = [
+	Gitter::SCOPE_FLOW,
+	Gitter::SCOPE_PRIVATE,
+];
+
 /** @var \chillerlan\OAuth\Providers\Gitter $provider */
-$provider = getProvider('Gitter', [Gitter::SCOPE_FLOW, Gitter::SCOPE_PRIVATE]);
+$provider = getProvider('Gitter', $scopes);
 
 if(isset($_GET['login']) && $_GET['login'] === $provider->serviceName){
 	header('Location: '.$provider->getAuthURL());

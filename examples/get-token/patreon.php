@@ -8,9 +8,9 @@
  * @license      MIT
  */
 
-use chillerlan\OAuth\Providers\Patreon;
-
 require_once __DIR__.'/../bootstrap.php';
+
+use chillerlan\OAuth\Providers\Patreon;
 
 $scopes =  [
 	Patreon::SCOPE_USERS,

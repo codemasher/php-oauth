@@ -14,9 +14,7 @@ require_once __DIR__.'/../bootstrap.php';
 $provider = getProvider('Tumblr');
 
 if(isset($_GET['login']) && $_GET['login'] === $provider->serviceName){
-	header('Location: '.$provider->getAuthURL([
-		'oauth_token' => $provider->getRequestToken()->requestToken,
-	]));
+	header('Location: '.$provider->getAuthURL());
 }
 elseif(isset($_GET['oauth_token']) && isset($_GET['oauth_verifier'])){
 	$token = $provider->getAccessToken($_GET['oauth_token'], $_GET['oauth_verifier']);

@@ -39,12 +39,12 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	/**
 	 * @var bool
 	 */
-	protected $csrfToken = true;
+	protected $useCsrfToken = true;
 
 	/**
 	 * @var bool
 	 */
-	protected $accessTokenExpires  = false;
+	protected $accessTokenExpires = false;
 
 	/**
 	 * @var int
@@ -59,7 +59,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	/**
 	 * @var string
 	 */
-	protected $ccTokenEndpoint;
+	protected $clientCredentialsTokenURL;
 
 	/**
 	 * OAuth2Provider constructor.
@@ -69,10 +69,10 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	 * @param \chillerlan\OAuth\OAuthOptions                  $options
 	 * @param array                                           $scopes
 	 */
-	public function __construct(HTTPClientInterface $http, TokenStorageInterface $storage, OAuthOptions $options, array $scopes = []){
+	public function __construct(HTTPClientInterface $http, TokenStorageInterface $storage, OAuthOptions $options, array $scopes = null){
 		parent::__construct($http, $storage, $options);
 
-		$this->scopes = $scopes;
+		$this->scopes = $scopes ?? [];
 	}
 
 	/**
@@ -88,9 +88,9 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	 * @return string
 	 */
 	public function getAuthURL(array $parameters = []):string{
-		$parameters = $this->getAuthURLBody($parameters);
+		$parameters = $this->getAuthURLParams($parameters);
 
-		if($this->csrfToken){
+		if($this->useCsrfToken){
 
 			if(!isset($parameters['state'])){
 				$parameters['state'] = sha1(random_bytes(256));
@@ -107,7 +107,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	 *
 	 * @return array
 	 */
-	protected function getAuthURLBody(array $parameters):array {
+	protected function getAuthURLParams(array $parameters):array {
 		return array_merge($parameters, [
 			'client_id'     => $this->options->key,
 			'redirect_uri'  => $this->options->callbackURL,
@@ -130,7 +130,13 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 			throw new OAuthException('unable to parse access token response'.PHP_EOL.print_r($response, true));
 		}
 
-		$this->checkResponse($data);
+		foreach(['error_description', 'error'] as $field){
+
+			if(isset($data[$field])){
+				throw new OAuthException('error retrieving access token: "'.$data[$field].'"'.PHP_EOL.print_r($data, true));
+			}
+
+		}
 
 		$token = new Token([
 			'accessToken'  => $data['access_token'],
@@ -146,35 +152,6 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	}
 
 	/**
-	 * @param array $data
-	 *
-	 * @return array
-	 * @throws \chillerlan\OAuth\OAuthException
-	 */
-	protected function checkResponse($data):array {
-
-		switch(true){
-			case isset($data['error_description']):
-				$error = 'error retrieving access token #1: "'.$data['error_description'].'"';
-				break;
-			case isset($data['error']):
-				$error = 'error retrieving access token #2: "'.$data['error'].'"';
-				break;
-			case isset($data['error_reason']): // Deezer
-				$error = 'error retrieving access token #3: "'.$data['error_reason'].'"';
-				break;
-			default:
-				$error = null;
-		}
-
-		if($error){
-			throw new OAuthException($error.PHP_EOL.print_r($data, true));
-		}
-
-		return $data;
-	}
-
-	/**
 	 * @param string      $code
 	 * @param string|null $state
 	 *
@@ -183,7 +160,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	 */
 	public function getAccessToken(string $code, string $state = null):Token{
 
-		if($this->csrfToken && is_string($state) && (
+		if($this->useCsrfToken && is_string($state) && (
 			!$this->storage->hasAuthorizationState($this->serviceName)
 			|| $this->storage->retrieveAuthorizationState($this->serviceName) !== $state
 		)){
@@ -192,7 +169,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 
 		$token = $this->parseResponse(
 			$this->http->request(
-				$this->accessTokenEndpoint,
+				$this->accessTokenURL,
 				[],
 				'POST',
 				$this->getAccessTokenBody($code),
@@ -241,7 +218,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 
 		$token = $this->parseResponse(
 			$this->http->request(
-				$this->ccTokenEndpoint ?? $this->accessTokenEndpoint,
+				$this->clientCredentialsTokenURL ?? $this->accessTokenURL,
 				[],
 				'POST',
 				$this->getClientCredentialsTokenBody($scopes),
@@ -261,8 +238,8 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	 */
 	protected function getClientCredentialsTokenBody(array $scopes):array {
 		return [
-			'grant_type'    => 'client_credentials',
-			'scope'         => implode($this->scopesDelimiter, $scopes),
+			'grant_type' => 'client_credentials',
+			'scope'      => implode($this->scopesDelimiter, $scopes),
 		];
 	}
 
@@ -293,11 +270,11 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 
 		$newToken = $this->parseResponse(
 			$this->http->request(
-				$this->accessTokenEndpoint,
+				$this->accessTokenURL,
 				[],
 				'POST',
 				$this->refreshAccessTokenBody($token),
-				$this->authHeaders
+				$this->refreshAccessTokenHeaders()
 			)
 		);
 
@@ -323,6 +300,13 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 			'refresh_token' => $token->refreshToken,
 			'type'          => 'web_server',
 		];
+	}
+
+	/**
+	 * @return array
+	 */
+	protected function refreshAccessTokenHeaders():array{
+		return $this->authHeaders;
 	}
 
 	/**

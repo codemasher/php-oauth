@@ -26,10 +26,10 @@ class Google extends OAuth2Provider{
 	const SCOPE_YOUTUBE          = 'https://www.googleapis.com/auth/youtube';
 	const SCOPE_YOUTUBE_GDATA    = 'https://gdata.youtube.com';
 
-	protected $apiURL              = 'https://www.googleapis.com';
-	protected $authURL             = 'https://accounts.google.com/o/oauth2/auth';
-	protected $accessTokenEndpoint = 'https://accounts.google.com/o/oauth2/token';
-	protected $userRevokeURL       = 'https://myaccount.google.com/permissions';
-	protected $accessTokenExpires  = true;
+	protected $apiURL             = 'https://www.googleapis.com';
+	protected $authURL            = 'https://accounts.google.com/o/oauth2/auth';
+	protected $accessTokenURL     = 'https://accounts.google.com/o/oauth2/token';
+	protected $userRevokeURL      = 'https://myaccount.google.com/permissions';
+	protected $accessTokenExpires = true;
 
 }

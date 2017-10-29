@@ -50,10 +50,10 @@ class Instagram extends OAuth2Provider{
 	const SCOPE_PUBLIC_CONTENT = 'public_content';
 	const SCOPE_FOLLOWER_LIST  = 'follower_list';
 
-	protected $apiURL              = 'https://api.instagram.com/v1';
-	protected $authURL             = 'https://api.instagram.com/oauth/authorize/';
-	protected $userRevokeURL       = 'https://www.instagram.com/accounts/manage_access/';
-	protected $accessTokenEndpoint = 'https://api.instagram.com/oauth/access_token';
-	protected $authMethod          = self::QUERY_ACCESS_TOKEN;
+	protected $apiURL         = 'https://api.instagram.com/v1';
+	protected $authURL        = 'https://api.instagram.com/oauth/authorize';
+	protected $accessTokenURL = 'https://api.instagram.com/oauth/access_token';
+	protected $userRevokeURL  = 'https://www.instagram.com/accounts/manage_access/';
+	protected $authMethod     = self::QUERY_ACCESS_TOKEN;
 
 }

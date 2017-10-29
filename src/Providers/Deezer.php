@@ -12,9 +12,9 @@
 
 namespace chillerlan\OAuth\Providers;
 
-use chillerlan\OAuth\HTTP\OAuthResponse;
-use chillerlan\OAuth\OAuthException;
-use chillerlan\OAuth\Token;
+use chillerlan\OAuth\{
+	HTTP\OAuthResponse, OAuthException, Token
+};
 
 /**
  * @link https://developers.deezer.com/api/oauth
@@ -32,17 +32,18 @@ class Deezer extends OAuth2Provider{
 	const SCOPE_DELETE_LIBRARY    = 'delete_library';
 	const SCOPE_LISTENING_HISTORY = 'listening_history';
 
-	protected $apiURL              = 'https://api.deezer.com';
-	protected $authURL             = 'https://connect.deezer.com/oauth/auth.php';
-	protected $accessTokenEndpoint = 'https://connect.deezer.com/oauth/access_token.php';
-	protected $authMethod          = self::QUERY_ACCESS_TOKEN;
+	protected $apiURL         = 'https://api.deezer.com';
+	protected $authURL        = 'https://connect.deezer.com/oauth/auth.php';
+	protected $accessTokenURL = 'https://connect.deezer.com/oauth/access_token.php';
+	protected $userRevokeURL  = 'https://www.deezer.com/account/apps';
+	protected $authMethod     = self::QUERY_ACCESS_TOKEN;
 
 	/**
 	 * @param array $parameters
 	 *
 	 * @return array
 	 */
-	protected function getAuthURLBody(array $parameters):array {
+	protected function getAuthURLParams(array $parameters):array {
 		return array_merge($parameters, [
 			'app_id'        => $this->options->key,
 			'redirect_uri'  => $this->options->callbackURL,
@@ -78,7 +79,9 @@ class Deezer extends OAuth2Provider{
 			throw new OAuthException('unable to parse access token response'.PHP_EOL.print_r($response, true));
 		}
 
-		$this->checkResponse($data);
+		if(isset($data['error_reason'])){
+			throw new OAuthException('error retrieving access token: "'.$data['error_reason'].'"'.PHP_EOL.print_r($data, true));
+		}
 
 		$token = new Token([
 			'accessToken'  => $data['access_token'],

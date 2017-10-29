@@ -127,11 +127,11 @@ namespace chillerlan\OAuth\Providers;
  */
 class Twitter extends OAuth1Provider{
 
-	protected $apiURL               = 'https://api.twitter.com/1.1';
-	protected $requestTokenEndpoint = 'https://api.twitter.com/oauth/request_token';
-	protected $authURL              = 'https://api.twitter.com/oauth/authorize';
-	protected $userRevokeURL        = 'https://twitter.com/settings/applications';
-	protected $accessTokenEndpoint  = 'https://api.twitter.com/oauth/access_token';
+	protected $apiURL          = 'https://api.twitter.com/1.1';
+	protected $requestTokenURL = 'https://api.twitter.com/oauth/request_token';
+	protected $authURL         = 'https://api.twitter.com/oauth/authorize';
+	protected $accessTokenURL  = 'https://api.twitter.com/oauth/access_token';
+	protected $userRevokeURL   = 'https://twitter.com/settings/applications';
 
 	// todo: filter allowed params
 	protected function checkParams($params){

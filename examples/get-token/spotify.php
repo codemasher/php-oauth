@@ -8,9 +8,9 @@
  * @license      MIT
  */
 
-use chillerlan\OAuth\Providers\Spotify;
-
 require_once __DIR__.'/../bootstrap.php';
+
+use chillerlan\OAuth\Providers\Spotify;
 
 $scopes =  [
 	Spotify::SCOPE_PLAYLIST_READ_PRIVATE,

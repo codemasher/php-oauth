@@ -25,6 +25,7 @@ interface OAuth2Interface extends OAuthInterface{
 	const QUERY_OAUTH2_ACCESS_TOKEN = 3;
 	const QUERY_APIKEY              = 4;
 	const QUERY_AUTH                = 5;
+	const QUERY_OAUTH_TOKEN         = 6;
 
 	const AUTH_METHODS_HEADER = [
 		self::HEADER_OAUTH  => 'OAuth ',
@@ -36,6 +37,7 @@ interface OAuth2Interface extends OAuthInterface{
 		self::QUERY_OAUTH2_ACCESS_TOKEN => 'oauth2_access_token',
 		self::QUERY_APIKEY              => 'apikey',
 		self::QUERY_AUTH                => 'auth',
+		self::QUERY_OAUTH_TOKEN         => 'oauth_token',
 	];
 
 	/**

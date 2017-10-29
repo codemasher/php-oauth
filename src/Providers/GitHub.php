@@ -44,11 +44,11 @@ class GitHub extends OAuth2Provider{
 	const SCOPE_GPG_KEY_WRITE    = 'write:gpg_key';
 	const SCOPE_GPG_KEY_ADMIN    = 'admin:gpg_key';
 
-	protected $apiURL              = 'https://api.github.com';
-	protected $authURL             = 'https://github.com/login/oauth/authorize';
-	protected $userRevokeURL       = 'https://github.com/settings/applications';
-	protected $accessTokenEndpoint = 'https://github.com/login/oauth/access_token';
-	protected $authHeaders         = ['Accept' => 'application/json'];
-	protected $apiHeaders          = ['Accept' => 'application/vnd.github.beta+json'];
+	protected $apiURL         = 'https://api.github.com';
+	protected $authURL        = 'https://github.com/login/oauth/authorize';
+	protected $accessTokenURL = 'https://github.com/login/oauth/access_token';
+	protected $userRevokeURL  = 'https://github.com/settings/applications';
+	protected $authHeaders    = ['Accept' => 'application/json'];
+	protected $apiHeaders     = ['Accept' => 'application/vnd.github.beta+json'];
 
 }

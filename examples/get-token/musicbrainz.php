@@ -8,9 +8,9 @@
  * @license      MIT
  */
 
-use chillerlan\OAuth\Providers\MusicBrainz;
-
 require_once __DIR__.'/../bootstrap.php';
+
+use chillerlan\OAuth\Providers\MusicBrainz;
 
 $scopes = [
 	MusicBrainz::SCOPE_PROFILE,

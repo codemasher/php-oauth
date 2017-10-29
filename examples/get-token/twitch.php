@@ -7,12 +7,16 @@
  * @license      MIT
  */
 
-use chillerlan\OAuth\Providers\Twitch;
-
 require_once __DIR__.'/../bootstrap.php';
 
+use chillerlan\OAuth\Providers\Twitch;
+
+$scopes = [
+	Twitch::SCOPE_USER_READ,
+];
+
 /** @var \chillerlan\OAuth\Providers\Twitch $provider */
-$provider = getProvider('Twitch', [Twitch::SCOPE_USER_READ]);
+$provider = getProvider('Twitch', $scopes);
 
 if(isset($_GET['login']) && $_GET['login'] === $provider->serviceName){
 	header('Location: '.$provider->getAuthURL());

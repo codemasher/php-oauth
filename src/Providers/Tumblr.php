@@ -17,10 +17,10 @@ namespace chillerlan\OAuth\Providers;
  */
 class Tumblr extends OAuth1Provider{
 
-	protected $apiURL               = 'https://api.tumblr.com/v2';
-	protected $requestTokenEndpoint = 'https://www.tumblr.com/oauth/request_token';
-	protected $authURL              = 'https://www.tumblr.com/oauth/authorize';
-	protected $accessTokenEndpoint  = 'https://www.tumblr.com/oauth/access_token';
-	protected $userRevokeURL        = 'https://www.tumblr.com/settings/apps';
+	protected $apiURL          = 'https://api.tumblr.com/v2';
+	protected $requestTokenURL = 'https://www.tumblr.com/oauth/request_token';
+	protected $authURL         = 'https://www.tumblr.com/oauth/authorize';
+	protected $accessTokenURL  = 'https://www.tumblr.com/oauth/access_token';
+	protected $userRevokeURL   = 'https://www.tumblr.com/settings/apps';
 
 }

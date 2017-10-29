@@ -6,9 +6,10 @@
  * @copyright    2017 Smiley
  * @license      MIT
  */
-use chillerlan\OAuth\Providers\GitHub;
 
 require_once __DIR__.'/../bootstrap.php';
+
+use chillerlan\OAuth\Providers\GitHub;
 
 $scopes = [
 	GitHub::SCOPE_USER,
