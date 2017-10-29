@@ -76,6 +76,7 @@ function createTable(Connection $db, string $token_table, string $provider_table
 		['provider_id' => 23, 'servicename' => 'Deezer'],
 		['provider_id' => 24, 'servicename' => 'Mixcloud'],
 		['provider_id' => 25, 'servicename' => 'Slack'],
+		['provider_id' => 26, 'servicename' => 'Amazon'],
 	];
 
 	return $db->insert

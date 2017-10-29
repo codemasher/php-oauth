@@ -38,6 +38,7 @@
   - Tumblr
   - Flickr
 - Oauth2
+  - Amazon
   - Deezer
   - Foursquare
   - Github
