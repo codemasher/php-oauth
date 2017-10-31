@@ -54,8 +54,9 @@ class GuzzleClient extends HTTPClientAbstract{
 
 			// @link http://docs.guzzlephp.org/en/stable/request-options.html
 			$options = [
-				'query'   => $params,
-				'headers' => $headers
+				'query'       => $params,
+				'headers'     => $headers,
+				'http_errors' => false, // no exceptions on HTTP errors plz
 			];
 
 			if(in_array($method, ['PATCH', 'POST', 'PUT', 'DELETE'], true)){
@@ -72,8 +73,13 @@ class GuzzleClient extends HTTPClientAbstract{
 
 			$response = $this->http->request($method, explode('?', $url)[0], $options);
 
+			$responseHeaders              = $this->parseResponseHeaders($response->getHeaders());
+			$responseHeaders->statuscode  = $response->getStatusCode();
+			$responseHeaders->statustext  = $response->getReasonPhrase();
+			$responseHeaders->httpversion = $response->getProtocolVersion();
+
 			return new OAuthResponse([
-				'headers' => $this->parseResponseHeaders($response->getHeaders()),
+				'headers' => $responseHeaders,
 				'body'    => $response->getBody(),
 			]);
 
