@@ -23,6 +23,7 @@ class GuzzleClientTest extends HTTPClientTestAbstract{
 
 		$client = new Client([
 			'cacert' => self::CACERT,
+			'headers' => ['User-Agent' => self::USER_AGENT]
 		]);
 
 		$this->http = new $this->FQCN($client);

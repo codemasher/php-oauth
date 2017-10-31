@@ -94,6 +94,7 @@ abstract class HTTPClientTestAbstract extends TestCase{
 		$this->assertSame('https://httpbin.org/'.$method.'?foo=bar', $r->url);
 		$this->assertSame('bar', $r->args->foo);
 		$this->assertSame('nope', $r->headers->What);
+		$this->assertSame(self::USER_AGENT, $r->headers->{'User-Agent'});
 
 		if(in_array($method, ['patch', 'post', 'put'])){
 			$this->assertSame('wtf', $r->form->huh);
