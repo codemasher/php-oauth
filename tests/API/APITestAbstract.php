@@ -36,6 +36,7 @@ abstract class APITestAbstract extends TestCase{
 
 	const CFGDIR  = __DIR__.'/../../config';
 	const STORAGE = __DIR__.'/../../tokenstorage';
+	const UA = 'chillerlanPhpOAuth/1.2.0 +https://github.com/codemasher/php-oauth';
 
 	/**
 	 * @var \chillerlan\OAuth\Storage\TokenStorageInterface
@@ -70,10 +71,10 @@ abstract class APITestAbstract extends TestCase{
 
 		$this->storage  = new DBTokenStorage($db, DBTest::TABLE_TOKEN, DBTest::TABLE_PROVIDER, 1);
 
-		$http = new GuzzleClient(new Client(['cacert' => self::CFGDIR.'/cacert.pem']));
-#		$http = new TinyCurlClient(new Request(new RequestOptions(['ca_info' => self::CFGDIR.'/cacert.pem'])));
-#		$http = new CurlClient([CURLOPT_CAINFO => self::CFGDIR.'/cacert.pem']);
-#		$http = new StreamClient(self::CFGDIR.'/cacert.pem', 'test');
+		$http = new GuzzleClient(new Client(['cacert' => self::CFGDIR.'/cacert.pem', 'headers' => ['User-Agent' => self::UA]]));
+#		$http = new TinyCurlClient(new Request(new RequestOptions(['ca_info' => self::CFGDIR.'/cacert.pem', 'userAgent' => self::UA])));
+#		$http = new CurlClient([CURLOPT_CAINFO => self::CFGDIR.'/cacert.pem', CURLOPT_USERAGENT => self::UA]);
+#		$http = new StreamClient(self::CFGDIR.'/cacert.pem', self::UA);
 
 		$this->provider = new $this->providerClass(
 			$http,
