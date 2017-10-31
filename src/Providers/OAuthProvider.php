@@ -153,7 +153,7 @@ abstract class OAuthProvider implements OAuthInterface{
 	 * @param string $name
 	 * @param array  $arguments
 	 *
-	 * @return mixed
+	 * @return \chillerlan\OAuth\HTTP\OAuthResponse|null
 	 * @throws \chillerlan\OAuth\API\OAuthAPIClientException
 	 */
 	public function __call(string $name, array $arguments){
@@ -163,35 +163,47 @@ abstract class OAuthProvider implements OAuthInterface{
 
 			$endpoint      = $m->path ?? '/';
 			$method        = $m->method ?? 'GET';
-
-			$p = $m->path_elements ?? [];
-			$params_in_url = count($p);
-
-			$body      = null;
-			$params    = $arguments[$params_in_url] ?? null;
-			$urlparams = array_slice($arguments,0 , $params_in_url);
+			$body          = null;
+			$headers       = is_object($m->headers) ? (array)$m->headers : [];
+			$path_elements = $m->path_elements ?? [];
+			$params_in_url = count($path_elements);
+			$params        = $arguments[$params_in_url] ?? null;
+			$urlparams     = array_slice($arguments,0 , $params_in_url);
 
 			if($params_in_url > 0){
 
 				if(count($urlparams) < $params_in_url){
-					throw new OAuthAPIClientException('too few URL params, required: '.implode(', ', $p));
+					throw new OAuthAPIClientException('too few URL params, required: '.implode(', ', $path_elements));
 				}
 
 				$endpoint = sprintf($endpoint, ...$urlparams);
 			}
 
-			if(in_array($method, ['POST', 'PUT', 'DELETE'])){
-				$body   = $arguments[$params_in_url + 1] ?? $params;
-				$params = $params === $body ? null : $params;
+
+			if(in_array($method, ['POST', 'PATCH', 'PUT', 'DELETE'])){
+				$body = $arguments[$params_in_url + 1] ?? $params;
+
+				if($params === $body){
+					$params = null;
+				}
+
+				if(is_array($body) && isset($headers['Content-Type']) && strpos($headers['Content-Type'], 'json') !== false){
+					$body = json_encode($body);
+				}
+
 			}
+
+#			print_r([$endpoint,$params,$method,$body,$headers]);
+
+			// uhhhh... @todo
 
 			return $this->request(
 				$endpoint,
 				$this->checkParams($params ?? []),
 				$method,
 				$this->checkParams($body),
-				$m->headers ?? []
-			)->json;
+				$headers
+			);
 
 		}
 
