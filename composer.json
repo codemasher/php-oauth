@@ -21,7 +21,7 @@
 		"chillerlan/php-curl": ">=1.0.3",
 		"chillerlan/database": "dev-master",
 		"guzzlehttp/guzzle": "~6.0",
-		"phpunit/phpunit": "6.3.*",
+		"phpunit/phpunit": "6.4.*",
 		"vlucas/phpdotenv": "2.*"
 	},
 	"autoload": {
