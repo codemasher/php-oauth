@@ -12,65 +12,65 @@
 
 namespace chillerlan\OAuth\Providers;
 
-use chillerlan\OAuth\OAuthException;
-use chillerlan\OAuth\Token;
-use chillerlan\OAuth\HTTP\OAuthResponse;
+use chillerlan\OAuth\{
+	OAuthException, Token, HTTP\OAuthResponse
+};
 
 /**
- * @link http://www.last.fm/api
+ * @link https://www.last.fm/api/authentication
  *
- * @method mixed albumAddTags(array $body = ['mbid', 'album', 'artist', 'tags'])
- * @method mixed albumGetInfo(array $params = ['mbid', 'album', 'artist', 'username', 'lang', 'autocorrect'])
- * @method mixed albumGetTags(array $params = ['mbid', 'album', 'artist', 'user', 'autocorrect'])
- * @method mixed albumGetTopTags(array $params = ['mbid', 'album', 'artist', 'autocorrect'])
- * @method mixed albumRemoveTag(array $body = ['mbid', 'album', 'artist', 'tag'])
- * @method mixed albumSearch(array $params = ['album', 'limit', 'page'])
- * @method mixed artistAddTags(array $body = ['mbid', 'artist', 'tags'])
- * @method mixed artistGetCorrection(array $params = ['artist'])
- * @method mixed artistGetInfo(array $params = ['mbid', 'artist', 'username', 'lang', 'autocorrect'])
- * @method mixed artistGetSimilar(array $params = ['mbid', 'artist', 'limit', 'autocorrect'])
- * @method mixed artistGetTags(array $params = ['mbid', 'artist', 'user', 'autocorrect'])
- * @method mixed artistGetTopAlbums(array $params = ['mbid', 'artist', 'autocorrect', 'page', 'limit'])
- * @method mixed artistGetTopTags(array $params = ['mbid', 'artist', 'autocorrect'])
- * @method mixed artistGetTopTracks(array $params = ['mbid', 'artist', 'autocorrect', 'page', 'limit'])
- * @method mixed artistRemoveTag(array $body = ['mbid', 'artist', 'tag'])
- * @method mixed artistSearch(array $params = ['artist', 'limit', 'page'])
- * @method mixed chartGetTopArtists(array $params = ['limit', 'page'])
- * @method mixed chartGetTopTags(array $params = ['limit', 'page'])
- * @method mixed chartGetTopTracks(array $params = ['limit', 'page'])
- * @method mixed geoGetTopArtists(array $params = ['country', 'location', 'limit', 'page'])
- * @method mixed geoGetTopTracks(array $params = ['country', 'location', 'limit', 'page'])
- * @method mixed libraryGetArtists(array $params = ['user', 'limit', 'page'])
- * @method mixed tagGetInfo(array $params = ['tag', 'lang'])
- * @method mixed tagGetSimilar(array $params = ['tag'])
- * @method mixed tagGetTopAlbums(array $params = ['tag', 'limit', 'page'])
- * @method mixed tagGetTopArtists(array $params = ['tag', 'limit', 'page'])
- * @method mixed tagGetTopTags()
- * @method mixed tagGetTopTracks(array $params = ['tag', 'limit', 'page'])
- * @method mixed tagGetWeeklyChartList(array $params = ['tag'])
- * @method mixed trackAddTags(array $body = ['mbid', 'artist', 'track', 'tags'])
- * @method mixed trackGetCorrection(array $params = ['artist', 'track'])
- * @method mixed trackGetInfo(array $params = ['mbid', 'artist', 'track', 'username', 'autocorrect'])
- * @method mixed trackGetSimilar(array $params = ['mbid', 'artist', 'track', 'autocorrect', 'limit'])
- * @method mixed trackGetTags(array $params = ['mbid', 'artist', 'track', 'autocorrect', 'user'])
- * @method mixed trackGetTopTags(array $params = ['mbid', 'artist', 'track', 'autocorrect'])
- * @method mixed trackLove(array $body = ['mbid', 'artist', 'track'])
- * @method mixed trackRemoveTag(array $body = ['mbid', 'artist', 'track', 'tag'])
- * @method mixed trackSearch(array $params = ['artist', 'track', 'limit', 'page'])
- * @method mixed trackUnlove(array $body = ['mbid', 'artist', 'track'])
- * @method mixed trackUpdateNowPlaying(array $body = ['mbid', 'artist', 'track', 'album', 'trackNumber', 'context', 'duration', 'albumArtist'])
- * @method mixed userGetArtistTracks(array $params = ['user', 'artist', 'limit', 'page', 'startTimestamp', 'endTimestamp'])
- * @method mixed userGetFriends(array $params = ['user', 'limit', 'page', 'recenttracks'])
- * @method mixed userGetInfo(array $params = ['user'])
- * @method mixed userGetLovedTracks(array $params = ['user', 'limit', 'page'])
- * @method mixed userGetPersonalTags(array $params = ['user', 'limit', 'page', 'tag', 'taggingtype'])
- * @method mixed userGetRecentTracks(array $params = ['user', 'limit', 'page', 'from', 'to', 'extended'])
- * @method mixed userGetTopAlbums(array $params = ['user', 'limit', 'page', 'period'])
- * @method mixed userGetTopArtists(array $params = ['user', 'limit', 'page', 'period'])
- * @method mixed userGetTopTags(array $params = ['user', 'limit', 'page'])
- * @method mixed userGetWeeklyAlbumChart(array $params = ['user', 'from', 'to'])
- * @method mixed userGetWeeklyArtistChart(array $params = ['user', 'from', 'to'])
- * @method mixed userGetWeeklyTrackChart(array $params = ['user', 'from', 'to'])
+ * @method \chillerlan\OAuth\HTTP\OAuthResponse albumAddTags(array $body = ['mbid', 'album', 'artist', 'tags'])
+ * @method \chillerlan\OAuth\HTTP\OAuthResponse albumGetInfo(array $params = ['mbid', 'album', 'artist', 'username', 'lang', 'autocorrect'])
+ * @method \chillerlan\OAuth\HTTP\OAuthResponse albumGetTags(array $params = ['mbid', 'album', 'artist', 'user', 'autocorrect'])
+ * @method \chillerlan\OAuth\HTTP\OAuthResponse albumGetTopTags(array $params = ['mbid', 'album', 'artist', 'autocorrect'])
+ * @method \chillerlan\OAuth\HTTP\OAuthResponse albumRemoveTag(array $body = ['mbid', 'album', 'artist', 'tag'])
+ * @method \chillerlan\OAuth\HTTP\OAuthResponse albumSearch(array $params = ['album', 'limit', 'page'])
+ * @method \chillerlan\OAuth\HTTP\OAuthResponse artistAddTags(array $body = ['mbid', 'artist', 'tags'])
+ * @method \chillerlan\OAuth\HTTP\OAuthResponse artistGetCorrection(array $params = ['artist'])
+ * @method \chillerlan\OAuth\HTTP\OAuthResponse artistGetInfo(array $params = ['mbid', 'artist', 'username', 'lang', 'autocorrect'])
+ * @method \chillerlan\OAuth\HTTP\OAuthResponse artistGetSimilar(array $params = ['mbid', 'artist', 'limit', 'autocorrect'])
+ * @method \chillerlan\OAuth\HTTP\OAuthResponse artistGetTags(array $params = ['mbid', 'artist', 'user', 'autocorrect'])
+ * @method \chillerlan\OAuth\HTTP\OAuthResponse artistGetTopAlbums(array $params = ['mbid', 'artist', 'autocorrect', 'page', 'limit'])
+ * @method \chillerlan\OAuth\HTTP\OAuthResponse artistGetTopTags(array $params = ['mbid', 'artist', 'autocorrect'])
+ * @method \chillerlan\OAuth\HTTP\OAuthResponse artistGetTopTracks(array $params = ['mbid', 'artist', 'autocorrect', 'page', 'limit'])
+ * @method \chillerlan\OAuth\HTTP\OAuthResponse artistRemoveTag(array $body = ['mbid', 'artist', 'tag'])
+ * @method \chillerlan\OAuth\HTTP\OAuthResponse artistSearch(array $params = ['artist', 'limit', 'page'])
+ * @method \chillerlan\OAuth\HTTP\OAuthResponse chartGetTopArtists(array $params = ['limit', 'page'])
+ * @method \chillerlan\OAuth\HTTP\OAuthResponse chartGetTopTags(array $params = ['limit', 'page'])
+ * @method \chillerlan\OAuth\HTTP\OAuthResponse chartGetTopTracks(array $params = ['limit', 'page'])
+ * @method \chillerlan\OAuth\HTTP\OAuthResponse geoGetTopArtists(array $params = ['country', 'location', 'limit', 'page'])
+ * @method \chillerlan\OAuth\HTTP\OAuthResponse geoGetTopTracks(array $params = ['country', 'location', 'limit', 'page'])
+ * @method \chillerlan\OAuth\HTTP\OAuthResponse libraryGetArtists(array $params = ['user', 'limit', 'page'])
+ * @method \chillerlan\OAuth\HTTP\OAuthResponse tagGetInfo(array $params = ['tag', 'lang'])
+ * @method \chillerlan\OAuth\HTTP\OAuthResponse tagGetSimilar(array $params = ['tag'])
+ * @method \chillerlan\OAuth\HTTP\OAuthResponse tagGetTopAlbums(array $params = ['tag', 'limit', 'page'])
+ * @method \chillerlan\OAuth\HTTP\OAuthResponse tagGetTopArtists(array $params = ['tag', 'limit', 'page'])
+ * @method \chillerlan\OAuth\HTTP\OAuthResponse tagGetTopTags()
+ * @method \chillerlan\OAuth\HTTP\OAuthResponse tagGetTopTracks(array $params = ['tag', 'limit', 'page'])
+ * @method \chillerlan\OAuth\HTTP\OAuthResponse tagGetWeeklyChartList(array $params = ['tag'])
+ * @method \chillerlan\OAuth\HTTP\OAuthResponse trackAddTags(array $body = ['mbid', 'artist', 'track', 'tags'])
+ * @method \chillerlan\OAuth\HTTP\OAuthResponse trackGetCorrection(array $params = ['artist', 'track'])
+ * @method \chillerlan\OAuth\HTTP\OAuthResponse trackGetInfo(array $params = ['mbid', 'artist', 'track', 'username', 'autocorrect'])
+ * @method \chillerlan\OAuth\HTTP\OAuthResponse trackGetSimilar(array $params = ['mbid', 'artist', 'track', 'autocorrect', 'limit'])
+ * @method \chillerlan\OAuth\HTTP\OAuthResponse trackGetTags(array $params = ['mbid', 'artist', 'track', 'autocorrect', 'user'])
+ * @method \chillerlan\OAuth\HTTP\OAuthResponse trackGetTopTags(array $params = ['mbid', 'artist', 'track', 'autocorrect'])
+ * @method \chillerlan\OAuth\HTTP\OAuthResponse trackLove(array $body = ['mbid', 'artist', 'track'])
+ * @method \chillerlan\OAuth\HTTP\OAuthResponse trackRemoveTag(array $body = ['mbid', 'artist', 'track', 'tag'])
+ * @method \chillerlan\OAuth\HTTP\OAuthResponse trackSearch(array $params = ['artist', 'track', 'limit', 'page'])
+ * @method \chillerlan\OAuth\HTTP\OAuthResponse trackUnlove(array $body = ['mbid', 'artist', 'track'])
+ * @method \chillerlan\OAuth\HTTP\OAuthResponse trackUpdateNowPlaying(array $body = ['mbid', 'artist', 'track', 'album', 'trackNumber', 'context', 'duration', 'albumArtist'])
+ * @method \chillerlan\OAuth\HTTP\OAuthResponse userGetArtistTracks(array $params = ['user', 'artist', 'limit', 'page', 'startTimestamp', 'endTimestamp'])
+ * @method \chillerlan\OAuth\HTTP\OAuthResponse userGetFriends(array $params = ['user', 'limit', 'page', 'recenttracks'])
+ * @method \chillerlan\OAuth\HTTP\OAuthResponse userGetInfo(array $params = ['user'])
+ * @method \chillerlan\OAuth\HTTP\OAuthResponse userGetLovedTracks(array $params = ['user', 'limit', 'page'])
+ * @method \chillerlan\OAuth\HTTP\OAuthResponse userGetPersonalTags(array $params = ['user', 'limit', 'page', 'tag', 'taggingtype'])
+ * @method \chillerlan\OAuth\HTTP\OAuthResponse userGetRecentTracks(array $params = ['user', 'limit', 'page', 'from', 'to', 'extended'])
+ * @method \chillerlan\OAuth\HTTP\OAuthResponse userGetTopAlbums(array $params = ['user', 'limit', 'page', 'period'])
+ * @method \chillerlan\OAuth\HTTP\OAuthResponse userGetTopArtists(array $params = ['user', 'limit', 'page', 'period'])
+ * @method \chillerlan\OAuth\HTTP\OAuthResponse userGetTopTags(array $params = ['user', 'limit', 'page'])
+ * @method \chillerlan\OAuth\HTTP\OAuthResponse userGetWeeklyAlbumChart(array $params = ['user', 'from', 'to'])
+ * @method \chillerlan\OAuth\HTTP\OAuthResponse userGetWeeklyArtistChart(array $params = ['user', 'from', 'to'])
+ * @method \chillerlan\OAuth\HTTP\OAuthResponse userGetWeeklyTrackChart(array $params = ['user', 'from', 'to'])
  */
 class LastFM extends OAuthProvider{
 
@@ -90,13 +90,12 @@ class LastFM extends OAuthProvider{
 		self::PERIOD_12MONTH,
 	];
 
-	protected $apiURL    = 'https://ws.audioscrobbler.com/2.0';
-	protected $authURL   = 'https://www.last.fm/api/auth';
+	protected $apiURL        = 'https://ws.audioscrobbler.com/2.0';
+	protected $authURL       = 'https://www.last.fm/api/auth';
+	protected $userRevokeURL = 'https://www.last.fm/settings'; // ???
 
 	/**
-	 * @param array $params
-	 *
-	 * @return string
+	 * @inheritdoc
 	 */
 	public function getAuthURL(array $params = []):string {
 
@@ -108,18 +107,18 @@ class LastFM extends OAuthProvider{
 	}
 
 	/**
-	 * @param string $token
+	 * @param string $session_token
 	 *
 	 * @return \chillerlan\OAuth\Token
 	 * @throws \chillerlan\OAuth\OAuthException
 	 */
-	public function getAccessToken(string $token):Token {
+	public function getAccessToken(string $session_token):Token {
 
 		$params = [
 			'method'  => 'auth.getSession',
 			'format'  => 'json',
 			'api_key' => $this->options->key,
-			'token'   => $token,
+			'token'   => $session_token,
 		];
 
 		$params['api_sig'] = $this->getSignature($params);
@@ -142,18 +141,18 @@ class LastFM extends OAuthProvider{
 			throw new OAuthException($error);
 		}
 
-		$token = new Token([
+		$session_token = new Token([
 			'accessToken' => $response['session']['key'],
 			'expires'     => Token::EOL_NEVER_EXPIRES,
 		]);
 
 		unset($response['session']['key']);
 
-		$token->extraParams = $response;
+		$session_token->extraParams = $response;
 
-		$this->storage->storeAccessToken($this->serviceName, $token);
+		$this->storage->storeAccessToken($this->serviceName, $session_token);
 
-		return $token;
+		return $session_token;
 	}
 
 	/**
@@ -203,5 +202,12 @@ class LastFM extends OAuthProvider{
 
 		return md5($signature.$this->options->secret);
 	}
+
+	/**
+	 * @todo
+	 *
+	 * @param array $tracks
+	 */
+	public function scrobble(array $tracks){}
 
 }

@@ -14,9 +14,15 @@ namespace chillerlan\OAuthTest\API;
 
 use chillerlan\OAuth\Providers\LastFM;
 
+/**
+ * last.fm API test & examples
+ *
+ * @link https://www.last.fm/api/intro
+ *
+ */
 class LastFMTest extends APITestAbstract{
 
-	const USER = 'smiley-1'; // you're welcome
+	const USER = 'smiley-1'; // you're welcome (@todo: change this to your username)
 
 	protected $providerClass = LastFM::class;
 	protected $envvar        = 'LASTFM';
@@ -27,21 +33,41 @@ class LastFMTest extends APITestAbstract{
 	protected $provider;
 
 	/**
-	 * @dataProvider MethodDataProvider
+	 *  @dataProvider tagDataProvider
+	 */
+	public function testTagging(string $method, array $params){
+		$this->response = $this->provider->{$method}($params);
+		$this->assertSame(200, $this->response->headers->statuscode);
+	}
+
+	public function tagDataProvider(){
+		return [
+			['trackAddTags', ['artist' => 'St. Vincent', 'track' => 'Pills', 'tags' => 'test']],
+			['trackRemoveTag', ['artist' => 'St. Vincent', 'track' => 'Pills', 'tag' => 'test']],
+			['artistAddTags', ['mbid' => '5334edc0-5faf-4ca5-b1df-000de3e1f752', 'tags' => 'test']],
+			['artistRemoveTag', ['mbid' => '5334edc0-5faf-4ca5-b1df-000de3e1f752', 'tag' => 'test']],
+			['albumAddTags', ['artist' => 'St. Vincent', 'album' => 'Masseduction', 'tags' => 'test']],
+			['albumRemoveTag', ['artist' => 'St. Vincent', 'album' => 'Masseduction', 'tag' => 'test']],
+			['trackUnlove', ['artist' => 'St. Vincent', 'track' => 'Pills']],
+			['trackLove', ['artist' => 'St. Vincent', 'track' => 'Pills']],
+		];
+	}
+
+	/**
+	 * @dataProvider getMethodDataProvider
 	 *
 	 * @param string $method
 	 * @param string $return
 	 * @param array  $params
 	*/
-	public function testMethod(string $method, string $return, array $params){
-		$r = $this->provider->{$method}($params);
+	public function testGetMethods(string $method, string $return, array $params){
+		$this->response = $this->provider->{$method}($params);
 
-		$this->assertTrue(isset($r->{$return}));
-
-		print_r($r->{$return});
+		$this->assertTrue(isset($this->response->json->{$return}));
 	}
 
-	public function MethodDataProvider(){
+
+	public function getMethodDataProvider(){
 		return [
 			['albumGetInfo', 'album', [
 				'mbid'        => null, // ???
@@ -50,27 +76,6 @@ class LastFMTest extends APITestAbstract{
 				'username'    => null,
 				'lang'        => null,
 				'autocorrect' => true,
-			]],
-			['artistGetCorrection', 'corrections', [
-				'artist'  => 'sleater kinney',
-			]],
-			['artistGetInfo', 'artist', [
-				'mbid'  => null,
-				'artist'  => 'sleater kinney',
-				'username'  => null,
-				'lang'  => 'en',
-				'autocorrect'  => true,
-			]],
-			['trackGetCorrection', 'corrections', [
-				'artist'  => 'sleater kinney',
-				'track'  => 'oh',
-			]],
-			['trackGetInfo', 'track', [
-				'mbid'  => null,
-				'artist'  => 'sleater kinney',
-				'track'  => 'oh',
-				'username'  => null,
-				'autocorrect'  => true,
 			]],
 			['albumGetTags', 'tags', [
 				'mbid'        => null, // ???
@@ -89,6 +94,16 @@ class LastFMTest extends APITestAbstract{
 				'album'  => 'the magic city',
 				'limit'  => null,
 				'page'   => null,
+			]],
+			['artistGetCorrection', 'corrections', [
+				'artist'  => 'sleater kinney',
+			]],
+			['artistGetInfo', 'artist', [
+				'mbid'  => null,
+				'artist'  => 'sleater kinney',
+				'username'  => null,
+				'lang'  => 'en',
+				'autocorrect'  => true,
 			]],
 			['artistGetSimilar', 'similarartists', [
 				'mbid'  => null,
@@ -154,6 +169,43 @@ class LastFMTest extends APITestAbstract{
 				'user'  => self::USER,
 				'page'  => null,
 				'limit'  => 10,
+			]],
+			['tagGetInfo', 'tag', [
+				'tag'  => 'Disco',
+				'lang'  => 'en',
+			]],
+			['tagGetSimilar', 'similartags', [
+				'tag'  => 'Disco',
+			]],
+			['tagGetTopAlbums', 'albums', [
+				'tag'  => 'Disco',
+				'limit'  => 5,
+				'page'  => null,
+			]],
+			['tagGetTopArtists', 'topartists', [
+				'tag'  => 'Disco',
+				'limit'  => 5,
+				'page'  => null,
+			]],
+			['tagGetTopTags', 'toptags', []],
+			['tagGetTopTracks', 'tracks', [
+				'tag'  => 'Disco',
+				'limit'  => 5,
+				'page'  => null,
+			]],
+			['tagGetWeeklyChartList', 'weeklychartlist', [
+				'tag'  => 'Disco',
+			]],
+			['trackGetCorrection', 'corrections', [
+				'artist'  => 'sleater kinney',
+				'track'  => 'oh',
+			]],
+			['trackGetInfo', 'track', [
+				'mbid'  => null,
+				'artist'  => 'sleater kinney',
+				'track'  => 'oh',
+				'username'  => null,
+				'autocorrect'  => true,
 			]],
 			['trackGetSimilar', 'similartracks', [
 				'mbid'  => '9ef0e5a6-fd45-462e-83c0-f59b8c2d102f',
@@ -259,32 +311,6 @@ class LastFMTest extends APITestAbstract{
 				'user'  => self::USER,
 				'from'  => null,
 				'to'  => null,
-			]],
-			['tagGetInfo', 'tag', [
-				'tag'  => 'Disco',
-				'lang'  => 'en',
-			]],
-			['tagGetSimilar', 'similartags', [
-				'tag'  => 'Disco',
-			]],
-			['tagGetTopAlbums', 'albums', [
-				'tag'  => 'Disco',
-				'limit'  => 5,
-				'page'  => null,
-			]],
-			['tagGetTopArtists', 'topartists', [
-				'tag'  => 'Disco',
-				'limit'  => 5,
-				'page'  => null,
-			]],
-			['tagGetTopTags', 'toptags', []],
-			['tagGetTopTracks', 'tracks', [
-				'tag'  => 'Disco',
-				'limit'  => 5,
-				'page'  => null,
-			]],
-			['tagGetWeeklyChartList', 'weeklychartlist', [
-				'tag'  => 'Disco',
 			]],
 		];
 	}

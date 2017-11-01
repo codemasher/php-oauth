@@ -22,7 +22,7 @@ elseif(isset($_GET['token'])){
 	saveToken($token, $provider->serviceName);
 }
 elseif(isset($_GET['granted']) && $_GET['granted'] === $provider->serviceName){
-	echo '<pre>'.print_r($provider->userGetInfo(),true).'</pre>';
+	echo '<pre>'.print_r($provider->userGetInfo()->json,true).'</pre>';
 }
 else{
 	echo '<a href="?login='.$provider->serviceName.'">Login with '.$provider->serviceName.'!</a>';
