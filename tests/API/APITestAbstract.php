@@ -12,31 +12,19 @@
 
 namespace chillerlan\OAuthTest\API;
 
-use chillerlan\Database\Connection;
-use chillerlan\Database\Drivers\PDO\PDOMySQLDriver;
-use chillerlan\Database\Options as DBOptions;
-use chillerlan\Database\Query\Dialects\MySQLQueryBuilder;
-use chillerlan\OAuth\HTTP\CurlClient;
-use chillerlan\OAuth\HTTP\GuzzleClient;
-use chillerlan\OAuth\HTTP\StreamClient;
-use chillerlan\OAuth\HTTP\TinyCurlClient;
-use chillerlan\OAuth\OAuthOptions;
-use chillerlan\OAuth\Providers\OAuth2Interface;
-use chillerlan\OAuth\Providers\OAuthInterface;
-use chillerlan\OAuth\Storage\DBTokenStorage;
-use chillerlan\OAuth\Token;
-use chillerlan\OAuthTest\Storage\DBTest;
-use chillerlan\TinyCurl\Request;
-use chillerlan\TinyCurl\RequestOptions;
+use chillerlan\OAuth\{
+	HTTP\OAuthResponse, OAuthOptions, Providers\OAuth2Interface, Providers\OAuthInterface, Token
+};
+use chillerlan\OAuthTest\{
+	HTTP\TestHTTPClient, Storage\TestDBStorage
+};
 use Dotenv\Dotenv;
-use GuzzleHttp\Client;
 use PHPUnit\Framework\TestCase;
 
 abstract class APITestAbstract extends TestCase{
 
 	const CFGDIR  = __DIR__.'/../../config';
 	const STORAGE = __DIR__.'/../../tokenstorage';
-	const UA = 'chillerlanPhpOAuth/1.2.0 +https://github.com/codemasher/php-oauth';
 
 	/**
 	 * @var \chillerlan\OAuth\Storage\TokenStorageInterface
@@ -47,6 +35,11 @@ abstract class APITestAbstract extends TestCase{
 	 * @var \chillerlan\OAuth\Providers\OAuthInterface
 	 */
 	protected $provider;
+
+	/**
+	 * @var \chillerlan\OAuth\HTTP\OAuthResponse
+	 */
+	protected $response;
 
 	protected $providerClass;
 	protected $envvar;
@@ -59,25 +52,10 @@ abstract class APITestAbstract extends TestCase{
 
 		(new Dotenv(self::CFGDIR, $env))->load();
 
-		$db = new Connection(new DBOptions([
-			'driver'       => PDOMySQLDriver::class,
-			'querybuilder' => MySQLQueryBuilder::class,
-			'host'         => getenv('MYSQL_HOST'),
-			'port'         => getenv('MYSQL_PORT'),
-			'database'     => getenv('MYSQL_DATABASE'),
-			'username'     => getenv('MYSQL_USERNAME'),
-			'password'     => getenv('MYSQL_PASSWORD'),
-		]));
-
-		$this->storage  = new DBTokenStorage($db, DBTest::TABLE_TOKEN, DBTest::TABLE_PROVIDER, 1);
-
-		$http = new GuzzleClient(new Client(['cacert' => self::CFGDIR.'/cacert.pem', 'headers' => ['User-Agent' => self::UA]]));
-#		$http = new TinyCurlClient(new Request(new RequestOptions(['ca_info' => self::CFGDIR.'/cacert.pem', 'userAgent' => self::UA])));
-#		$http = new CurlClient([CURLOPT_CAINFO => self::CFGDIR.'/cacert.pem', CURLOPT_USERAGENT => self::UA]);
-#		$http = new StreamClient(self::CFGDIR.'/cacert.pem', self::UA);
+		$this->storage  = new TestDBStorage;
 
 		$this->provider = new $this->providerClass(
-			$http,
+			new TestHTTPClient,
 			$this->storage,
 			new OAuthOptions([
 				'key'         => getenv($this->envvar.'_KEY'),
@@ -90,11 +68,23 @@ abstract class APITestAbstract extends TestCase{
 		$this->storage->storeAccessToken($this->provider->serviceName, $this->getToken());
 	}
 
-	protected function getToken():Token{
-		$f = self::STORAGE.'/'.$this->provider->serviceName.'.token';
+	protected function tearDown(){
+		if($this->response instanceof OAuthResponse){
+			print_r($this->response->headers);
 
-		if(is_file($f)){
-			return unserialize(file_get_contents($f));
+			$json = $this->response->json;
+
+			!empty($json)
+				? print_r($json)
+				: print_r($this->response->body);
+		}
+	}
+
+	protected function getToken():Token{
+		$file = self::STORAGE.'/'.$this->provider->serviceName.'.token';
+
+		if(is_file($file)){
+			return unserialize(file_get_contents($file));
 		}
 
 		return new Token(['accessToken' => '']);
