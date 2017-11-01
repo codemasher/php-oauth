@@ -162,18 +162,6 @@
         "body": null,
         "headers": []
     },
-    "createPlaylist": {
-        "path": "\/users\/%1$s\/playlists",
-        "method": "POST",
-        "query": [],
-        "path_elements": [
-            "user_id"
-        ],
-        "body": true,
-        "headers": {
-            "Content-Type": "application\/json"
-        }
-    },
     "devices": {
         "path": "\/me\/player\/devices",
         "method": "GET",
@@ -200,11 +188,13 @@
         "path": "\/me\/following",
         "method": "PUT",
         "query": [
-            "type",
-            "ids"
+            "ids",
+            "type"
         ],
         "path_elements": [],
-        "body": true,
+        "body": [
+            "ids"
+        ],
         "headers": {
             "Content-Type": "application\/json"
         }
@@ -217,7 +207,9 @@
             "owner_id",
             "playlist_id"
         ],
-        "body": true,
+        "body": [
+            "public"
+        ],
         "headers": {
             "Content-Type": "application\/json"
         }
@@ -230,17 +222,6 @@
         "body": null,
         "headers": []
     },
-    "meFollowersContains": {
-        "path": "\/me\/following\/contains",
-        "method": "GET",
-        "query": [
-            "type",
-            "ids"
-        ],
-        "path_elements": [],
-        "body": null,
-        "headers": []
-    },
     "meFollowing": {
         "path": "\/me\/following",
         "method": "GET",
@@ -248,6 +229,17 @@
             "type",
             "after",
             "limit"
+        ],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "meFollowingContains": {
+        "path": "\/me\/following\/contains",
+        "method": "GET",
+        "query": [
+            "type",
+            "ids"
         ],
         "path_elements": [],
         "body": null,
@@ -372,7 +364,11 @@
             "device_id"
         ],
         "path_elements": [],
-        "body": true,
+        "body": [
+            "context_uri",
+            "uris",
+            "offset"
+        ],
         "headers": {
             "Content-Type": "application\/json"
         }
@@ -380,15 +376,32 @@
     "playlistAddTracks": {
         "path": "\/users\/%1$s\/playlists\/%2$s\/tracks",
         "method": "POST",
-        "query": [
-            "uris",
-            "position"
-        ],
+        "query": [],
         "path_elements": [
             "user_id",
             "playlist_id"
         ],
-        "body": true,
+        "body": [
+            "uris",
+            "position"
+        ],
+        "headers": {
+            "Content-Type": "application\/json"
+        }
+    },
+    "playlistCreate": {
+        "path": "\/users\/%1$s\/playlists",
+        "method": "POST",
+        "query": [],
+        "path_elements": [
+            "user_id"
+        ],
+        "body": [
+            "name",
+            "description",
+            "public",
+            "collaborative"
+        ],
         "headers": {
             "Content-Type": "application\/json"
         }
@@ -396,14 +409,16 @@
     "playlistRemoveTracks": {
         "path": "\/users\/%1$s\/playlists\/%2$s\/tracks",
         "method": "DELETE",
-        "query": [
-            "tracks"
-        ],
+        "query": [],
         "path_elements": [
             "user_id",
             "playlist_id"
         ],
-        "body": true,
+        "body": [
+            "tracks",
+            "positions",
+            "snapshot_id"
+        ],
         "headers": {
             "Content-Type": "application\/json"
         }
@@ -416,7 +431,12 @@
             "user_id",
             "playlist_id"
         ],
-        "body": true,
+        "body": [
+            "range_start",
+            "range_length",
+            "insert_before",
+            "snapshot_id"
+        ],
         "headers": {
             "Content-Type": "application\/json"
         }
@@ -429,7 +449,9 @@
             "user_id",
             "playlist_id"
         ],
-        "body": true,
+        "body": [
+            "uris"
+        ],
         "headers": {
             "Content-Type": "application\/json"
         }
@@ -442,7 +464,12 @@
             "user_id",
             "playlist_id"
         ],
-        "body": true,
+        "body": [
+            "name",
+            "description",
+            "public",
+            "collaborative"
+        ],
         "headers": {
             "Content-Type": "application\/json"
         }
@@ -490,11 +517,11 @@
     "removeSavedAlbums": {
         "path": "\/me\/albums",
         "method": "DELETE",
-        "query": [
+        "query": [],
+        "path_elements": [],
+        "body": [
             "ids"
         ],
-        "path_elements": [],
-        "body": true,
         "headers": {
             "Content-Type": "application\/json"
         }
@@ -502,11 +529,11 @@
     "removeSavedTracks": {
         "path": "\/me\/tracks",
         "method": "DELETE",
-        "query": [
+        "query": [],
+        "path_elements": [],
+        "body": [
             "ids"
         ],
-        "path_elements": [],
-        "body": true,
         "headers": {
             "Content-Type": "application\/json"
         }
@@ -525,11 +552,11 @@
     "saveAlbums": {
         "path": "\/me\/albums",
         "method": "PUT",
-        "query": [
+        "query": [],
+        "path_elements": [],
+        "body": [
             "ids"
         ],
-        "path_elements": [],
-        "body": true,
         "headers": {
             "Content-Type": "application\/json"
         }
@@ -537,11 +564,11 @@
     "saveTracks": {
         "path": "\/me\/tracks",
         "method": "PUT",
-        "query": [
+        "query": [],
+        "path_elements": [],
+        "body": [
             "ids"
         ],
-        "path_elements": [],
-        "body": true,
         "headers": {
             "Content-Type": "application\/json"
         }
@@ -610,7 +637,10 @@
         "method": "PUT",
         "query": [],
         "path_elements": [],
-        "body": true,
+        "body": [
+            "device_ids",
+            "play"
+        ],
         "headers": {
             "Content-Type": "application\/json"
         }
@@ -619,11 +649,13 @@
         "path": "\/me\/following",
         "method": "DELETE",
         "query": [
-            "type",
-            "ids"
+            "ids",
+            "type"
         ],
         "path_elements": [],
-        "body": true,
+        "body": [
+            "ids"
+        ],
         "headers": {
             "Content-Type": "application\/json"
         }
@@ -636,10 +668,8 @@
             "owner_id",
             "playlist_id"
         ],
-        "body": true,
-        "headers": {
-            "Content-Type": "application\/json"
-        }
+        "body": null,
+        "headers": []
     },
     "user": {
         "path": "\/users\/%1$s",
