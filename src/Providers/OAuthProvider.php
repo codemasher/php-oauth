@@ -179,7 +179,6 @@ abstract class OAuthProvider implements OAuthInterface{
 				$endpoint = sprintf($endpoint, ...$urlparams);
 			}
 
-
 			if(in_array($method, ['POST', 'PATCH', 'PUT', 'DELETE'])){
 				$body = $arguments[$params_in_url + 1] ?? $params;
 
@@ -211,8 +210,6 @@ abstract class OAuthProvider implements OAuthInterface{
 	}
 
 	/**
-	 * @todo: filter allowed params?
-	 *
 	 * @param $params
 	 *
 	 * @return array
@@ -232,10 +229,83 @@ abstract class OAuthProvider implements OAuthInterface{
 
 			}
 
-			uksort($params, 'strcmp');
 		}
 
 		return $params;
+	}
+
+	/**
+	 * @param $data
+	 *
+	 * @return array|string
+	 */
+	protected function rawurlencode($data){
+
+		if(is_array($data)){
+			return array_map([$this, 'rawurlencode'], $data);
+		}
+		elseif(is_scalar($data)){
+			return rawurlencode($data);
+		}
+
+		return $data;
+	}
+
+	/**
+	 * from https://github.com/abraham/twitteroauth/blob/master/src/Util.php
+	 *
+	 * @param array  $params
+	 * @param bool   $urlencode
+	 * @param string $delimiter
+	 * @param string $enclosure
+	 *
+	 * @return string
+	 */
+	public function buildHttpQuery(array $params, bool $urlencode = null, string $delimiter = null, string $enclosure = null):string {
+
+		if(empty($params)) {
+			return '';
+		}
+		$urlencode = $urlencode ?? true;
+		$delimiter = $delimiter ?? '&';
+		$enclosure = $enclosure ?? '';
+
+		// Urlencode both keys and values
+		if($urlencode){
+			$params = array_combine(
+				$this->rawurlencode(array_keys($params)),
+				$this->rawurlencode(array_values($params))
+			);
+		}
+
+		// Parameters are sorted by name, using lexicographical byte value ordering.
+		// Ref: Spec: 9.1.1 (1)
+		uksort($params, 'strcmp');
+
+		$pairs = [];
+
+		foreach($params as $parameter => $value){
+
+			if(is_array($value)) {
+				// If two or more parameters share the same name, they are sorted by their value
+				// Ref: Spec: 9.1.1 (1)
+				// June 12th, 2010 - changed to sort because of issue 164 by hidetaka
+				sort($value, SORT_STRING);
+
+				foreach ($value as $duplicateValue) {
+					$pairs[] = $parameter.'='.$enclosure.$duplicateValue.$enclosure;
+				}
+
+			}
+			else{
+				$pairs[] = $parameter.'='.$enclosure.$value.$enclosure;
+			}
+
+		}
+
+		// For each parameter, the name is separated from the corresponding value by an '=' character (ASCII code 61)
+		// Each name-value pair is separated by an '&' character (ASCII code 38)
+		return implode($delimiter, $pairs);
 	}
 
 }

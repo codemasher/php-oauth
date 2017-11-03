@@ -43,7 +43,7 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 			['oauth_token' => $this->getRequestToken()->requestToken]
 		);
 
-		return $this->authURL.'?'.http_build_query($params);
+		return $this->authURL.'?'.$this->buildHttpQuery($params);
 	}
 
 	/**
@@ -75,6 +75,7 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 	 * @throws \chillerlan\OAuth\OAuthException
 	 */
 	public function getRequestToken():Token {
+		$params   = $this->getRequestTokenHeaderParams();
 
 		$response = $this->http->request(
 			$this->requestTokenURL,
@@ -82,7 +83,7 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 			'POST',
 			null,
 			array_merge($this->authHeaders, [
-				'Authorization' => $this->encodeAuthHeader($this->getRequestTokenHeaderParams())
+				'Authorization' => 'OAuth '.$this->buildHttpQuery($params, true, ', ', '"')
 			])
 		);
 
@@ -93,7 +94,10 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 		if(!$data || !is_array($data)){
 			$error = 'unable to parse access token response: ';
 		}
-		elseif(!isset($data['oauth_callback_confirmed']) || $data['oauth_callback_confirmed'] !== 'true'){
+		elseif(
+			!isset($data['oauth_callback_confirmed'])
+			|| !hash_equals('true', $data['oauth_callback_confirmed'])
+		){
 			$error = 'error retrieving request token: ';
 		}
 		elseif(!isset($data['oauth_token']) || !isset($data['oauth_token_secret'])){
@@ -115,7 +119,7 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 		$params = [
 			'oauth_callback'         => $this->options->callbackURL,
 			'oauth_consumer_key'     => $this->options->key,
-			'oauth_nonce'            => bin2hex(random_bytes(32)),
+			'oauth_nonce'            => bin2hex(random_bytes(32)), // \Sodium\...
 			'oauth_signature_method' => 'HMAC-SHA1',
 			'oauth_timestamp'        => (new DateTime())->format('U'),
 			'oauth_version'          => '1.0',
@@ -132,22 +136,48 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 	 * @param string $method
 	 *
 	 * @return string
+	 * @throws \chillerlan\OAuth\OAuthException
 	 */
 	public function getSignature(string $url, array $params, string $method = 'POST'):string {
-		parse_str(parse_url($url, PHP_URL_QUERY), $query);
+		$parseURL = parse_url($url);
 
-		$data = array_merge($query, $params);
+		if(!isset($parseURL['host']) || !isset($parseURL['scheme']) || !in_array($parseURL['scheme'], ['http', 'https'], true)){
+			throw new OAuthException('getSignature: invalid url');
+		}
 
-		uksort($data, 'strcmp');
+		parse_str($parseURL['query'] ?? '', $query);
 
-		return base64_encode(
-			hash_hmac(
-				'sha1',
-				strtoupper($method).'&'.rawurlencode($url).'&'.rawurlencode(http_build_query($data)),
-				rawurlencode($this->options->secret).'&'.rawurlencode($this->tokenSecret ?? ''),
-				true
-			)
+		$data = $this->getSignatureData(
+			$method,
+			$parseURL['scheme'].'://'.$parseURL['host'].($parseURL['path'] ?? ''),
+			array_merge($query, $params)
 		);
+
+		$key = implode('&', $this->rawurlencode([$this->options->secret, $this->tokenSecret ?? '']));
+
+		return base64_encode(hash_hmac('sha1', $data, $key, true));
+	}
+
+	/**
+	 * @param string $method
+	 * @param string $signatureURL
+	 * @param array  $signatureParams
+	 *
+	 * @return string
+	 */
+	protected function getSignatureData(string $method, string $signatureURL, array $signatureParams){
+
+		if(isset($signatureParams['oauth_signature'])){
+			unset($signatureParams['oauth_signature']);
+		}
+
+		$data = [
+			strtoupper($method),
+			$signatureURL,
+			$this->buildHttpQuery($signatureParams),
+		];
+
+		return implode('&', $this->rawurlencode($data));
 	}
 
 	/**
@@ -214,24 +244,6 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 	}
 
 	/**
-	 * @param array $params
-	 *
-	 * @return string
-	 */
-	protected function encodeAuthHeader(array $params):string{
-		$authHeader = 'OAuth';
-		$delimiter  = ' ';
-
-		foreach($params as $key => $value){
-			$authHeader .= $delimiter.rawurlencode($key).'="'.rawurlencode($value).'"';
-
-			$delimiter = ', ';
-		}
-
-		return $authHeader;
-	}
-
-	/**
 	 * @param string                  $url
 	 * @param array|string            $params
 	 * @param string                  $method
@@ -245,11 +257,7 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 		$this->tokenSecret = $token->accessTokenSecret;
 		$parameters        = $this->getApiHeaderParams($token);
 
-		$signatureParams = is_array($params)
-			? array_merge($params, $parameters)
-			: $parameters;
-
-		$parameters['oauth_signature'] = $this->getSignature($url, $signatureParams, $method);
+		$parameters['oauth_signature'] = $this->getSignature($url, array_merge(is_array($params) ? $params : [], $parameters), $method);
 
 		if(isset($params['oauth_session_handle'])){
 			$parameters['oauth_session_handle'] = $params['oauth_session_handle'];
@@ -257,7 +265,7 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 		}
 
 		return array_merge($headers, $this->apiHeaders, [
-			'Authorization' => $this->encodeAuthHeader($parameters),
+			'Authorization' => 'OAuth '.$this->buildHttpQuery($parameters, true, ', ', '"')
 		]);
 	}
 
@@ -270,7 +278,7 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 	protected function getApiHeaderParams(Token $token):array {
 		return [
 			'oauth_consumer_key'     => $this->options->key,
-			'oauth_nonce'            => bin2hex(random_bytes(32)),
+			'oauth_nonce'            => bin2hex(random_bytes(32)), // \Sodium\bin2hex()
 			'oauth_signature_method' => 'HMAC-SHA1',
 			'oauth_timestamp'        => (new DateTime())->format('U'),
 			'oauth_token'            => $token->accessToken,
