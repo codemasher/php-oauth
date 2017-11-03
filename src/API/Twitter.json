@@ -1,5 +1,5 @@
 {
-    "account_remove_profile_banner": {
+    "accountRemoveProfileBanner": {
         "path": "\/account\/remove_profile_banner.json",
         "method": "POST",
         "query": [],
@@ -7,7 +7,7 @@
         "body": null,
         "headers": []
     },
-    "account_settings": {
+    "accountSettings": {
         "path": "\/account\/settings.json",
         "method": "GET",
         "query": [],
@@ -15,7 +15,7 @@
         "body": null,
         "headers": []
     },
-    "account_update_profile": {
+    "accountUpdateProfile": {
         "path": "\/account\/update_profile.json",
         "method": "POST",
         "query": [],
@@ -31,7 +31,7 @@
         ],
         "headers": []
     },
-    "account_update_settings": {
+    "accountUpdateSettings": {
         "path": "\/account\/settings.json",
         "method": "POST",
         "query": [],
@@ -59,7 +59,7 @@
         ],
         "headers": []
     },
-    "blocks_ids": {
+    "blocksIds": {
         "path": "\/blocks\/ids.json",
         "method": "GET",
         "query": [
@@ -70,7 +70,7 @@
         "body": null,
         "headers": []
     },
-    "blocks_list": {
+    "blocksList": {
         "path": "\/blocks\/list.json",
         "method": "GET",
         "query": [
@@ -82,7 +82,7 @@
         "body": null,
         "headers": []
     },
-    "collections_create": {
+    "collectionsCreate": {
         "path": "\/collections\/create.json",
         "method": "POST",
         "query": [],
@@ -95,7 +95,7 @@
         ],
         "headers": []
     },
-    "collections_destroy": {
+    "collectionsDestroy": {
         "path": "\/collections\/destroy.json",
         "method": "POST",
         "query": [],
@@ -105,7 +105,7 @@
         ],
         "headers": []
     },
-    "collections_entries": {
+    "collectionsEntries": {
         "path": "\/collections\/entries.json",
         "method": "GET",
         "query": [
@@ -118,7 +118,7 @@
         "body": null,
         "headers": []
     },
-    "collections_entries_add": {
+    "collectionsEntriesAdd": {
         "path": "\/collections\/entries\/add.json",
         "method": "POST",
         "query": [],
@@ -131,17 +131,20 @@
         ],
         "headers": []
     },
-    "collections_entries_curate": {
+    "collectionsEntriesCurate": {
         "path": "\/collections\/entries\/curate.json",
         "method": "POST",
         "query": [],
         "path_elements": [],
-        "body": true,
+        "body": [
+            "id",
+            "changes"
+        ],
         "headers": {
             "Content-type": "application\/json"
         }
     },
-    "collections_entries_move": {
+    "collectionsEntriesMove": {
         "path": "\/collections\/entries\/move.json",
         "method": "POST",
         "query": [],
@@ -154,7 +157,7 @@
         ],
         "headers": []
     },
-    "collections_entries_remove": {
+    "collectionsEntriesRemove": {
         "path": "\/collections\/entries\/remove.json",
         "method": "POST",
         "query": [],
@@ -165,7 +168,7 @@
         ],
         "headers": []
     },
-    "collections_list": {
+    "collectionsList": {
         "path": "\/collections\/list.json",
         "method": "GET",
         "query": [
@@ -179,7 +182,7 @@
         "body": null,
         "headers": []
     },
-    "collections_show": {
+    "collectionsShow": {
         "path": "\/collections\/show.json",
         "method": "GET",
         "query": [
@@ -189,7 +192,7 @@
         "body": null,
         "headers": []
     },
-    "collections_update": {
+    "collectionsUpdate": {
         "path": "\/collections\/update.json",
         "method": "POST",
         "query": [],
@@ -202,7 +205,7 @@
         ],
         "headers": []
     },
-    "direct_messages": {
+    "directMessages": {
         "path": "\/direct_messages.json",
         "method": "GET",
         "query": [
@@ -217,7 +220,7 @@
         "body": null,
         "headers": []
     },
-    "direct_messages_destroy": {
+    "directMessagesDestroy": {
         "path": "\/direct_messages\/destroy.json",
         "method": "POST",
         "query": [],
@@ -228,7 +231,7 @@
         ],
         "headers": []
     },
-    "direct_messages_events_list": {
+    "directMessagesEventsList": {
         "path": "\/direct_messages\/events\/list.json",
         "method": "GET",
         "query": [
@@ -238,17 +241,7 @@
         "body": null,
         "headers": []
     },
-    "direct_messages_events_new": {
-        "path": "\/direct_messages\/events\/new.json",
-        "method": "POST",
-        "query": [],
-        "path_elements": [],
-        "body": true,
-        "headers": {
-            "Content-type": "application\/json"
-        }
-    },
-    "direct_messages_events_show": {
+    "directMessagesEventsShow": {
         "path": "\/direct_messages\/events\/show.json",
         "method": "GET",
         "query": [
@@ -258,7 +251,7 @@
         "body": null,
         "headers": []
     },
-    "direct_messages_sent": {
+    "directMessagesSent": {
         "path": "\/direct_messages\/sent.json",
         "method": "GET",
         "query": [
@@ -273,7 +266,7 @@
         "body": null,
         "headers": []
     },
-    "direct_messages_show": {
+    "directMessagesShow": {
         "path": "\/direct_messages\/show.json",
         "method": "GET",
         "query": [
@@ -285,7 +278,7 @@
         "body": null,
         "headers": []
     },
-    "direct_messages_welcome_messages_list": {
+    "directMessagesWelcomeMessagesList": {
         "path": "\/direct_messages\/welcome_messages\/list.json",
         "method": "GET",
         "query": [
@@ -295,17 +288,19 @@
         "body": null,
         "headers": []
     },
-    "direct_messages_welcome_messages_new": {
+    "directMessagesWelcomeMessagesNew": {
         "path": "\/direct_messages\/welcome_messages\/new.json",
         "method": "POST",
         "query": [],
         "path_elements": [],
-        "body": true,
+        "body": [
+            "welcome_message"
+        ],
         "headers": {
             "Content-type": "application\/json"
         }
     },
-    "direct_messages_welcome_messages_rules_list": {
+    "directMessagesWelcomeMessagesRulesList": {
         "path": "\/direct_messages\/welcome_messages\/rules\/list.json",
         "method": "GET",
         "query": [
@@ -315,17 +310,19 @@
         "body": null,
         "headers": []
     },
-    "direct_messages_welcome_messages_rules_new": {
+    "directMessagesWelcomeMessagesRulesNew": {
         "path": "\/direct_messages\/welcome_messages\/rules\/new.json",
         "method": "POST",
         "query": [],
         "path_elements": [],
-        "body": true,
+        "body": [
+            "welcome_message_rule"
+        ],
         "headers": {
             "Content-type": "application\/json"
         }
     },
-    "direct_messages_welcome_messages_rules_show": {
+    "directMessagesWelcomeMessagesRulesShow": {
         "path": "\/direct_messages\/welcome_messages\/rules\/show.json",
         "method": "GET",
         "query": [
@@ -335,7 +332,7 @@
         "body": null,
         "headers": []
     },
-    "direct_messages_welcome_messages_show": {
+    "directMessagesWelcomeMessagesShow": {
         "path": "\/direct_messages\/welcome_messages\/show.json",
         "method": "GET",
         "query": [
@@ -343,18 +340,6 @@
         ],
         "path_elements": [],
         "body": null,
-        "headers": []
-    },
-    "dm": {
-        "path": "\/direct_messages\/new.json",
-        "method": "POST",
-        "query": [],
-        "path_elements": [],
-        "body": [
-            "user_id",
-            "screen_name",
-            "text"
-        ],
         "headers": []
     },
     "favorite": {
@@ -396,7 +381,7 @@
         ],
         "headers": []
     },
-    "followers_ids": {
+    "followersIds": {
         "path": "\/followers\/ids.json",
         "method": "GET",
         "query": [
@@ -410,7 +395,7 @@
         "body": null,
         "headers": []
     },
-    "followers_list": {
+    "followersList": {
         "path": "\/followers\/list.json",
         "method": "GET",
         "query": [
@@ -425,7 +410,7 @@
         "body": null,
         "headers": []
     },
-    "friends_ids": {
+    "friendsIds": {
         "path": "\/friends\/ids.json",
         "method": "GET",
         "query": [
@@ -439,7 +424,7 @@
         "body": null,
         "headers": []
     },
-    "friends_list": {
+    "friendsList": {
         "path": "\/friends\/list.json",
         "method": "GET",
         "query": [
@@ -454,7 +439,7 @@
         "body": null,
         "headers": []
     },
-    "friendships_incoming": {
+    "friendshipsIncoming": {
         "path": "\/friendships\/incoming.json",
         "method": "GET",
         "query": [
@@ -465,7 +450,7 @@
         "body": null,
         "headers": []
     },
-    "friendships_lookup": {
+    "friendshipsLookup": {
         "path": "\/friendships\/lookup.json",
         "method": "GET",
         "query": [
@@ -476,7 +461,7 @@
         "body": null,
         "headers": []
     },
-    "friendships_no_retweets_ids": {
+    "friendshipsNoRetweetsIds": {
         "path": "\/friendships\/no_retweets\/ids.json",
         "method": "GET",
         "query": [
@@ -486,7 +471,7 @@
         "body": null,
         "headers": []
     },
-    "friendships_outgoing": {
+    "friendshipsOutgoing": {
         "path": "\/friendships\/outgoing.json",
         "method": "GET",
         "query": [
@@ -497,7 +482,7 @@
         "body": null,
         "headers": []
     },
-    "friendships_show": {
+    "friendshipsShow": {
         "path": "\/friendships\/show.json",
         "method": "GET",
         "query": [
@@ -510,7 +495,7 @@
         "body": null,
         "headers": []
     },
-    "friendships_update": {
+    "friendshipsUpdate": {
         "path": "\/friendships\/update.json",
         "method": "POST",
         "query": [],
@@ -523,7 +508,7 @@
         ],
         "headers": []
     },
-    "geo_reverse_geocode": {
+    "geoReverseGeocode": {
         "path": "\/geo\/reverse_geocode.json",
         "method": "GET",
         "query": [
@@ -537,7 +522,7 @@
         "body": null,
         "headers": []
     },
-    "geo_search": {
+    "geoSearch": {
         "path": "\/geo\/search.json",
         "method": "GET",
         "query": [
@@ -554,7 +539,7 @@
         "body": null,
         "headers": []
     },
-    "help_configuration": {
+    "helpConfiguration": {
         "path": "\/help\/configuration.json",
         "method": "GET",
         "query": [],
@@ -562,7 +547,7 @@
         "body": null,
         "headers": []
     },
-    "help_privacy": {
+    "helpPrivacy": {
         "path": "\/help\/privacy.json",
         "method": "GET",
         "query": [],
@@ -607,7 +592,7 @@
         "body": null,
         "headers": []
     },
-    "lists_create": {
+    "listsCreate": {
         "path": "\/lists\/create.json",
         "method": "POST",
         "query": [],
@@ -619,7 +604,7 @@
         ],
         "headers": []
     },
-    "lists_destroy": {
+    "listsDestroy": {
         "path": "\/lists\/destroy.json",
         "method": "POST",
         "query": [],
@@ -632,7 +617,7 @@
         ],
         "headers": []
     },
-    "lists_members": {
+    "listsMembers": {
         "path": "\/lists\/members.json",
         "method": "GET",
         "query": [
@@ -649,7 +634,7 @@
         "body": null,
         "headers": []
     },
-    "lists_members_create": {
+    "listsMembersCreate": {
         "path": "\/lists\/members\/create.json",
         "method": "POST",
         "query": [],
@@ -664,7 +649,7 @@
         ],
         "headers": []
     },
-    "lists_members_create_all": {
+    "listsMembersCreateAll": {
         "path": "\/lists\/members\/create_all.json",
         "method": "POST",
         "query": [],
@@ -679,7 +664,7 @@
         ],
         "headers": []
     },
-    "lists_members_destroy": {
+    "listsMembersDestroy": {
         "path": "\/lists\/members\/destroy.json",
         "method": "POST",
         "query": [],
@@ -694,7 +679,7 @@
         ],
         "headers": []
     },
-    "lists_members_destroy_all": {
+    "listsMembersDestroyAll": {
         "path": "\/lists\/members\/destroy_all.json",
         "method": "POST",
         "query": [],
@@ -709,7 +694,7 @@
         ],
         "headers": []
     },
-    "lists_members_show": {
+    "listsMembersShow": {
         "path": "\/lists\/members\/show.json",
         "method": "GET",
         "query": [
@@ -726,7 +711,7 @@
         "body": null,
         "headers": []
     },
-    "lists_memberships": {
+    "listsMemberships": {
         "path": "\/lists\/memberships.json",
         "method": "GET",
         "query": [
@@ -740,7 +725,7 @@
         "body": null,
         "headers": []
     },
-    "lists_ownerships": {
+    "listsOwnerships": {
         "path": "\/lists\/ownerships.json",
         "method": "GET",
         "query": [
@@ -753,7 +738,7 @@
         "body": null,
         "headers": []
     },
-    "lists_show": {
+    "listsShow": {
         "path": "\/lists\/show.json",
         "method": "GET",
         "query": [
@@ -766,7 +751,7 @@
         "body": null,
         "headers": []
     },
-    "lists_statuses": {
+    "listsStatuses": {
         "path": "\/lists\/statuses.json",
         "method": "GET",
         "query": [
@@ -785,7 +770,7 @@
         "body": null,
         "headers": []
     },
-    "lists_subscribers": {
+    "listsSubscribers": {
         "path": "\/lists\/subscribers.json",
         "method": "GET",
         "query": [
@@ -803,7 +788,7 @@
         "body": null,
         "headers": []
     },
-    "lists_subscribers_create": {
+    "listsSubscribersCreate": {
         "path": "\/lists\/subscribers\/create.json",
         "method": "POST",
         "query": [],
@@ -816,7 +801,7 @@
         ],
         "headers": []
     },
-    "lists_subscribers_destroy": {
+    "listsSubscribersDestroy": {
         "path": "\/lists\/subscribers\/destroy.json",
         "method": "POST",
         "query": [],
@@ -829,7 +814,7 @@
         ],
         "headers": []
     },
-    "lists_subscribers_show": {
+    "listsSubscribersShow": {
         "path": "\/lists\/subscribers\/show.json",
         "method": "GET",
         "query": [
@@ -846,7 +831,7 @@
         "body": null,
         "headers": []
     },
-    "lists_subscriptions": {
+    "listsSubscriptions": {
         "path": "\/lists\/subscriptions.json",
         "method": "GET",
         "query": [
@@ -859,7 +844,7 @@
         "body": null,
         "headers": []
     },
-    "lists_update": {
+    "listsUpdate": {
         "path": "\/lists\/update.json",
         "method": "POST",
         "query": [],
@@ -903,7 +888,7 @@
         ],
         "headers": []
     },
-    "mutes_users_ids": {
+    "mutesUsersIds": {
         "path": "\/mutes\/users\/ids.json",
         "method": "GET",
         "query": [
@@ -914,7 +899,7 @@
         "body": null,
         "headers": []
     },
-    "mutes_users_list": {
+    "mutesUsersList": {
         "path": "\/mutes\/users\/list.json",
         "method": "GET",
         "query": [
@@ -936,15 +921,17 @@
         "body": null,
         "headers": []
     },
-    "rate_limit_status": {
+    "rateLimitStatus": {
         "path": "\/application\/rate_limit_status.json",
         "method": "GET",
-        "query": [],
+        "query": [
+            "resources"
+        ],
         "path_elements": [],
         "body": null,
         "headers": []
     },
-    "report": {
+    "reportSpam": {
         "path": "\/users\/report_spam.json",
         "method": "POST",
         "query": [],
@@ -967,7 +954,7 @@
         ],
         "headers": []
     },
-    "saved_searches_create": {
+    "savedSearchesCreate": {
         "path": "\/saved_searches\/create.json",
         "method": "POST",
         "query": [],
@@ -977,7 +964,7 @@
         ],
         "headers": []
     },
-    "saved_searches_destroy": {
+    "savedSearchesDestroy": {
         "path": "\/saved_searches\/destroy\/%1$s.json",
         "method": "POST",
         "query": [],
@@ -987,7 +974,7 @@
         "body": null,
         "headers": []
     },
-    "saved_searches_list": {
+    "savedSearchesList": {
         "path": "\/saved_searches\/list.json",
         "method": "GET",
         "query": [],
@@ -995,7 +982,7 @@
         "body": null,
         "headers": []
     },
-    "saved_searches_show": {
+    "savedSearchesShow": {
         "path": "\/saved_searches\/show\/%1$s.json",
         "method": "GET",
         "query": [],
@@ -1005,7 +992,7 @@
         "body": null,
         "headers": []
     },
-    "search_tweets": {
+    "searchTweets": {
         "path": "\/search\/tweets.json",
         "method": "GET",
         "query": [
@@ -1025,7 +1012,7 @@
         "body": null,
         "headers": []
     },
-    "statuses_destroy": {
+    "statusesDestroy": {
         "path": "\/statuses\/destroy.json",
         "method": "POST",
         "query": [],
@@ -1036,7 +1023,7 @@
         ],
         "headers": []
     },
-    "statuses_lookup": {
+    "statusesLookup": {
         "path": "\/statuses\/lookup.json",
         "method": "GET",
         "query": [
@@ -1051,7 +1038,7 @@
         "body": null,
         "headers": []
     },
-    "statuses_retweeters_ids": {
+    "statusesRetweetersIds": {
         "path": "\/statuses\/retweeters\/ids.json",
         "method": "GET",
         "query": [
@@ -1063,7 +1050,7 @@
         "body": null,
         "headers": []
     },
-    "statuses_retweets": {
+    "statusesRetweets": {
         "path": "\/statuses\/retweets.json",
         "method": "GET",
         "query": [
@@ -1077,7 +1064,7 @@
         "body": null,
         "headers": []
     },
-    "statuses_retweets_of_me": {
+    "statusesRetweetsOfMe": {
         "path": "\/statuses\/retweets_of_me.json",
         "method": "GET",
         "query": [
@@ -1093,7 +1080,7 @@
         "body": null,
         "headers": []
     },
-    "statuses_show": {
+    "statusesShow": {
         "path": "\/statuses\/show.json",
         "method": "GET",
         "query": [
@@ -1115,7 +1102,7 @@
         "body": null,
         "headers": []
     },
-    "trends_available": {
+    "trendsAvailable": {
         "path": "\/trends\/available.json",
         "method": "GET",
         "query": [],
@@ -1123,7 +1110,7 @@
         "body": null,
         "headers": []
     },
-    "trends_closest": {
+    "trendsClosest": {
         "path": "\/trends\/closest.json",
         "method": "GET",
         "query": [
@@ -1134,7 +1121,7 @@
         "body": null,
         "headers": []
     },
-    "trends_place": {
+    "trendsPlace": {
         "path": "\/trends\/place.json",
         "method": "GET",
         "query": [
@@ -1143,26 +1130,6 @@
         ],
         "path_elements": [],
         "body": null,
-        "headers": []
-    },
-    "tweet": {
-        "path": "\/statuses\/update.json",
-        "method": "POST",
-        "query": [],
-        "path_elements": [],
-        "body": [
-            "status",
-            "in_reply_to_status_id",
-            "possibly_sensitive",
-            "lat",
-            "long",
-            "place_id",
-            "display_coordinates",
-            "trim_user",
-            "media_ids",
-            "enable_dm_commands",
-            "fail_dm_commands"
-        ],
         "headers": []
     },
     "unblock": {
@@ -1242,7 +1209,7 @@
         "body": null,
         "headers": []
     },
-    "users_lookup": {
+    "usersLookup": {
         "path": "\/users\/lookup.json",
         "method": "GET",
         "query": [
@@ -1255,7 +1222,7 @@
         "body": null,
         "headers": []
     },
-    "users_profile_banner": {
+    "usersProfileBanner": {
         "path": "\/users\/profile_banner.json",
         "method": "GET",
         "query": [
@@ -1266,7 +1233,7 @@
         "body": null,
         "headers": []
     },
-    "users_search": {
+    "usersSearch": {
         "path": "\/users\/search.json",
         "method": "GET",
         "query": [
@@ -1280,7 +1247,7 @@
         "body": null,
         "headers": []
     },
-    "users_show": {
+    "usersShow": {
         "path": "\/users\/show.json",
         "method": "GET",
         "query": [
@@ -1293,7 +1260,7 @@
         "body": null,
         "headers": []
     },
-    "users_suggestions": {
+    "usersSuggestions": {
         "path": "\/users\/suggestions.json",
         "method": "GET",
         "query": [
@@ -1303,7 +1270,7 @@
         "body": null,
         "headers": []
     },
-    "users_suggestions_slug": {
+    "usersSuggestionsSlug": {
         "path": "\/users\/suggestions\/%1$s.json",
         "method": "GET",
         "query": [
@@ -1315,7 +1282,7 @@
         "body": null,
         "headers": []
     },
-    "users_suggestions_slug_members": {
+    "usersSuggestionsSlugMembers": {
         "path": "\/users\/suggestions\/%1$s\/members.json",
         "method": "GET",
         "query": [
@@ -1327,7 +1294,7 @@
         "body": null,
         "headers": []
     },
-    "verify": {
+    "verifyCredentials": {
         "path": "\/account\/verify_credentials.json",
         "method": "GET",
         "query": [
