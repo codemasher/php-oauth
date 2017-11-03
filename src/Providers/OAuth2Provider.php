@@ -99,7 +99,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 			$this->storage->storeAuthorizationState($this->serviceName, $parameters['state']);
 		}
 
-		return $this->authURL.'?'.http_build_query($parameters);
+		return $this->authURL.'?'.$this->buildHttpQuery($parameters);
 	}
 
 	/**
@@ -123,7 +123,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	 * @return \chillerlan\OAuth\Token
 	 * @throws \chillerlan\OAuth\OAuthException
 	 */
-	protected function  parseResponse(OAuthResponse $response):Token{
+	protected function parseTokenResponse(OAuthResponse $response):Token{
 		$data = $response->json_array;
 
 		if(!is_array($data)){
@@ -152,6 +152,31 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	}
 
 	/**
+	 * @param string|null $state
+	 *
+	 * @return \chillerlan\OAuth\Providers\OAuth2Interface
+	 * @throws \chillerlan\OAuth\OAuthException
+	 */
+	protected function checkState(string $state = null):OAuth2Interface{
+
+		if(empty($state)){
+			throw new OAuthException('invalid state');
+		}
+
+		if(!$this->storage->hasAuthorizationState($this->serviceName)){
+			throw new OAuthException('invalid state: '.$this->serviceName);
+		}
+
+		$knownState = $this->storage->retrieveAuthorizationState($this->serviceName);
+
+		if(!hash_equals($knownState, $state)){
+			throw new OAuthException('invalid authorization state: '.$this->serviceName.' '.$state);
+		}
+
+		return $this;
+	}
+
+	/**
 	 * @param string      $code
 	 * @param string|null $state
 	 *
@@ -160,14 +185,11 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	 */
 	public function getAccessToken(string $code, string $state = null):Token{
 
-		if($this->useCsrfToken && is_string($state) && (
-			!$this->storage->hasAuthorizationState($this->serviceName)
-			|| $this->storage->retrieveAuthorizationState($this->serviceName) !== $state
-		)){
-			throw new OAuthException('invalid authorization state');
+		if($this->useCsrfToken){
+			$this->checkState($state);
 		}
 
-		$token = $this->parseResponse(
+		$token = $this->parseTokenResponse(
 			$this->http->request(
 				$this->accessTokenURL,
 				[],
@@ -216,7 +238,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 			throw new OAuthException('not supported');
 		}
 
-		$token = $this->parseResponse(
+		$token = $this->parseTokenResponse(
 			$this->http->request(
 				$this->clientCredentialsTokenURL ?? $this->accessTokenURL,
 				[],
@@ -268,7 +290,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 			throw new OAuthException(sprintf('Token expired on %s, no refresh token available.', date('Y-m-d h:i:s A', $token->expires))); // @codeCoverageIgnore
 		}
 
-		$newToken = $this->parseResponse(
+		$newToken = $this->parseTokenResponse(
 			$this->http->request(
 				$this->accessTokenURL,
 				[],

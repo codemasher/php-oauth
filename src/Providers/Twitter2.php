@@ -50,7 +50,7 @@ class Twitter2 extends OAuth2Provider{
 			'scope'         => implode($this->scopesDelimiter, $this->scopes),
 		];
 
-		$token = $this->parseResponse(
+		$token = $this->parseTokenResponse(
 			$this->http->request($this->accessTokenEndpoint, [], 'POST', $body, [])
 		);
 

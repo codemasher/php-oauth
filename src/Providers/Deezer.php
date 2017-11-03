@@ -72,7 +72,7 @@ class Deezer extends OAuth2Provider{
 	 * @return \chillerlan\OAuth\Token
 	 * @throws \chillerlan\OAuth\OAuthException
 	 */
-	protected function parseResponse(OAuthResponse $response):Token{
+	protected function parseTokenResponse(OAuthResponse $response):Token{
 		parse_str($response->body, $data);
 
 		if(!is_array($data)){
