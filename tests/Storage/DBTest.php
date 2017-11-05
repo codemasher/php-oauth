@@ -23,4 +23,18 @@ class DBTest extends TokenStorageTestAbstract{
 		$this->storage->storeAccessToken('foo', $this->token);
 	}
 
+	/**
+	 * coverage
+	 * @runInSeparateProcess
+	 */
+	public function testTokenUpdate(){
+		$this->storage->storeAccessToken(self::SERVICE_NAME, $this->token);
+		$this->storage->storeAccessToken(self::SERVICE_NAME, $this->token);
+
+		$this->assertTrue($this->storage->hasAccessToken(self::SERVICE_NAME));
+		$this->assertSame('foobar', $this->storage->retrieveAccessToken(self::SERVICE_NAME)->accessToken);
+
+	}
+
+
 }
