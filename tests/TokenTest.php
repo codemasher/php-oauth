@@ -88,4 +88,16 @@ class TokenTest extends TestCase{
 		$this->assertSame($isExpired, $this->token->isExpired());
 	}
 
+	public function testIsExpiredVariable(){
+		$now    = time();
+
+		$expiry1 = time() + 3600;
+		$this->token->setExpiry($expiry1);
+		$this->assertSame($expiry1, $this->token->expires);
+
+		$expiry2 = 3600;
+		$this->token->setExpiry($expiry2);
+		$this->assertSame($now+$expiry2, $this->token->expires);
+	}
+
 }

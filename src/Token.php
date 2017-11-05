@@ -37,7 +37,7 @@ class Token{
 	const EOL_UNKNOWN = -9001;
 
 	/**
-	 * Denotes a token which never expires, should only happen in OAuth1.
+	 * Denotes a token which never expires
 	 */
 	const EOL_NEVER_EXPIRES = -9002;
 
@@ -103,18 +103,16 @@ class Token{
 	public function setExpiry(int $expires = null):Token{
 		$now = time();
 
-		switch(true){
-			case $expires === 0 || $expires === self::EOL_NEVER_EXPIRES:
-				$this->expires = self::EOL_NEVER_EXPIRES;
-				break;
-			case (int)$expires >= $now:
-				$this->expires = $expires; // @codeCoverageIgnore
-				break;
-			case (int)$expires > 0 && (int)$expires < $now:
-				$this->expires = $now + $expires; // @codeCoverageIgnore
-				break;
-			default:
-				$this->expires = self::EOL_UNKNOWN;
+		$this->expires = self::EOL_UNKNOWN;
+
+		if($expires === 0 || $expires === self::EOL_NEVER_EXPIRES){
+			$this->expires = self::EOL_NEVER_EXPIRES;
+		}
+		elseif((int)$expires > 0 && (int)$expires <= $now){
+			$this->expires = $now + $expires;
+		}
+		elseif((int)$expires > $now){
+			$this->expires = $expires;
 		}
 
 		return $this;
