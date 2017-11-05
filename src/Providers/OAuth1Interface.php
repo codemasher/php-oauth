@@ -22,13 +22,13 @@ interface OAuth1Interface extends OAuthInterface{
 	public function getRequestToken():Token;
 
 	/**
-	 * @param string $token
-	 * @param string $verifier
-	 * @param string $tokenSecret
+	 * @param string      $token
+	 * @param string      $verifier
+	 * @param string|null $tokenSecret
 	 *
 	 * @return \chillerlan\OAuth\Token
 	 */
-	public function getAccessToken(string $token, string $verifier, string $tokenSecret):Token;
+	public function getAccessToken(string $token, string $verifier, string $tokenSecret = null):Token;
 
 	/**
 	 * @param string $url

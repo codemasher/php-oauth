@@ -56,10 +56,10 @@ interface OAuth2Interface extends OAuthInterface{
 	public function getClientCredentialsToken(array $scopes = []):Token;
 
 	/**
-	 * @param \chillerlan\OAuth\Token $token
+	 * @param \chillerlan\OAuth\Token|null $token
 	 *
 	 * @return \chillerlan\OAuth\Token
 	 */
-	public function refreshAccessToken(Token $token):Token;
+	public function refreshAccessToken(Token $token = null):Token;
 
 }

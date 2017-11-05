@@ -47,11 +47,55 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 	}
 
 	/**
-	 * @param array $data
+	 * @return \chillerlan\OAuth\Token
+	 * @throws \chillerlan\OAuth\OAuthException
+	 */
+	public function getRequestToken():Token {
+		$params   = $this->getRequestTokenHeaderParams();
+
+		return $this->parseTokenResponse(
+			$this->http->request(
+				$this->requestTokenURL,
+				[],
+				'POST',
+				null,
+				array_merge($this->authHeaders, [
+					'Authorization' => 'OAuth '.$this->buildHttpQuery($params, true, ', ', '"')
+				])
+			),
+			true
+		);
+	}
+
+	/**
+	 * @param \chillerlan\OAuth\HTTP\OAuthResponse $response
+	 * @param bool|null                            $checkCallbackConfirmed
 	 *
 	 * @return \chillerlan\OAuth\Token
+	 * @throws \chillerlan\OAuth\OAuthException
 	 */
-	protected function getOAuth1Token(array $data):Token {
+	protected function parseTokenResponse(OAuthResponse $response, bool $checkCallbackConfirmed = null):Token {
+		$checkCallbackConfirmed = $checkCallbackConfirmed ?? false;
+
+		parse_str($response->body, $data);
+
+		if(!$data || !is_array($data)){
+			throw new OAuthException('unable to parse token response'.PHP_EOL.print_r($response, true));
+		}
+		elseif(isset($data['error'])){
+			throw new OAuthException('error retrieving access token: '.print_r($data['error'], true));
+		}
+		elseif(!isset($data['oauth_token']) || !isset($data['oauth_token_secret'])){
+			throw new OAuthException('token missing');
+		}
+
+		if($checkCallbackConfirmed){
+
+			if(!isset($data['oauth_callback_confirmed']) ||  $data['oauth_callback_confirmed'] !== 'true'){
+				throw new OAuthException('oauth callback unconfirmed');
+			}
+
+		}
 
 		$token = new Token([
 			'requestToken'       => $data['oauth_token'],
@@ -68,47 +112,6 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 		$this->storage->storeAccessToken($this->serviceName, $token);
 
 		return $token;
-	}
-
-	/**
-	 * @return \chillerlan\OAuth\Token
-	 * @throws \chillerlan\OAuth\OAuthException
-	 */
-	public function getRequestToken():Token {
-		$params   = $this->getRequestTokenHeaderParams();
-
-		$response = $this->http->request(
-			$this->requestTokenURL,
-			[],
-			'POST',
-			null,
-			array_merge($this->authHeaders, [
-				'Authorization' => 'OAuth '.$this->buildHttpQuery($params, true, ', ', '"')
-			])
-		);
-
-		parse_str($response->body, $data);
-
-		$error = null;
-
-		if(!$data || !is_array($data)){
-			$error = 'unable to parse access token response: ';
-		}
-		elseif(
-			!isset($data['oauth_callback_confirmed'])
-			|| !hash_equals('true', $data['oauth_callback_confirmed'])
-		){
-			$error = 'error retrieving request token: ';
-		}
-		elseif(!isset($data['oauth_token']) || !isset($data['oauth_token_secret'])){
-			$error = 'request token missing: ';
-		}
-
-		if($error){
-			throw new OAuthException($error.PHP_EOL.print_r($response, true));
-		}
-
-		return $this->getOAuth1Token($data);
 	}
 
 	/**
@@ -148,9 +151,9 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 		parse_str($parseURL['query'] ?? '', $query);
 
 		$data = $this->getSignatureData(
-			$method,
 			$parseURL['scheme'].'://'.$parseURL['host'].($parseURL['path'] ?? ''),
-			array_merge($query, $params)
+			array_merge($query, $params),
+			$method
 		);
 
 		$key = implode('&', $this->rawurlencode([$this->options->secret, $this->tokenSecret ?? '']));
@@ -165,7 +168,7 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 	 *
 	 * @return string
 	 */
-	protected function getSignatureData(string $method, string $signatureURL, array $signatureParams){
+	protected function getSignatureData(string $signatureURL, array $signatureParams, string $method){
 
 		if(isset($signatureParams['oauth_signature'])){
 			unset($signatureParams['oauth_signature']);
@@ -189,42 +192,17 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 	 * @throws \chillerlan\OAuth\OAuthException
 	 */
 	public function getAccessToken(string $token, string $verifier, string $tokenSecret = null):Token {
-
-		if(!$tokenSecret){
-			$tokenSecret = $this->storage->retrieveAccessToken($this->serviceName)->requestTokenSecret;
-		}
-
 		$this->tokenSecret = $tokenSecret;
+
+		if(empty($this->tokenSecret)){
+			$this->tokenSecret = $this->storage->retrieveAccessToken($this->serviceName)->requestTokenSecret;
+		}
 
 		$body = ['oauth_verifier' => $verifier];
 
-		$response = $this->http->request(
-			$this->accessTokenURL,
-			[],
-			'POST',
-			$body,
-			$this->getAccessTokenHeaders($body)
+		return $this->parseTokenResponse(
+			$this->http->request($this->accessTokenURL, [], 'POST', $body, $this->getAccessTokenHeaders($body))
 		);
-
-		parse_str($response->body, $data);
-
-		$error = null;
-
-		if(!$data || !is_array($data)){
-			$error = 'unable to parse access token response';
-		}
-		elseif(isset($data['error'])){
-			$error = 'access token error: '.$data['error'];
-		}
-		elseif(!isset($data['oauth_token']) || !isset($data['oauth_token_secret'])){
-			$error = 'access token missing: '.$response->body;
-		}
-
-		if($error){
-			throw new OAuthException($error.PHP_EOL.print_r($response, true));
-		}
-
-		return $this->getOAuth1Token($data);
 	}
 
 	/**
@@ -234,13 +212,7 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 	 * @throws \chillerlan\OAuth\OAuthException
 	 */
 	protected function getAccessTokenHeaders(array $body):array {
-		return $this->getApiHeaders(
-			$this->accessTokenURL,
-			$body,
-			'POST',
-			[],
-			$this->storage->retrieveAccessToken($this->serviceName)
-		);
+		return $this->requestHeaders($this->accessTokenURL, $body, 'POST', [], $this->storage->retrieveAccessToken($this->serviceName));
 	}
 
 	/**
@@ -253,9 +225,9 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 	 * @return array
 	 * @throws \Exception
 	 */
-	protected function getApiHeaders(string $url, $params = null, string $method, array $headers, Token $token):array{
+	protected function requestHeaders(string $url, $params = null, string $method, array $headers, Token $token):array{
 		$this->tokenSecret = $token->accessTokenSecret;
-		$parameters        = $this->getApiHeaderParams($token);
+		$parameters        = $this->requestHeaderParams($token);
 
 		$parameters['oauth_signature'] = $this->getSignature($url, array_merge(is_array($params) ? $params : [], $parameters), $method);
 
@@ -275,7 +247,7 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 	 * @return array
 	 * @throws \Exception
 	 */
-	protected function getApiHeaderParams(Token $token):array {
+	protected function requestHeaderParams(Token $token):array {
 		return [
 			'oauth_consumer_key'     => $this->options->key,
 			'oauth_nonce'            => bin2hex(random_bytes(32)), // \Sodium\bin2hex()
@@ -297,7 +269,7 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 	 */
 	public function request(string $path, array $params = [], string $method = 'GET', $body = null, array $headers = []):OAuthResponse{
 
-		$headers = $this->getApiHeaders(
+		$headers = $this->requestHeaders(
 			$this->apiURL.$path,
 			$body ?? $params,
 			$method,

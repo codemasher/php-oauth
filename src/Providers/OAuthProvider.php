@@ -17,7 +17,6 @@ use chillerlan\OAuth\{
 	HTTP\HTTPClientInterface,
 	OAuthOptions,
 	Storage\TokenStorageInterface,
-	Traits\ClassLoader,
 	Traits\Magic
 };
 
@@ -25,7 +24,7 @@ use chillerlan\OAuth\{
  * @property string $serviceName
  */
 abstract class OAuthProvider implements OAuthInterface{
-	use ClassLoader, Magic;
+	use Magic;
 
 	/**
 	 * @var \chillerlan\OAuth\HTTP\HTTPClientInterface
@@ -115,21 +114,6 @@ abstract class OAuthProvider implements OAuthInterface{
 	 */
 	protected function magic_get_serviceName():string {
 		return $this->serviceName;
-	}
-
-	/**
-	 * @param array $params
-	 *
-	 * @return string
-	 */
-	public function getAuthURL(array $params = []):string {
-		$url = $this->authURL;
-
-		if(!empty($params)){
-			$url .= '?'.http_build_query($params);
-		}
-
-		return $url;
 	}
 
 	/**
@@ -266,6 +250,7 @@ abstract class OAuthProvider implements OAuthInterface{
 		if(empty($params)) {
 			return '';
 		}
+
 		$urlencode = $urlencode ?? true;
 		$delimiter = $delimiter ?? '&';
 		$enclosure = $enclosure ?? '';

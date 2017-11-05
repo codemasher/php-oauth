@@ -27,6 +27,11 @@ use chillerlan\OAuth\{
 abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 
 	/**
+	 * @var int
+	 */
+	protected $authMethod = self::HEADER_BEARER;
+
+	/**
 	 * @var array
 	 */
 	protected $scopes;
@@ -47,9 +52,9 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	protected $accessTokenExpires = false;
 
 	/**
-	 * @var int
+	 * @var string
 	 */
-	protected $authMethod = self::HEADER_BEARER;
+	protected $refreshTokenURL;
 
 	/**
 	 * @var bool
@@ -83,32 +88,38 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	}
 
 	/**
-	 * @param array $parameters
+	 * @param array $params
 	 *
 	 * @return string
 	 */
-	public function getAuthURL(array $parameters = []):string{
-		$parameters = $this->getAuthURLParams($parameters);
+	public function getAuthURL(array $params = []):string{
+		$params = $this->getAuthURLParams($params);
 
 		if($this->useCsrfToken){
 
-			if(!isset($parameters['state'])){
-				$parameters['state'] = sha1(random_bytes(256));
+			if(!isset($params['state'])){
+				$params['state'] = sha1(random_bytes(256));
 			}
 
-			$this->storage->storeAuthorizationState($this->serviceName, $parameters['state']);
+			$this->storage->storeAuthorizationState($this->serviceName, $params['state']);
 		}
 
-		return $this->authURL.'?'.$this->buildHttpQuery($parameters);
+		return $this->authURL.'?'.$this->buildHttpQuery($params);
 	}
 
 	/**
-	 * @param array $parameters
+	 * @param array $params
 	 *
 	 * @return array
 	 */
-	protected function getAuthURLParams(array $parameters):array {
-		return array_merge($parameters, [
+	protected function getAuthURLParams(array $params):array {
+
+		// this should not be here
+		if(isset($params['client_secret'])){
+			unset($params['client_secret']);
+		}
+
+		return array_merge($params, [
 			'client_id'     => $this->options->key,
 			'redirect_uri'  => $this->options->callbackURL,
 			'response_type' => 'code',
@@ -127,7 +138,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 		$data = $response->json_array;
 
 		if(!is_array($data)){
-			throw new OAuthException('unable to parse access token response'.PHP_EOL.print_r($response, true));
+			throw new OAuthException('unable to parse token response'.PHP_EOL.print_r($response, true));
 		}
 
 		foreach(['error_description', 'error'] as $field){
@@ -138,13 +149,17 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 
 		}
 
+		if(!isset($data['access_token'])){
+			throw new OAuthException('token missing');
+		}
+
 		$token = new Token([
 			'accessToken'  => $data['access_token'],
 			'expires'      => $data['expires_in'] ?? Token::EOL_NEVER_EXPIRES,
 			'refreshToken' => $data['refresh_token'] ?? null,
 		]);
 
-		unset($data['expires_in'], $data['refresh_token'], $data['access_token']);
+		unset($data['expires_in'], $data['refresh_token'], $data['access_token']);//$data['state'],
 
 		$token->extraParams = $data;
 
@@ -164,7 +179,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 		}
 
 		if(!$this->storage->hasAuthorizationState($this->serviceName)){
-			throw new OAuthException('invalid state: '.$this->serviceName);
+			throw new OAuthException('invalid state for '.$this->serviceName);
 		}
 
 		$knownState = $this->storage->retrieveAuthorizationState($this->serviceName);
@@ -172,6 +187,8 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 		if(!hash_equals($knownState, $state)){
 			throw new OAuthException('invalid authorization state: '.$this->serviceName.' '.$state);
 		}
+
+#		$this->storage->clearAuthorizationState($this->serviceName);
 
 		return $this;
 	}
@@ -220,6 +237,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	}
 
 	/**
+	 * @codeCoverageIgnore
 	 * @return array
 	 */
 	protected function getAccessTokenHeaders():array {
@@ -292,7 +310,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 
 		$newToken = $this->parseTokenResponse(
 			$this->http->request(
-				$this->accessTokenURL,
+				$this->refreshTokenURL ?? $this->accessTokenURL,
 				[],
 				'POST',
 				$this->refreshAccessTokenBody($token),
@@ -325,6 +343,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	}
 
 	/**
+	 * @codeCoverageIgnore
 	 * @return array
 	 */
 	protected function refreshAccessTokenHeaders():array{
@@ -353,17 +372,16 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 
 		$params = array_merge($query, $params);
 
-		switch(true){
-			case array_key_exists($this->authMethod, self::AUTH_METHODS_HEADER):
-				$headers = array_merge($headers, [
-					'Authorization' => self::AUTH_METHODS_HEADER[$this->authMethod].$token->accessToken,
-				]);
-				break;
-			case array_key_exists($this->authMethod, self::AUTH_METHODS_QUERY):
-				$params[self::AUTH_METHODS_QUERY[$this->authMethod]] = $token->accessToken;
-				break;
-			default:
-				throw new OAuthException('invalid auth type'); // @codeCoverageIgnore
+		if(array_key_exists($this->authMethod, self::AUTH_METHODS_HEADER)){
+			$headers = array_merge($headers, [
+				'Authorization' => self::AUTH_METHODS_HEADER[$this->authMethod].$token->accessToken,
+			]);
+		}
+		elseif(array_key_exists($this->authMethod, self::AUTH_METHODS_QUERY)){
+			$params[self::AUTH_METHODS_QUERY[$this->authMethod]] = $token->accessToken;
+		}
+		else{
+			throw new OAuthException('invalid auth type');
 		}
 
 		return $this->http->request(

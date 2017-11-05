@@ -48,4 +48,16 @@ interface OAuthInterface{
 	 */
 	public function getStorageInterface():TokenStorageInterface;
 
+	/**
+	 * http_build_query() replacement
+	 *
+	 * @param array  $params
+	 * @param bool   $urlencode
+	 * @param string $delimiter
+	 * @param string $enclosure
+	 *
+	 * @return string
+	 */
+	public function buildHttpQuery(array $params, bool $urlencode = null, string $delimiter = null, string $enclosure = null):string;
+
 }
