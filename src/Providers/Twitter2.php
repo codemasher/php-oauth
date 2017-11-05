@@ -12,7 +12,9 @@
 
 namespace chillerlan\OAuth\Providers;
 
-use chillerlan\OAuth\{OAuthException, Token};
+use chillerlan\OAuth\{
+	OAuthException, Token
+};
 
 /**
  * @link https://dev.twitter.com/overview/api
@@ -25,38 +27,22 @@ class Twitter2 extends OAuth2Provider{
 	protected $apiURL                    = 'https://api.twitter.com/1.1';
 	protected $clientCredentialsTokenURL = 'https://api.twitter.com/oauth2/token';
 	protected $clientCredentials         = true;
+	protected $userRevokeURL             = 'https://twitter.com/settings/applications';
 
 	/**
+	 * @inheritdoc
 	 * @throws \chillerlan\OAuth\OAuthException
 	 */
-	public function getAuthURL(array $parameters = []):string{
+	public function getAuthURL(array $params = []):string{
 		throw new OAuthException($this->AUTH_ERRMSG);
 	}
 
 	/**
+	 * @inheritdoc
 	 * @throws \chillerlan\OAuth\OAuthException
 	 */
 	public function getAccessToken(string $code, string $state = null):Token{
 		throw new OAuthException($this->AUTH_ERRMSG);
-	}
-
-	/**
-	 * @return \chillerlan\OAuth\Token
-	 */
-	public function requestCredentialsToken(){
-
-		$body = [
-			'grant_type'    => 'client_credentials',
-			'scope'         => implode($this->scopesDelimiter, $this->scopes),
-		];
-
-		$token = $this->parseTokenResponse(
-			$this->http->request($this->accessTokenEndpoint, [], 'POST', $body, [])
-		);
-
-		$this->storage->storeAccessToken($this->serviceName, $token);
-
-		return $token;
 	}
 
 }

@@ -14,6 +14,9 @@ namespace chillerlan\OAuthTest\API;
 
 use chillerlan\OAuth\Providers\Twitter2;
 
+/**
+ * @property \chillerlan\OAuth\Providers\Twitter2 $provider
+ */
 class Twitter2Test extends APITestAbstract{
 
 	protected $providerClass = Twitter2::class;
