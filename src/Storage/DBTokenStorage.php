@@ -13,11 +13,11 @@
 namespace chillerlan\OAuth\Storage;
 
 use chillerlan\Database\Connection;
-use chillerlan\OAuth\{OAuthException, Token};
+use chillerlan\OAuth\{
+	OAuthException, OAuthOptions, Token
+};
 
 class DBTokenStorage extends TokenStorageAbstract{
-
-	const LABEL_HASH_ALGO = 'md5';
 
 	/**
 	 * @var \chillerlan\Database\Connection
@@ -25,33 +25,26 @@ class DBTokenStorage extends TokenStorageAbstract{
 	protected $db;
 
 	/**
-	 * @var string
-	 */
-	protected $token_table;
-
-	/**
-	 * @var string
-	 */
-	protected $provider_table;
-
-	/**
-	 * @var int
+	 * @var int|string
 	 */
 	protected $user_id;
 
 	/**
 	 * DBTokenStorage constructor.
 	 *
-	 * @param \chillerlan\Database\Connection $db
-	 * @param string                          $token_table
-	 * @param string                          $provider_table
-	 * @param int                             $user_id
+	 * @param \chillerlan\OAuth\OAuthOptions   $options
+	 * @param \chillerlan\Database\Connection  $db
+	 * @param string|int                       $user_id
 	 */
-	public function __construct(Connection $db, string $token_table, string $provider_table, int $user_id){
-		$this->db             = $db;
-		$this->token_table    = $token_table;
-		$this->provider_table = $provider_table;
-		$this->user_id        = $user_id;
+	public function __construct(OAuthOptions $options, Connection $db, $user_id){
+		parent::__construct($options);
+
+		if(!$this->options->dbTokenTable || !$this->options->dbProviderTable){
+			throw new OAuthException('invalid table config');
+		}
+
+		$this->db      = $db;
+		$this->user_id = $user_id;
 
 		$this->db->connect();
 	}
@@ -62,8 +55,8 @@ class DBTokenStorage extends TokenStorageAbstract{
 	protected function getProviders():array {
 		return $this->db->select
 			->cached()
-			->from([$this->provider_table])
-			->execute('servicename')
+			->from([$this->options->dbProviderTable])
+			->execute($this->options->dbProviderTableName)
 			->__toArray();
 	}
 
@@ -81,27 +74,29 @@ class DBTokenStorage extends TokenStorageAbstract{
 		}
 
 		$values = [
-			'user_id'     => $this->user_id,
-			'provider_id' => $this->getProviders()[$service]['provider_id'],
-			'token'       => serialize($token),
-			'expires'     => $token->expires,
+			$this->options->dbTokenTableUser       => $this->user_id,
+			$this->options->dbTokenTableProviderID =>
+				$this->getProviders()[$service][$this->options->dbProviderTableID],
+			$this->options->dbTokenTableToken      => serialize($token),
+			$this->options->dbTokenTableExpires    => $token->expires,
 		];
 
 		if($this->hasAccessToken($service) === true){
 			$this->db->update
-				->table($this->token_table)
+				->table($this->options->dbTokenTable)
 				->set($values)
-				->where('label', $this->getLabel($service))
+				->where($this->options->dbTokenTableLabel, $this->getLabel($service))
 				->execute();
-		}
-		else{
-			$values['label'] = $this->getLabel($service);
 
-			$this->db->insert
-				->into($this->token_table)
-				->values($values)
-				->execute();
+			return $this;
 		}
+
+		$values[$this->options->dbTokenTableLabel] = $this->getLabel($service);
+
+		$this->db->insert
+			->into($this->options->dbTokenTable)
+			->values($values)
+			->execute();
 
 		return $this;
 	}
@@ -115,9 +110,9 @@ class DBTokenStorage extends TokenStorageAbstract{
 	public function retrieveAccessToken(string $service):Token{
 
 		$r = $this->db->select
-			->cols(['token'])
-			->from([$this->token_table])
-			->where('label', $this->getLabel($service))
+			->cols([$this->options->dbTokenTableToken])
+			->from([$this->options->dbTokenTable])
+			->where($this->options->dbTokenTableLabel, $this->getLabel($service))
 			->execute();
 
 		if(is_bool($r) || $r->length < 1){
@@ -135,9 +130,9 @@ class DBTokenStorage extends TokenStorageAbstract{
 	public function hasAccessToken(string $service):bool{
 
 		return (bool)$this->db->select
-			->cols(['token'])
-			->from([$this->token_table])
-			->where('label', $this->getLabel($service))
+			->cols([$this->options->dbTokenTableToken])
+			->from([$this->options->dbTokenTable])
+			->where($this->options->dbTokenTableLabel, $this->getLabel($service))
 			->count();
 	}
 
@@ -149,8 +144,8 @@ class DBTokenStorage extends TokenStorageAbstract{
 	public function clearAccessToken(string $service):TokenStorageInterface{
 
 		$this->db->delete
-			->from($this->token_table)
-			->where('label', $this->getLabel($service))
+			->from($this->options->dbTokenTable)
+			->where($this->options->dbTokenTableLabel, $this->getLabel($service))
 			->execute();
 
 		return $this;
@@ -162,8 +157,8 @@ class DBTokenStorage extends TokenStorageAbstract{
 	public function clearAllAccessTokens():TokenStorageInterface{
 
 		$this->db->delete
-			->from($this->token_table)
-			->where('user_id', $this->user_id)
+			->from($this->options->dbTokenTable)
+			->where($this->options->dbTokenTableUser, $this->user_id)
 			->execute();
 
 		return $this;
@@ -178,9 +173,9 @@ class DBTokenStorage extends TokenStorageAbstract{
 	public function storeAuthorizationState(string $service, string $state):TokenStorageInterface{
 
 		$this->db->update
-			->table($this->token_table)
-			->set(['state' => $state])
-			->where('label', $this->getLabel($service))
+			->table($this->options->dbTokenTable)
+			->set([$this->options->dbTokenTableState => $state])
+			->where($this->options->dbTokenTableLabel, $this->getLabel($service))
 			->execute();
 
 		return $this;
@@ -195,9 +190,9 @@ class DBTokenStorage extends TokenStorageAbstract{
 	public function retrieveAuthorizationState(string $service):string{
 
 		$r = $this->db->select
-			->cols(['state'])
-			->from([$this->token_table])
-			->where('label', $this->getLabel($service))
+			->cols([$this->options->dbTokenTableState])
+			->from([$this->options->dbTokenTable])
+			->where($this->options->dbTokenTableLabel, $this->getLabel($service))
 			->execute();
 
 		if(is_bool($r) || $r->length < 1){
@@ -215,9 +210,9 @@ class DBTokenStorage extends TokenStorageAbstract{
 	public function hasAuthorizationState(string $service):bool{
 
 		$r = $this->db->select
-			->cols(['state'])
-			->from([$this->token_table])
-			->where('label', $this->getLabel($service))
+			->cols([$this->options->dbTokenTableState])
+			->from([$this->options->dbTokenTable])
+			->where($this->options->dbTokenTableLabel, $this->getLabel($service))
 			->execute();
 
 		if(is_bool($r) || $r->length < 1 || empty($r[0]->state('trim'))){
@@ -235,9 +230,9 @@ class DBTokenStorage extends TokenStorageAbstract{
 	public function clearAuthorizationState(string $service):TokenStorageInterface{
 
 		$this->db->update
-			->table($this->token_table)
-			->set(['state' => null])
-			->where('label', $this->getLabel($service))
+			->table($this->options->dbTokenTable)
+			->set([$this->options->dbTokenTableState => null])
+			->where($this->options->dbTokenTableLabel, $this->getLabel($service))
 			->execute();
 
 		return $this;
@@ -249,9 +244,9 @@ class DBTokenStorage extends TokenStorageAbstract{
 	public function clearAllAuthorizationStates():TokenStorageInterface{
 
 		$this->db->update
-			->table($this->token_table)
-			->set(['state' => null])
-			->where('user_id', $this->user_id)
+			->table($this->options->dbTokenTable)
+			->set([$this->options->dbTokenTableState => null])
+			->where($this->options->dbTokenTableUser, $this->user_id)
 			->execute();
 
 		return $this;
@@ -263,7 +258,7 @@ class DBTokenStorage extends TokenStorageAbstract{
 	 * @return string
 	 */
 	protected function getLabel(string $service):string{
-		return hash(self::LABEL_HASH_ALGO, $this->user_id.'#'.$service);
+		return hash($this->options->dbLabelHashAlgo, sprintf($this->options->dbLabelFormat, $this->user_id, $service));
 	}
 
 }
