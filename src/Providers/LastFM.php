@@ -103,85 +103,7 @@ class LastFM extends OAuthProvider{
 			'api_key' => $this->options->key,
 		]);
 
-		return $this->authURL.'?'.http_build_query($params);
-	}
-
-	/**
-	 * @param string $session_token
-	 *
-	 * @return \chillerlan\OAuth\Token
-	 * @throws \chillerlan\OAuth\OAuthException
-	 */
-	public function getAccessToken(string $session_token):Token {
-
-		$params = [
-			'method'  => 'auth.getSession',
-			'format'  => 'json',
-			'api_key' => $this->options->key,
-			'token'   => $session_token,
-		];
-
-		$params['api_sig'] = $this->getSignature($params);
-
-		$response = $this->http->request($this->apiURL, $params)->json_array;
-
-		$error = null;
-
-		if(!$response || !is_array($response)){
-			$error = 'unable to parse access token response';
-		}
-		elseif(isset($response['error'])){
-			$error = 'access token error: '.$response['message'];
-		}
-		elseif(!isset($response['session']['key'])){
-			$error = 'access token missing';
-		}
-
-		if($error){
-			throw new OAuthException($error);
-		}
-
-		$session_token = new Token([
-			'accessToken' => $response['session']['key'],
-			'expires'     => Token::EOL_NEVER_EXPIRES,
-		]);
-
-		unset($response['session']['key']);
-
-		$session_token->extraParams = $response;
-
-		$this->storage->storeAccessToken($this->serviceName, $session_token);
-
-		return $session_token;
-	}
-
-	/**
-	 * @param string $path
-	 * @param array  $params
-	 * @param string $method
-	 * @param null   $body
-	 * @param array  $headers
-	 *
-	 * @return \chillerlan\OAuth\HTTP\OAuthResponse
-	 * @throws \chillerlan\OAuth\OAuthException
-	 */
-	public function request(string $path, array $params = [], string $method = 'GET', $body = null, array $headers = []):OAuthResponse{
-
-		$params = array_merge($params, $body ?? [], [
-			'method'  => $path,
-			'format'  => 'json',
-			'api_key' => $this->options->key,
-			'sk'      => $this->storage->retrieveAccessToken($this->serviceName)->accessToken,
-		]);
-
-		$params['api_sig'] = $this->getSignature($params);
-
-		if($method === 'POST'){
-			$body = $params;
-			$params = [];
-		}
-
-		return $this->http->request($this->apiURL, $params, $method, $body, $headers);
+		return $this->authURL.'?'.$this->buildHttpQuery($params);
 	}
 
 	/**
@@ -204,10 +126,110 @@ class LastFM extends OAuthProvider{
 	}
 
 	/**
-	 * @todo
+	 * @param string $session_token
 	 *
-	 * @param array $tracks
+	 * @return \chillerlan\OAuth\Token
+	 * @throws \chillerlan\OAuth\OAuthException
 	 */
-	public function scrobble(array $tracks){}
+	public function getAccessToken(string $session_token):Token {
+		return $this->parseTokenResponse(
+			$this->http->request($this->apiURL, $this->getAccessTokenParams($session_token))
+		);
+	}
+
+	/**
+	 * @param string $session_token
+	 *
+	 * @return array
+	 */
+	protected function getAccessTokenParams(string $session_token):array {
+
+		$params = [
+			'method'  => 'auth.getSession',
+			'format'  => 'json',
+			'api_key' => $this->options->key,
+			'token'   => $session_token,
+		];
+
+		$params['api_sig'] = $this->getSignature($params);
+
+		return $params;
+	}
+
+	/**
+	 * @param \chillerlan\OAuth\HTTP\OAuthResponse $response
+	 *
+	 * @return \chillerlan\OAuth\Token
+	 * @throws \chillerlan\OAuth\OAuthException
+	 */
+	protected function parseTokenResponse(OAuthResponse $response):Token {
+		$data = $response->json_array;
+
+		if(!$data || !is_array($data)){
+			throw new OAuthException('unable to parse token response'.PHP_EOL.print_r($response, true));
+		}
+		elseif(isset($data['error'])){
+			throw new OAuthException('error retrieving access token: '.$data['message']);
+		}
+		elseif(!isset($data['session']['key'])){
+			throw new OAuthException('token missing');
+		}
+
+		$token = new Token([
+			'accessToken' => $data['session']['key'],
+			'expires'     => Token::EOL_NEVER_EXPIRES,
+		]);
+
+		unset($data['session']['key']);
+
+		$token->extraParams = $data;
+
+		$this->storage->storeAccessToken($this->serviceName, $token);
+
+		return $token;
+	}
+
+	/**
+	 * @param string $apiMethod
+	 * @param array  $params
+	 * @param array  $body
+	 *
+	 * @return array
+	 * @throws \chillerlan\OAuth\OAuthException
+	 */
+	protected function requestParams(string $apiMethod, array $params, array $body):array {
+
+		$params = array_merge($params, $body, [
+			'method'  => $apiMethod,
+			'format'  => 'json',
+			'api_key' => $this->options->key,
+			'sk'      => $this->storage->retrieveAccessToken($this->serviceName)->accessToken,
+		]);
+
+		$params['api_sig'] = $this->getSignature($params);
+
+		return $params;
+	}
+
+	/**
+	 * @param string $path
+	 * @param array  $params
+	 * @param string $method
+	 * @param null   $body
+	 * @param array  $headers
+	 *
+	 * @return \chillerlan\OAuth\HTTP\OAuthResponse
+	 */
+	public function request(string $path, array $params = [], string $method = 'GET', $body = null, array $headers = []):OAuthResponse{
+
+		$params = $this->requestParams($path, $params, $body ?? []);
+
+		if($method === 'POST'){
+			$body = $params;
+			$params = [];
+		}
+
+		return $this->http->request($this->apiURL, $params, $method, $body, $headers);
+	}
 
 }
