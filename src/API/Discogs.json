@@ -13,6 +13,8 @@
         "path": "\/artists\/%1$s\/releases",
         "method": "GET",
         "query": [
+            "page",
+            "per_page",
             "sort",
             "sort_order"
         ],
@@ -29,7 +31,9 @@
         "path_elements": [
             "username"
         ],
-        "body": true,
+        "body": [
+            "name"
+        ],
         "headers": {
             "Content-Type": "application\/json"
         }
@@ -88,7 +92,9 @@
             "release_id",
             "instance_id"
         ],
-        "body": true,
+        "body": [
+            "rating"
+        ],
         "headers": {
             "Content-Type": "application\/json"
         }
@@ -96,7 +102,12 @@
     "collectionFolderReleases": {
         "path": "\/users\/%1$s\/collection\/folders\/%2$s\/releases",
         "method": "GET",
-        "query": [],
+        "query": [
+            "page",
+            "per_page",
+            "sort",
+            "sort_order"
+        ],
         "path_elements": [
             "username",
             "folder_id"
@@ -120,9 +131,7 @@
     "collectionFolderUpdateReleaseField": {
         "path": "\/users\/%1$s\/collection\/folders\/%2$s\/releases\/%3$s\/instances\/%4$s\/fields\/%5$s",
         "method": "POST",
-        "query": [
-            "value"
-        ],
+        "query": [],
         "path_elements": [
             "username",
             "folder_id",
@@ -130,7 +139,9 @@
             "instance_id",
             "field_id"
         ],
-        "body": true,
+        "body": [
+            "value"
+        ],
         "headers": {
             "Content-Type": "application\/json"
         }
@@ -164,7 +175,9 @@
             "username",
             "folder_id"
         ],
-        "body": true,
+        "body": [
+            "name"
+        ],
         "headers": {
             "Content-Type": "application\/json"
         }
@@ -183,6 +196,8 @@
         "path": "\/users\/%1$s\/contributions",
         "method": "GET",
         "query": [
+            "page",
+            "per_page",
             "sort",
             "sort_order"
         ],
@@ -204,6 +219,8 @@
         "path": "\/users\/%1$s\/inventory",
         "method": "GET",
         "query": [
+            "page",
+            "per_page",
             "status",
             "sort",
             "sort_order"
@@ -229,7 +246,9 @@
         "method": "GET",
         "query": [
             "page",
-            "per_page"
+            "per_page",
+            "sort",
+            "sort_order"
         ],
         "path_elements": [
             "label_id"
@@ -262,7 +281,19 @@
         "method": "POST",
         "query": [],
         "path_elements": [],
-        "body": true,
+        "body": [
+            "release_id",
+            "condition",
+            "sleeve_condition",
+            "price",
+            "comments",
+            "allow_offers",
+            "status",
+            "external_id",
+            "location",
+            "weight",
+            "format_quantity"
+        ],
         "headers": {
             "Content-Type": "application\/json"
         }
@@ -317,7 +348,10 @@
         "path_elements": [
             "order_id"
         ],
-        "body": true,
+        "body": [
+            "message",
+            "status"
+        ],
         "headers": {
             "Content-Type": "application\/json"
         }
@@ -325,7 +359,12 @@
     "marketplaceOrderMessages": {
         "path": "\/marketplace\/orders\/%1$s\/messages",
         "method": "GET",
-        "query": [],
+        "query": [
+            "page",
+            "per_page",
+            "sort",
+            "sort_order"
+        ],
         "path_elements": [
             "order_id"
         ],
@@ -337,6 +376,8 @@
         "method": "GET",
         "query": [
             "status",
+            "page",
+            "per_page",
             "sort",
             "sort_order"
         ],
@@ -357,13 +398,23 @@
     "marketplaceUpdateListing": {
         "path": "\/marketplace\/listings\/%1$s",
         "method": "POST",
-        "query": [
-            "curr_abbr"
-        ],
+        "query": [],
         "path_elements": [
             "listing_id"
         ],
-        "body": true,
+        "body": [
+            "release_id",
+            "condition",
+            "sleeve_condition",
+            "price",
+            "comments",
+            "allow_offers",
+            "status",
+            "external_id",
+            "location",
+            "weight",
+            "format_quantity"
+        ],
         "headers": {
             "Content-Type": "application\/json"
         }
@@ -375,7 +426,10 @@
         "path_elements": [
             "order_id"
         ],
-        "body": true,
+        "body": [
+            "status",
+            "shipping"
+        ],
         "headers": {
             "Content-Type": "application\/json"
         }
@@ -395,7 +449,9 @@
         "method": "GET",
         "query": [
             "page",
-            "per_page"
+            "per_page",
+            "sort",
+            "sort_order"
         ],
         "path_elements": [
             "master_id"
@@ -420,7 +476,12 @@
         "path_elements": [
             "username"
         ],
-        "body": true,
+        "body": [
+            "name",
+            "home_page",
+            "location",
+            "curr_abbr"
+        ],
         "headers": {
             "Content-Type": "application\/json"
         }
@@ -476,7 +537,7 @@
             "release_id",
             "username"
         ],
-        "body": true,
+        "body": null,
         "headers": {
             "Content-Type": "application\/json"
         }
@@ -523,7 +584,12 @@
     "submissions": {
         "path": "\/users\/%1$s\/submissions",
         "method": "GET",
-        "query": [],
+        "query": [
+            "page",
+            "per_page",
+            "sort",
+            "sort_order"
+        ],
         "path_elements": [
             "username"
         ],
@@ -533,7 +599,12 @@
     "wantlist": {
         "path": "\/users\/%1$s\/wants",
         "method": "GET",
-        "query": [],
+        "query": [
+            "page",
+            "per_page",
+            "sort",
+            "sort_order"
+        ],
         "path_elements": [
             "username"
         ],
@@ -548,7 +619,10 @@
             "username",
             "release_id"
         ],
-        "body": true,
+        "body": [
+            "notes",
+            "rating"
+        ],
         "headers": {
             "Content-Type": "application\/json"
         }
@@ -572,7 +646,10 @@
             "username",
             "release_id"
         ],
-        "body": true,
+        "body": [
+            "notes",
+            "rating"
+        ],
         "headers": {
             "Content-Type": "application\/json"
         }
