@@ -14,7 +14,6 @@ namespace chillerlan\OAuth\Traits;
 
 /**
  * a generic container with getter and setter
- * @codeCoverageIgnore
  */
 trait Container{
 
@@ -44,7 +43,7 @@ trait Container{
 			return $this->{$property};
 		}
 
-		return false;
+		return false; // @codeCoverageIgnore
 	}
 
 	/**

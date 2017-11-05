@@ -32,7 +32,7 @@ class OAuth2Test extends ProviderTestAbstract{
 		parse_str(parse_url($url, PHP_URL_QUERY), $query);
 
 		$this->assertArrayNotHasKey('client_secret', $query);
-		$this->assertSame('testkey', $query['client_id']);
+		$this->assertSame($this->options->key, $query['client_id']);
 		$this->assertSame('code', $query['response_type']);
 	}
 
@@ -121,8 +121,8 @@ class OAuth2Test extends ProviderTestAbstract{
 		$body = $this->getMethod('getAccessTokenBody')->invokeArgs($this->provider, ['foo']);
 
 		$this->assertSame('foo', $body['code']);
-		$this->assertSame('testkey', $body['client_id']);
-		$this->assertSame('testsecret', $body['client_secret']);
+		$this->assertSame($this->options->key, $body['client_id']);
+		$this->assertSame($this->options->secret, $body['client_secret']);
 		$this->assertSame('authorization_code', $body['grant_type']);
 	}
 
@@ -161,8 +161,8 @@ class OAuth2Test extends ProviderTestAbstract{
 			->invokeArgs($this->provider, [new Token(['refreshToken' => 'whatever'])]);
 
 		$this->assertSame('whatever', $body['refresh_token']);
-		$this->assertSame('testkey', $body['client_id']);
-		$this->assertSame('testsecret', $body['client_secret']);
+		$this->assertSame($this->options->key, $body['client_id']);
+		$this->assertSame($this->options->secret, $body['client_secret']);
 		$this->assertSame('refresh_token', $body['grant_type']);
 	}
 

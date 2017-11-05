@@ -79,7 +79,7 @@ class OAuth1Test extends ProviderTestAbstract{
 			->invoke($this->provider);
 
 		$this->assertSame(self::HOST.self::BASE_PATH.'/callback', $params['oauth_callback']);
-		$this->assertSame('testkey', $params['oauth_consumer_key']);
+		$this->assertSame($this->options->key, $params['oauth_consumer_key']);
 		$this->assertRegExp('/^([a-f\d]{64})$/', $params['oauth_nonce']);
 	}
 
@@ -88,7 +88,7 @@ class OAuth1Test extends ProviderTestAbstract{
 			->getMethod('requestHeaders')
 			->invokeArgs($this->provider, ['http://localhost/api/whatever', ['oauth_session_handle' => 'nope'], 'GET', [], new Token(['accessTokenSecret' => 'test_token_secret', 'accessToken' => 'test_token'])]);
 
-		$this->assertContains('OAuth oauth_consumer_key="testkey", oauth_nonce="', $headers['Authorization']);
+		$this->assertContains('OAuth oauth_consumer_key="'.$this->options->key.'", oauth_nonce="', $headers['Authorization']);
 	}
 
 	public function testGetAccessTokenHeaders(){
@@ -98,7 +98,7 @@ class OAuth1Test extends ProviderTestAbstract{
 			->getMethod('getAccessTokenHeaders')
 			->invokeArgs($this->provider, [['foo' => 'bar']]);
 
-		$this->assertContains('OAuth oauth_consumer_key="testkey", oauth_nonce="', $headers['Authorization']);
+		$this->assertContains('OAuth oauth_consumer_key="'.$this->options->key.'", oauth_nonce="', $headers['Authorization']);
 	}
 
 	public function testGetSignatureData(){
