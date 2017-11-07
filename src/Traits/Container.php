@@ -62,4 +62,13 @@ trait Container{
 
 	}
 
+	public function __toArray():array {
+		$data = [];
+
+		foreach($this as $key => $value){
+			$data[$key] = $value;
+		}
+
+		return $data;
+	}
 }

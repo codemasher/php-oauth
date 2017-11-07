@@ -12,15 +12,16 @@
 
 namespace chillerlan\OAuth\Storage;
 
-use chillerlan\OAuth\OAuthException;
-use chillerlan\OAuth\Token;
+use chillerlan\OAuth\{
+	OAuthException, OAuthOptions, Token
+};
 
 class SessionTokenStorage extends TokenStorageAbstract{
 
 	/**
 	 * @var bool
 	 */
-	protected $sessionStarted;
+	protected $sessionStart;
 
 	/**
 	 * @var string
@@ -35,25 +36,24 @@ class SessionTokenStorage extends TokenStorageAbstract{
 	/**
 	 * Session constructor.
 	 *
-	 * @param bool   $sessionStart Whether or not to start the session upon construction.
-	 * @param string $sessionVar   the variable name to use within the _SESSION superglobal
-	 * @param string $stateVar
+	 * @param \chillerlan\OAuth\OAuthOptions|null $options
 	 */
-	public function __construct($sessionStart = true, string $sessionVar = 'chillerlan-oauth-token', string $stateVar = 'chillerlan-oauth-state'){
-		$this->sessionVar     = $sessionVar;
-		$this->stateVar       = $stateVar;
-		$this->sessionStarted = $sessionStart;
+	public function __construct(OAuthOptions $options = null){
+		parent::__construct($options);
 
-		if($this->sessionStarted && !$this->sessionIsActive()){
+		$this->sessionVar = $this->options->sessionTokenVar;
+		$this->stateVar = $this->options->sessionStateVar;
+
+		if($this->options->sessionStart && !$this->sessionIsActive()){
 			session_start();
 		}
 
-		if(!isset($_SESSION[$sessionVar])){
-			$_SESSION[$sessionVar] = [];
+		if(!isset($_SESSION[$this->sessionVar])){
+			$_SESSION[$this->sessionVar] = [];
 		}
 
-		if(!isset($_SESSION[$stateVar])){
-			$_SESSION[$stateVar] = [];
+		if(!isset($_SESSION[$this->stateVar])){
+			$_SESSION[$this->stateVar] = [];
 		}
 
 	}
@@ -62,7 +62,7 @@ class SessionTokenStorage extends TokenStorageAbstract{
 	 * Destructor.
 	 */
 	public function __destruct(){
-		if($this->sessionStarted){
+		if($this->options->sessionStart){
 			session_write_close();
 		}
 	}
@@ -74,7 +74,7 @@ class SessionTokenStorage extends TokenStorageAbstract{
 	 * @return \chillerlan\OAuth\Storage\TokenStorageInterface
 	 */
 	public function storeAccessToken(string $service, Token $token):TokenStorageInterface{
-		$token = serialize($token);
+		$token = json_encode($token->__toArray());
 
 		if(isset($_SESSION[$this->sessionVar]) && is_array($_SESSION[$this->sessionVar])){
 			$_SESSION[$this->sessionVar][$service] = $token;
@@ -95,7 +95,7 @@ class SessionTokenStorage extends TokenStorageAbstract{
 	public function retrieveAccessToken(string $service):Token{
 
 		if($this->hasAccessToken($service)){
-			return unserialize($_SESSION[$this->sessionVar][$service]);
+			return new Token(json_decode($_SESSION[$this->sessionVar][$service], true));
 		}
 
 		throw new OAuthException('token not found');

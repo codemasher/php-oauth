@@ -32,6 +32,9 @@ use chillerlan\OAuth\Traits\Container;
  * @property string $dbProviderTable
  * @property string $dbProviderTableID
  * @property string $dbProviderTableName
+ * @property bool   $sessionStart
+ * @property string $sessionTokenVar
+ * @property string $sessionStateVar
  */
 class OAuthOptions{
 	use Container;
@@ -69,4 +72,7 @@ class OAuthOptions{
 	protected $dbProviderTableID   = 'provider_id';
 	protected $dbProviderTableName = 'servicename';
 
+	protected $sessionStart    = true;
+	protected $sessionTokenVar = 'chillerlan-oauth-token';
+	protected $sessionStateVar = 'chillerlan-oauth-state';
 }

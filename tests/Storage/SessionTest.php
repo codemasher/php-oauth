@@ -54,7 +54,7 @@ class SessionTest extends TokenStorageTestAbstract{
 		$_SESSION[self::SESSION_VAR] = 'foo';
 
 		$this->storage->storeAccessToken(self::SERVICE_NAME, $this->token);
-		$tokenFromSession = unserialize($_SESSION[self::SESSION_VAR][self::SERVICE_NAME]);
+		$tokenFromSession = new Token(json_decode($_SESSION[self::SESSION_VAR][self::SERVICE_NAME], true));
 		$this->assertInstanceOf(Token::class, $tokenFromSession);
 		$this->assertSame('foobar', $tokenFromSession->accessToken);
 		$tokenFromStorage = $this->storage->retrieveAccessToken(self::SERVICE_NAME);

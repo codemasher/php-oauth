@@ -77,7 +77,7 @@ class DBTokenStorage extends TokenStorageAbstract{
 			$this->options->dbTokenTableUser       => $this->user_id,
 			$this->options->dbTokenTableProviderID =>
 				$this->getProviders()[$service][$this->options->dbProviderTableID],
-			$this->options->dbTokenTableToken      => serialize($token),
+			$this->options->dbTokenTableToken      => json_encode($token->__toArray()),
 			$this->options->dbTokenTableExpires    => $token->expires,
 		];
 
@@ -119,7 +119,7 @@ class DBTokenStorage extends TokenStorageAbstract{
 			throw new OAuthException('token not found');
 		}
 
-		return $r[0]->token('unserialize');
+		return new Token(json_decode($r[0]->{$this->options->dbTokenTableToken}, true));
 	}
 
 	/**
