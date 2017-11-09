@@ -39,6 +39,7 @@
   - Flickr
 - Oauth2
   - Amazon
+  - BigCartel
   - Deezer
   - Foursquare
   - Github
@@ -184,7 +185,7 @@ The general method scheme looks as follows:
    - the actual API method name if available
    - substituted from the path element names
  - `:path` elements become required parameters
- - query parameters become a `[$k => $v]` array
+ - `?query=` parameters become a `[$k => $v]` array
 
 ```php
 // https://example.com/api/endpoint/:id/subendpoint/:name?param1=foo&param2=bar
@@ -225,7 +226,7 @@ class MyOauth1Provider extends Oauth1Provider{
 ```
 
 #### `OAuth2Interface`
-[OAuth2 is a very straightforward mess](https://hueniverse.com/oauth-2-0-and-the-road-to-hell-8eec45921529). Please refer to your provider's docs for implementation details.
+[OAuth2 is a very straightforward... mess](https://hueniverse.com/oauth-2-0-and-the-road-to-hell-8eec45921529). Please refer to your provider's docs for implementation details.
 ```php
 use chillerlan\OAuth\Providers\OAuth2Provider;
 
@@ -242,7 +243,7 @@ class MyOauth2Provider extends Oauth2Provider{
 	protected $apiHeaders                = ['Accept' => 'application/json'];
 	protected $scopesDelimiter           = ',';
 	protected $accessTokenExpires        = true;  // a token refresh will be performed
-	protected $csrfToken                 = false; // disables <state> parameter creation & check.
+	protected $useCsrfToken              = false; // disables <state> parameter creation & check.
 	protected $clientCredentials         = true;  // enables/allows fetching of Client Credentials Token
 
 }
