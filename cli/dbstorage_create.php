@@ -51,37 +51,42 @@ function createTable(Connection $db, string $token_table, string $provider_table
 		->execute();
 
 	$providers = [
-		['provider_id' => 1, 'servicename' => 'Discogs'],
-		['provider_id' => 2, 'servicename' => 'Twitter'],
-		['provider_id' => 3, 'servicename' => 'Flickr'],
-		['provider_id' => 4, 'servicename' => 'Foursquare'],
-		['provider_id' => 5, 'servicename' => 'GitHub'],
-		['provider_id' => 6, 'servicename' => 'Gitter'],
-		['provider_id' => 7, 'servicename' => 'Google'],
-		['provider_id' => 8, 'servicename' => 'Instagram'],
-		['provider_id' => 9, 'servicename' => 'MusicBrainz'],
-		['provider_id' => 10, 'servicename' => 'SoundCloud'],
-		['provider_id' => 11, 'servicename' => 'Discord'],
-		['provider_id' => 12, 'servicename' => 'Spotify'],
-		['provider_id' => 13, 'servicename' => 'Twitch'],
-		['provider_id' => 14, 'servicename' => 'Vimeo'],
-		['provider_id' => 15, 'servicename' => 'LastFM'],
-		['provider_id' => 16, 'servicename' => 'GuildWars2'],
-		['provider_id' => 17, 'servicename' => 'Tumblr'],
-		['provider_id' => 18, 'servicename' => 'Patreon'],
-		['provider_id' => 19, 'servicename' => 'Twitter2'],
-		['provider_id' => 20, 'servicename' => 'Wordpress'],
-		['provider_id' => 21, 'servicename' => 'DeviantArt'],
-		['provider_id' => 22, 'servicename' => 'YahooSocial'],
-		['provider_id' => 23, 'servicename' => 'Deezer'],
-		['provider_id' => 24, 'servicename' => 'Mixcloud'],
-		['provider_id' => 25, 'servicename' => 'Slack'],
-		['provider_id' => 26, 'servicename' => 'Amazon'],
+		 1 => 'Discogs',
+		 2 => 'Twitter',
+		 3 => 'Flickr',
+		 4 => 'Foursquare',
+		 5 => 'GitHub',
+		 6 => 'Gitter',
+		 7 => 'Google',
+		 8 => 'Instagram',
+		 9 => 'MusicBrainz',
+		10 => 'SoundCloud',
+		11 => 'Discord',
+		12 => 'Spotify',
+		13 => 'Twitch',
+		14 => 'Vimeo',
+		15 => 'LastFM',
+		16 => 'GuildWars2',
+		17 => 'Tumblr',
+		18 => 'Patreon',
+		19 => 'Twitter2',
+		20 => 'Wordpress',
+		21 => 'DeviantArt',
+		22 => 'YahooSocial',
+		23 => 'Deezer',
+		24 => 'Mixcloud',
+		25 => 'Slack',
+		26 => 'Amazon',
+		27 => 'BigCartel',
 	];
 
-	return $db->insert
-		->into($provider_table)
-		->values($providers)
-		->execute();
+	foreach($providers as $i => $provider){
+		$db->insert
+			->into($provider_table)
+			->values(['provider_id' => $i, 'servicename' => $provider])
+			->execute();
+	}
+
+	return true;
 }
 

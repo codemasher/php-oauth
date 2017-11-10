@@ -10,8 +10,8 @@
 
 require_once __DIR__.'/../bootstrap.php';
 
-/** @var \chillerlan\OAuth\Providers\Bigcartel $provider */
-$provider = getProvider('Bigcartel', []);
+/** @var \chillerlan\OAuth\Providers\BigCartel $provider */
+$provider = getProvider('BigCartel', []);
 
 if(isset($_GET['login']) && $_GET['login'] === $provider->serviceName){
 	header('Location: '.$provider->getAuthURL());

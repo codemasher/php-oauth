@@ -1,8 +1,8 @@
 <?php
 /**
- * Class Bigcartel
+ * Class BigCartel
  *
- * @filesource   Bigcartel.php
+ * @filesource   BigCartel.php
  * @created      31.10.2017
  * @package      chillerlan\OAuth\Providers
  * @author       Smiley <smiley@chillerlan.net>
@@ -43,7 +43,7 @@ namespace chillerlan\OAuth\Providers;
  * @method \chillerlan\OAuth\HTTP\OAuthResponse updateDiscount($account_id, $discount_id, array $body = ['type', 'name', 'code', 'active_at', 'expires_at', 'requirement_type', 'expiration_type', 'reward_type', 'application_type', 'percent_discount', 'flat_rate_discount', 'use_limit', 'minimum_cart_total', 'minimum_cart_quantity'])
  * @method \chillerlan\OAuth\HTTP\OAuthResponse updateOrder($account_id, $order_id, array $body = ['id', 'type', 'customer_first_name', 'customer_last_name', 'customer_email', 'shipping_address_1', 'shipping_address_2', 'shipping_city', 'shipping_state', 'shipping_zip', 'shipping_country_id', 'shipping_status'])
  */
-class Bigcartel extends OAuth2Provider{
+class BigCartel extends OAuth2Provider{
 
 	protected $apiURL         = 'https://api.bigcartel.com/v1';
 	protected $authURL        = 'https://my.bigcartel.com/oauth/authorize';
