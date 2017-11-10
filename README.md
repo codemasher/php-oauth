@@ -33,36 +33,36 @@
 ## Supported providers
 
 - Oauth1
-  - Discogs
-  - Twitter
-  - Tumblr
-  - Flickr
+  - [Discogs](https://www.discogs.com/developers/)
+  - [Twitter](https://developer.twitter.com/en/docs/api-reference-index)
+  - [Tumblr](https://www.tumblr.com/docs/en/api/v2)
+  - [Flickr]()
 - Oauth2
-  - Amazon
-  - BigCartel
-  - Deezer
-  - Foursquare
-  - Github
-  - Gitter
-  - Google
-  - GuildWars2 (no authentication)
-  - Instagram
-  - Mixcloud
-  - MusicBrainz
-  - Patreon
-  - Slack
-  - SoundCloud
-  - Wordpress
-  - Yahoo
+  - [Amazon](https://login.amazon.com/)
+  - [Big Cartel](https://developers.bigcartel.com/api/v1)
+  - [Deezer](https://developers.deezer.com/api/oauth)
+  - [Foursquare](https://developer.foursquare.com/docs/)
+  - [Github](https://developer.github.com/v3/)
+  - [Gitter](https://developer.gitter.im/)
+  - [Google](https://developers.google.com/oauthplayground/)
+  - [GuildWars2](https://wiki.guildwars2.com/wiki/API:Main) (no authentication)
+  - [Instagram](https://www.instagram.com/developer)
+  - [Mixcloud](https://www.mixcloud.com/developers/)
+  - [MusicBrainz](https://musicbrainz.org/doc/Development)
+  - [Patreon](https://docs.patreon.com/)
+  - [Slack](https://api.slack.com/docs/oauth)
+  - [SoundCloud](https://developers.soundcloud.com/)
+  - [Wordpress](https://developer.wordpress.com/docs/api/)
+  - [Yahoo](https://developer.yahoo.com/oauth2/guide/)
 - Oauth2 & client credentials
-  - DeviantArt
-  - Discord
-  - Spotify
-  - Twitch
-  - Twitter2 (client credentials only)
-  - Vimeo
+  - [DeviantArt](https://www.deviantart.com/developers/)
+  - [Discord](https://discordapp.com/developers/)
+  - [Spotify](https://developer.spotify.com/web-api/)
+  - [Twitch](https://dev.twitch.tv/docs)
+  - [Twitter2](https://developer.twitter.com/en/docs/basics/authentication/overview/application-only) (application only)
+  - [Vimeo](https://developer.vimeo.com/)
 - Native
-  - Last.fm
+  - [Last.fm](https://www.last.fm/api/)
 
 (PR welcome!)
 

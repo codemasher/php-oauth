@@ -13,6 +13,7 @@
 namespace chillerlan\OAuth\Providers;
 
 /**
+ * @link https://login.amazon.com/
  * @link https://images-na.ssl-images-amazon.com/images/G/01/lwa/dev/docs/website-developer-guide._TTH_.pdf
  * @link https://images-na.ssl-images-amazon.com/images/G/01/mwsportal/doc/en_US/offamazonpayments/LoginAndPayWithAmazonIntegrationGuide._V335378063_.pdf
  */

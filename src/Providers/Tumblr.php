@@ -13,7 +13,7 @@
 namespace chillerlan\OAuth\Providers;
 
 /**
- *
+ * @link https://www.tumblr.com/docs/en/api/v2
  */
 class Tumblr extends OAuth1Provider{
 

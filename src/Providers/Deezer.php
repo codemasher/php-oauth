@@ -39,12 +39,12 @@ class Deezer extends OAuth2Provider{
 	protected $authMethod     = self::QUERY_ACCESS_TOKEN;
 
 	/**
-	 * @param array $parameters
+	 * @param array $params
 	 *
 	 * @return array
 	 */
-	protected function getAuthURLParams(array $parameters):array {
-		return array_merge($parameters, [
+	protected function getAuthURLParams(array $params):array {
+		return array_merge($params, [
 			'app_id'        => $this->options->key,
 			'redirect_uri'  => $this->options->callbackURL,
 			'perms'         => implode($this->scopesDelimiter, $this->scopes),

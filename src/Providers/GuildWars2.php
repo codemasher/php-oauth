@@ -17,6 +17,7 @@ use chillerlan\OAuth\Token;
 
 /**
  * @link https://api.guildwars2.com/v2
+ * @link https://wiki.guildwars2.com/wiki/API:Main
  *
  * GW2 does not support authentication (anymore) but the API still works like a regular OAUth API, so...
  *
