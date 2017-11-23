@@ -16,9 +16,10 @@ use chillerlan\OAuth\{
 	API\OAuthAPIClientException,
 	HTTP\HTTPClientInterface,
 	OAuthOptions,
-	Storage\TokenStorageInterface,
-	Traits\Magic
+	Storage\TokenStorageInterface
+
 };
+use chillerlan\Traits\Magic;
 
 /**
  * @property string $serviceName

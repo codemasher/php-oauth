@@ -12,7 +12,7 @@
 
 namespace chillerlan\OAuth\HTTP;
 
-use chillerlan\OAuth\Traits\Container;
+use chillerlan\Traits\Container;
 
 /**
  * @property \stdClass $headers

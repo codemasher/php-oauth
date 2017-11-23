@@ -12,7 +12,7 @@
 
 namespace chillerlan\OAuth;
 
-use chillerlan\OAuth\Traits\Container;
+use chillerlan\Traits\Container;
 
 /**
  * Base token implementation for any OAuth version.
