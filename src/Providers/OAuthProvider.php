@@ -149,7 +149,7 @@ abstract class OAuthProvider implements OAuthInterface{
 			$endpoint      = $m->path ?? '/';
 			$method        = $m->method ?? 'GET';
 			$body          = null;
-			$headers       = is_object($m->headers) ? (array)$m->headers : [];
+			$headers       = isset($m->headers) && is_object($m->headers) ? (array)$m->headers : [];
 			$path_elements = $m->path_elements ?? [];
 			$params_in_url = count($path_elements);
 			$params        = $arguments[$params_in_url] ?? null;
