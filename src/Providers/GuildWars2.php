@@ -233,7 +233,7 @@ class GuildWars2 extends OAuth2Provider{
 	 * @throws \chillerlan\OAuth\OAuthException
 	 */
 	public function storeGW2Token(string $access_token):Token{
-		$tokeninfo = $this->tokeninfo(['access_token' => $access_token]);
+		$tokeninfo = $this->tokeninfo(['access_token' => $access_token])->json;
 
 		if(isset($tokeninfo->id) && strpos($access_token, $tokeninfo->id) === 0){
 
@@ -254,7 +254,7 @@ class GuildWars2 extends OAuth2Provider{
 			return $token;
 		}
 
-		throw new OAuthException('invalid/unverified token');
+		throw new OAuthException('invalid/unverified token: '.print_r($tokeninfo, true));
 	}
 
 }
