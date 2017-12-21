@@ -18,7 +18,7 @@ use chillerlan\OAuth\{
 use chillerlan\OAuthTest\{
 	HTTP\TestHTTPClient, Storage\TestDBStorage
 };
-use Dotenv\Dotenv;
+use chillerlan\Traits\DotEnv;
 use PHPUnit\Framework\TestCase;
 
 abstract class APITestAbstract extends TestCase{
@@ -48,9 +48,8 @@ abstract class APITestAbstract extends TestCase{
 	protected function setUp(){
 		ini_set('date.timezone', 'Europe/Amsterdam');
 
-		$env = file_exists(self::CFGDIR.'/.env') ? '.env' : '.env_travis';
 
-		(new Dotenv(self::CFGDIR, $env))->load();
+		$env = (new DotEnv(self::CFGDIR, file_exists(self::CFGDIR.'/.env') ? '.env' : '.env_travis'))->load();
 
 		$this->storage  = new TestDBStorage;
 
@@ -58,9 +57,9 @@ abstract class APITestAbstract extends TestCase{
 			new TestHTTPClient,
 			$this->storage,
 			new OAuthOptions([
-				'key'         => getenv($this->envvar.'_KEY'),
-				'secret'      => getenv($this->envvar.'_SECRET'),
-				'callbackURL' => getenv($this->envvar.'_CALLBACK_URL'),
+				'key'         => $env->get($this->envvar.'_KEY'),
+				'secret'      => $env->get($this->envvar.'_SECRET'),
+				'callbackURL' => $env->get($this->envvar.'_CALLBACK_URL'),
 			]),
 			$this->scopes
 		);
@@ -70,7 +69,7 @@ abstract class APITestAbstract extends TestCase{
 
 	protected function tearDown(){
 		if($this->response instanceof OAuthResponse){
-			print_r($this->response->headers);
+#			print_r($this->response->headers);
 
 			$json = $this->response->json;
 
