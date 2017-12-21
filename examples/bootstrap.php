@@ -10,8 +10,7 @@
 use chillerlan\OAuth\{
 	OAuthOptions, HTTP\CurlClient, Storage\SessionTokenStorage, Token
 };
-use chillerlan\TinyCurl\{Request, RequestOptions};
-use Dotenv\Dotenv;
+use chillerlan\Traits\DotEnv;
 
 error_reporting(E_ALL);
 ini_set('display_errors', 1);
@@ -19,7 +18,7 @@ ini_set('date.timezone', 'Europe/Amsterdam');
 
 require_once __DIR__.'/../vendor/autoload.php';
 
-(new Dotenv(__DIR__.'/../config', '.env'))->load();
+(new DotEnv(__DIR__.'/../config', '.env'))->load();
 
 $storage = new SessionTokenStorage;
 
@@ -42,9 +41,9 @@ function getProvider(string $name, array $scopes = []){
 		]),
 		$storage,
 		new OAuthOptions([
-			'key'         => getenv($envvar.'_KEY'),
-			'secret'      => getenv($envvar.'_SECRET'),
-			'callbackURL' => getenv($envvar.'_CALLBACK_URL'),
+			'key'         => $_ENV[$envvar.'_KEY'],
+			'secret'      => $_ENV[$envvar.'_SECRET'],
+			'callbackURL' => $_ENV[$envvar.'_CALLBACK_URL'],
 		]),
 		$scopes
 	);
