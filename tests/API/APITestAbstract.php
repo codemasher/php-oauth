@@ -16,7 +16,7 @@ use chillerlan\OAuth\{
 	HTTP\OAuthResponse, OAuthOptions, Providers\OAuth2Interface, Providers\OAuthInterface, Token
 };
 use chillerlan\OAuthTest\{
-	HTTP\TestHTTPClient, Storage\TestDBStorage
+	Request\TestHTTPClient, Storage\TestDBStorage
 };
 use chillerlan\Traits\DotEnv;
 use PHPUnit\Framework\TestCase;
