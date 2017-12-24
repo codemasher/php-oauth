@@ -22,6 +22,7 @@
 		"chillerlan/php-curl": ">=1.0.3",
 		"chillerlan/database": ">=1.0.2",
 		"guzzlehttp/guzzle": "~6.0",
+		"nikic/fast-route":"1.2.*",
 		"phpunit/phpunit": "6.5.*"
 	},
 	"autoload": {
