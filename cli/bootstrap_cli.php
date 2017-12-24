@@ -18,22 +18,20 @@ use chillerlan\Database\{
 	Drivers\Native\MySQLiDriver,
 	Query\Dialects\MySQLQueryBuilder
 };
-use Dotenv\Dotenv;
+use chillerlan\Traits\DotEnv;
 
 const CFGDIR = __DIR__.'/../config';
 
-$env = file_exists(CFGDIR.'/.env') ? '.env' : '.env_travis';
-
-(new Dotenv(CFGDIR, $env))->load();
+$env = (new DotEnv(CFGDIR, file_exists(CFGDIR.'/.env') ? '.env' : '.env_travis'))->load();
 
 $db = new Connection(new Options([
 	'driver'       => MySQLiDriver::class,
 	'querybuilder' => MySQLQueryBuilder::class,
-	'host'         => getenv('MYSQL_HOST'),
-	'port'         => getenv('MYSQL_PORT'),
-	'database'     => getenv('MYSQL_DATABASE'),
-	'username'     => getenv('MYSQL_USERNAME'),
-	'password'     => getenv('MYSQL_PASSWORD'),
+	'host'         => $env->get('MYSQL_HOST'),
+	'port'         => $env->get('MYSQL_PORT'),
+	'database'     => $env->get('MYSQL_DATABASE'),
+	'username'     => $env->get('MYSQL_USERNAME'),
+	'password'     => $env->get('MYSQL_PASSWORD'),
 ]));
 
 
