@@ -15,12 +15,11 @@ namespace chillerlan\OAuthTest\Storage;
 use chillerlan\Database\{
 	Connection, Drivers\PDO\PDOMySQLDriver, Query\Dialects\MySQLQueryBuilder, Options
 };
-use chillerlan\OAuth\OAuthOptions;
 use chillerlan\OAuth\Storage\{
 	DBTokenStorage, TokenStorageAbstract, TokenStorageInterface
 };
-use chillerlan\OAuth\Token;
-use Dotenv\Dotenv;
+use chillerlan\OAuth\{OAuthOptions, Token};
+use chillerlan\Traits\DotEnv;
 
 class TestDBStorage extends TokenStorageAbstract{
 
@@ -41,18 +40,16 @@ class TestDBStorage extends TokenStorageAbstract{
 
 		parent::__construct($options);
 
-		$env = file_exists(self::CFGDIR.'/.env') ? '.env' : '.env_travis';
-
-		(new Dotenv(self::CFGDIR, $env))->load();
+		$env = (new DotEnv(self::CFGDIR, file_exists(self::CFGDIR.'/.env') ? '.env' : '.env_travis'))->load();
 
 		$db = new Connection(new Options([
 			'driver'       => PDOMySQLDriver::class,
 			'querybuilder' => MySQLQueryBuilder::class,
-			'host'         => getenv('MYSQL_HOST'),
-			'port'         => getenv('MYSQL_PORT'),
-			'database'     => getenv('MYSQL_DATABASE'),
-			'username'     => getenv('MYSQL_USERNAME'),
-			'password'     => getenv('MYSQL_PASSWORD'),
+			'host'         => $env->get('MYSQL_HOST'),
+			'port'         => $env->get('MYSQL_PORT'),
+			'database'     => $env->get('MYSQL_DATABASE'),
+			'username'     => $env->get('MYSQL_USERNAME'),
+			'password'     => $env->get('MYSQL_PASSWORD'),
 		]));
 
 		$this->storage = new DBTokenStorage($this->options, $db, 1);
