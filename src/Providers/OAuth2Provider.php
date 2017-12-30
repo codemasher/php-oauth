@@ -362,7 +362,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 		$token = $this->storage->retrieveAccessToken($this->serviceName);
 
 		// attempt to refresh an expired token
-		if($this->accessTokenExpires && $token->isExpired()){
+		if($this->accessTokenExpires && ($token->isExpired() || $token->expires === Token::EOL_UNKNOWN)){
 			$token = $this->refreshAccessToken($token);
 		}
 
