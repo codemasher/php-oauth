@@ -48,7 +48,6 @@ abstract class APITestAbstract extends TestCase{
 	protected function setUp(){
 		ini_set('date.timezone', 'Europe/Amsterdam');
 
-
 		$env = (new DotEnv(self::CFGDIR, file_exists(self::CFGDIR.'/.env') ? '.env' : '.env_travis'))->load();
 
 		$this->storage  = new TestDBStorage;
@@ -69,7 +68,6 @@ abstract class APITestAbstract extends TestCase{
 
 	protected function tearDown(){
 		if($this->response instanceof OAuthResponse){
-#			print_r($this->response->headers);
 
 			$json = $this->response->json;
 
@@ -117,7 +115,7 @@ abstract class APITestAbstract extends TestCase{
 	}
 
 	/**
-	 * @expectedException \chillerlan\OAuth\OAuthException
+	 * @expectedException \chillerlan\OAuth\Providers\ProviderException
 	 * @expectedExceptionMessage not supported
 	 */
 	public function testRequestCredentialsTokenNotSupportedException(){

@@ -25,7 +25,7 @@ use GuzzleHttp\Client;
 class TestHTTPClient extends HTTPClientAbstract{
 
 	const CFGDIR        = __DIR__.'/../../config';
-	const UA            = 'chillerlanPhpOAuth/1.2.0 +https://github.com/codemasher/php-oauth';
+	const UA            = 'chillerlanPhpOAuth/2.0.0 +https://github.com/codemasher/php-oauth';
 	const SLEEP_SECONDS = 1.0;
 
 	/**
