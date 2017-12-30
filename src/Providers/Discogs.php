@@ -85,7 +85,7 @@ class Discogs extends OAuth1Provider{
 		return [
 			'oauth_callback'         => $this->options->callbackURL,
 			'oauth_consumer_key'     => $this->options->key,
-			'oauth_nonce'            => bin2hex(random_bytes(32)),
+			'oauth_nonce'            => $this->nonce(),
 			'oauth_signature'        => $this->options->secret.'&',
 			'oauth_signature_method' => 'PLAINTEXT',
 			'oauth_timestamp'        => (new DateTime())->format('U'),

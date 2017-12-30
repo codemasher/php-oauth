@@ -112,14 +112,24 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 	}
 
 	/**
+	 * returns a random 32 byte hex string
+	 * 
+	 * @return string
+	 */
+	protected function nonce():string {
+		$nonce = random_bytes(32);
+
+		return function_exists('sodium_bin2hex') ? sodium_bin2hex($nonce) : bin2hex($nonce); // use the sodium extension if available
+	}
+
+	/**
 	 * @return array
 	 */
 	protected function getRequestTokenHeaderParams():array {
-
 		$params = [
 			'oauth_callback'         => $this->options->callbackURL,
 			'oauth_consumer_key'     => $this->options->key,
-			'oauth_nonce'            => bin2hex(random_bytes(32)), // \Sodium\...
+			'oauth_nonce'            => $this->nonce(),
 			'oauth_signature_method' => 'HMAC-SHA1',
 			'oauth_timestamp'        => (new DateTime())->format('U'),
 			'oauth_version'          => '1.0',
@@ -245,7 +255,7 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 	protected function requestHeaderParams(Token $token):array {
 		return [
 			'oauth_consumer_key'     => $this->options->key,
-			'oauth_nonce'            => bin2hex(random_bytes(32)), // \Sodium\bin2hex()
+			'oauth_nonce'            => $this->nonce(),
 			'oauth_signature_method' => 'HMAC-SHA1',
 			'oauth_timestamp'        => (new DateTime())->format('U'),
 			'oauth_token'            => $token->accessToken,
