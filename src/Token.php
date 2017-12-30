@@ -29,7 +29,9 @@ use chillerlan\Traits\Container;
  * @property int    $expires
  */
 class Token{
-	use Container;
+	use Container{
+		__construct as constructContainer;
+	}
 
 	/**
 	 * Denotes an unknown end of life time.
@@ -40,6 +42,11 @@ class Token{
 	 * Denotes a token which never expires
 	 */
 	const EOL_NEVER_EXPIRES = -9002;
+
+	/**
+	 * defines a maximum expiry period (1 year)
+	 */
+	const EXPIRY_MAX = 86400 * 365;
 
 	/**
 	 * @var string
@@ -77,6 +84,12 @@ class Token{
 	 */
 	protected $extraParams = [];
 
+	public function __construct(array $properties = null){
+		$this->constructContainer($properties);
+
+		$this->setExpiry($this->expires);
+	}
+
 	/**
 	 * Token setter
 	 *
@@ -103,16 +116,20 @@ class Token{
 	public function setExpiry(int $expires = null):Token{
 		$now = time();
 
+		if($expires!== null){
+			$expires =  intval($expires);
+		}
+
 		$this->expires = self::EOL_UNKNOWN;
 
 		if($expires === 0 || $expires === self::EOL_NEVER_EXPIRES){
 			$this->expires = self::EOL_NEVER_EXPIRES;
 		}
-		elseif((int)$expires > 0 && (int)$expires <= $now){
-			$this->expires = $now + $expires;
-		}
-		elseif((int)$expires > $now){
+		elseif($expires > $now){
 			$this->expires = $expires;
+		}
+		elseif($expires > 0 && $expires < self::EXPIRY_MAX){
+			$this->expires = $now + $expires;
 		}
 
 		return $this;
@@ -124,7 +141,7 @@ class Token{
 	public function isExpired():bool{
 		return $this->expires !== self::EOL_NEVER_EXPIRES
 		       && $this->expires !== self::EOL_UNKNOWN // ??
-		       && time() >= $this->expires;
+		       && time() > $this->expires;
 	}
 
 }
