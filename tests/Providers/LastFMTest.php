@@ -46,7 +46,7 @@ class LastFMTest extends ProviderTestAbstract{
 	}
 
 	/**
-	 * @expectedException \chillerlan\OAuth\OAuthException
+	 * @expectedException \chillerlan\OAuth\Providers\ProviderException
 	 * @expectedExceptionMessage unable to parse token response
 	 */
 	public function testParseTokenResponseNoData(){
@@ -56,7 +56,7 @@ class LastFMTest extends ProviderTestAbstract{
 	}
 
 	/**
-	 * @expectedException \chillerlan\OAuth\OAuthException
+	 * @expectedException \chillerlan\OAuth\Providers\ProviderException
 	 * @expectedExceptionMessage error retrieving access token:
 	 */
 	public function testParseTokenResponseError(){
@@ -66,7 +66,7 @@ class LastFMTest extends ProviderTestAbstract{
 	}
 
 	/**
-	 * @expectedException \chillerlan\OAuth\OAuthException
+	 * @expectedException \chillerlan\OAuth\Providers\ProviderException
 	 * @expectedExceptionMessage token missing
 	 */
 	public function testParseTokenResponseNoToken(){

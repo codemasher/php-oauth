@@ -15,7 +15,6 @@ namespace chillerlan\OAuth\Providers;
 use chillerlan\OAuth\{
 	HTTP\HTTPClientInterface,
 	HTTP\OAuthResponse,
-	OAuthException,
 	OAuthOptions,
 	Token,
 	Storage\TokenStorageInterface
@@ -132,25 +131,25 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	 * @param OAuthResponse $response
 	 *
 	 * @return \chillerlan\OAuth\Token
-	 * @throws \chillerlan\OAuth\OAuthException
+	 * @throws \chillerlan\OAuth\Providers\ProviderException
 	 */
 	protected function parseTokenResponse(OAuthResponse $response):Token{
 		$data = $response->json_array;
 
 		if(!is_array($data)){
-			throw new OAuthException('unable to parse token response'.PHP_EOL.print_r($response, true));
+			throw new ProviderException('unable to parse token response'.PHP_EOL.print_r($response, true));
 		}
 
 		foreach(['error_description', 'error'] as $field){
 
 			if(isset($data[$field])){
-				throw new OAuthException('error retrieving access token: "'.$data[$field].'"'.PHP_EOL.print_r($data, true));
+				throw new ProviderException('error retrieving access token: "'.$data[$field].'"'.PHP_EOL.print_r($data, true));
 			}
 
 		}
 
 		if(!isset($data['access_token'])){
-			throw new OAuthException('token missing');
+			throw new ProviderException('token missing');
 		}
 
 		$token = new Token([
@@ -170,22 +169,22 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	 * @param string|null $state
 	 *
 	 * @return \chillerlan\OAuth\Providers\OAuth2Interface
-	 * @throws \chillerlan\OAuth\OAuthException
+	 * @throws \chillerlan\OAuth\Providers\ProviderException
 	 */
 	protected function checkState(string $state = null):OAuth2Interface{
 
 		if(empty($state)){
-			throw new OAuthException('invalid state');
+			throw new ProviderException('invalid state');
 		}
 
 		if(!$this->storage->hasAuthorizationState($this->serviceName)){
-			throw new OAuthException('invalid state for '.$this->serviceName);
+			throw new ProviderException('invalid state for '.$this->serviceName);
 		}
 
 		$knownState = $this->storage->retrieveAuthorizationState($this->serviceName);
 
 		if(!hash_equals($knownState, $state)){
-			throw new OAuthException('invalid authorization state: '.$this->serviceName.' '.$state);
+			throw new ProviderException('invalid authorization state: '.$this->serviceName.' '.$state);
 		}
 
 #		$this->storage->clearAuthorizationState($this->serviceName);
@@ -198,7 +197,6 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	 * @param string|null $state
 	 *
 	 * @return \chillerlan\OAuth\Token
-	 * @throws \chillerlan\OAuth\OAuthException
 	 */
 	public function getAccessToken(string $code, string $state = null):Token{
 
@@ -248,12 +246,12 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	 * @param array $scopes
 	 *
 	 * @return \chillerlan\OAuth\Token
-	 * @throws \chillerlan\OAuth\OAuthException
+	 * @throws \chillerlan\OAuth\Providers\ProviderException
 	 */
 	public function getClientCredentialsToken(array $scopes = []):Token {
 
 		if(!$this->clientCredentials){
-			throw new OAuthException('not supported');
+			throw new ProviderException('not supported');
 		}
 
 		$token = $this->parseTokenResponse(
@@ -296,7 +294,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	 * @param \chillerlan\OAuth\Token $token
 	 *
 	 * @return \chillerlan\OAuth\Token
-	 * @throws \chillerlan\OAuth\OAuthException
+	 * @throws \chillerlan\OAuth\Providers\ProviderException
 	 */
 	public function refreshAccessToken(Token $token = null):Token{
 
@@ -305,7 +303,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 		}
 
 		if(!$token->refreshToken){
-			throw new OAuthException(sprintf('Token expired on %s, no refresh token available.', date('Y-m-d h:i:s A', $token->expires))); // @codeCoverageIgnore
+			throw new ProviderException(sprintf('Token expired on %s, no refresh token available.', date('Y-m-d h:i:s A', $token->expires))); // @codeCoverageIgnore
 		}
 
 		$newToken = $this->parseTokenResponse(
@@ -358,7 +356,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	 * @param array  $headers
 	 *
 	 * @return \chillerlan\OAuth\HTTP\OAuthResponse
-	 * @throws \chillerlan\OAuth\OAuthException
+	 * @throws \chillerlan\OAuth\Providers\ProviderException
 	 */
 	public function request(string $path, array $params = [], string $method = 'GET', $body = null, array $headers = []):OAuthResponse{
 		$token = $this->storage->retrieveAccessToken($this->serviceName);
@@ -381,7 +379,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 			$params[self::AUTH_METHODS_QUERY[$this->authMethod]] = $token->accessToken;
 		}
 		else{
-			throw new OAuthException('invalid auth type');
+			throw new ProviderException('invalid auth type');
 		}
 
 		return $this->http->request(

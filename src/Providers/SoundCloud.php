@@ -12,8 +12,6 @@
 
 namespace chillerlan\OAuth\Providers;
 
-use chillerlan\OAuth\{Token, OAuthException};
-
 /**
  * @link https://developers.soundcloud.com/
  * @link https://developers.soundcloud.com/docs/api/guide#authentication

@@ -12,9 +12,7 @@
 
 namespace chillerlan\OAuth\Providers;
 
-use chillerlan\OAuth\{
-	OAuthException, Token
-};
+use chillerlan\OAuth\Token;
 
 /**
  * @link https://dev.twitter.com/overview/api
@@ -31,18 +29,18 @@ class Twitter2 extends OAuth2Provider{
 
 	/**
 	 * @inheritdoc
-	 * @throws \chillerlan\OAuth\OAuthException
+	 * @throws \chillerlan\OAuth\Providers\ProviderException
 	 */
 	public function getAuthURL(array $params = []):string{
-		throw new OAuthException($this->AUTH_ERRMSG);
+		throw new ProviderException($this->AUTH_ERRMSG);
 	}
 
 	/**
 	 * @inheritdoc
-	 * @throws \chillerlan\OAuth\OAuthException
+	 * @throws \chillerlan\OAuth\Providers\ProviderException
 	 */
 	public function getAccessToken(string $code, string $state = null):Token{
-		throw new OAuthException($this->AUTH_ERRMSG);
+		throw new ProviderException($this->AUTH_ERRMSG);
 	}
 
 }

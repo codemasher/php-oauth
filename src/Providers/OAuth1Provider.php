@@ -13,9 +13,7 @@
 namespace chillerlan\OAuth\Providers;
 
 use chillerlan\OAuth\{
-	OAuthException,
-	Token,
-	HTTP\OAuthResponse
+	Token, HTTP\OAuthResponse
 };
 use DateTime;
 
@@ -48,7 +46,6 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 
 	/**
 	 * @return \chillerlan\OAuth\Token
-	 * @throws \chillerlan\OAuth\OAuthException
 	 */
 	public function getRequestToken():Token {
 		$params   = $this->getRequestTokenHeaderParams();
@@ -72,7 +69,7 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 	 * @param bool|null                            $checkCallbackConfirmed
 	 *
 	 * @return \chillerlan\OAuth\Token
-	 * @throws \chillerlan\OAuth\OAuthException
+	 * @throws \chillerlan\OAuth\Providers\ProviderException
 	 */
 	protected function parseTokenResponse(OAuthResponse $response, bool $checkCallbackConfirmed = null):Token {
 		$checkCallbackConfirmed = $checkCallbackConfirmed ?? false;
@@ -80,19 +77,19 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 		parse_str($response->body, $data);
 
 		if(!$data || !is_array($data)){
-			throw new OAuthException('unable to parse token response'.PHP_EOL.print_r($response, true));
+			throw new ProviderException('unable to parse token response'.PHP_EOL.print_r($response, true));
 		}
 		elseif(isset($data['error'])){
-			throw new OAuthException('error retrieving access token: '.print_r($data['error'], true));
+			throw new ProviderException('error retrieving access token: '.print_r($data['error'], true));
 		}
 		elseif(!isset($data['oauth_token']) || !isset($data['oauth_token_secret'])){
-			throw new OAuthException('token missing');
+			throw new ProviderException('token missing');
 		}
 
 		if($checkCallbackConfirmed){
 
 			if(!isset($data['oauth_callback_confirmed']) ||  $data['oauth_callback_confirmed'] !== 'true'){
-				throw new OAuthException('oauth callback unconfirmed');
+				throw new ProviderException('oauth callback unconfirmed');
 			}
 
 		}
@@ -139,13 +136,13 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 	 * @param string $method
 	 *
 	 * @return string
-	 * @throws \chillerlan\OAuth\OAuthException
+	 * @throws \chillerlan\OAuth\Providers\ProviderException
 	 */
 	public function getSignature(string $url, array $params, string $method = 'POST'):string {
 		$parseURL = parse_url($url);
 
 		if(!isset($parseURL['host']) || !isset($parseURL['scheme']) || !in_array($parseURL['scheme'], ['http', 'https'], true)){
-			throw new OAuthException('getSignature: invalid url');
+			throw new ProviderException('getSignature: invalid url');
 		}
 
 		parse_str($parseURL['query'] ?? '', $query);
@@ -189,7 +186,6 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 	 * @param string|null $tokenSecret
 	 *
 	 * @return \chillerlan\OAuth\Token
-	 * @throws \chillerlan\OAuth\OAuthException
 	 */
 	public function getAccessToken(string $token, string $verifier, string $tokenSecret = null):Token {
 		$this->tokenSecret = $tokenSecret;
@@ -209,7 +205,6 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 	 * @param array $body
 	 *
 	 * @return array
-	 * @throws \chillerlan\OAuth\OAuthException
 	 */
 	protected function getAccessTokenHeaders(array $body):array {
 		return $this->requestHeaders($this->accessTokenURL, $body, 'POST', [], $this->storage->retrieveAccessToken($this->serviceName));

@@ -261,7 +261,6 @@ class Flickr extends OAuth1Provider{
 	 * @param array  $headers
 	 *
 	 * @return \chillerlan\OAuth\HTTP\OAuthResponse
-	 * @throws \chillerlan\OAuth\OAuthException
 	 */
 	public function request(string $path, array $params = [], string $method = 'GET', $body = null, array $headers = []):OAuthResponse{
 

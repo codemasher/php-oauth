@@ -46,7 +46,7 @@ class OAuth2Test extends ProviderTestAbstract{
 	}
 
 	/**
-	 * @expectedException \chillerlan\OAuth\OAuthException
+	 * @expectedException \chillerlan\OAuth\Providers\ProviderException
 	 * @expectedExceptionMessage unable to parse token response
 	 */
 	public function testParseTokenResponseNoData(){
@@ -56,7 +56,7 @@ class OAuth2Test extends ProviderTestAbstract{
 	}
 
 	/**
-	 * @expectedException \chillerlan\OAuth\OAuthException
+	 * @expectedException \chillerlan\OAuth\Providers\ProviderException
 	 * @expectedExceptionMessage retrieving access token:
 	 */
 	public function testParseTokenResponseError(){
@@ -66,7 +66,7 @@ class OAuth2Test extends ProviderTestAbstract{
 	}
 
 	/**
-	 * @expectedException \chillerlan\OAuth\OAuthException
+	 * @expectedException \chillerlan\OAuth\Providers\ProviderException
 	 * @expectedExceptionMessage token missing
 	 */
 	public function testParseTokenResponseNoToken(){
@@ -86,7 +86,7 @@ class OAuth2Test extends ProviderTestAbstract{
 	}
 
 	/**
-	 * @expectedException \chillerlan\OAuth\OAuthException
+	 * @expectedException \chillerlan\OAuth\Providers\ProviderException
 	 * @expectedExceptionMessage invalid state
 	 */
 	public function testCheckStateInvalid(){
@@ -96,7 +96,7 @@ class OAuth2Test extends ProviderTestAbstract{
 	}
 
 	/**
-	 * @expectedException \chillerlan\OAuth\OAuthException
+	 * @expectedException \chillerlan\OAuth\Providers\ProviderException
 	 * @expectedExceptionMessage invalid state for
 	 */
 	public function testCheckStateInvalidForService(){
@@ -106,7 +106,7 @@ class OAuth2Test extends ProviderTestAbstract{
 	}
 
 	/**
-	 * @expectedException \chillerlan\OAuth\OAuthException
+	 * @expectedException \chillerlan\OAuth\Providers\ProviderException
 	 * @expectedExceptionMessage invalid authorization state
 	 */
 	public function testCheckStateInvalidAuth(){
@@ -128,7 +128,7 @@ class OAuth2Test extends ProviderTestAbstract{
 
 
 	/**
-	 * @expectedException \chillerlan\OAuth\OAuthException
+	 * @expectedException \chillerlan\OAuth\Providers\ProviderException
 	 * @expectedExceptionMessage not supported
 	 */
 	public function testGetClientCredentialsTokenNotSupported(){

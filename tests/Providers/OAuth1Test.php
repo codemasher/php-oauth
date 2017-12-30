@@ -32,7 +32,7 @@ class OAuth1Test extends ProviderTestAbstract{
 	}
 
 	/**
-	 * @expectedException \chillerlan\OAuth\OAuthException
+	 * @expectedException \chillerlan\OAuth\Providers\ProviderException
 	 * @expectedExceptionMessage oauth callback unconfirmed
 	 */
 	public function testParseTokenResponseCallbackUnconfirmed(){
@@ -42,7 +42,7 @@ class OAuth1Test extends ProviderTestAbstract{
 	}
 
 	/**
-	 * @expectedException \chillerlan\OAuth\OAuthException
+	 * @expectedException \chillerlan\OAuth\Providers\ProviderException
 	 * @expectedExceptionMessage unable to parse token response
 	 */
 	public function testParseTokenResponseNoData(){
@@ -52,7 +52,7 @@ class OAuth1Test extends ProviderTestAbstract{
 	}
 
 	/**
-	 * @expectedException \chillerlan\OAuth\OAuthException
+	 * @expectedException \chillerlan\OAuth\Providers\ProviderException
 	 * @expectedExceptionMessage error retrieving access token
 	 */
 	public function testParseTokenResponseError(){
@@ -62,7 +62,7 @@ class OAuth1Test extends ProviderTestAbstract{
 	}
 
 	/**
-	 * @expectedException \chillerlan\OAuth\OAuthException
+	 * @expectedException \chillerlan\OAuth\Providers\ProviderException
 	 * @expectedExceptionMessage token missing
 	 */
 	public function testParseTokenResponseNoToken(){
@@ -118,7 +118,7 @@ class OAuth1Test extends ProviderTestAbstract{
 	}
 
 	/**
-	 * @expectedException \chillerlan\OAuth\OAuthException
+	 * @expectedException \chillerlan\OAuth\Providers\ProviderException
 	 * @expectedExceptionMessage getSignature: invalid url
 	 */
 	public function testGetSignatureInvalidURLException(){

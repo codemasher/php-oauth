@@ -13,7 +13,7 @@
 namespace chillerlan\OAuth\Providers;
 
 use chillerlan\OAuth\{
-	HTTP\OAuthResponse, OAuthException, Token
+	HTTP\OAuthResponse, Token
 };
 
 /**
@@ -70,17 +70,17 @@ class Deezer extends OAuth2Provider{
 	 * @param OAuthResponse $response
 	 *
 	 * @return \chillerlan\OAuth\Token
-	 * @throws \chillerlan\OAuth\OAuthException
+	 * @throws \chillerlan\OAuth\Providers\ProviderException
 	 */
 	protected function parseTokenResponse(OAuthResponse $response):Token{
 		parse_str($response->body, $data);
 
 		if(!is_array($data)){
-			throw new OAuthException('unable to parse access token response'.PHP_EOL.print_r($response, true));
+			throw new ProviderException('unable to parse access token response'.PHP_EOL.print_r($response, true));
 		}
 
 		if(isset($data['error_reason'])){
-			throw new OAuthException('error retrieving access token: "'.$data['error_reason'].'"'.PHP_EOL.print_r($data, true));
+			throw new ProviderException('error retrieving access token: "'.$data['error_reason'].'"'.PHP_EOL.print_r($data, true));
 		}
 
 		$token = new Token([

@@ -12,7 +12,6 @@
 
 namespace chillerlan\OAuth\Providers;
 
-use chillerlan\OAuth\OAuthException;
 use chillerlan\OAuth\Token;
 
 /**
@@ -230,7 +229,7 @@ class GuildWars2 extends OAuth2Provider{
 	 * @param string $access_token
 	 *
 	 * @return \chillerlan\OAuth\Token
-	 * @throws \chillerlan\OAuth\OAuthException
+	 * @throws \chillerlan\OAuth\Providers\ProviderException
 	 */
 	public function storeGW2Token(string $access_token):Token{
 		$tokeninfo = $this->tokeninfo(['access_token' => $access_token])->json;
@@ -254,7 +253,7 @@ class GuildWars2 extends OAuth2Provider{
 			return $token;
 		}
 
-		throw new OAuthException('invalid/unverified token: '.print_r($tokeninfo, true));
+		throw new ProviderException('invalid/unverified token: '.print_r($tokeninfo, true));
 	}
 
 }

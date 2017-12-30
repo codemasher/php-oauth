@@ -12,8 +12,7 @@
 
 namespace chillerlan\OAuth\Providers;
 
-use chillerlan\OAuth\HTTP\OAuthResponse;
-use chillerlan\OAuth\{Token, OAuthException};
+use chillerlan\OAuth\{Token, HTTP\OAuthResponse};
 
 /**
  * @link https://musicbrainz.org/doc/Development
@@ -56,13 +55,13 @@ class MusicBrainz extends OAuth2Provider{
 	 * @param array  $headers
 	 *
 	 * @return \chillerlan\OAuth\HTTP\OAuthResponse
-	 * @throws \chillerlan\OAuth\OAuthException
+	 * @throws \chillerlan\OAuth\Providers\ProviderException
 	 */
 	public function request(string $path, array $params = [], string $method = 'GET', $body = null, array $headers = []):OAuthResponse{
 		$token = $this->storage->retrieveAccessToken($this->serviceName);
 
 		if($this->accessTokenExpires && $token->isExpired()){
-			throw new OAuthException(sprintf('Token expired on %s at %s', date('m/d/Y', $token->expires), date('h:i:s A', $token->expires))); // @codeCoverageIgnore
+			throw new ProviderException(sprintf('Token expired on %s at %s', date('m/d/Y', $token->expires), date('h:i:s A', $token->expires))); // @codeCoverageIgnore
 		}
 
 		if(!isset($params['fmt'])){

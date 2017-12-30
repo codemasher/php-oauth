@@ -13,7 +13,7 @@
 namespace chillerlan\OAuth\Providers;
 
 use chillerlan\OAuth\{
-	OAuthException, Token, HTTP\OAuthResponse
+	Token, HTTP\OAuthResponse
 };
 
 /**
@@ -129,7 +129,6 @@ class LastFM extends OAuthProvider{
 	 * @param string $session_token
 	 *
 	 * @return \chillerlan\OAuth\Token
-	 * @throws \chillerlan\OAuth\OAuthException
 	 */
 	public function getAccessToken(string $session_token):Token {
 		return $this->parseTokenResponse(
@@ -160,19 +159,19 @@ class LastFM extends OAuthProvider{
 	 * @param \chillerlan\OAuth\HTTP\OAuthResponse $response
 	 *
 	 * @return \chillerlan\OAuth\Token
-	 * @throws \chillerlan\OAuth\OAuthException
+	 * @throws \chillerlan\OAuth\Providers\ProviderException
 	 */
 	protected function parseTokenResponse(OAuthResponse $response):Token {
 		$data = $response->json_array;
 
 		if(!$data || !is_array($data)){
-			throw new OAuthException('unable to parse token response'.PHP_EOL.print_r($response, true));
+			throw new ProviderException('unable to parse token response'.PHP_EOL.print_r($response, true));
 		}
 		elseif(isset($data['error'])){
-			throw new OAuthException('error retrieving access token: '.$data['message']);
+			throw new ProviderException('error retrieving access token: '.$data['message']);
 		}
 		elseif(!isset($data['session']['key'])){
-			throw new OAuthException('token missing');
+			throw new ProviderException('token missing');
 		}
 
 		$token = new Token([
@@ -195,7 +194,6 @@ class LastFM extends OAuthProvider{
 	 * @param array  $body
 	 *
 	 * @return array
-	 * @throws \chillerlan\OAuth\OAuthException
 	 */
 	protected function requestParams(string $apiMethod, array $params, array $body):array {
 
@@ -231,5 +229,12 @@ class LastFM extends OAuthProvider{
 
 		return $this->http->request($this->apiURL, $params, $method, $body, $headers);
 	}
+
+	/**
+	 * @todo
+	 *
+	 * @param array $tracks
+	 */
+#	public function scrobble(array $tracks){}
 
 }

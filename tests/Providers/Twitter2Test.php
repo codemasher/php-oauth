@@ -22,7 +22,7 @@ class Twitter2Test extends ProviderTestAbstract{
 	protected $FQCN = Twitter2::class;
 
 	/**
-	 * @expectedException \chillerlan\OAuth\OAuthException
+	 * @expectedException \chillerlan\OAuth\Providers\ProviderException
 	 * @expectedExceptionMessage Twitter2 only supports Client Credentials Grant
 	 */
 	public function testRequestGetAuthURLNotSupportedException(){
@@ -30,7 +30,7 @@ class Twitter2Test extends ProviderTestAbstract{
 	}
 
 	/**
-	 * @expectedException \chillerlan\OAuth\OAuthException
+	 * @expectedException \chillerlan\OAuth\Providers\ProviderException
 	 * @expectedExceptionMessage Twitter2 only supports Client Credentials Grant
 	 */
 	public function testRequestGetAccessTokenNotSupportedException(){
