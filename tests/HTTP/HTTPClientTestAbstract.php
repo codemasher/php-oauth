@@ -103,7 +103,7 @@ abstract class HTTPClientTestAbstract extends TestCase{
 	}
 
 	/**
-	 * @expectedException \chillerlan\OAuth\OAuthException
+	 * @expectedException \chillerlan\OAuth\HTTP\HTTPClientException
 	 * @expectedExceptionMessage invalid URL
 	 */
 	public function testInvalidURLException(){

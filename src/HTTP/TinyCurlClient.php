@@ -12,7 +12,6 @@
 
 namespace chillerlan\OAuth\HTTP;
 
-use chillerlan\OAuth\OAuthException;
 use chillerlan\TinyCurl\{Request, URL};
 
 class TinyCurlClient extends HTTPClientAbstract{
@@ -39,7 +38,7 @@ class TinyCurlClient extends HTTPClientAbstract{
 	 * @param array  $headers
 	 *
 	 * @return \chillerlan\OAuth\HTTP\OAuthResponse
-	 * @throws \chillerlan\OAuth\OAuthException
+	 * @throws \chillerlan\OAuth\HTTP\HTTPClientException
 	 */
 	public function request(string $url, array $params = [], string $method = 'POST', $body = null, array $headers = []):OAuthResponse{
 
@@ -61,7 +60,7 @@ class TinyCurlClient extends HTTPClientAbstract{
 
 		}
 		catch(\Exception $e){
-			throw new OAuthException('fetch error: '.$e->getMessage());
+			throw new HTTPClientException('fetch error: '.$e->getMessage());
 		}
 
 	}

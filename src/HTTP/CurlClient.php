@@ -12,8 +12,6 @@
 
 namespace chillerlan\OAuth\HTTP;
 
-use chillerlan\OAuth\OAuthException;
-
 class CurlClient extends HTTPClientAbstract{
 
 	/**
@@ -36,12 +34,12 @@ class CurlClient extends HTTPClientAbstract{
 	 *
 	 * @param array $curl_options
 	 *
-	 * @throws \chillerlan\OAuth\OAuthException
+	 * @throws \chillerlan\OAuth\HTTP\HTTPClientException
 	 */
 	public function __construct(array $curl_options){
 
 		if(!isset($curl_options[CURLOPT_CAINFO]) || !is_file($curl_options[CURLOPT_CAINFO])){
-			throw new OAuthException('invalid CA file');
+			throw new HTTPClientException('invalid CA file');
 		}
 
 		$this->curl = curl_init();
@@ -68,7 +66,7 @@ class CurlClient extends HTTPClientAbstract{
 	 * @param array  $headers
 	 *
 	 * @return \chillerlan\OAuth\HTTP\OAuthResponse
-	 * @throws \chillerlan\OAuth\OAuthException
+	 * @throws \chillerlan\OAuth\HTTP\HTTPClientException
 	 */
 	public function request(string $url, array $params = [], string $method = 'POST', $body = null, array $headers = []):OAuthResponse{
 		$this->responseHeaders = new \stdClass;
@@ -123,7 +121,7 @@ class CurlClient extends HTTPClientAbstract{
 
 		}
 		catch(\Exception $e){
-			throw new OAuthException($e->getMessage());
+			throw new HTTPClientException($e->getMessage());
 		}
 
 	}

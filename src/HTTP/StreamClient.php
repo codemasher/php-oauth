@@ -12,8 +12,6 @@
 
 namespace chillerlan\OAuth\HTTP;
 
-use chillerlan\OAuth\OAuthException;
-
 class StreamClient extends HTTPClientAbstract{
 
 	/**
@@ -34,12 +32,12 @@ class StreamClient extends HTTPClientAbstract{
 	 * @param string $cacert
 	 * @param string $userAgent
 	 *
-	 * @throws \chillerlan\OAuth\OAuthException
+	 * @throws \chillerlan\OAuth\HTTP\HTTPClientException
 	 */
 	public function __construct(string $cacert, string $userAgent){
 
 		if(!is_file($cacert)){
-			throw new OAuthException('invalid CA file');
+			throw new HTTPClientException('invalid CA file');
 		}
 
 		$this->cacert    = $cacert;
@@ -54,7 +52,7 @@ class StreamClient extends HTTPClientAbstract{
 	 * @param array  $headers
 	 *
 	 * @return \chillerlan\OAuth\HTTP\OAuthResponse
-	 * @throws \chillerlan\OAuth\OAuthException
+	 * @throws \chillerlan\OAuth\HTTP\HTTPClientException
 	 */
 	public function request(string $url, array $params = [], string $method = 'POST', $body = null, array $headers = []):OAuthResponse{
 
@@ -110,7 +108,7 @@ class StreamClient extends HTTPClientAbstract{
 
 		}
 		catch(\Exception $e){
-			throw new OAuthException($e->getMessage());
+			throw new HTTPClientException($e->getMessage());
 		}
 
 	}
