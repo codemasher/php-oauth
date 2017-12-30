@@ -104,7 +104,7 @@ abstract class TokenStorageTestAbstract extends TestCase{
 
 	/**
 	 * @runInSeparateProcess
-	 * @expectedException \chillerlan\OAuth\OAuthException
+	 * @expectedException \chillerlan\OAuth\Storage\TokenStorageException
 	 * @expectedExceptionMessage state not found
 	 */
 	public function testRetrieveAuthorizationStateNotFoundException(){
@@ -113,7 +113,7 @@ abstract class TokenStorageTestAbstract extends TestCase{
 
 	/**
 	 * @runInSeparateProcess
-	 * @expectedException \chillerlan\OAuth\OAuthException
+	 * @expectedException \chillerlan\OAuth\Storage\TokenStorageException
 	 * @expectedExceptionMessage token not found
 	 */
 	public function testRetrieveAccessTokenNotFoundException(){

@@ -23,7 +23,7 @@ class DBTest extends TokenStorageTestAbstract{
 	protected $FQCN = TestDBStorage::class;
 
 	/**
-	 * @expectedException \chillerlan\OAuth\OAuthException
+	 * @expectedException \chillerlan\OAuth\Storage\TokenStorageException
 	 * @expectedExceptionMessage invalid table config
 	 */
 	public function testInvalidTable(){
@@ -31,7 +31,7 @@ class DBTest extends TokenStorageTestAbstract{
 	}
 
 	/**
-	 * @expectedException \chillerlan\OAuth\OAuthException
+	 * @expectedException \chillerlan\OAuth\Storage\TokenStorageException
 	 * @expectedExceptionMessage unknown service
 	 */
 	public function testStoreAccessTokenUnkownServiceException(){

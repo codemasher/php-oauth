@@ -13,7 +13,7 @@
 namespace chillerlan\OAuth\Storage;
 
 use chillerlan\OAuth\{
-	OAuthException, OAuthOptions, Token
+	OAuthOptions, Token
 };
 
 class SessionTokenStorage extends TokenStorageAbstract{
@@ -90,7 +90,7 @@ class SessionTokenStorage extends TokenStorageAbstract{
 	 * @param string $service
 	 *
 	 * @return \chillerlan\OAuth\Token
-	 * @throws \chillerlan\OAuth\OAuthException
+	 * @throws \chillerlan\OAuth\Storage\TokenStorageException
 	 */
 	public function retrieveAccessToken(string $service):Token{
 
@@ -98,7 +98,7 @@ class SessionTokenStorage extends TokenStorageAbstract{
 			return new Token(json_decode($_SESSION[$this->sessionVar][$service], true));
 		}
 
-		throw new OAuthException('token not found');
+		throw new TokenStorageException('token not found');
 	}
 
 	/**
@@ -155,7 +155,7 @@ class SessionTokenStorage extends TokenStorageAbstract{
 	 * @param string $service
 	 *
 	 * @return string
-	 * @throws \chillerlan\OAuth\OAuthException
+	 * @throws \chillerlan\OAuth\Storage\TokenStorageException
 	 */
 	public function retrieveAuthorizationState(string $service):string{
 
@@ -163,7 +163,7 @@ class SessionTokenStorage extends TokenStorageAbstract{
 			return $_SESSION[$this->stateVar][$service];
 		}
 
-		throw new OAuthException('state not found');
+		throw new TokenStorageException('state not found');
 	}
 
 	/**

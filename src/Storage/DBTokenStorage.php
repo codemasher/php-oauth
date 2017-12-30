@@ -14,7 +14,7 @@ namespace chillerlan\OAuth\Storage;
 
 use chillerlan\Database\Connection;
 use chillerlan\OAuth\{
-	OAuthException, OAuthOptions, Token
+	OAuthOptions, Token
 };
 
 class DBTokenStorage extends TokenStorageAbstract{
@@ -35,12 +35,14 @@ class DBTokenStorage extends TokenStorageAbstract{
 	 * @param \chillerlan\OAuth\OAuthOptions   $options
 	 * @param \chillerlan\Database\Connection  $db
 	 * @param string|int                       $user_id
+	 *
+	 * @throws \chillerlan\OAuth\Storage\TokenStorageException
 	 */
 	public function __construct(OAuthOptions $options, Connection $db, $user_id){
 		parent::__construct($options);
 
 		if(!$this->options->dbTokenTable || !$this->options->dbProviderTable){
-			throw new OAuthException('invalid table config');
+			throw new TokenStorageException('invalid table config');
 		}
 
 		$this->db      = $db;
@@ -65,12 +67,12 @@ class DBTokenStorage extends TokenStorageAbstract{
 	 * @param \chillerlan\OAuth\Token $token
 	 *
 	 * @return \chillerlan\OAuth\Storage\TokenStorageInterface
-	 * @throws \chillerlan\OAuth\OAuthException
+	 * @throws \chillerlan\OAuth\Storage\TokenStorageException
 	 */
 	public function storeAccessToken(string $service, Token $token):TokenStorageInterface{
 
 		if(!isset($this->getProviders()[$service])){
-			throw new OAuthException('unknown service');
+			throw new TokenStorageException('unknown service');
 		}
 
 		$values = [
@@ -105,7 +107,7 @@ class DBTokenStorage extends TokenStorageAbstract{
 	 * @param string $service
 	 *
 	 * @return \chillerlan\OAuth\Token
-	 * @throws \chillerlan\OAuth\OAuthException
+	 * @throws \chillerlan\OAuth\Storage\TokenStorageException
 	 */
 	public function retrieveAccessToken(string $service):Token{
 
@@ -116,7 +118,7 @@ class DBTokenStorage extends TokenStorageAbstract{
 			->execute();
 
 		if(is_bool($r) || $r->length < 1){
-			throw new OAuthException('token not found');
+			throw new TokenStorageException('token not found');
 		}
 
 		return new Token(json_decode($r[0]->{$this->options->dbTokenTableToken}, true));
@@ -185,7 +187,7 @@ class DBTokenStorage extends TokenStorageAbstract{
 	 * @param string $service
 	 *
 	 * @return string
-	 * @throws \chillerlan\OAuth\OAuthException
+	 * @throws \chillerlan\OAuth\Storage\TokenStorageException
 	 */
 	public function retrieveAuthorizationState(string $service):string{
 
@@ -196,7 +198,7 @@ class DBTokenStorage extends TokenStorageAbstract{
 			->execute();
 
 		if(is_bool($r) || $r->length < 1){
-			throw new OAuthException('state not found');
+			throw new TokenStorageException('state not found');
 		}
 
 		return (string)$r[0]->state('trim');
