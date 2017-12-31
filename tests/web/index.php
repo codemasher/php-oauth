@@ -47,8 +47,8 @@ if($route[0] === 1){
 		exit;
 	}
 
-	var_dump($route, $path);
+#	var_dump($route, $path);
 }
 
-var_dump($route);
+#var_dump($route);
 exit;
