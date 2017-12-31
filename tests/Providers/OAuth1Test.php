@@ -17,9 +17,7 @@ use chillerlan\OAuth\{HTTP\OAuthResponse, Token};
 /**
  * @property \chillerlan\OAuth\Providers\OAuth1Interface $provider
  */
-class OAuth1Test extends ProviderTestAbstract{
-
-	protected $FQCN = TestOAuth1Provider::class;
+abstract class OAuth1Test extends ProviderTestAbstract{
 
 	public function testParseTokenResponse(){
 		$token = $this

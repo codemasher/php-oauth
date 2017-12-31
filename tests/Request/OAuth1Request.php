@@ -13,7 +13,6 @@
 namespace chillerlan\OAuthTest\Request;
 
 use chillerlan\OAuth\Token;
-use chillerlan\OAuthTest\Providers\TestOAuth1Provider;
 
 /**
  * @property \chillerlan\OAuth\Providers\OAuth1Interface $provider

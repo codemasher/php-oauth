@@ -19,9 +19,7 @@ use chillerlan\OAuth\{
 /**
  * @property \chillerlan\OAuth\Providers\OAuth2Interface $provider
  */
-class OAuth2Test extends ProviderTestAbstract{
-
-	protected $FQCN = TestOAuth2Provider::class;
+abstract class OAuth2Test extends ProviderTestAbstract{
 
 	public function testMagicSupportsClientCredentials(){
 		$this->assertFalse($this->provider->supportsClientCredentials);
@@ -125,7 +123,6 @@ class OAuth2Test extends ProviderTestAbstract{
 		$this->assertSame($this->options->secret, $body['client_secret']);
 		$this->assertSame('authorization_code', $body['grant_type']);
 	}
-
 
 	/**
 	 * @expectedException \chillerlan\OAuth\Providers\ProviderException

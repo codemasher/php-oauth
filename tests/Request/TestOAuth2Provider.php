@@ -10,7 +10,7 @@
  * @license      MIT
  */
 
-namespace chillerlan\OAuthTest\Providers;
+namespace chillerlan\OAuthTest\Request;
 
 use chillerlan\OAuth\Providers\OAuth2Provider;
 

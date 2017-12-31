@@ -12,8 +12,9 @@
 
 namespace chillerlan\OAuthTest\Request;
 
-use chillerlan\OAuth\{Providers\OAuth2Interface, Token};
-use chillerlan\OAuthTest\Providers\TestOAuth2Provider;
+use chillerlan\OAuth\{
+	Token
+};
 
 /**
  * @property \chillerlan\OAuth\Providers\OAuth2Interface $provider
