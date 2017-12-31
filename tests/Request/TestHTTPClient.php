@@ -49,7 +49,7 @@ class TestHTTPClient extends HTTPClientAbstract{
 	 *
 	 * @return \chillerlan\OAuth\HTTP\OAuthResponse
 	 */
-	public function request(string $url, array $params = [], string $method = 'POST', $body = null, array $headers = []):OAuthResponse{
+	public function request(string $url, array $params = null, string $method = null, $body = null, array $headers = null):OAuthResponse{
 		$args = func_get_args();
 #		print_r($args);
 

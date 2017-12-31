@@ -40,7 +40,7 @@ class TinyCurlClient extends HTTPClientAbstract{
 	 * @return \chillerlan\OAuth\HTTP\OAuthResponse
 	 * @throws \chillerlan\OAuth\HTTP\HTTPClientException
 	 */
-	public function request(string $url, array $params = [], string $method = 'POST', $body = null, array $headers = []):OAuthResponse{
+	public function request(string $url, array $params = null, string $method = null, $body = null, array $headers = null):OAuthResponse{
 
 		try{
 
@@ -50,7 +50,7 @@ class TinyCurlClient extends HTTPClientAbstract{
 				trigger_error('invalid URL');
 			}
 
-			$url      = new URL(explode('?', $url)[0], $params, $method, $body, $headers);
+			$url      = new URL(explode('?', $url)[0], $params ?? [], $method ?? 'POST', $body, $headers ?? []);
 			$response = $this->http->fetch($url);
 
 			return new OAuthResponse([

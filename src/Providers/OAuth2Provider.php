@@ -261,7 +261,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	 * @return \chillerlan\OAuth\Token
 	 * @throws \chillerlan\OAuth\Providers\ProviderException
 	 */
-	public function getClientCredentialsToken(array $scopes = []):Token {
+	public function getClientCredentialsToken(array $scopes = null):Token {
 
 		if(!$this->clientCredentials){
 			throw new ProviderException('not supported');
@@ -272,7 +272,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 				$this->clientCredentialsTokenURL ?? $this->accessTokenURL,
 				[],
 				'POST',
-				$this->getClientCredentialsTokenBody($scopes),
+				$this->getClientCredentialsTokenBody($scopes ?? []),
 				$this->getClientCredentialsTokenHeaders()
 			)
 		);
@@ -375,7 +375,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	 * @return \chillerlan\OAuth\HTTP\OAuthResponse
 	 * @throws \chillerlan\OAuth\Providers\ProviderException
 	 */
-	public function request(string $path, array $params = [], string $method = 'GET', $body = null, array $headers = []):OAuthResponse{
+	public function request(string $path, array $params = null, string $method = null, $body = null, array $headers = null):OAuthResponse{
 		$token = $this->storage->retrieveAccessToken($this->serviceName);
 
 		// attempt to refresh an expired token
@@ -385,7 +385,8 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 
 		parse_str(parse_url($this->apiURL.$path, PHP_URL_QUERY), $query);
 
-		$params = array_merge($query, $params);
+		$params  = array_merge($query, $params ?? []);
+		$headers = $headers ?? [];
 
 		if(array_key_exists($this->authMethod, $this::AUTH_METHODS_HEADER)){
 			$headers = array_merge($headers, [
@@ -402,7 +403,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 		return $this->http->request(
 			$this->apiURL.explode('?', $path)[0],
 			$params,
-			$method,
+			$method ?? 'GET',
 			$body,
 			array_merge($this->apiHeaders, $headers)
 		);

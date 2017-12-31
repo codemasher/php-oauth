@@ -62,7 +62,7 @@ abstract class ProviderTestAbstract extends TestCase{
 	protected function setUp(){
 
 		$this->http = new class extends HTTPClientAbstract{
-			public function request(string $url, array $params = [], string $method = 'POST', $body = null, array $headers = []):OAuthResponse{
+			public function request(string $url, array $params = null, string $method = null, $body = null, array $headers = null):OAuthResponse{
 				return new OAuthResponse;
 			}
 		};

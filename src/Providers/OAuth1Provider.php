@@ -72,8 +72,6 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 	 * @throws \chillerlan\OAuth\Providers\ProviderException
 	 */
 	protected function parseTokenResponse(OAuthResponse $response, bool $checkCallbackConfirmed = null):Token {
-		$checkCallbackConfirmed = $checkCallbackConfirmed ?? false;
-
 		parse_str($response->body, $data);
 
 		if(!$data || !is_array($data)){
@@ -86,12 +84,10 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 			throw new ProviderException('token missing');
 		}
 
-		if($checkCallbackConfirmed){
-
-			if(!isset($data['oauth_callback_confirmed']) ||  $data['oauth_callback_confirmed'] !== 'true'){
-				throw new ProviderException('oauth callback unconfirmed');
-			}
-
+		if(($checkCallbackConfirmed ?? false)
+		   && (!isset($data['oauth_callback_confirmed']) || $data['oauth_callback_confirmed'] !== 'true')
+		){
+			throw new ProviderException('oauth callback unconfirmed');
 		}
 
 		$token = new Token([
@@ -113,13 +109,14 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 
 	/**
 	 * returns a random 32 byte hex string
-	 * 
+	 *
 	 * @return string
 	 */
 	protected function nonce():string {
 		$nonce = random_bytes(32);
 
-		return function_exists('sodium_bin2hex') ? sodium_bin2hex($nonce) : bin2hex($nonce); // use the sodium extension if available
+		// use the sodium extension if available
+		return function_exists('sodium_bin2hex') ? sodium_bin2hex($nonce) : bin2hex($nonce);
 	}
 
 	/**
@@ -135,7 +132,7 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 			'oauth_version'          => '1.0',
 		];
 
-		$params['oauth_signature'] = $this->getSignature($this->requestTokenURL, $params, 'POST');
+		$params['oauth_signature'] = $this->getSignature($this->requestTokenURL, $params);
 
 		return $params;
 	}
@@ -148,7 +145,7 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 	 * @return string
 	 * @throws \chillerlan\OAuth\Providers\ProviderException
 	 */
-	public function getSignature(string $url, array $params, string $method = 'POST'):string {
+	public function getSignature(string $url, array $params, string $method = null):string {
 		$parseURL = parse_url($url);
 
 		if(!isset($parseURL['host']) || !isset($parseURL['scheme']) || !in_array($parseURL['scheme'], ['http', 'https'], true)){
@@ -160,7 +157,7 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 		$data = $this->getSignatureData(
 			$parseURL['scheme'].'://'.$parseURL['host'].($parseURL['path'] ?? ''),
 			array_merge($query, $params),
-			$method
+			$method ?? 'POST'
 		);
 
 		$key = implode('&', $this->rawurlencode([$this->options->secret, $this->tokenSecret ?? '']));
@@ -230,18 +227,18 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 	 * @return array
 	 * @throws \Exception
 	 */
-	protected function requestHeaders(string $url, $params = null, string $method, array $headers, Token $token):array{
+	protected function requestHeaders(string $url, $params = null, string $method, array $headers = null, Token $token):array{
 		$this->tokenSecret = $token->accessTokenSecret;
 		$parameters        = $this->requestHeaderParams($token);
 
-		$parameters['oauth_signature'] = $this->getSignature($url, array_merge(is_array($params) ? $params : [], $parameters), $method);
+		$parameters['oauth_signature'] = $this->getSignature($url, array_merge($params ?? [], $parameters), $method);
 
 		if(isset($params['oauth_session_handle'])){
 			$parameters['oauth_session_handle'] = $params['oauth_session_handle'];
 			unset($params['oauth_session_handle']);
 		}
 
-		return array_merge($headers, $this->apiHeaders, [
+		return array_merge($headers ?? [], $this->apiHeaders, [
 			'Authorization' => 'OAuth '.$this->buildHttpQuery($parameters, true, ', ', '"')
 		]);
 	}
@@ -272,7 +269,8 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 	 *
 	 * @return \chillerlan\OAuth\HTTP\OAuthResponse
 	 */
-	public function request(string $path, array $params = [], string $method = 'GET', $body = null, array $headers = []):OAuthResponse{
+	public function request(string $path, array $params = null, string $method = null, $body = null, array $headers = null):OAuthResponse{
+		$method = $method ?? 'GET';
 
 		$headers = $this->requestHeaders(
 			$this->apiURL.$path,

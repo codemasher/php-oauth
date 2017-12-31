@@ -38,14 +38,14 @@ class Foursquare extends OAuth2Provider{
 	 *
 	 * @return \chillerlan\OAuth\HTTP\OAuthResponse
 	 */
-	public function request(string $path, array $params = [], string $method = 'GET', $body = null, array $headers = []):OAuthResponse{
+	public function request(string $path, array $params = null, string $method = null, $body = null, array $headers = null):OAuthResponse{
 
 		parse_str(parse_url($this->apiURL.$path, PHP_URL_QUERY), $query);
 
 		$query['v'] = $this::API_VERSIONDATE;
 		$query['m'] = 'foursquare';
 
-		return parent::request(explode('?', $path)[0], array_merge($params, $query), $method, $body, $headers);
+		return parent::request(explode('?', $path)[0], array_merge($params ?? [], $query), $method, $body, $headers);
 	}
 
 }

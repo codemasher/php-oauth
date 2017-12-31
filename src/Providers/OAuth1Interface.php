@@ -37,6 +37,6 @@ interface OAuth1Interface extends OAuthInterface{
 	 *
 	 * @return string
 	 */
-	public function getSignature(string $url, array $params, string $method = 'POST'):string;
+	public function getSignature(string $url, array $params, string $method = null):string;
 
 }

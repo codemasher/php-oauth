@@ -68,7 +68,7 @@ class CurlClient extends HTTPClientAbstract{
 	 * @return \chillerlan\OAuth\HTTP\OAuthResponse
 	 * @throws \chillerlan\OAuth\HTTP\HTTPClientException
 	 */
-	public function request(string $url, array $params = [], string $method = 'POST', $body = null, array $headers = []):OAuthResponse{
+	public function request(string $url, array $params = null, string $method = null, $body = null, array $headers = null):OAuthResponse{
 		$this->responseHeaders = new \stdClass;
 
 		try{
@@ -78,8 +78,8 @@ class CurlClient extends HTTPClientAbstract{
 				trigger_error('invalid URL');
 			}
 
-			$method    = strtoupper($method);
-			$headers   = $this->normalizeRequestHeaders($headers);
+			$method    = strtoupper($method ?? 'POST');
+			$headers   = $this->normalizeRequestHeaders($headers ?? []);
 			$options   = [CURLOPT_CUSTOMREQUEST => $method];
 
 			if(in_array($method, ['PATCH', 'POST', 'PUT', 'DELETE'], true)){
@@ -102,7 +102,8 @@ class CurlClient extends HTTPClientAbstract{
 				'Connection: close',
 			];
 
-			$url = $url.(!empty($params) ? '?'.http_build_query($params) : '');
+			$params = $params ?? [];
+			$url    = $url.(!empty($params) ? '?'.http_build_query($params) : '');
 
 			$options += [
 				CURLOPT_URL => $url,

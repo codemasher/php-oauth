@@ -41,11 +41,11 @@ class GuzzleClient extends HTTPClientAbstract{
 	 * @return \chillerlan\OAuth\HTTP\OAuthResponse
 	 * @throws \chillerlan\OAuth\HTTP\HTTPClientException
 	 */
-	public function request(string $url, array $params = [], string $method = 'POST', $body = null, array $headers = []):OAuthResponse{
+	public function request(string $url, array $params = null, string $method = null, $body = null, array $headers = null):OAuthResponse{
 
 		try{
 			$parsedURL = parse_url($url);
-			$method    = strtoupper($method);
+			$method    = strtoupper($method ?? 'POST');
 
 			if(!isset($parsedURL['host']) || !in_array($parsedURL['scheme'], ['http', 'https'], true)){
 				trigger_error('invalid URL');
@@ -53,8 +53,8 @@ class GuzzleClient extends HTTPClientAbstract{
 
 			// @link http://docs.guzzlephp.org/en/stable/request-options.html
 			$options = [
-				'query'       => $params,
-				'headers'     => $headers,
+				'query'       => $params ?? [],
+				'headers'     => $headers ?? [],
 				'http_errors' => false, // no exceptions on HTTP errors plz
 			];
 

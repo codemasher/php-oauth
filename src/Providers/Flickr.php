@@ -262,7 +262,8 @@ class Flickr extends OAuth1Provider{
 	 *
 	 * @return \chillerlan\OAuth\HTTP\OAuthResponse
 	 */
-	public function request(string $path, array $params = [], string $method = 'GET', $body = null, array $headers = []):OAuthResponse{
+	public function request(string $path, array $params = null, string $method = null, $body = null, array $headers = null):OAuthResponse{
+		$method = $method ?? 'GET';
 
 		$params = array_merge($params, [
 			'method'         => $path,
@@ -270,13 +271,7 @@ class Flickr extends OAuth1Provider{
 			'nojsoncallback' => true,
 		]);
 
-		$headers = $this->requestHeaders(
-			$this->apiURL,
-			$params,
-			$method,
-			$headers,
-			$this->storage->retrieveAccessToken($this->serviceName)
-		);
+		$headers = $this->requestHeaders($this->apiURL, $params, $method, $headers, $this->storage->retrieveAccessToken($this->serviceName));
 
 		return $this->http->request($this->apiURL, $params, $method, $body, $headers);
 	}

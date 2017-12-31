@@ -54,7 +54,7 @@ interface OAuth2Interface extends OAuthInterface{
 	 *
 	 * @return \chillerlan\OAuth\Token
 	 */
-	public function getClientCredentialsToken(array $scopes = []):Token;
+	public function getClientCredentialsToken(array $scopes = null):Token;
 
 	/**
 	 * @param \chillerlan\OAuth\Token|null $token

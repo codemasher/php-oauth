@@ -57,8 +57,9 @@ class MusicBrainz extends OAuth2Provider{
 	 * @return \chillerlan\OAuth\HTTP\OAuthResponse
 	 * @throws \chillerlan\OAuth\Providers\ProviderException
 	 */
-	public function request(string $path, array $params = [], string $method = 'GET', $body = null, array $headers = []):OAuthResponse{
+	public function request(string $path, array $params = null, string $method = null, $body = null, array $headers = null):OAuthResponse{
 		$token = $this->storage->retrieveAccessToken($this->serviceName);
+		$params = $params ?? [];
 
 		if($this->accessTokenExpires && $token->isExpired()){
 			throw new ProviderException(sprintf('Token expired on %s at %s', date('m/d/Y', $token->expires), date('h:i:s A', $token->expires))); // @codeCoverageIgnore
@@ -72,7 +73,7 @@ class MusicBrainz extends OAuth2Provider{
 			$params['client'] = 'awesome-php-oauth-client-0.1'; // @todo
 		}
 
-		$headers = array_merge($this->apiHeaders, $headers, ['Authorization' => 'Bearer '.$token->accessToken]);
+		$headers = array_merge($this->apiHeaders, $headers ?? [], ['Authorization' => 'Bearer '.$token->accessToken]);
 
 		return $this->http->request($this->apiURL.explode('?', $path)[0], $params, $method, $body, $headers);
 	}

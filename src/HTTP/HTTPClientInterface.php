@@ -23,7 +23,7 @@ interface HTTPClientInterface{
 	 *
 	 * @return \chillerlan\OAuth\HTTP\OAuthResponse
 	 */
-	public function request(string $url, array $params = [], string $method = 'POST', $body = null, array $headers = []):OAuthResponse;
+	public function request(string $url, array $params = null, string $method = null, $body = null, array $headers = null):OAuthResponse;
 
 	/**
 	 * @param array $headers

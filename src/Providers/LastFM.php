@@ -218,9 +218,10 @@ class LastFM extends OAuthProvider{
 	 *
 	 * @return \chillerlan\OAuth\HTTP\OAuthResponse
 	 */
-	public function request(string $path, array $params = [], string $method = 'GET', $body = null, array $headers = []):OAuthResponse{
+	public function request(string $path, array $params = null, string $method = null, $body = null, array $headers = null):OAuthResponse{
+		$method = $method ?? 'GET';
 
-		$params = $this->requestParams($path, $params, $body ?? []);
+		$params = $this->requestParams($path, $params ?? [], $body ?? []);
 
 		if($method === 'POST'){
 			$body = $params;

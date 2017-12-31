@@ -54,7 +54,7 @@ class StreamClient extends HTTPClientAbstract{
 	 * @return \chillerlan\OAuth\HTTP\OAuthResponse
 	 * @throws \chillerlan\OAuth\HTTP\HTTPClientException
 	 */
-	public function request(string $url, array $params = [], string $method = 'POST', $body = null, array $headers = []):OAuthResponse{
+	public function request(string $url, array $params = null, string $method = null, $body = null, array $headers = null):OAuthResponse{
 
 		try{
 			$parsedURL = parse_url($url);
@@ -63,8 +63,8 @@ class StreamClient extends HTTPClientAbstract{
 				trigger_error('invalid URL');
 			}
 
-			$method  = strtoupper($method);
-			$headers = $this->normalizeRequestHeaders($headers);
+			$method  = strtoupper($method ?? 'POST');
+			$headers = $this->normalizeRequestHeaders($headers ?? []);
 
 			if(in_array($method, ['PATCH', 'POST', 'PUT', 'DELETE']) && is_array($body)){
 				$body = http_build_query($body, '', '&', PHP_QUERY_RFC1738);
@@ -76,7 +76,8 @@ class StreamClient extends HTTPClientAbstract{
 			$headers['Host']           = 'Host: '.$parsedURL['host'].(!empty($parsedURL['port']) ? ':'.$parsedURL['port'] : '');
 			$headers['Connection']     = 'Connection: close';
 
-			$url = $url.(!empty($params) ? '?'.http_build_query($params) : '');
+			$params = $params ?? [];
+			$url    = $url.(!empty($params) ? '?'.http_build_query($params) : '');
 
 			$context = stream_context_create([
 				'http' => [
