@@ -120,15 +120,15 @@ class Token{
 			$expires =  intval($expires);
 		}
 
-		$this->expires = self::EOL_UNKNOWN;
+		$this->expires = $this::EOL_UNKNOWN;
 
-		if($expires === 0 || $expires === self::EOL_NEVER_EXPIRES){
-			$this->expires = self::EOL_NEVER_EXPIRES;
+		if($expires === 0 || $expires === $this::EOL_NEVER_EXPIRES){
+			$this->expires = $this::EOL_NEVER_EXPIRES;
 		}
 		elseif($expires > $now){
 			$this->expires = $expires;
 		}
-		elseif($expires > 0 && $expires < self::EXPIRY_MAX){
+		elseif($expires > 0 && $expires < $this::EXPIRY_MAX){
 			$this->expires = $now + $expires;
 		}
 
@@ -139,8 +139,8 @@ class Token{
 	 * @return bool
 	 */
 	public function isExpired():bool{
-		return $this->expires !== self::EOL_NEVER_EXPIRES
-		       && $this->expires !== self::EOL_UNKNOWN // ??
+		return $this->expires !== $this::EOL_NEVER_EXPIRES
+		       && $this->expires !== $this::EOL_UNKNOWN // ??
 		       && time() > $this->expires;
 	}
 

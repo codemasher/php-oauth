@@ -379,7 +379,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 		$token = $this->storage->retrieveAccessToken($this->serviceName);
 
 		// attempt to refresh an expired token
-		if($this->accessTokenRefreshable && ($token->isExpired() || $token->expires === Token::EOL_UNKNOWN)){
+		if($this->accessTokenRefreshable && ($token->isExpired() || $token->expires === $token::EOL_UNKNOWN)){
 			$token = $this->refreshAccessToken($token);
 		}
 
@@ -387,13 +387,13 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 
 		$params = array_merge($query, $params);
 
-		if(array_key_exists($this->authMethod, self::AUTH_METHODS_HEADER)){
+		if(array_key_exists($this->authMethod, $this::AUTH_METHODS_HEADER)){
 			$headers = array_merge($headers, [
-				'Authorization' => self::AUTH_METHODS_HEADER[$this->authMethod].$token->accessToken,
+				'Authorization' => $this::AUTH_METHODS_HEADER[$this->authMethod].$token->accessToken,
 			]);
 		}
-		elseif(array_key_exists($this->authMethod, self::AUTH_METHODS_QUERY)){
-			$params[self::AUTH_METHODS_QUERY[$this->authMethod]] = $token->accessToken;
+		elseif(array_key_exists($this->authMethod, $this::AUTH_METHODS_QUERY)){
+			$params[$this::AUTH_METHODS_QUERY[$this->authMethod]] = $token->accessToken;
 		}
 		else{
 			throw new ProviderException('invalid auth type');
