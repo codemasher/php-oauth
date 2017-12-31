@@ -31,7 +31,7 @@ class Twitter2 extends OAuth2Provider{
 	 * @inheritdoc
 	 * @throws \chillerlan\OAuth\Providers\ProviderException
 	 */
-	public function getAuthURL(array $params = []):string{
+	public function getAuthURL(array $params = null):string{
 		throw new ProviderException($this->AUTH_ERRMSG);
 	}
 

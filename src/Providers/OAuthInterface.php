@@ -25,7 +25,7 @@ interface OAuthInterface{
 	 *
 	 * @return string
 	 */
-	public function getAuthURL(array $params = []):string;
+	public function getAuthURL(array $params = null):string;
 
 	/**
 	 * @return string

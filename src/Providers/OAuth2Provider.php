@@ -104,8 +104,8 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	 *
 	 * @return string
 	 */
-	public function getAuthURL(array $params = []):string{
-		$params = $this->getAuthURLParams($params);
+	public function getAuthURL(array $params = null):string{
+		$params = $this->getAuthURLParams($params ?? []);
 
 		if($this->useCsrfToken){
 

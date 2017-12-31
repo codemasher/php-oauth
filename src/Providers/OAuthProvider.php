@@ -252,12 +252,8 @@ abstract class OAuthProvider implements OAuthInterface{
 			return '';
 		}
 
-		$urlencode = $urlencode ?? true;
-		$delimiter = $delimiter ?? '&';
-		$enclosure = $enclosure ?? '';
-
-		// Urlencode both keys and values
-		if($urlencode){
+		// urlencode both keys and values
+		if($urlencode ?? true){
 			$params = array_combine(
 				$this->rawurlencode(array_keys($params)),
 				$this->rawurlencode(array_values($params))
@@ -268,7 +264,8 @@ abstract class OAuthProvider implements OAuthInterface{
 		// Ref: Spec: 9.1.1 (1)
 		uksort($params, 'strcmp');
 
-		$pairs = [];
+		$pairs     = [];
+		$enclosure = $enclosure ?? '';
 
 		foreach($params as $parameter => $value){
 
@@ -291,7 +288,7 @@ abstract class OAuthProvider implements OAuthInterface{
 
 		// For each parameter, the name is separated from the corresponding value by an '=' character (ASCII code 61)
 		// Each name-value pair is separated by an '&' character (ASCII code 38)
-		return implode($delimiter, $pairs);
+		return implode($delimiter ?? '&', $pairs);
 	}
 
 }

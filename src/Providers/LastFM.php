@@ -97,9 +97,9 @@ class LastFM extends OAuthProvider{
 	/**
 	 * @inheritdoc
 	 */
-	public function getAuthURL(array $params = []):string {
+	public function getAuthURL(array $params = null):string {
 
-		$params = array_merge($params, [
+		$params = array_merge($params ?? [], [
 			'api_key' => $this->options->key,
 		]);
 
