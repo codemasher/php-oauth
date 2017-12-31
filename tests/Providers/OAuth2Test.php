@@ -146,7 +146,6 @@ class OAuth2Test extends ProviderTestAbstract{
 		$this->assertSame('client_credentials', $body['grant_type']);
 	}
 
-
 	public function testGetClientCredentialsHeaders(){
 		$headers = $this
 			->getMethod('getClientCredentialsTokenHeaders')
@@ -166,4 +165,11 @@ class OAuth2Test extends ProviderTestAbstract{
 		$this->assertSame('refresh_token', $body['grant_type']);
 	}
 
+	/**
+	 * @expectedException \chillerlan\OAuth\Providers\ProviderException
+	 * @expectedExceptionMessage Token is not refreshable
+	 */
+	public function testTokenRefreshNotRefreshable(){
+		$this->provider->refreshAccessToken();
+	}
 }

@@ -15,7 +15,8 @@ namespace chillerlan\OAuth\Providers;
 use chillerlan\OAuth\Token;
 
 /**
- * @property bool supportsClientCredentials
+ * @property bool $supportsClientCredentials
+ * @property bool $tokenRefreshable
  */
 interface OAuth2Interface extends OAuthInterface{
 

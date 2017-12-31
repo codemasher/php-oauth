@@ -27,5 +27,6 @@ class Amazon extends OAuth2Provider{
 	protected $authURL            = 'https://www.amazon.com/ap/oa';
 	protected $accessTokenURL     = 'https://www.amazon.com/ap/oatoken';
 	protected $accessTokenExpires = true;
+	protected $accessTokenRefreshable = true;
 
 }

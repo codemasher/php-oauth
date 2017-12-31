@@ -34,6 +34,7 @@ class DeviantArt extends OAuth2Provider{
 	protected $accessTokenURL     = 'https://www.deviantart.com/oauth2/token';
 	protected $userRevokeURL      = 'https://www.deviantart.com/settings/applications';
 	protected $accessTokenExpires = true;
+	protected $accessTokenRefreshable = true;
 	protected $clientCredentials  = true;
 
 }

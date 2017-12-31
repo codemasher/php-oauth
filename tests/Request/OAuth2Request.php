@@ -99,6 +99,7 @@ class OAuth2Request extends RequestTestAbstract{
 
 	public function testRefreshAccessToken(){
 		$this->setProperty($this->provider, 'accessTokenExpires', true);
+		$this->setProperty($this->provider, 'accessTokenRefreshable', true);
 		$this->setURL('accessTokenURL', self::ROUTE_REFRESH_TOKEN[1]);
 		$this->storeToken(new Token(['expires' => 30, 'refreshToken' => 'test_refresh_token']));
 

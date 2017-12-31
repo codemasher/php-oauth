@@ -21,7 +21,8 @@ use chillerlan\OAuth\{
 };
 
 /**
- * @property bool supportsClientCredentials
+ * @property bool $supportsClientCredentials
+ * @property bool $tokenRefreshable
  */
 abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 
@@ -49,6 +50,11 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	 * @var bool
 	 */
 	protected $accessTokenExpires = false;
+
+	/**
+	 * @var bool
+	 */
+	protected $accessTokenRefreshable = false;
 
 	/**
 	 * @var string
@@ -84,6 +90,13 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	 */
 	protected function magic_get_supportsClientCredentials():bool {
 		return $this->clientCredentials;
+	}
+
+	/**
+	 * @return bool
+	 */
+	protected function magic_get_tokenRefreshable():bool {
+		return $this->accessTokenRefreshable;
 	}
 
 	/**
@@ -298,7 +311,11 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	 */
 	public function refreshAccessToken(Token $token = null):Token{
 
-		if(is_null($token)){
+		if(!$this->accessTokenRefreshable){
+			throw new ProviderException('Token is not refreshable.');
+		}
+
+		if($token === null){
 			$token = $this->storage->retrieveAccessToken($this->serviceName);
 		}
 
@@ -362,7 +379,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 		$token = $this->storage->retrieveAccessToken($this->serviceName);
 
 		// attempt to refresh an expired token
-		if($this->accessTokenExpires && ($token->isExpired() || $token->expires === Token::EOL_UNKNOWN)){
+		if($this->accessTokenRefreshable && ($token->isExpired() || $token->expires === Token::EOL_UNKNOWN)){
 			$token = $this->refreshAccessToken($token);
 		}
 

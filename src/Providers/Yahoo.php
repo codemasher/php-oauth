@@ -21,5 +21,6 @@ abstract class Yahoo extends OAuth2Provider{
 	protected $accessTokenURL     = 'https://api.login.yahoo.com/oauth2/get_token';
 	protected $userRevokeURL      = 'https://login.yahoo.com/account/activity';
 	protected $accessTokenExpires = true;
+	protected $accessTokenRefreshable = true;
 
 }
