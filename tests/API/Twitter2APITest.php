@@ -1,8 +1,8 @@
 <?php
 /**
- * Class Twitter2Test
+ * Class Twitter2APITest
  *
- * @filesource   Twitter2Test.php
+ * @filesource   Twitter2APITest.php
  * @created      26.10.2017
  * @package      chillerlan\OAuthTest\API
  * @author       Smiley <smiley@chillerlan.net>
@@ -17,7 +17,7 @@ use chillerlan\OAuth\Providers\Twitter2;
 /**
  * @property \chillerlan\OAuth\Providers\Twitter2 $provider
  */
-class Twitter2Test extends APITestAbstract{
+class Twitter2APITest extends APITestAbstract{
 
 	protected $providerClass = Twitter2::class;
 	protected $envvar        = 'TWITTER';

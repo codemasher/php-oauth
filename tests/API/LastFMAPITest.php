@@ -1,8 +1,8 @@
 <?php
 /**
- * Class LastFMTest
+ * Class LastFMAPITest
  *
- * @filesource   LastFMTest.php
+ * @filesource   LastFMAPITest.php
  * @created      10.07.2017
  * @package      chillerlan\OAuthTest\API
  * @author       Smiley <smiley@chillerlan.net>
@@ -20,7 +20,7 @@ use chillerlan\OAuth\Providers\LastFM;
  * @link https://www.last.fm/api/intro
  *
  */
-class LastFMTest extends APITestAbstract{
+class LastFMAPITest extends APITestAbstract{
 
 	const USER = 'smiley-1'; // you're welcome (@todo: change this to your username)
 

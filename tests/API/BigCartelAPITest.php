@@ -1,8 +1,8 @@
 <?php
 /**
- * Class BigCartelTest
+ * Class BigCartelAPITest
  *
- * @filesource   BigCartelTest.php
+ * @filesource   BigCartelAPITest.php
  * @created      31.10.2017
  * @package      chillerlan\OAuthTest\API
  * @author       Smiley <smiley@chillerlan.net>
@@ -14,7 +14,7 @@ namespace chillerlan\OAuthTest\API;
 
 use chillerlan\OAuth\Providers\BigCartel;
 
-class BigCartelTest extends APITestAbstract{
+class BigCartelAPITest extends APITestAbstract{
 
 	protected $providerClass = BigCartel::class;
 	protected $envvar        = 'BIGCARTEL';

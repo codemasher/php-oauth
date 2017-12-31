@@ -1,10 +1,10 @@
 <?php
 /**
- * Class GuildWars2Test
+ * Class GuildWars2APITest
  *
- * @filesource   GuildWars2Test.php
+ * @filesource   GuildWars2APITest.php
  * @created      15.07.2017
- * @package      chillerlan\OAuthTest
+ * @package      chillerlan\OAuthTest\API
  * @author       Smiley <smiley@chillerlan.net>
  * @copyright    2017 Smiley
  * @license      MIT
@@ -14,7 +14,7 @@ namespace chillerlan\OAuthTest\API;
 
 use chillerlan\OAuth\Providers\GuildWars2;
 
-class GuildWars2Test extends APITestAbstract{
+class GuildWars2APITest extends APITestAbstract{
 
 	protected $providerClass = GuildWars2::class;
 
@@ -42,4 +42,19 @@ class GuildWars2Test extends APITestAbstract{
 		$this->provider->storeGW2Token('foo');
 	}
 
+	public function testStuff(){
+
+		print_r($this->provider->colors(['ids' => '1,2,3', 'lang' => 'zh'])->json);
+
+/*
+		print_r($this->provider->build());
+		print_r($this->provider->cats(['ids' => '1,2,3']));
+		print_r($this->provider->catsId(3));
+		print_r($this->provider->color(1, ['lang' => 'zh']));
+		print_r($this->provider->color(1, ['lang' => 'zh']));
+*/
+
+
+
+	}
 }

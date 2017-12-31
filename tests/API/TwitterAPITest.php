@@ -1,8 +1,8 @@
 <?php
 /**
- * Class TwitterTest
+ * Class TwitterAPITest
  *
- * @filesource   TwitterTest.php
+ * @filesource   TwitterAPITest.php
  * @created      11.07.2017
  * @package      chillerlan\OAuthTest\API
  * @author       Smiley <smiley@chillerlan.net>
@@ -19,7 +19,7 @@ use chillerlan\OAuth\Providers\Twitter;
  *
  * @link https://developer.twitter.com/en/docs/api-reference-index
  */
-class TwitterTest extends APITestAbstract{
+class TwitterAPITest extends APITestAbstract{
 
 	protected $providerClass = Twitter::class;
 	protected $envvar        = 'TWITTER';

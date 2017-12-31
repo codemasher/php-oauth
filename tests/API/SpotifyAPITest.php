@@ -1,8 +1,8 @@
 <?php
 /**
- * Class SpotifyTest
+ * Class SpotifyAPITest
  *
- * @filesource   SpotifyTest.php
+ * @filesource   SpotifyAPITest.php
  * @created      10.07.2017
  * @package      chillerlan\OAuthTest\API
  * @author       Smiley <smiley@chillerlan.net>
@@ -19,7 +19,7 @@ use chillerlan\OAuth\Providers\Spotify;
  *
  * @link https://developer.spotify.com/web-api/endpoint-reference/
  */
-class SpotifyTest extends APITestAbstract{
+class SpotifyAPITest extends APITestAbstract{
 
 	const USER = 'chillerlan'; // you're welcome (@todo: change this to your username)
 

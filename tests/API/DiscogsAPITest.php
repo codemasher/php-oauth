@@ -1,8 +1,8 @@
 <?php
 /**
- * Class DiscogsTest
+ * Class DiscogsAPITest
  *
- * @filesource   DiscogsTest.php
+ * @filesource   DiscogsAPITest.php
  * @created      10.07.2017
  * @package      chillerlan\OAuthTest\API
  * @author       Smiley <smiley@chillerlan.net>
@@ -32,7 +32,7 @@ use chillerlan\OAuth\Providers\Discogs;
  *
  * @property \chillerlan\OAuth\Providers\Discogs $provider
  */
-class DiscogsTest extends APITestAbstract{
+class DiscogsAPITest extends APITestAbstract{
 
 	const USER = '<DISCOGS_USERNAME>'; // @todo: change this to your username
 
