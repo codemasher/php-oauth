@@ -13,9 +13,7 @@
 namespace chillerlan\OAuth\Storage;
 
 use chillerlan\Database\Connection;
-use chillerlan\OAuth\{
-	OAuthOptions, Token
-};
+use chillerlan\OAuth\{OAuthOptions, Token};
 
 class DBTokenStorage extends TokenStorageAbstract{
 
@@ -25,29 +23,21 @@ class DBTokenStorage extends TokenStorageAbstract{
 	protected $db;
 
 	/**
-	 * @var int|string
-	 */
-	protected $user_id;
-
-	/**
 	 * DBTokenStorage constructor.
 	 *
 	 * @param \chillerlan\OAuth\OAuthOptions   $options
 	 * @param \chillerlan\Database\Connection  $db
-	 * @param string|int                       $user_id
 	 *
 	 * @throws \chillerlan\OAuth\Storage\TokenStorageException
 	 */
-	public function __construct(OAuthOptions $options, Connection $db, $user_id){
+	public function __construct(OAuthOptions $options, Connection $db){
 		parent::__construct($options);
 
 		if(!$this->options->dbTokenTable || !$this->options->dbProviderTable){
 			throw new TokenStorageException('invalid table config');
 		}
 
-		$this->db      = $db;
-		$this->user_id = $user_id;
-
+		$this->db = $db;
 		$this->db->connect();
 	}
 
@@ -76,10 +66,9 @@ class DBTokenStorage extends TokenStorageAbstract{
 		}
 
 		$values = [
-			$this->options->dbTokenTableUser       => $this->user_id,
-			$this->options->dbTokenTableProviderID =>
-				$this->getProviders()[$service][$this->options->dbProviderTableID],
-			$this->options->dbTokenTableToken      => json_encode($token->__toArray()),
+			$this->options->dbTokenTableUser       => $this->options->dbUserID,
+			$this->options->dbTokenTableProviderID => $this->getProviders()[$service][$this->options->dbProviderTableID],
+			$this->options->dbTokenTableToken      => $this->toStorage($token),
 			$this->options->dbTokenTableExpires    => $token->expires,
 		];
 
@@ -121,7 +110,7 @@ class DBTokenStorage extends TokenStorageAbstract{
 			throw new TokenStorageException('token not found');
 		}
 
-		return new Token(json_decode($r[0]->{$this->options->dbTokenTableToken}, true));
+		return $this->fromStorage($r[0]->{$this->options->dbTokenTableToken});
 	}
 
 	/**
@@ -160,7 +149,7 @@ class DBTokenStorage extends TokenStorageAbstract{
 
 		$this->db->delete
 			->from($this->options->dbTokenTable)
-			->where($this->options->dbTokenTableUser, $this->user_id)
+			->where($this->options->dbTokenTableUser, $this->options->dbUserID)
 			->execute();
 
 		return $this;
@@ -248,7 +237,7 @@ class DBTokenStorage extends TokenStorageAbstract{
 		$this->db->update
 			->table($this->options->dbTokenTable)
 			->set([$this->options->dbTokenTableState => null])
-			->where($this->options->dbTokenTableUser, $this->user_id)
+			->where($this->options->dbTokenTableUser, $this->options->dbUserID)
 			->execute();
 
 		return $this;
@@ -260,7 +249,7 @@ class DBTokenStorage extends TokenStorageAbstract{
 	 * @return string
 	 */
 	protected function getLabel(string $service):string{
-		return hash($this->options->dbLabelHashAlgo, sprintf($this->options->dbLabelFormat, $this->user_id, $service));
+		return hash($this->options->dbLabelHashAlgo, sprintf($this->options->dbLabelFormat, $this->options->dbUserID, $service));
 	}
 
 }

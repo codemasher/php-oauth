@@ -12,8 +12,9 @@
 
 namespace chillerlan\OAuthTest\Storage;
 
-use chillerlan\OAuth\Storage\TokenStorageInterface;
-use chillerlan\OAuth\Token;
+use chillerlan\OAuth\{
+	OAuthOptions, Token, Storage\TokenStorageInterface
+};
 use PHPUnit\Framework\TestCase;
 
 abstract class TokenStorageTestAbstract extends TestCase{
@@ -31,12 +32,23 @@ abstract class TokenStorageTestAbstract extends TestCase{
 	protected $token;
 
 	/**
+	 * @var \chillerlan\OAuth\OAuthOptions
+	 */
+	protected $options;
+
+	/**
 	 * @var string FQCN
 	 */
 	protected $FQCN;
 
 	protected function setUp(){
-		$this->storage = new $this->FQCN;
+
+		$this->options = new OAuthOptions([
+			'storageCryptoKey' => '000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f',
+			'dbUserID' => 1,
+		]);
+
+		$this->storage = new $this->FQCN($this->options);
 		$this->token   = new Token(['accessToken' => 'foobar']);
 	}
 

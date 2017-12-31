@@ -13,12 +13,14 @@
 namespace chillerlan\OAuthTest\Storage;
 
 use chillerlan\Database\{
-	Connection, Drivers\PDO\PDOMySQLDriver, Query\Dialects\MySQLQueryBuilder, Options
+	Connection, Drivers\PDO\PDOMySQLDriver, Options, Query\Dialects\MySQLQueryBuilder
+};
+use chillerlan\OAuth\{
+	OAuthOptions, Token
 };
 use chillerlan\OAuth\Storage\{
 	DBTokenStorage, TokenStorageAbstract, TokenStorageInterface
 };
-use chillerlan\OAuth\{OAuthOptions, Token};
 use chillerlan\Traits\DotEnv;
 
 class TestDBStorage extends TokenStorageAbstract{
@@ -34,9 +36,11 @@ class TestDBStorage extends TokenStorageAbstract{
 
 	public function __construct(){
 
-		$options = new OAuthOptions;
-		$options->dbTokenTable    = self::TABLE_TOKEN;
-		$options->dbProviderTable = self::TABLE_PROVIDER;
+		$options                   = new OAuthOptions;
+		$options->dbTokenTable     = self::TABLE_TOKEN;
+		$options->dbProviderTable  = self::TABLE_PROVIDER;
+		$options->storageCryptoKey = '000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f';
+		$options->dbUserID         = 1;
 
 		parent::__construct($options);
 
@@ -52,7 +56,7 @@ class TestDBStorage extends TokenStorageAbstract{
 			'password'     => $env->get('MYSQL_PASSWORD'),
 		]));
 
-		$this->storage = new DBTokenStorage($this->options, $db, 1);
+		$this->storage = new DBTokenStorage($this->options, $db);
 	}
 
 	public function storeAccessToken(string $service, Token $token):TokenStorageInterface{

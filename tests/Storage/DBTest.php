@@ -11,12 +11,12 @@
 
 namespace chillerlan\OAuthTest\Storage;
 
-use chillerlan\Database\Connection;
-use chillerlan\Database\Drivers\PDO\PDOMySQLDriver;
-use chillerlan\Database\Options;
-use chillerlan\Database\Query\Dialects\MySQLQueryBuilder;
-use chillerlan\OAuth\OAuthOptions;
-use chillerlan\OAuth\Storage\DBTokenStorage;
+use chillerlan\Database\{
+	Connection, Options, Drivers\PDO\PDOMySQLDriver, Query\Dialects\MySQLQueryBuilder
+};
+use chillerlan\OAuth\{
+	OAuthOptions, Storage\DBTokenStorage
+};
 
 class DBTest extends TokenStorageTestAbstract{
 
@@ -27,7 +27,7 @@ class DBTest extends TokenStorageTestAbstract{
 	 * @expectedExceptionMessage invalid table config
 	 */
 	public function testInvalidTable(){
-		new DBTokenStorage(new OAuthOptions, new Connection(new Options(['driver' => PDOMySQLDriver::class, 'querybuilder' => MySQLQueryBuilder::class])),  1);
+		new DBTokenStorage($this->options, new Connection(new Options(['driver' => PDOMySQLDriver::class, 'querybuilder' => MySQLQueryBuilder::class])));
 	}
 
 	/**
@@ -48,7 +48,6 @@ class DBTest extends TokenStorageTestAbstract{
 
 		$this->assertTrue($this->storage->hasAccessToken(self::SERVICE_NAME));
 		$this->assertSame('foobar', $this->storage->retrieveAccessToken(self::SERVICE_NAME)->accessToken);
-
 	}
 
 

@@ -78,12 +78,16 @@ class Token{
 	 */
 	protected $expires = self::EOL_UNKNOWN;
 
-
 	/**
 	 * @var array
 	 */
 	protected $extraParams = [];
 
+	/**
+	 * Token constructor.
+	 *
+	 * @param array|null $properties
+	 */
 	public function __construct(array $properties = null){
 		$this->constructContainer($properties);
 
@@ -139,9 +143,7 @@ class Token{
 	 * @return bool
 	 */
 	public function isExpired():bool{
-		return $this->expires !== $this::EOL_NEVER_EXPIRES
-		       && $this->expires !== $this::EOL_UNKNOWN // ??
-		       && time() > $this->expires;
+		return $this->expires !== $this::EOL_NEVER_EXPIRES && $this->expires !== $this::EOL_UNKNOWN && time() > $this->expires;
 	}
 
 }
