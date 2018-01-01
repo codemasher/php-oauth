@@ -186,11 +186,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	 */
 	protected function checkState(string $state = null):OAuth2Interface{
 
-		if(empty($state)){
-			throw new ProviderException('invalid state');
-		}
-
-		if(!$this->storage->hasAuthorizationState($this->serviceName)){
+		if(empty($state) || !$this->storage->hasAuthorizationState($this->serviceName)){
 			throw new ProviderException('invalid state for '.$this->serviceName);
 		}
 
@@ -199,8 +195,6 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 		if(!hash_equals($knownState, $state)){
 			throw new ProviderException('invalid authorization state: '.$this->serviceName.' '.$state);
 		}
-
-#		$this->storage->clearAuthorizationState($this->serviceName);
 
 		return $this;
 	}
@@ -320,7 +314,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 		}
 
 		if(!$token->refreshToken){
-			throw new ProviderException(sprintf('Token expired on %s, no refresh token available.', date('Y-m-d h:i:s A', $token->expires))); // @codeCoverageIgnore
+			throw new ProviderException(sprintf('no refresh token available, token expired [%s]', date('Y-m-d h:i:s A', $token->expires)));
 		}
 
 		$newToken = $this->parseTokenResponse(
