@@ -32,6 +32,12 @@ class LastFMTest extends ProviderTestAbstract{
 
 	protected $FQCN = LastFM::class;
 
+	public function setUp(){
+		parent::setUp();
+
+		$this->setProperty($this->provider, 'apiURL', 'https://localhost/lastfm/api/request');
+	}
+
 	protected function initHttp():HTTPClientInterface{
 		return new class extends HTTPClientAbstract{
 			public function request(string $url, array $params = null, string $method = null, $body = null, array $headers = null):OAuthResponse{
@@ -121,12 +127,9 @@ class LastFMTest extends ProviderTestAbstract{
 	}
 
 	public function testRequest(){
-		$this->setProperty($this->provider, 'apiURL', 'https://localhost/lastfm/api/request');
-
 		$response = $this->provider->request('');
 
 		$this->assertSame('such data! much wow!', $response->json->data);
 	}
-
 
 }

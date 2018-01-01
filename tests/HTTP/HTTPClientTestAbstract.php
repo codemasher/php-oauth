@@ -88,7 +88,7 @@ abstract class HTTPClientTestAbstract extends TestCase{
 		$r = $response->json;
 
 		if(!$r){
-			$this->markTestSkipped(print_r($response, true));
+			$this->markTestSkipped('httpbin.org timeout...');
 		}
 		else{
 			$this->assertSame('https://httpbin.org/'.$method.'?foo=bar', $r->url);

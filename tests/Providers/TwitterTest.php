@@ -21,4 +21,10 @@ class TwitterTest extends OAuth1Test{
 
 	protected $FQCN = Twitter::class;
 
+	public function testCheckParams(){
+		$data = ['foo' => 'bar', 'whatever' => null, 'nope' => '', 'true' => true, 'false' => false];
+
+		$this->assertSame(['foo' => 'bar', 'true' => 'true', 'false' => 'false'], $this->getMethod('checkParams')->invokeArgs($this->provider, [$data]));
+	}
+
 }

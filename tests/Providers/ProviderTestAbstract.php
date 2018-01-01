@@ -13,7 +13,7 @@
 namespace chillerlan\OAuthTest\Providers;
 
 use chillerlan\OAuth\{
-	HTTP\HTTPClientAbstract, HTTP\HTTPClientInterface, HTTP\OAuthResponse, OAuthOptions, Providers\OAuthInterface, Storage\MemoryTokenStorage, Storage\TokenStorageInterface, Token
+	HTTP\HTTPClientInterface, OAuthOptions, Providers\OAuth2Interface, Providers\OAuthInterface, Storage\MemoryTokenStorage, Storage\TokenStorageInterface, Token
 };
 use PHPUnit\Framework\TestCase;
 use ReflectionClass, ReflectionMethod, ReflectionProperty;
@@ -161,6 +161,38 @@ abstract class ProviderTestAbstract extends TestCase{
 
 		$data['florps']  = ['nope', 'nope', 'nah'];
 		$this->assertSame('florps="nah", florps="nope", florps="nope", foo="bar", whatever?="nope!"', $this->provider->buildHttpQuery($data, false, ', ', '"'));
+	}
+
+	public function testCheckParams(){
+		$data = ['foo' => 'bar', 'whatever' => null, 'nope' => '', 'true' => true, 'false' => false];
+
+		$this->assertSame(['foo' => 'bar', 'true' => '1', 'false' => '0'], $this->getMethod('checkParams')->invokeArgs($this->provider, [$data]));
+	}
+
+	// @todo
+	public function testCall(){
+		$this->setProperty($this->provider, 'apiMethods', json_decode('{"test":{"path":"","method":"POST"}}'));
+
+		if($this->provider instanceof OAuth2Interface){
+			$this->setProperty($this->provider, 'accessTokenRefreshable', false);
+		}
+
+		$this->assertSame('such data! much wow!', $this->provider->test()->json->data);
+		$this->assertNull($this->provider->foo());
+	}
+
+	/**
+	 * @expectedException \chillerlan\OAuth\API\OAuthAPIClientException
+	 * @expectedExceptionMessage too few URL params, required:
+	 */
+	public function testCallTooFewPathElements(){
+		$this->setProperty($this->provider, 'apiMethods', json_decode('{"test":{"path":"","path_elements":["foo"]}}'));
+
+		if($this->provider instanceof OAuth2Interface){
+			$this->setProperty($this->provider, 'accessTokenRefreshable', false);
+		}
+		$this->assertNull($this->provider->test());
+
 	}
 
 }
