@@ -11,14 +11,13 @@
 namespace chillerlan\OAuthCLI;
 
 use chillerlan\Database\Connection;
-use chillerlan\OAuthTest\API\TestDBStorage;
 
 /** @var \chillerlan\Database\Connection $db */
 $db = null;
 
 require_once __DIR__.'/bootstrap_cli.php';
 
-createTable($db, TestDBStorage::TABLE_TOKEN, TestDBStorage::TABLE_PROVIDER);
+createTable($db, TABLE_TOKEN, TABLE_PROVIDER);
 
 /**
  * @param \chillerlan\Database\Connection $db

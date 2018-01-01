@@ -21,6 +21,8 @@ use chillerlan\Database\{
 use chillerlan\Traits\DotEnv;
 
 const CFGDIR = __DIR__.'/../config';
+const TABLE_TOKEN    = 'storagetest';
+const TABLE_PROVIDER = 'storagetest_providers';
 
 $env = (new DotEnv(CFGDIR, file_exists(CFGDIR.'/.env') ? '.env' : '.env_travis'))->load();
 
