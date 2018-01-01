@@ -18,15 +18,8 @@ use chillerlan\OAuth\Providers\Stripe;
  * @property \chillerlan\OAuth\Providers\Stripe $provider
  */
 class StripeTest extends OAuth2Test{
+	use SupportsOAuth2TokenRefresh;
 
 	protected $FQCN = Stripe::class;
-
-	public function testMagicTokenRefreshable(){
-		$this->assertTrue($this->provider->tokenRefreshable);
-	}
-
-	public function testTokenRefreshNotRefreshable(){
-		$this->markTestSkipped('N/A');
-	}
 
 }

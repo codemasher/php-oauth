@@ -18,23 +18,8 @@ use chillerlan\OAuth\Providers\DeviantArt;
  * @property \chillerlan\OAuth\Providers\DeviantArt $provider
  */
 class DeviantArtTest extends OAuth2Test{
+	use SupportsOAuth2ClientCredentials, SupportsOAuth2TokenRefresh;
 
 	protected $FQCN = DeviantArt::class;
-
-	public function testMagicSupportsClientCredentials(){
-		$this->assertTrue($this->provider->supportsClientCredentials);
-	}
-
-	public function testGetClientCredentialsTokenNotSupported(){
-		$this->markTestSkipped('N/A');
-	}
-
-	public function testMagicTokenRefreshable(){
-		$this->assertTrue($this->provider->tokenRefreshable);
-	}
-
-	public function testTokenRefreshNotRefreshable(){
-		$this->markTestSkipped('N/A');
-	}
 
 }

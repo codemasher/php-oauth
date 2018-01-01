@@ -18,15 +18,8 @@ use chillerlan\OAuth\Providers\Amazon;
  * @property \chillerlan\OAuth\Providers\Amazon $provider
  */
 class AmazonTest extends OAuth2Test{
+	use SupportsOAuth2TokenRefresh;
 
 	protected $FQCN = Amazon::class;
-
-	public function testMagicTokenRefreshable(){
-		$this->assertTrue($this->provider->tokenRefreshable);
-	}
-
-	public function testTokenRefreshNotRefreshable(){
-		$this->markTestSkipped('N/A');
-	}
 
 }

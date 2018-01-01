@@ -15,7 +15,6 @@ namespace chillerlan\OAuthTest\API;
 use chillerlan\OAuth\{
 	HTTP\HTTPClientAbstract, HTTP\OAuthResponse, HTTP\TinyCurlClient, OAuthOptions, Providers\OAuth2Interface, Providers\OAuthInterface, Token
 };
-use chillerlan\OAuthTest\Storage\TestDBStorage;
 use chillerlan\TinyCurl\Request;
 use chillerlan\TinyCurl\RequestOptions;
 use chillerlan\Traits\DotEnv;

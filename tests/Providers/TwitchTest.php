@@ -18,24 +18,9 @@ use chillerlan\OAuth\Providers\Twitch;
  * @property \chillerlan\OAuth\Providers\BigCartel $provider
  */
 class TwitchTest extends OAuth2Test{
+	use SupportsOAuth2ClientCredentials, SupportsOAuth2TokenRefresh;
 
 	protected $FQCN = Twitch::class;
-
-	public function testMagicSupportsClientCredentials(){
-		$this->assertTrue($this->provider->supportsClientCredentials);
-	}
-
-	public function testGetClientCredentialsTokenNotSupported(){
-		$this->markTestSkipped('N/A');
-	}
-
-	public function testMagicTokenRefreshable(){
-		$this->assertTrue($this->provider->tokenRefreshable);
-	}
-
-	public function testTokenRefreshNotRefreshable(){
-		$this->markTestSkipped('N/A');
-	}
 
 	public function testGetClientCredentialsHeaders(){
 		$headers = $this
@@ -44,6 +29,5 @@ class TwitchTest extends OAuth2Test{
 
 		$this->assertSame('application/vnd.twitchtv.v5+json', $headers['Accept']);
 	}
-
 
 }

@@ -18,18 +18,15 @@ use chillerlan\OAuth\Providers\Twitter2;
  * @property \chillerlan\OAuth\Providers\Twitter2 $provider
  */
 class Twitter2Test extends OAuth2Test{
+	use SupportsOAuth2ClientCredentials;
 
 	protected $FQCN = Twitter2::class;
 
-	public function testMagicSupportsClientCredentials(){
-		$this->assertTrue($this->provider->supportsClientCredentials);
-	}
-
-	public function testGetClientCredentialsTokenNotSupported(){
+	public function testGetAuthURL(){
 		$this->markTestSkipped('N/A');
 	}
 
-	public function testGetAuthURL(){
+	public function testGetAccessToken(){
 		$this->markTestSkipped('N/A');
 	}
 
@@ -47,10 +44,6 @@ class Twitter2Test extends OAuth2Test{
 	 */
 	public function testRequestGetAccessTokenNotSupportedException(){
 		$this->provider->getAccessToken('foo');
-	}
-
-	public function testGetAccessToken(){
-		$this->markTestSkipped('N/A');
 	}
 
 }

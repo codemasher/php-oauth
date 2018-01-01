@@ -18,15 +18,8 @@ use chillerlan\OAuth\Providers\YahooSocial;
  * @property \chillerlan\OAuth\Providers\YahooSocial $provider
  */
 class YahooSocialTest extends OAuth2Test{
+	use SupportsOAuth2TokenRefresh;
 
 	protected $FQCN = YahooSocial::class;
-
-	public function testMagicTokenRefreshable(){
-		$this->assertTrue($this->provider->tokenRefreshable);
-	}
-
-	public function testTokenRefreshNotRefreshable(){
-		$this->markTestSkipped('N/A');
-	}
 
 }

@@ -18,23 +18,8 @@ use chillerlan\OAuth\Providers\Discord;
  * @property \chillerlan\OAuth\Providers\Discord $provider
  */
 class DiscordTest extends OAuth2Test{
+	use SupportsOAuth2ClientCredentials, SupportsOAuth2TokenRefresh;
 
 	protected $FQCN = Discord::class;
-
-	public function testMagicSupportsClientCredentials(){
-		$this->assertTrue($this->provider->supportsClientCredentials);
-	}
-
-	public function testGetClientCredentialsTokenNotSupported(){
-		$this->markTestSkipped('N/A');
-	}
-
-	public function testMagicTokenRefreshable(){
-		$this->assertTrue($this->provider->tokenRefreshable);
-	}
-
-	public function testTokenRefreshNotRefreshable(){
-		$this->markTestSkipped('N/A');
-	}
 
 }

@@ -11,20 +11,18 @@
 
 namespace chillerlan\OAuthTest\Storage;
 
-use chillerlan\OAuth\Storage\SessionTokenStorage;
-use chillerlan\OAuth\Token;
+use chillerlan\OAuth\{
+	Storage\SessionTokenStorage, Storage\TokenStorageInterface, Token
+};
 
+/**
+ * @property \chillerlan\OAuth\Storage\SessionTokenStorage $storage
+ */
 class SessionTest extends TokenStorageTestAbstract{
 
-	const SESSION_VAR = 'chillerlan-oauth-token';
-	const STATE_VAR   = 'chillerlan-oauth-state';
-
-	/**
-	 * @var \chillerlan\OAuth\Storage\SessionTokenStorage
-	 */
-	protected $storage;
-
-	protected $FQCN = SessionTokenStorage::class;
+	protected function initStorage():TokenStorageInterface{
+		return new SessionTokenStorage($this->options);
+	}
 
 	/**
 	 * coverage
@@ -41,8 +39,8 @@ class SessionTest extends TokenStorageTestAbstract{
 	 * @runInSeparateProcess
 	 */
 	public function testSessionVars(){
-		$this->assertSame([], $_SESSION[self::SESSION_VAR]);
-		$this->assertSame([], $_SESSION[self::STATE_VAR]);
+		$this->assertSame([], $_SESSION[$this->options->sessionTokenVar]);
+		$this->assertSame([], $_SESSION[$this->options->sessionStateVar]);
 	}
 
 	/**
@@ -51,10 +49,10 @@ class SessionTest extends TokenStorageTestAbstract{
 	 * @runInSeparateProcess
 	 */
 	public function testStoreTokenWithSessionVar(){
-		$_SESSION[self::SESSION_VAR] = 'foo';
+		$_SESSION[$this->options->sessionTokenVar] = 'foo';
 
 		$this->storage->storeAccessToken(self::SERVICE_NAME, $this->token);
-		$tokenFromSession = new Token(json_decode($_SESSION[self::SESSION_VAR][self::SERVICE_NAME], true));
+		$tokenFromSession = new Token(json_decode($_SESSION[$this->options->sessionTokenVar][self::SERVICE_NAME], true));
 		$this->assertInstanceOf(Token::class, $tokenFromSession);
 		$this->assertSame('foobar', $tokenFromSession->accessToken);
 		$tokenFromStorage = $this->storage->retrieveAccessToken(self::SERVICE_NAME);
@@ -68,10 +66,11 @@ class SessionTest extends TokenStorageTestAbstract{
 	 * @runInSeparateProcess
 	 */
 	public function testStoreAuthorizationStateWithSessionVar(){
-		$_SESSION[self::STATE_VAR] = 'foo';
+		$_SESSION[$this->options->sessionStateVar] = 'foo';
 
 		$this->storage->storeAuthorizationState(self::SERVICE_NAME, 'foobar');
 		$this->assertTrue($this->storage->hasAuthorizationState(self::SERVICE_NAME));
 		$this->assertSame('foobar', $this->storage->retrieveAuthorizationState(self::SERVICE_NAME));
 	}
+
 }

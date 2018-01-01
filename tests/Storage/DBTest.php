@@ -12,22 +12,66 @@
 namespace chillerlan\OAuthTest\Storage;
 
 use chillerlan\Database\{
-	Connection, Options, Drivers\PDO\PDOMySQLDriver, Query\Dialects\MySQLQueryBuilder
+	Connection, Drivers\Native\MySQLiDriver, Options, Query\Dialects\MySQLQueryBuilder
 };
 use chillerlan\OAuth\{
-	OAuthOptions, Storage\DBTokenStorage
+	OAuthOptions, Storage\DBTokenStorage, Storage\TokenStorageInterface
 };
+use chillerlan\Traits\DotEnv;
 
+/**
+ * @property \chillerlan\OAuth\Storage\DBTokenStorage $storage
+ */
 class DBTest extends TokenStorageTestAbstract{
 
-	protected $FQCN = TestDBStorage::class;
+	const CFGDIR         = __DIR__.'/../../config';
+	const TABLE_TOKEN    = 'storagetest';
+	const TABLE_PROVIDER = 'storagetest_providers';
+
+	/**
+	 * @var \chillerlan\Traits\DotEnv
+	 */
+	protected $env;
+
+	/**
+	 * @var \chillerlan\Database\Connection
+	 */
+	protected $db;
+
+	protected function setUp(){
+		$this->env = (new DotEnv(self::CFGDIR, file_exists(self::CFGDIR.'/.env') ? '.env' : '.env_travis'))->load();
+
+		$this->db = new Connection(new Options([
+			'driver'       => MySQLiDriver::class,
+			'querybuilder' => MySQLQueryBuilder::class,
+			'host'         => $this->env->get('MYSQL_HOST'),
+			'port'         => $this->env->get('MYSQL_PORT'),
+			'database'     => $this->env->get('MYSQL_DATABASE'),
+			'username'     => $this->env->get('MYSQL_USERNAME'),
+			'password'     => $this->env->get('MYSQL_PASSWORD'),
+		]));
+
+		$this->options = new OAuthOptions([
+			'dbTokenTable'     => self::TABLE_TOKEN,
+			'dbProviderTable'  => self::TABLE_PROVIDER,
+			'storageCryptoKey' => '000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f',
+			'dbUserID'         => 1,
+		]);
+
+		parent::setUp();
+	}
+
+	protected function initStorage():TokenStorageInterface{
+		return new DBTokenStorage($this->options, $this->db);
+	}
 
 	/**
 	 * @expectedException \chillerlan\OAuth\Storage\TokenStorageException
 	 * @expectedExceptionMessage invalid table config
 	 */
 	public function testInvalidTable(){
-		new DBTokenStorage($this->options, new Connection(new Options(['driver' => PDOMySQLDriver::class, 'querybuilder' => MySQLQueryBuilder::class])));
+		$this->options->dbTokenTable = '';
+		$this->initStorage();
 	}
 
 	/**
@@ -49,6 +93,5 @@ class DBTest extends TokenStorageTestAbstract{
 		$this->assertTrue($this->storage->hasAccessToken(self::SERVICE_NAME));
 		$this->assertSame('foobar', $this->storage->retrieveAccessToken(self::SERVICE_NAME)->accessToken);
 	}
-
 
 }

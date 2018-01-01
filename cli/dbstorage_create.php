@@ -11,7 +11,7 @@
 namespace chillerlan\OAuthCLI;
 
 use chillerlan\Database\Connection;
-use chillerlan\OAuthTest\Storage\TestDBStorage;
+use chillerlan\OAuthTest\API\TestDBStorage;
 
 /** @var \chillerlan\Database\Connection $db */
 $db = null;

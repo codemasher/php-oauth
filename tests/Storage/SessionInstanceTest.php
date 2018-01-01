@@ -11,26 +11,18 @@
 
 namespace chillerlan\OAuthTest\Storage;
 
-use chillerlan\OAuth\OAuthOptions;
-use chillerlan\OAuth\Storage\SessionTokenStorage;
+use chillerlan\OAuth\{
+	OAuthOptions, Storage\SessionTokenStorage
+};
 use PHPUnit\Framework\TestCase;
 
 class SessionInstanceTest extends TestCase{
-
-	protected $FQCN = SessionTokenStorage::class;
-
-	/**
-	 * @var \chillerlan\OAuth\Storage\TokenStorageInterface
-	 */
-	protected $storage;
 
 	/**
 	 * @runInSeparateProcess
 	 */
 	public function testWithWithoutStart(){
-		$this->storage = new SessionTokenStorage(new OAuthOptions(['sessionStart' => false]));
-		$this->assertInstanceOf($this->FQCN, $this->storage);
-		$this->assertFalse($this->storage->sessionIsActive());
+		$this->assertFalse((new SessionTokenStorage(new OAuthOptions(['sessionStart' => false])))->sessionIsActive());
 	}
 
 	/**
@@ -39,9 +31,7 @@ class SessionInstanceTest extends TestCase{
 	public function testWithExistingSession(){
 		session_start();
 
-		$this->storage = new SessionTokenStorage;
-		$this->assertInstanceOf($this->FQCN, $this->storage);
-		$this->assertTrue($this->storage->sessionIsActive());
+		$this->assertTrue((new SessionTokenStorage)->sessionIsActive());
 	}
 
 	/**
@@ -50,9 +40,7 @@ class SessionInstanceTest extends TestCase{
 	public function testWithExistingSessionWithoutStart(){
 		session_start();
 
-		$this->storage = new SessionTokenStorage(new OAuthOptions(['sessionStart' => false]));
-		$this->assertInstanceOf($this->FQCN, $this->storage);
-		$this->assertTrue($this->storage->sessionIsActive());
+		$this->assertTrue((new SessionTokenStorage(new OAuthOptions(['sessionStart' => false])))->sessionIsActive());
 	}
 
 }

@@ -10,10 +10,10 @@
  * @license      MIT
  */
 
-namespace chillerlan\OAuthTest\Storage;
+namespace chillerlan\OAuthTest\API;
 
 use chillerlan\Database\{
-	Connection, Drivers\Native\MySQLiDriver, Drivers\PDO\PDOMySQLDriver, Options, Query\Dialects\MySQLQueryBuilder
+	Connection, Drivers\Native\MySQLiDriver, Options, Query\Dialects\MySQLQueryBuilder
 };
 use chillerlan\OAuth\{
 	OAuthOptions, Token

@@ -18,15 +18,8 @@ use chillerlan\OAuth\Providers\Patreon;
  * @property \chillerlan\OAuth\Providers\Patreon $provider
  */
 class PatreonTest extends OAuth2Test{
+	use SupportsOAuth2TokenRefresh;
 
 	protected $FQCN = Patreon::class;
-
-	public function testMagicTokenRefreshable(){
-		$this->assertTrue($this->provider->tokenRefreshable);
-	}
-
-	public function testTokenRefreshNotRefreshable(){
-		$this->markTestSkipped('N/A');
-	}
 
 }

@@ -12,9 +12,15 @@
 namespace chillerlan\OAuthTest\Storage;
 
 use chillerlan\OAuth\Storage\MemoryTokenStorage;
+use chillerlan\OAuth\Storage\TokenStorageInterface;
 
+/**
+ * @property \chillerlan\OAuth\Storage\MemoryTokenStorage $storage
+ */
 class MemoryTest extends TokenStorageTestAbstract{
 
-	protected $FQCN = MemoryTokenStorage::class;
+	protected function initStorage():TokenStorageInterface{
+		return new MemoryTokenStorage($this->options);
+	}
 
 }

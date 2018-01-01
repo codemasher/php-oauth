@@ -13,7 +13,7 @@
 namespace chillerlan\OAuthTest\Storage;
 
 use chillerlan\OAuth\{
-	OAuthOptions, Token, Storage\TokenStorageInterface
+	OAuthOptions, Storage\TokenStorageInterface, Token
 };
 use PHPUnit\Framework\TestCase;
 
@@ -43,20 +43,21 @@ abstract class TokenStorageTestAbstract extends TestCase{
 
 	protected function setUp(){
 
-		$this->options = new OAuthOptions([
+		$this->options = $this->options ?? new OAuthOptions([
 			'storageCryptoKey' => '000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f',
 			'dbUserID' => 1,
 		]);
 
-		$this->storage = new $this->FQCN($this->options);
 		$this->token   = new Token(['accessToken' => 'foobar']);
+		$this->storage = $this->initStorage();
 	}
+
+	abstract protected function initStorage():TokenStorageInterface;
 
 	/**
 	 * @runInSeparateProcess
 	 */
 	public function testInterface(){
-		$this->assertInstanceOf($this->FQCN, $this->storage);
 		$this->assertInstanceOf(TokenStorageInterface::class, $this->storage);
 	}
 
@@ -78,7 +79,6 @@ abstract class TokenStorageTestAbstract extends TestCase{
 		$this->storage->clearAccessToken(self::SERVICE_NAME);
 		$this->assertFalse($this->storage->hasAccessToken(self::SERVICE_NAME));
 	}
-
 
 	/**
 	 * @runInSeparateProcess
@@ -113,7 +113,6 @@ abstract class TokenStorageTestAbstract extends TestCase{
 
 	}
 
-
 	/**
 	 * @runInSeparateProcess
 	 * @expectedException \chillerlan\OAuth\Storage\TokenStorageException
@@ -142,6 +141,21 @@ abstract class TokenStorageTestAbstract extends TestCase{
 		$this->assertInternalType('string', $a);
 		$this->assertInstanceOf(Token::class, $b);
 		$this->assertEquals($this->token, $b);
+	}
+
+	/**
+	 * @runInSeparateProcess
+	 * @expectedException \chillerlan\OAuth\Storage\TokenStorageException
+	 * @expectedExceptionMessage sodium extension installed/enabled?
+	 */
+	public function testMissingSodiumExtension(){
+
+		if(PHP_MINOR_VERSION >= 2 && function_exists('sodium_crypto_secretbox')){
+			$this->markTestSkipped('soduim enabled');
+		}
+
+		$this->options->useEncryption = true;
+		$this->initStorage();
 	}
 
 }

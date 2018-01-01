@@ -18,6 +18,7 @@ use chillerlan\OAuth\Providers\MusicBrainz;
  * @property \chillerlan\OAuth\Providers\MusicBrainz $provider
  */
 class MusicBrainzTest extends OAuth2Test{
+	use SupportsOAuth2TokenRefresh;
 
 	protected $FQCN = MusicBrainz::class;
 

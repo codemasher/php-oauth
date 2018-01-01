@@ -76,6 +76,23 @@ abstract class OAuth2Test extends ProviderTestAbstract{
 		$this->assertArrayNotHasKey('client_secret', $query);
 		$this->assertSame($this->options->key, $query['client_id']);
 		$this->assertSame('code', $query['response_type']);
+		$this->assertSame(explode('?', $url)[0], $this->getProperty('authURL')->getValue($this->provider));
+	}
+
+	public function testGetAccessToken(){
+		$token = $this->provider->getAccessToken('foo', 'test_state');
+
+		$this->assertSame('test_access_token', $token->accessToken);
+		$this->assertGreaterThan(time(), $token->expires);
+	}
+
+	public function testGetAccessTokenBody(){
+		$body = $this->getMethod('getAccessTokenBody')->invokeArgs($this->provider, ['foo']);
+
+		$this->assertSame('foo', $body['code']);
+		$this->assertSame($this->options->key, $body['client_id']);
+		$this->assertSame($this->options->secret, $body['client_secret']);
+		$this->assertSame('authorization_code', $body['grant_type']);
 	}
 
 	public function testParseTokenResponse(){
@@ -140,19 +157,17 @@ abstract class OAuth2Test extends ProviderTestAbstract{
 	 * @expectedExceptionMessage invalid authorization state
 	 */
 	public function testCheckStateInvalidAuth(){
-
 		$this
 			->getMethod('checkState')
 			->invokeArgs($this->provider, ['invalid_test_state']);
 	}
 
-	public function testGetAccessTokenBody(){
-		$body = $this->getMethod('getAccessTokenBody')->invokeArgs($this->provider, ['foo']);
+	public function testRequest(){
+		$this->storeToken(new Token(['accessToken' => 'test_access_token_secret', 'expires' => 1]));
 
-		$this->assertSame('foo', $body['code']);
-		$this->assertSame($this->options->key, $body['client_id']);
-		$this->assertSame($this->options->secret, $body['client_secret']);
-		$this->assertSame('authorization_code', $body['grant_type']);
+		$response = $this->provider->request('');
+
+		$this->assertSame('such data! much wow!', $response->json->data);
 	}
 
 	/**
@@ -161,93 +176,6 @@ abstract class OAuth2Test extends ProviderTestAbstract{
 	 */
 	public function testGetClientCredentialsTokenNotSupported(){
 		$this->provider->getClientCredentialsToken();
-	}
-
-	public function testGetClientCredentialsTokenBody(){
-		$this->setProperty($this->provider, 'scopesDelimiter', ',');
-
-		$body = $this
-			->getMethod('getClientCredentialsTokenBody')
-			->invokeArgs($this->provider, [['scope1', 'scope2', 'scope3']]);
-
-		$this->assertSame('scope1,scope2,scope3', $body['scope']);
-		$this->assertSame('client_credentials', $body['grant_type']);
-	}
-
-	public function testGetClientCredentialsHeaders(){
-		$headers = $this
-			->getMethod('getClientCredentialsTokenHeaders')
-			->invoke($this->provider);
-
-		$this->assertSame('Basic dGVzdGtleTp0ZXN0c2VjcmV0', $headers['Authorization']);
-	}
-
-	public function testRefreshAccessTokenBody(){
-		$body = $this
-			->getMethod('refreshAccessTokenBody')
-			->invokeArgs($this->provider, [new Token(['refreshToken' => 'whatever'])]);
-
-		$this->assertSame('whatever', $body['refresh_token']);
-		$this->assertSame($this->options->key, $body['client_id']);
-		$this->assertSame($this->options->secret, $body['client_secret']);
-		$this->assertSame('refresh_token', $body['grant_type']);
-	}
-
-	/**
-	 * @expectedException \chillerlan\OAuth\Providers\ProviderException
-	 * @expectedExceptionMessage Token is not refreshable
-	 */
-	public function testTokenRefreshNotRefreshable(){
-		$this->provider->refreshAccessToken();
-	}
-
-	public function testGetAccessToken(){
-		$token = $this->provider->getAccessToken('foo', 'test_state');
-
-		$this->assertSame('test_access_token', $token->accessToken);
-		$this->assertGreaterThan(time(), $token->expires);
-	}
-
-	public function testGetClientCredentials(){
-
-		if(!$this->provider->supportsClientCredentials){
-			$this->markTestSkipped('N/A');
-		}
-
-		$token = $this->provider->getClientCredentialsToken();
-
-		$this->assertSame('test_client_credentials_token', $token->accessToken);
-		$this->assertGreaterThan(time(), $token->expires);
-	}
-
-	public function testRefreshAccessToken(){
-
-		if(!$this->provider->tokenRefreshable){
-			$this->markTestSkipped('N/A');
-		}
-
-		$this->storeToken(new Token(['expires' => 1, 'refreshToken' => 'test_refresh_token']));
-
-		$token = $this->provider->refreshAccessToken();
-
-		$this->assertSame('test_refresh_token', $token->refreshToken);
-		$this->assertSame('test_refreshed_access_token', $token->accessToken);
-		$this->assertGreaterThan(time(), $token->expires);
-	}
-
-	/**
-	 * @expectedException \chillerlan\OAuth\OAuthException
-	 * @expectedExceptionMessage no refresh token available, token expired [
-	 */
-	public function testRefreshAccessTokenNoRefreshTokenAvailable(){
-
-		if(!$this->provider->tokenRefreshable){
-			$this->markTestSkipped('N/A');
-		}
-
-		$this->storeToken(new Token(['expires' => 1, 'refreshToken' => null]));
-
-		$token = $this->provider->refreshAccessToken();
 	}
 
 	/**
@@ -261,25 +189,12 @@ abstract class OAuth2Test extends ProviderTestAbstract{
 		$this->provider->request('');
 	}
 
-	public function testRequest(){
-		$this->storeToken(new Token(['accessToken' => 'test_access_token_secret', 'expires' => 1]));
-
-		$response = $this->provider->request('');
-
-		$this->assertSame('such data! much wow!', $response->json->data);
-	}
-
-	public function testRequestWithTokenRefresh(){
-
-		if(!$this->provider->tokenRefreshable){
-			$this->markTestSkipped('N/A');
-		}
-
-		$this->storeToken(new Token(['accessToken' => 'test_access_token', 'refreshToken' => 'test_refresh_token', 'expires' => 1]));
-
-		sleep(2);
-
-		$this->assertSame('such data! much wow!', $this->provider->request('')->json->data);
+	/**
+	 * @expectedException \chillerlan\OAuth\Providers\ProviderException
+	 * @expectedExceptionMessage Token is not refreshable
+	 */
+	public function testTokenRefreshNotRefreshable(){
+		$this->provider->refreshAccessToken();
 	}
 
 }

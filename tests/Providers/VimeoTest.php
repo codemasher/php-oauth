@@ -18,15 +18,8 @@ use chillerlan\OAuth\Providers\Vimeo;
  * @property \chillerlan\OAuth\Providers\Vimeo $provider
  */
 class VimeoTest extends OAuth2Test{
+	use SupportsOAuth2ClientCredentials;
 
 	protected $FQCN = Vimeo::class;
-
-	public function testMagicSupportsClientCredentials(){
-		$this->assertTrue($this->provider->supportsClientCredentials);
-	}
-
-	public function testGetClientCredentialsTokenNotSupported(){
-		$this->markTestSkipped('N/A');
-	}
 
 }
