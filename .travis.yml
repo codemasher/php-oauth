@@ -8,8 +8,9 @@ php:
 services:
   - mysql
 
+install: travis_retry composer install --no-interaction --prefer-source
+
 before_script:
-  - travis_retry composer install --no-interaction --prefer-source
   - mysql -e 'create database dbtest;'
   - php cli/dbstorage_create.php
 
