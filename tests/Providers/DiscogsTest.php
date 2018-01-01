@@ -17,7 +17,7 @@ use chillerlan\OAuth\Providers\Discogs;
 /**
  * @property \chillerlan\OAuth\Providers\Discogs $provider
  */
-class DiscogsTest extends ProviderTestAbstract{
+class DiscogsTest extends OAuth1Test{
 
 	protected $FQCN = Discogs::class;
 

@@ -25,6 +25,10 @@ abstract class OAuth2Test extends ProviderTestAbstract{
 		$this->assertFalse($this->provider->supportsClientCredentials);
 	}
 
+	public function testMagicTokenRefreshable(){
+		$this->assertFalse($this->provider->tokenRefreshable);
+	}
+
 	public function testGetAuthURL(){
 		$url = $this->provider->getAuthURL(['client_secret' => 'foo']);
 		parse_str(parse_url($url, PHP_URL_QUERY), $query);
