@@ -36,8 +36,8 @@ class DiscogsAPITest extends APITestAbstract{
 
 	const USER = '<DISCOGS_USERNAME>'; // @todo: change this to your username
 
-	protected $providerClass = Discogs::class;
-	protected $envvar        = 'DISCOGS';
+	protected $FQCN   = Discogs::class;
+	protected $envvar = 'DISCOGS';
 
 	public function testIdentity(){
 		$this->response = $this->provider->identity();

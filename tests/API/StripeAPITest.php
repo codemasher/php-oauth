@@ -15,10 +15,11 @@ namespace chillerlan\OAuthTest\API;
 use chillerlan\OAuth\Providers\Stripe;
 
 /**
+ * @property \chillerlan\OAuth\Providers\Stripe $provider
  */
 class StripeAPITest extends APITestAbstract{
 
-	protected $providerClass = Stripe::class;
-	protected $envvar        = 'STRIPE';
+	protected $FQCN   = Stripe::class;
+	protected $envvar = 'STRIPE';
 
 }

@@ -21,8 +21,8 @@ use chillerlan\OAuth\Providers\Twitter;
  */
 class TwitterAPITest extends APITestAbstract{
 
-	protected $providerClass = Twitter::class;
-	protected $envvar        = 'TWITTER';
+	protected $FQCN   = Twitter::class;
+	protected $envvar = 'TWITTER';
 
 	protected $screen_name;
 	protected $user_id;

@@ -14,9 +14,12 @@ namespace chillerlan\OAuthTest\API;
 
 use chillerlan\OAuth\Providers\DeviantArt;
 
+/**
+ * @property \chillerlan\OAuth\Providers\DeviantArt $provider
+ */
 class DeviantArtAPITest extends APITestAbstract{
 
-	protected $providerClass = DeviantArt::class;
-	protected $envvar        = 'DEVIANTART';
+	protected $FQCN   = DeviantArt::class;
+	protected $envvar = 'DEVIANTART';
 
 }

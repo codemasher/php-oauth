@@ -14,14 +14,12 @@ namespace chillerlan\OAuthTest\API;
 
 use chillerlan\OAuth\Providers\GuildWars2;
 
+/**
+ * @property \chillerlan\OAuth\Providers\GuildWars2 $provider
+ */
 class GuildWars2APITest extends APITestAbstract{
 
-	protected $providerClass = GuildWars2::class;
-
-	/**
-	 * @var \chillerlan\OAuth\Providers\GuildWars2
-	 */
-	protected $provider;
+	protected $FQCN = GuildWars2::class;
 
 	/**
 	 * @var \chillerlan\OAuth\Token
@@ -29,32 +27,17 @@ class GuildWars2APITest extends APITestAbstract{
 	protected $token;
 
 	public function testStoreGW2Token(){
-		$this->token = $this->provider->storeGW2Token(getenv('GW2_TOKEN'));
+		$this->token = $this->provider->storeGW2Token($this->env->get('GW2_TOKEN'));
 
-		$this->assertSame(getenv('GW2_TOKEN'), $this->token->accessToken);
+		$this->assertSame($this->env->get('GW2_TOKEN'), $this->token->accessToken);
 	}
 
 	/**
 	 * @expectedException \chillerlan\OAuth\OAuthException
-	 * @expectedExceptionMessage invalid/unverified token
+	 * @expectedExceptionMessage invalid token
 	 */
 	public function testStoreInvalidGW2TokenException(){
 		$this->provider->storeGW2Token('foo');
 	}
 
-	public function testStuff(){
-
-		print_r($this->provider->colors(['ids' => '1,2,3', 'lang' => 'zh'])->json);
-
-/*
-		print_r($this->provider->build());
-		print_r($this->provider->cats(['ids' => '1,2,3']));
-		print_r($this->provider->catsId(3));
-		print_r($this->provider->color(1, ['lang' => 'zh']));
-		print_r($this->provider->color(1, ['lang' => 'zh']));
-*/
-
-
-
-	}
 }

@@ -19,21 +19,20 @@ use chillerlan\OAuth\Providers\LastFM;
  *
  * @link https://www.last.fm/api/intro
  *
+ * @property \chillerlan\OAuth\Providers\LastFM $provider
  */
 class LastFMAPITest extends APITestAbstract{
 
-	const USER = 'smiley-1'; // you're welcome (@todo: change this to your username)
+	const USER = '<LASTFM_USERNAME>'; // @todo: change this to your username
 
-	protected $providerClass = LastFM::class;
-	protected $envvar        = 'LASTFM';
-
-	/**
-	 * @var \chillerlan\OAuth\Providers\LastFM
-	 */
-	protected $provider;
+	protected $FQCN   = LastFM::class;
+	protected $envvar = 'LASTFM';
 
 	/**
-	 *  @dataProvider tagDataProvider
+	 * @dataProvider tagDataProvider
+	 *
+	 * @param string $method
+	 * @param array  $params
 	 */
 	public function testTagging(string $method, array $params){
 		$this->response = $this->provider->{$method}($params);

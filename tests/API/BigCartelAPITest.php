@@ -14,20 +14,18 @@ namespace chillerlan\OAuthTest\API;
 
 use chillerlan\OAuth\Providers\BigCartel;
 
+/**
+ * @property \chillerlan\OAuth\Providers\BigCartel $provider
+ */
 class BigCartelAPITest extends APITestAbstract{
 
-	protected $providerClass = BigCartel::class;
-	protected $envvar        = 'BIGCARTEL';
+	protected $FQCN   = BigCartel::class;
+	protected $envvar = 'BIGCARTEL';
 
 	/**
 	 * @var int
 	 */
 	protected $account_id;
-
-	/**
-	 * @var \chillerlan\OAuth\Providers\BigCartel
-	 */
-	protected $provider;
 
 	protected function setUp(){
 		parent::setUp();

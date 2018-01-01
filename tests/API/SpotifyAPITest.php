@@ -18,18 +18,15 @@ use chillerlan\OAuth\Providers\Spotify;
  * Spotify API usage tests/examples
  *
  * @link https://developer.spotify.com/web-api/endpoint-reference/
+ *
+ * @property \chillerlan\OAuth\Providers\Spotify $provider
  */
 class SpotifyAPITest extends APITestAbstract{
 
-	const USER = 'chillerlan'; // you're welcome (@todo: change this to your username)
+	const USER = '<SPOTIFY_USERNAME>'; // @todo: change this to your username
 
-	protected $providerClass = Spotify::class;
-	protected $envvar        = 'SPOTIFY';
-
-	/**
-	 * @var \chillerlan\OAuth\Providers\Spotify
-	 */
-	protected $provider;
+	protected $FQCN   = Spotify::class;
+	protected $envvar = 'SPOTIFY';
 
 	public function testAlbum(){
 		$this->response = $this->provider->album('4KJaUvkYQ93TH4MxnJfpPh', ['market' => 'de']);
