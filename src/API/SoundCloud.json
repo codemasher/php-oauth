@@ -1,0 +1,20 @@
+{
+    "me": {
+        "path": "\/me",
+        "method": "GET",
+        "query": [],
+        "path_elements": [],
+        "body": null,
+        "headers": []
+    },
+    "user": {
+        "path": "\/users\/%1$s",
+        "method": "GET",
+        "query": [],
+        "path_elements": [
+            "id"
+        ],
+        "body": null,
+        "headers": []
+    }
+}
