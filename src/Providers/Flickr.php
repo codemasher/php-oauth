@@ -265,7 +265,7 @@ class Flickr extends OAuth1Provider{
 	public function request(string $path, array $params = null, string $method = null, $body = null, array $headers = null):OAuthResponse{
 		$method = $method ?? 'GET';
 
-		$params = array_merge($params, [
+		$params = array_merge($params ?? [], [
 			'method'         => $path,
 			'format'         => 'json',
 			'nojsoncallback' => true,
