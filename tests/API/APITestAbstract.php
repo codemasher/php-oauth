@@ -13,18 +13,20 @@
 namespace chillerlan\OAuthTest\API;
 
 use chillerlan\OAuth\{
-	HTTP\OAuthResponse, OAuthOptions, Providers\OAuth2Interface, Providers\OAuthInterface, Token
+	HTTP\HTTPClientAbstract, HTTP\OAuthResponse, HTTP\TinyCurlClient, OAuthOptions, Providers\OAuth2Interface, Providers\OAuthInterface, Token
 };
-use chillerlan\OAuthTest\{
-	Request\TestHTTPClient, Storage\TestDBStorage
-};
+use chillerlan\OAuthTest\Storage\TestDBStorage;
+use chillerlan\TinyCurl\Request;
+use chillerlan\TinyCurl\RequestOptions;
 use chillerlan\Traits\DotEnv;
 use PHPUnit\Framework\TestCase;
 
 abstract class APITestAbstract extends TestCase{
 
-	const CFGDIR  = __DIR__.'/../../config';
-	const STORAGE = __DIR__.'/../../tokenstorage';
+	const CFGDIR        = __DIR__.'/../../config';
+	const STORAGE       = __DIR__.'/../../tokenstorage';
+	const UA            = 'chillerlanPhpOAuth/2.0.0 +https://github.com/codemasher/php-oauth';
+	const SLEEP_SECONDS = 1.0;
 
 	/**
 	 * @var \chillerlan\OAuth\Storage\TokenStorageInterface
@@ -44,6 +46,7 @@ abstract class APITestAbstract extends TestCase{
 	protected $providerClass;
 	protected $envvar;
 	protected $scopes = [];
+	protected $httpclient;
 
 	protected function setUp(){
 		ini_set('date.timezone', 'Europe/Amsterdam');
@@ -52,8 +55,28 @@ abstract class APITestAbstract extends TestCase{
 
 		$this->storage  = new TestDBStorage;
 
+		$this->httpclient = new class extends HTTPClientAbstract{
+			protected $http;
+
+			public function __construct(){
+#				$this->http = new GuzzleClient(new Client(['cacert' => APITestAbstract::CFGDIR.'/cacert.pem', 'headers' => ['User-Agent' => APITestAbstract::UA]]));
+				$this->http = new TinyCurlClient(new Request(new RequestOptions(['ca_info' => APITestAbstract::CFGDIR.'/cacert.pem', 'userAgent' => APITestAbstract::UA])));
+#	        	$this->http = new CurlClient([CURLOPT_CAINFO => self::CFGDIR.'/cacert.pem', CURLOPT_USERAGENT => self::UA]);
+#	        	$this->http = new StreamClient(self::CFGDIR.'/cacert.pem', self::UA);
+			}
+
+			public function request(string $url, array $params = null, string $method = null, $body = null, array $headers = null):OAuthResponse{
+				$args = func_get_args();
+#	        	print_r($args);
+				$response = $this->http->request(...$args);
+#	        	print_r($response);
+				usleep(APITestAbstract::SLEEP_SECONDS * 1000000);
+				return $response;
+			}
+		};
+
 		$this->provider = new $this->providerClass(
-			new TestHTTPClient,
+			$this->httpclient,
 			$this->storage,
 			new OAuthOptions([
 				'key'         => $env->get($this->envvar.'_KEY'),
