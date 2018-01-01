@@ -77,33 +77,28 @@ abstract class HTTPClientTestAbstract extends TestCase{
 	public function testRequest(string $method, array $extra_headers){
 
 		// @todo httpbin times out on a regular basis... a more reliable service, anyone?
-		try{
-			$response = $this->http->request(
-				'https://httpbin.org/'.$method,
-				['foo' => 'bar'],
-				$method,
-				['huh' => 'wtf'],
-				['what' => 'nope'] + $extra_headers
-			);
+		$response = $this->http->request(
+			'https://httpbin.org/'.$method,
+			['foo' => 'bar'],
+			$method,
+			['huh' => 'wtf'],
+			['what' => 'nope'] + $extra_headers
+		);
 
-			$r = $response->json;
+		$r = $response->json;
 
-			if(!$r){
-				trigger_error($response);
+		if(!$r){
+			$this->markTestSkipped(print_r($response, true));
+		}
+		else{
+			$this->assertSame('https://httpbin.org/'.$method.'?foo=bar', $r->url);
+			$this->assertSame('bar', $r->args->foo);
+			$this->assertSame('nope', $r->headers->What);
+			$this->assertSame(self::USER_AGENT, $r->headers->{'User-Agent'});
+
+			if(in_array($method, ['patch', 'post', 'put'])){
+				$this->assertSame('wtf', $r->form->huh);
 			}
-		}
-		catch(\Exception $exception){
-			$this->markTestSkipped(print_r($exception, true));
-		}
-
-
-		$this->assertSame('https://httpbin.org/'.$method.'?foo=bar', $r->url);
-		$this->assertSame('bar', $r->args->foo);
-		$this->assertSame('nope', $r->headers->What);
-		$this->assertSame(self::USER_AGENT, $r->headers->{'User-Agent'});
-
-		if(in_array($method, ['patch', 'post', 'put'])){
-			$this->assertSame('wtf', $r->form->huh);
 		}
 
 	}
