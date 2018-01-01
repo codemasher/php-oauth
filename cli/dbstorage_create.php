@@ -78,6 +78,7 @@ function createTable(Connection $db, string $token_table, string $provider_table
 		25 => 'Slack',
 		26 => 'Amazon',
 		27 => 'BigCartel',
+		28 => 'Stripe',
 	];
 
 	foreach($providers as $i => $provider){

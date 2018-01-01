@@ -54,6 +54,7 @@ A PHP7+ OAuth1/2 client with an integrated API wrapper, [loosely based](https://
   - [Patreon](https://docs.patreon.com/)
   - [Slack](https://api.slack.com/docs/oauth)
   - [SoundCloud](https://developers.soundcloud.com/)
+  - [Stripe](https://stripe.com/docs/api)
   - [Wordpress](https://developer.wordpress.com/docs/api/)
   - [Yahoo](https://developer.yahoo.com/oauth2/guide/)
 - Oauth2 & client credentials
