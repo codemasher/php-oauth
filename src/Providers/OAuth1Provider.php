@@ -75,10 +75,10 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 		parse_str($response->body, $data);
 
 		if(!$data || !is_array($data)){
-			throw new ProviderException('unable to parse token response'.PHP_EOL.print_r($response, true));
+			throw new ProviderException('unable to parse token response');
 		}
 		elseif(isset($data['error'])){
-			throw new ProviderException('error retrieving access token: '.print_r($data['error'], true));
+			throw new ProviderException('error retrieving access token: '.$data['error']);
 		}
 		elseif(!isset($data['oauth_token']) || !isset($data['oauth_token_secret'])){
 			throw new ProviderException('token missing');

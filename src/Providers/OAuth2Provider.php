@@ -150,13 +150,13 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 		$data = $response->json_array;
 
 		if(!is_array($data)){
-			throw new ProviderException('unable to parse token response'.PHP_EOL.print_r($response, true));
+			throw new ProviderException('unable to parse token response');
 		}
 
 		foreach(['error_description', 'error'] as $field){
 
 			if(isset($data[$field])){
-				throw new ProviderException('error retrieving access token: "'.$data[$field].'"'.PHP_EOL.print_r($data, true));
+				throw new ProviderException('error retrieving access token: "'.$data[$field].'"');
 			}
 
 		}
@@ -171,7 +171,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 			'refreshToken' => $data['refresh_token'] ?? null,
 		]);
 
-		unset($data['expires_in'], $data['refresh_token'], $data['access_token']);//$data['state'],
+		unset($data['expires_in'], $data['refresh_token'], $data['access_token']);
 
 		$token->extraParams = $data;
 

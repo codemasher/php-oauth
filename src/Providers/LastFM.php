@@ -165,7 +165,7 @@ class LastFM extends OAuthProvider{
 		$data = $response->json_array;
 
 		if(!$data || !is_array($data)){
-			throw new ProviderException('unable to parse token response'.PHP_EOL.print_r($response, true));
+			throw new ProviderException('unable to parse token response');
 		}
 		elseif(isset($data['error'])){
 			throw new ProviderException('error retrieving access token: '.$data['message']);

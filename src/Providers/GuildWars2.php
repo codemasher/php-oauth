@@ -253,7 +253,7 @@ class GuildWars2 extends OAuth2Provider{
 			return $token;
 		}
 
-		throw new ProviderException('invalid/unverified token: '.print_r($tokeninfo, true));
+		throw new ProviderException('invalid/unverified token');
 	}
 
 }
