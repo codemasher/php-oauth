@@ -19,7 +19,7 @@ use chillerlan\OAuth\{
 /**
  * @link https://developers.deezer.com/api/oauth
  *
- * sure, you *can* use different parameter names than the standard ones...
+ * sure, you *can* use different parameter names than the standard ones... and what about JSON?
  * https://xkcd.com/927/
  */
 class Deezer extends OAuth2Provider{
@@ -75,12 +75,16 @@ class Deezer extends OAuth2Provider{
 	protected function parseTokenResponse(OAuthResponse $response):Token{
 		parse_str($response->body, $data);
 
-		if(!is_array($data)){
-			throw new ProviderException('unable to parse access token response'.PHP_EOL.print_r($response, true));
+		if(!is_array($data) || empty($data)){
+			throw new ProviderException('unable to parse token response');
 		}
 
 		if(isset($data['error_reason'])){
-			throw new ProviderException('error retrieving access token: "'.$data['error_reason'].'"'.PHP_EOL.print_r($data, true));
+			throw new ProviderException('error retrieving access token: "'.$data['error_reason'].'"');
+		}
+
+		if(!isset($data['access_token'])){
+			throw new ProviderException('token missing');
 		}
 
 		$token = new Token([
