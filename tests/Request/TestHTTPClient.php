@@ -34,8 +34,8 @@ class TestHTTPClient extends HTTPClientAbstract{
 	protected $http;
 
 	public function __construct(){
-#		$this->http = new GuzzleClient(new Client(['cacert' => self::CFGDIR.'/cacert.pem', 'headers' => ['User-Agent' => self::UA]]));
-		$this->http = new TinyCurlClient(new Request(new RequestOptions(['ca_info' => self::CFGDIR.'/cacert.pem', 'userAgent' => self::UA])));
+		$this->http = new GuzzleClient(new Client(['cacert' => self::CFGDIR.'/cacert.pem', 'headers' => ['User-Agent' => self::UA]]));
+#		$this->http = new TinyCurlClient(new Request(new RequestOptions(['ca_info' => self::CFGDIR.'/cacert.pem', 'userAgent' => self::UA])));
 #		$this->http = new CurlClient([CURLOPT_CAINFO => self::CFGDIR.'/cacert.pem', CURLOPT_USERAGENT => self::UA]);
 #		$this->http = new StreamClient(self::CFGDIR.'/cacert.pem', self::UA);
 	}

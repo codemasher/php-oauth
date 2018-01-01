@@ -58,7 +58,7 @@ class LastFMRequest extends RequestTestAbstract{
 		$response = $this->provider->request('');
 
 		$this->assertSame('application/json', $response->headers->{'content-type'});
-		$this->assertSame(self::ROUTE_API_REQUEST['2']['body']['data'], $response->json->data);
+		$this->assertSame(self::ROUTE_API_REQUEST[2]['body']['data'], $response->json->data);
 	}
 
 
