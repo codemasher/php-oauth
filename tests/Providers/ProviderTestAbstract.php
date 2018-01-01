@@ -27,7 +27,7 @@ use ReflectionClass, ReflectionMethod, ReflectionProperty;
 abstract class ProviderTestAbstract extends TestCase{
 
 	const HOST      = 'http://localhost';
-	const BASE_PATH = '/php-oauth-rewrite/tests/web'; // @todo Travis reminder
+	const BASE_PATH = '/php-oauth/tests/web'; // @todo Travis reminder
 
 	/**
 	 * @var string

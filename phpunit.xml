@@ -16,8 +16,10 @@
 		<testsuite name="php-oauth test suite">
 			<directory suffix=".php">./tests</directory>
 			<exclude>./tests/API</exclude>
-			<exclude>./tests/Request</exclude>
 			<exclude>./tests/web</exclude>
+			<!--
+			<exclude>./tests/Request</exclude>
+			-->
 		</testsuite>
 	</testsuites>
 	<filter>
