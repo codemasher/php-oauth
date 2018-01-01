@@ -34,6 +34,7 @@ class MusicBrainz extends OAuth2Provider{
 	protected $accessTokenURL     = 'https://musicbrainz.org/oauth2/token';
 	protected $userRevokeURL      = 'https://musicbrainz.org/account/applications';
 	protected $accessTokenExpires = true;
+	protected $accessTokenRefreshable = true;
 
 	/**
 	 * @inheritdoc
@@ -55,14 +56,13 @@ class MusicBrainz extends OAuth2Provider{
 	 * @param array  $headers
 	 *
 	 * @return \chillerlan\OAuth\HTTP\OAuthResponse
-	 * @throws \chillerlan\OAuth\Providers\ProviderException
 	 */
 	public function request(string $path, array $params = null, string $method = null, $body = null, array $headers = null):OAuthResponse{
 		$token = $this->storage->retrieveAccessToken($this->serviceName);
 		$params = $params ?? [];
 
-		if($this->accessTokenExpires && $token->isExpired()){
-			throw new ProviderException(sprintf('Token expired on %s at %s', date('m/d/Y', $token->expires), date('h:i:s A', $token->expires))); // @codeCoverageIgnore
+		if($this->accessTokenRefreshable && ($token->isExpired() || $token->expires === $token::EOL_UNKNOWN)){
+			$token = $this->refreshAccessToken($token);
 		}
 
 		if(!isset($params['fmt'])){
