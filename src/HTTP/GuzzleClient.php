@@ -61,7 +61,7 @@ class GuzzleClient extends HTTPClientAbstract{
 			if(in_array($method, ['PATCH', 'POST', 'PUT', 'DELETE'], true)){
 
 				if(is_scalar($body) || $body instanceof StreamInterface){
-					$options['body'] = $body;
+					$options['body'] = $body; // @codeCoverageIgnore
 				}
 				elseif(in_array($method, ['PATCH', 'POST', 'PUT'], true) && is_array($body)){
 					$options['form_params'] = $body;
