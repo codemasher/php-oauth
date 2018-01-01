@@ -21,18 +21,12 @@ abstract class HTTPClientTestAbstract extends TestCase{
 	const USER_AGENT = 'chillerLAN-php-oauth-test';
 
 	/**
-	 * @var string
-	 */
-	protected $FQCN;
-
-	/**
 	 * @var \chillerlan\OAuth\HTTP\HTTPClientInterface
 	 */
 	protected $http;
 
 	public function testInstance(){
 		$this->assertInstanceOf(HTTPClientInterface::class, $this->http);
-		$this->assertInstanceOf($this->FQCN, $this->http);
 	}
 
 	public function headerDataProvider():array {

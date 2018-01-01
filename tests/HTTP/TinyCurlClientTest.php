@@ -17,10 +17,8 @@ use chillerlan\TinyCurl\{Request, RequestOptions};
 
 class TinyCurlClientTest extends HTTPClientTestAbstract{
 
-	protected $FQCN = TinyCurlClient::class;
-
 	protected function setUp(){
-		$this->http = new $this->FQCN(new Request(new RequestOptions([
+		$this->http = new TinyCurlClient(new Request(new RequestOptions([
 			'ca_info'    => self::CACERT,
 			'user_agent' => self::USER_AGENT,
 		])));

@@ -17,10 +17,8 @@ use chillerlan\TinyCurl\{Request, RequestOptions};
 
 class StreamClientTest extends HTTPClientTestAbstract{
 
-	protected $FQCN = StreamClient::class;
-
 	protected function setUp(){
-		$this->http = new $this->FQCN(self::CACERT, self::USER_AGENT);
+		$this->http = new StreamClient(self::CACERT, self::USER_AGENT);
 	}
 
 	/**
@@ -28,7 +26,7 @@ class StreamClientTest extends HTTPClientTestAbstract{
 	 * @expectedExceptionMessage invalid CA file
 	 */
 	public function testNoCAException(){
-		new $this->FQCN('foo', self::USER_AGENT);
+		new StreamClient('foo', self::USER_AGENT);
 	}
 
 }

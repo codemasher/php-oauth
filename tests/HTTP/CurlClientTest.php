@@ -16,11 +16,9 @@ use chillerlan\OAuth\HTTP\CurlClient;
 
 class CurlClientTest extends HTTPClientTestAbstract{
 
-	protected $FQCN = CurlClient::class;
-
 	protected function setUp(){
 
-		$this->http = new $this->FQCN([
+		$this->http = new CurlClient([
 			CURLOPT_CAINFO => self::CACERT,
 			CURLOPT_USERAGENT => self::USER_AGENT
 		]);
@@ -32,7 +30,7 @@ class CurlClientTest extends HTTPClientTestAbstract{
 	 * @expectedExceptionMessage invalid CA file
 	 */
 	public function testNoCAException(){
-		$this->http = new $this->FQCN([CURLOPT_CAINFO => 'foo']);
+		$this->http = new CurlClient([CURLOPT_CAINFO => 'foo']);
 	}
 
 }

@@ -26,7 +26,7 @@ class GuzzleClientTest extends HTTPClientTestAbstract{
 			'headers' => ['User-Agent' => self::USER_AGENT]
 		]);
 
-		$this->http = new $this->FQCN($client);
+		$this->http = new GuzzleClient($client);
 	}
 
 }
