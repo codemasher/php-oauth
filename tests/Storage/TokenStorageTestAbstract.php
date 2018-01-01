@@ -132,4 +132,16 @@ abstract class TokenStorageTestAbstract extends TestCase{
 		$this->storage->retrieveAccessToken('LOLNOPE');
 	}
 
+	/**
+	 * @runInSeparateProcess
+	 */
+	public function testToStorage(){
+		$a = $this->storage->toStorage($this->token);
+		$b = $this->storage->fromStorage($a);
+
+		$this->assertInternalType('string', $a);
+		$this->assertInstanceOf(Token::class, $b);
+		$this->assertEquals($this->token, $b);
+	}
+
 }
