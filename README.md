@@ -186,8 +186,21 @@ elseif(isset($_GET['granted']) && $_GET['granted'] === $provider->serviceName){
 	echo '<pre>'.print_r($response,true).'</pre>';
 }
 ```
+### Call the Provider's API
+After successfully receiving the Token, we're ready to make API requests:
+```php
+// import a token to the database if needed
+$storage->storeAccessToken('Spotify', $token);
 
-## The built-in API Client
+// make a request
+$response = $provider->request('/some/endpoint', ['q' => 'param'], 'POST', ['data' => 'content'], ['content-type' => 'whatever']);
+
+// use the data
+$headers = $response->headers;
+$data    = $response->json; 
+``` 
+
+### The built-in API Client
 The API client is a very minimal implementation of available endpoints for the given provider, which returns the JSON responses as `\stdClass` object. 
 Please refer to the [provider class docblocks](https://github.com/codemasher/php-oauth/tree/master/src/Providers) for method names and signatures, 
 as well as to [the live API tests](https://github.com/codemasher/php-oauth/tree/master/tests/API) (which are not enabled on Travis) for usage examples.
@@ -262,7 +275,6 @@ class MyOauth2Provider extends Oauth2Provider{
 ```
 
 ### API Clients
-
 The API client is rather a map of endpoints than a huge blob of redundant php code.
 Simply place a `<providername>.json` in [`/src/API`](https://github.com/codemasher/php-oauth/tree/master/src/API), which then will be parsed and checked against.
 
@@ -287,7 +299,6 @@ The JSON for `https://example.com/api/endpoint/:id/subendpoint/:name?param1=foo&
     }
 }
 ```
-
 
 ## API
 ### `OAuthInterface`
