@@ -12,17 +12,15 @@
 
 namespace chillerlan\OAuth\HTTP;
 
+/**
+ * @property resource $http
+ */
 class CurlClient extends HTTPClientAbstract{
 
 	/**
 	 * @var array
 	 */
 	protected $options;
-
-	/**
-	 * @var resource
-	 */
-	protected $curl;
 
 	/**
 	 * @var \stdClass
@@ -42,11 +40,11 @@ class CurlClient extends HTTPClientAbstract{
 			throw new HTTPClientException('invalid CA file');
 		}
 
-		$this->curl = curl_init();
+		$this->http = curl_init();
 
-		curl_setopt_array($this->curl, $curl_options);
+		curl_setopt_array($this->http, $curl_options);
 
-		curl_setopt_array($this->curl, [
+		curl_setopt_array($this->http, [
 			CURLOPT_HEADER         => false,
 			CURLOPT_RETURNTRANSFER => true,
 			CURLOPT_PROTOCOLS      => CURLPROTO_HTTP|CURLPROTO_HTTPS,
@@ -111,9 +109,9 @@ class CurlClient extends HTTPClientAbstract{
 				CURLOPT_HEADERFUNCTION => [$this, 'headerLine'],
 			];
 
-			curl_setopt_array($this->curl, $options);
+			curl_setopt_array($this->http, $options);
 
-			$response = curl_exec($this->curl);
+			$response = curl_exec($this->http);
 
 			return new OAuthResponse([
 				'headers' => $this->responseHeaders,

@@ -14,12 +14,10 @@ namespace chillerlan\OAuth\HTTP;
 
 use chillerlan\TinyCurl\{Request, URL};
 
+/**
+ * @property \chillerlan\TinyCurl\Request $http
+ */
 class TinyCurlClient extends HTTPClientAbstract{
-
-	/**
-	 * @var \chillerlan\TinyCurl\Request
-	 */
-	protected $http;
 
 	/**
 	 * TinyCurlClient constructor.
@@ -50,8 +48,13 @@ class TinyCurlClient extends HTTPClientAbstract{
 				trigger_error('invalid URL');
 			}
 
-			$url      = new URL(explode('?', $url)[0], $params ?? [], $method ?? 'POST', $body, $headers ?? []);
-			$response = $this->http->fetch($url);
+			$response = $this->http->fetch(new URL(
+				explode('?', $url)[0],
+				$params ?? [],
+				$method ?? 'POST',
+				$body,
+				$headers ?? []
+			));
 
 			return new OAuthResponse([
 				'headers' => $response->headers,

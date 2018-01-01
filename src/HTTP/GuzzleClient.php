@@ -15,12 +15,10 @@ namespace chillerlan\OAuth\HTTP;
 use GuzzleHttp\Client;
 use Psr\Http\Message\StreamInterface;
 
+/**
+ * @property \GuzzleHttp\Client $http
+ */
 class GuzzleClient extends HTTPClientAbstract{
-
-	/**
-	 * @var \GuzzleHttp\Client
-	 */
-	protected $http;
 
 	/**
 	 * GuzzleClient constructor.
