@@ -13,7 +13,7 @@
 namespace chillerlan\OAuthTest\Storage;
 
 use chillerlan\Database\{
-	Connection, Drivers\PDO\PDOMySQLDriver, Options, Query\Dialects\MySQLQueryBuilder
+	Connection, Drivers\Native\MySQLiDriver, Drivers\PDO\PDOMySQLDriver, Options, Query\Dialects\MySQLQueryBuilder
 };
 use chillerlan\OAuth\{
 	OAuthOptions, Token
@@ -47,7 +47,7 @@ class TestDBStorage extends TokenStorageAbstract{
 		$env = (new DotEnv(self::CFGDIR, file_exists(self::CFGDIR.'/.env') ? '.env' : '.env_travis'))->load();
 
 		$db = new Connection(new Options([
-			'driver'       => PDOMySQLDriver::class,
+			'driver'       => MySQLiDriver::class,
 			'querybuilder' => MySQLQueryBuilder::class,
 			'host'         => $env->get('MYSQL_HOST'),
 			'port'         => $env->get('MYSQL_PORT'),
