@@ -21,4 +21,8 @@ class MusicBrainzTest extends OAuth2Test{
 
 	protected $FQCN = MusicBrainz::class;
 
+	public function testRequestInvalidAuthType(){
+		$this->markTestSkipped('N/A');
+	}
+
 }

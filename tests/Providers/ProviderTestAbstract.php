@@ -13,21 +13,12 @@
 namespace chillerlan\OAuthTest\Providers;
 
 use chillerlan\OAuth\{
-	HTTP\HTTPClientAbstract,
-	HTTP\OAuthResponse,
-	OAuthOptions,
-	Providers\OAuthInterface,
-	Storage\MemoryTokenStorage,
-	Storage\TokenStorageInterface,
-	Token
+	HTTP\HTTPClientAbstract, HTTP\HTTPClientInterface, HTTP\OAuthResponse, OAuthOptions, Providers\OAuthInterface, Storage\MemoryTokenStorage, Storage\TokenStorageInterface, Token
 };
 use PHPUnit\Framework\TestCase;
 use ReflectionClass, ReflectionMethod, ReflectionProperty;
 
 abstract class ProviderTestAbstract extends TestCase{
-
-	const HOST      = 'http://localhost';
-	const BASE_PATH = '/php-oauth/tests/web'; // @todo Travis reminder
 
 	/**
 	 * @var string
@@ -38,11 +29,6 @@ abstract class ProviderTestAbstract extends TestCase{
 	 * @var \ReflectionClass
 	 */
 	protected $reflection;
-
-	/**
-	 * @var \chillerlan\OAuth\HTTP\HTTPClientInterface
-	 */
-	protected $http;
 
 	/**
 	 * @var \chillerlan\OAuth\Storage\TokenStorageInterface
@@ -61,24 +47,20 @@ abstract class ProviderTestAbstract extends TestCase{
 
 	protected function setUp(){
 
-		$this->http = new class extends HTTPClientAbstract{
-			public function request(string $url, array $params = null, string $method = null, $body = null, array $headers = null):OAuthResponse{
-				return new OAuthResponse;
-			}
-		};
-
 		$this->options  = new OAuthOptions([
 			'key'         => 'testkey',
 			'secret'      => 'testsecret',
-			'callbackURL' => self::HOST.self::BASE_PATH.'/callback',
+			'callbackURL' => 'https://localhost/callback',
 		]);
 
 		$this->storage    = new MemoryTokenStorage;
 		$this->reflection = new ReflectionClass($this->FQCN);
 
-		$this->provider = $this->reflection->newInstanceArgs([$this->http, $this->storage, $this->options]);
+		$this->provider = $this->reflection->newInstanceArgs([$this->initHttp(), $this->storage, $this->options]);
 		$this->storage->storeAccessToken($this->provider->serviceName, new Token(['accessToken' => 'foo']));
 	}
+
+	abstract protected function initHttp():HTTPClientInterface;
 
 	/**
 	 * @param string $method
@@ -123,7 +105,7 @@ abstract class ProviderTestAbstract extends TestCase{
 	 * @param string $path
 	 */
 	protected function setURL(string $prop, string $path){
-		$this->setProperty($this->provider, $prop, self::HOST.self::BASE_PATH.$path);
+		$this->setProperty($this->provider, $prop, $path);
 	}
 
 	/**

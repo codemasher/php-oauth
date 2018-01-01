@@ -12,12 +12,38 @@
 
 namespace chillerlan\OAuthTest\Providers;
 
-use chillerlan\OAuth\{HTTP\OAuthResponse, Token};
+use chillerlan\OAuth\{
+	HTTP\HTTPClientInterface, HTTP\HTTPClientAbstract, HTTP\OAuthResponse, Token
+};
 
 /**
  * @property \chillerlan\OAuth\Providers\OAuth1Interface $provider
  */
 abstract class OAuth1Test extends ProviderTestAbstract{
+
+	const OAUTH1_RESPONSES = [
+		'https://localhost/oauth1/request_token' => 'oauth_token=test_request_token&oauth_token_secret=test_request_token_secret&oauth_callback_confirmed=true',
+		'https://localhost/oauth1/access_token' => 'oauth_token=test_access_token&oauth_token_secret=test_access_token_secret&oauth_callback_confirmed=true',
+		'https://localhost/oauth1/api/request' => '{"data":"such data! much wow!"}',
+	];
+
+
+	protected function setUp(){
+		parent::setUp();
+
+		$this->setProperty($this->provider, 'requestTokenURL', 'https://localhost/oauth1/request_token');
+		$this->setProperty($this->provider, 'accessTokenURL', 'https://localhost/oauth1/access_token');
+		$this->setProperty($this->provider, 'apiURL', 'https://localhost/oauth1/api/request');
+
+	}
+
+	protected function initHttp():HTTPClientInterface{
+		return new class extends HTTPClientAbstract{
+			public function request(string $url, array $params = null, string $method = null, $body = null, array $headers = null):OAuthResponse{
+				return new OAuthResponse(['body' => OAuth1Test::OAUTH1_RESPONSES[$url]]);
+			}
+		};
+	}
 
 	public function testParseTokenResponse(){
 		$token = $this
@@ -70,13 +96,11 @@ abstract class OAuth1Test extends ProviderTestAbstract{
 	}
 
 	public function testGetRequestTokenHeaderParams(){
-		$this->setURL('requestTokenURL', '/oauth1/request_token');
-
 		$params = $this
 			->getMethod('getRequestTokenHeaderParams')
 			->invoke($this->provider);
 
-		$this->assertSame(self::HOST.self::BASE_PATH.'/callback', $params['oauth_callback']);
+		$this->assertSame('https://localhost/callback', $params['oauth_callback']);
 		$this->assertSame($this->options->key, $params['oauth_consumer_key']);
 		$this->assertRegExp('/^([a-f\d]{64})$/', $params['oauth_nonce']);
 	}
@@ -90,8 +114,6 @@ abstract class OAuth1Test extends ProviderTestAbstract{
 	}
 
 	public function testGetAccessTokenHeaders(){
-		$this->setURL('accessTokenURL', '/oauth1/request_token');
-
 		$headers = $this
 			->getMethod('getAccessTokenHeaders')
 			->invokeArgs($this->provider, [['foo' => 'bar']]);
@@ -123,6 +145,29 @@ abstract class OAuth1Test extends ProviderTestAbstract{
 		$this
 			->getMethod('getSignature')
 			->invokeArgs($this->provider, ['whatever', [], 'GET']);
+	}
+
+	public function testGetAuthURL(){
+		parse_str(parse_url($this->provider->getAuthURL(), PHP_URL_QUERY), $query);
+
+		$this->assertSame('test_request_token', $query['oauth_token']);
+	}
+
+	public function testGetAccessToken(){
+		$this->storeToken(new Token(['requestTokenSecret' => 'test_request_token_secret']));
+
+		$token = $this->provider->getAccessToken('test_request_token', 'verifier');
+
+		$this->assertSame('test_access_token', $token->accessToken);
+		$this->assertSame('test_access_token_secret', $token->accessTokenSecret);
+	}
+
+	public function testRequest(){
+		$this->storeToken(new Token(['requestTokenSecret' => 'test_request_token_secret']));
+
+		$response = $this->provider->request('');
+
+		$this->assertSame('such data! much wow!', $response->json->data);
 	}
 
 }

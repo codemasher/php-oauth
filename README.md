@@ -344,7 +344,7 @@ method | return
 `clearAuthorizationState(string $service)` | `TokenStorageInterface`
 `clearAllAuthorizationStates()` | `TokenStorageInterface`
 
-### `Token`
+### [`Token`](https://github.com/codemasher/php-oauth/tree/master/src/Token.php)
 method | return | description
 ------ | ------ | -----------
 `__construct(array $properties = null)` | - | 
@@ -363,7 +363,7 @@ property | type | default | allowed | description
 `$extraParams` | array | `[]` |  | 
 `$expires` | int | `Token::EOL_UNKNOWN` |  | 
 
-### [`OAuthOptions`](https://github.com/codemasher/php-oauth/tree/master/src/OAuthOptions.php) properties
+### [`OAuthOptions`](https://github.com/codemasher/php-oauth/tree/master/src/OAuthOptions.php)
 property | type | default | allowed | description
 -------- | ---- | ------- | ------- | -----------
 `$key` | string | - | * | the client id from your OAuth provider

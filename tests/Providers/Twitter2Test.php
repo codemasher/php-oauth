@@ -49,4 +49,8 @@ class Twitter2Test extends OAuth2Test{
 		$this->provider->getAccessToken('foo');
 	}
 
+	public function testGetAccessToken(){
+		$this->markTestSkipped('N/A');
+	}
+
 }

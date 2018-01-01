@@ -13,7 +13,7 @@
 namespace chillerlan\OAuthTest\Providers;
 
 use chillerlan\OAuth\{
-	HTTP\OAuthResponse, Providers\LastFM
+	HTTP\HTTPClientInterface, HTTP\HTTPClientAbstract, HTTP\OAuthResponse, Providers\LastFM
 };
 
 /**
@@ -21,7 +21,24 @@ use chillerlan\OAuth\{
  */
 class LastFMTest extends ProviderTestAbstract{
 
+	const LASTFM_RESPONSES = [
+		'https://localhost/lastfm/auth' => [
+			'session' => ['key' => 'session_key'],
+		],
+		'https://localhost/lastfm/api/request' => [
+			'data' => 'such data! much wow!',
+		],
+	];
+
 	protected $FQCN = LastFM::class;
+
+	protected function initHttp():HTTPClientInterface{
+		return new class extends HTTPClientAbstract{
+			public function request(string $url, array $params = null, string $method = null, $body = null, array $headers = null):OAuthResponse{
+				return new OAuthResponse(['body' => json_encode(LastFMTest::LASTFM_RESPONSES[$url])]);
+			}
+		};
+	}
 
 	public function testGetAuthURL(){
 		$url = $this->provider->getAuthURL(['foo' => 'bar']);
@@ -94,5 +111,22 @@ class LastFMTest extends ProviderTestAbstract{
 		$this->assertSame('whatever', $params['method']);
 		$this->assertSame('bar', $params['foo']);
 	}
+
+	public function testGetAccessToken(){
+		$this->setProperty($this->provider, 'apiURL', 'https://localhost/lastfm/auth');
+
+		$token = $this->provider->getAccessToken('session_token');
+
+		$this->assertSame('session_key', $token->accessToken);
+	}
+
+	public function testRequest(){
+		$this->setProperty($this->provider, 'apiURL', 'https://localhost/lastfm/api/request');
+
+		$response = $this->provider->request('');
+
+		$this->assertSame('such data! much wow!', $response->json->data);
+	}
+
 
 }

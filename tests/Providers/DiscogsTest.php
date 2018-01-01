@@ -22,13 +22,13 @@ class DiscogsTest extends OAuth1Test{
 	protected $FQCN = Discogs::class;
 
 	public function testGetRequestTokenHeaderParams(){
-		$this->setURL('requestTokenURL', '/oauth1/request_token');
+		$this->setProperty($this->provider, 'requestTokenURL', '/oauth1/request_token');
 
 		$params = $this
 			->getMethod('getRequestTokenHeaderParams')
 			->invoke($this->provider);
 
-		$this->assertSame(self::HOST.self::BASE_PATH.'/callback', $params['oauth_callback']);
+		$this->assertSame('https://localhost/callback', $params['oauth_callback']);
 		$this->assertSame($this->options->key, $params['oauth_consumer_key']);
 		$this->assertRegExp('/^([a-f\d]{64})$/', $params['oauth_nonce']);
 		$this->assertSame('PLAINTEXT', $params['oauth_signature_method']);
