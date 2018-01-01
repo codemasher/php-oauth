@@ -5,12 +5,9 @@ php:
   - 7.1
   - 7.2
 
-services:
-  - mysql
+before_install: travis_retry composer install --no-interaction --prefer-source
 
-install: travis_retry composer install --no-interaction --prefer-source
-
-before_script:
+install:
   - mysql -e 'create database dbtest;'
   - php cli/dbstorage_create.php
 
