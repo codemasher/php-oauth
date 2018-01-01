@@ -13,6 +13,7 @@
 namespace chillerlan\OAuth\Providers;
 
 use DateTime;
+use chillerlan\OAuth\HTTP\OAuthResponse;
 
 /**
  * @link https://www.discogs.com/developers/
@@ -90,6 +91,23 @@ class Discogs extends OAuth1Provider{
 			'oauth_signature_method' => 'PLAINTEXT',
 			'oauth_timestamp'        => (new DateTime())->format('U'),
 		];
+	}
+
+	/**
+	 * @inheritdoc
+	 */
+	public function request(string $path, array $params = null, string $method = null, $body = null, array $headers = null):OAuthResponse{
+		$method = $method ?? 'GET';
+
+		$headers = $this->requestHeaders(
+			$this->apiURL.$path,
+			$params ?? [],
+			$method,
+			$headers,
+			$this->storage->retrieveAccessToken($this->serviceName)
+		);
+
+		return $this->http->request($this->apiURL.$path, $params, $method, $body, $headers);
 	}
 
 }
