@@ -85,4 +85,18 @@ interface TokenStorageInterface{
 	 */
 	public function clearAllAuthorizationStates():TokenStorageInterface;
 
+	/**
+	 * @param \chillerlan\OAuth\Token $token
+	 *
+	 * @return string
+	 */
+	public function toStorage(Token $token):string;
+
+	/**
+	 * @param string $data
+	 *
+	 * @return \chillerlan\OAuth\Token
+	 */
+	public function fromStorage(string $data):Token;
+
 }
