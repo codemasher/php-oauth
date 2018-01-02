@@ -71,18 +71,25 @@ abstract class HTTPClientTestAbstract extends TestCase{
 	public function testRequest(string $method, array $extra_headers){
 
 		// @todo httpbin times out on a regular basis... a more reliable service, anyone?
-		$response = $this->http->request(
-			'https://httpbin.org/'.$method,
-			['foo' => 'bar'],
-			$method,
-			['huh' => 'wtf'],
-			['what' => 'nope'] + $extra_headers
-		);
+		$r = null;
 
-		$r = $response->json;
+		try{
+			$response = $this->http->request(
+				'https://httpbin.org/'.$method,
+				['foo' => 'bar'],
+				$method,
+				['huh' => 'wtf'],
+				['what' => 'nope'] + $extra_headers
+			);
+
+			$r = $response->json;
+		}
+		catch(\Exception $e){
+			$this->markTestSkipped('httpbin.org timeout... '.$e->getMessage());
+		}
 
 		if(!$r){
-			$this->markTestSkipped('httpbin.org timeout...');
+			$this->markTestSkipped('empty response');
 		}
 		else{
 			$this->assertSame('https://httpbin.org/'.$method.'?foo=bar', $r->url);
