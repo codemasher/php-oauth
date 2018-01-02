@@ -17,7 +17,7 @@ $db = null;
 
 require_once __DIR__.'/bootstrap_cli.php';
 
-createTable($db, TABLE_TOKEN, TABLE_PROVIDER);
+return createTable($db, TABLE_TOKEN, TABLE_PROVIDER);
 
 /**
  * @param \chillerlan\Database\Connection $db
@@ -86,6 +86,8 @@ function createTable(Connection $db, string $token_table, string $provider_table
 			->values(['provider_id' => $i, 'servicename' => $provider])
 			->execute();
 	}
+
+	echo PHP_EOL.'created tables: "'.$token_table.'" and "'.$provider_table.'"'.PHP_EOL;
 
 	return true;
 }
