@@ -226,7 +226,7 @@ $provider->endpointIdSubendpointName($id, $name, ['param1' => 'foo', 'param2' =>
 In order to use a provider, http client or storage, that is not yet supported, you'll need to implement the respective interfaces:
 
 ### [`HTTPClientInterface`](https://github.com/codemasher/php-oauth/tree/master/src/HTTP/HTTPClientInterface.php)
-There's already a Guzzle client - what else do you need? :wink: Just extend `HTTPClientAbstract`!
+There's already a Guzzle client - what else do you need? :wink: Just extend `HTTPClientAbstract`! Have a look at the [built-in clients](https://github.com/codemasher/php-oauth/tree/master/tests/HTTP) and the [test http client](https://github.com/codemasher/php-oauth/blob/master/tests/API/APITestAbstract.php#L127-L161).
 
 ### [`TokenStorageInterface`](https://github.com/codemasher/php-oauth/tree/master/src/Storage/TokenStorageInterface.php)
 There are currently 3 different `TokenStorageInterface`, refer to these for implementation details (extend `TokenStorageAbstract`):
