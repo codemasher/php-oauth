@@ -135,7 +135,7 @@ abstract class TokenStorageTestAbstract extends TestCase{
 	 */
 	public function testMissingSodiumExtension(){
 
-		if(PHP_MINOR_VERSION >= 2 && function_exists('sodium_crypto_secretbox')){
+		if((PHP_MINOR_VERSION >= 2 && function_exists('sodium_crypto_secretbox')) || function_exists('\\Sodium\\crypto_secretbox')){
 			$this->markTestSkipped('soduim enabled');
 		}
 
