@@ -18,6 +18,7 @@ use chillerlan\Traits\Container;
  * @property string     $key
  * @property string     $secret
  * @property string     $callbackURL
+ * @property bool       $sandboxMode
  * @property bool       $sessionStart
  * @property string     $sessionTokenVar
  * @property string     $sessionStateVar
@@ -58,6 +59,11 @@ class OAuthOptions{
 	 * @var string
 	 */
 	protected $callbackURL;
+
+	/**
+	 * @var bool
+	 */
+	protected $sandboxMode = false;
 
 	/**
 	 * @var bool
