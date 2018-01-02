@@ -7,10 +7,13 @@ php:
 
 env:
   global:
-    - setup=sodium_pecl
+    - setup=no_encryption
 
 matrix:
   include:
+    - php: 7.0
+    - php: 7.1
+      env: setup=sodium_pecl
     - php: 7.2
       env: setup=sodium_ext
 
