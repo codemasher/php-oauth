@@ -26,20 +26,16 @@ before_install:
       sudo apt-get install -y build-essential;
       git clone -b stable https://github.com/jedisct1/libsodium.git;
       cd libsodium && sudo ./configure && sudo make check && sudo make install && cd ..;
+      pecl install libsodium;
     fi
 
 install:
   - travis_retry composer install --no-interaction --prefer-source
   - mysql -e 'create database dbtest;'
   - php cli/dbstorage_create.php
-  - |
-  if [[ $setup = 'sodium_pecl' ]]; then
-    pecl install libsodium;
-  elif [[ $setup = 'sodium_ext' ]]; then
-# disabling sodium extension for now, until the PHP7.2 build is fixed.
-# see https://github.com/travis-ci/travis-ci/issues/8863
-#    echo "extension=sodium" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini;
-  fi
+    # disabling sodium extension for now, until the PHP7.2 build is fixed.
+    # see https://github.com/travis-ci/travis-ci/issues/8863
+#  - if [[ $setup = 'sodium_ext' ]]; then echo "extension=sodium" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini; fi
 
 script:
   - vendor/bin/phpunit --configuration phpunit.xml --coverage-clover clover.xml
