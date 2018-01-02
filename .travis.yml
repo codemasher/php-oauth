@@ -36,7 +36,9 @@ install:
   if [[ $setup = 'sodium_pecl' ]]; then
     pecl install libsodium;
   elif [[ $setup = 'sodium_ext' ]]; then
-       echo "extension=sodium" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini;
+# disabling sodium extension for now, until the PHP7.2 build is fixed.
+# see https://github.com/travis-ci/travis-ci/issues/8863
+#    echo "extension=sodium" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini;
   fi
 
 script:
