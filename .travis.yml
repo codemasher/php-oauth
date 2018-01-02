@@ -5,11 +5,37 @@ php:
   - 7.1
   - 7.2
 
-before_install: travis_retry composer install --no-interaction --prefer-source
+env:
+  global:
+    - setup=sodium_pecl
+
+matrix:
+  include:
+    - php: 7.2
+      env: setup=sodium_ext
+
+mysql:
+  database: dbtest
+  username: root
+  encoding: utf8
+
+before_install:
+  - |
+    if [[ $setup = 'sodium_pecl' ]]; then
+      sudo apt-get update -qq;
+      sudo apt-get install -y build-essential;
+      git clone -b stable https://github.com/jedisct1/libsodium.git;
+      cd libsodium && sudo ./configure && sudo make check && sudo make install && cd ..;
+      echo "extension=sodium.so" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini;
+    elif [[ $setup = 'sodium_ext' ]]; then
+       echo "extension=sodium" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini;
+    fi
 
 install:
+  - travis_retry composer install --no-interaction --prefer-source
   - mysql -e 'create database dbtest;'
   - php cli/dbstorage_create.php
+  - if [[ $setup = 'sodium_pecl' ]]; then pecl install libsodium; fi
 
 script:
   - vendor/bin/phpunit --configuration phpunit.xml --coverage-clover clover.xml
