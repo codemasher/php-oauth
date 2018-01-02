@@ -84,7 +84,6 @@ class DBTest extends TokenStorageTestAbstract{
 
 	/**
 	 * coverage
-	 * @runInSeparateProcess
 	 */
 	public function testTokenUpdate(){
 		$this->storage->storeAccessToken(self::SERVICE_NAME, $this->token);

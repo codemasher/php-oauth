@@ -25,6 +25,61 @@ class SessionTest extends TokenStorageTestAbstract{
 	}
 
 	/**
+	 * @runInSeparateProcess
+	 */
+	public function testInterface(){
+		parent::testInterface();
+	}
+
+	/**
+	 * @runInSeparateProcess
+	 */
+	public function testTokenStorage(){
+		parent::testTokenStorage();
+	}
+
+	/**
+	 * @runInSeparateProcess
+	 */
+	public function testClearAllAccessTokens(){
+		parent::testClearAllAccessTokens();
+	}
+
+	/**
+	 * @runInSeparateProcess
+	 * @expectedException \chillerlan\OAuth\Storage\TokenStorageException
+	 * @expectedExceptionMessage state not found
+	 */
+	public function testRetrieveAuthorizationStateNotFoundException(){
+		parent::testRetrieveAuthorizationStateNotFoundException();
+	}
+
+	/**
+	 * @runInSeparateProcess
+	 * @expectedException \chillerlan\OAuth\Storage\TokenStorageException
+	 * @expectedExceptionMessage token not found
+	 */
+	public function testRetrieveAccessTokenNotFoundException(){
+		parent::testRetrieveAccessTokenNotFoundException();
+	}
+
+	/**
+	 * @runInSeparateProcess
+	 */
+	public function testToStorage(){
+		parent::testToStorage();
+	}
+
+	/**
+	 * @runInSeparateProcess
+	 * @expectedException \chillerlan\OAuth\Storage\TokenStorageException
+	 * @expectedExceptionMessage sodium extension installed/enabled?
+	 */
+	public function testMissingSodiumExtension(){
+		parent::testMissingSodiumExtension();
+	}
+
+	/**
 	 * coverage
 	 *
 	 * @runInSeparateProcess

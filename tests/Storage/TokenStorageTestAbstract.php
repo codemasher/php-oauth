@@ -54,16 +54,10 @@ abstract class TokenStorageTestAbstract extends TestCase{
 
 	abstract protected function initStorage():TokenStorageInterface;
 
-	/**
-	 * @runInSeparateProcess
-	 */
 	public function testInterface(){
 		$this->assertInstanceOf(TokenStorageInterface::class, $this->storage);
 	}
 
-	/**
-	 * @runInSeparateProcess
-	 */
 	public function testTokenStorage(){
 		$this->storage->storeAccessToken(self::SERVICE_NAME, $this->token);
 		$this->assertTrue($this->storage->hasAccessToken(self::SERVICE_NAME));
@@ -80,9 +74,6 @@ abstract class TokenStorageTestAbstract extends TestCase{
 		$this->assertFalse($this->storage->hasAccessToken(self::SERVICE_NAME));
 	}
 
-	/**
-	 * @runInSeparateProcess
-	 */
 	public function testClearAllAccessTokens(){
 		$range = ['Spotify', 'LastFM', 'Twitter'];
 		$this->storage->clearAllAccessTokens();
@@ -114,7 +105,6 @@ abstract class TokenStorageTestAbstract extends TestCase{
 	}
 
 	/**
-	 * @runInSeparateProcess
 	 * @expectedException \chillerlan\OAuth\Storage\TokenStorageException
 	 * @expectedExceptionMessage state not found
 	 */
@@ -123,7 +113,6 @@ abstract class TokenStorageTestAbstract extends TestCase{
 	}
 
 	/**
-	 * @runInSeparateProcess
 	 * @expectedException \chillerlan\OAuth\Storage\TokenStorageException
 	 * @expectedExceptionMessage token not found
 	 */
@@ -131,9 +120,6 @@ abstract class TokenStorageTestAbstract extends TestCase{
 		$this->storage->retrieveAccessToken('LOLNOPE');
 	}
 
-	/**
-	 * @runInSeparateProcess
-	 */
 	public function testToStorage(){
 		$a = $this->storage->toStorage($this->token);
 		$b = $this->storage->fromStorage($a);
@@ -144,7 +130,6 @@ abstract class TokenStorageTestAbstract extends TestCase{
 	}
 
 	/**
-	 * @runInSeparateProcess
 	 * @expectedException \chillerlan\OAuth\Storage\TokenStorageException
 	 * @expectedExceptionMessage sodium extension installed/enabled?
 	 */
