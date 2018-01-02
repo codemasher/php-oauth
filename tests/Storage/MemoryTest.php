@@ -19,8 +19,8 @@ use chillerlan\OAuth\Storage\TokenStorageInterface;
  */
 class MemoryTest extends TokenStorageTestAbstract{
 
-	protected function initStorage():TokenStorageInterface{
-		return new MemoryTokenStorage($this->options);
+	protected function initStorage($options):TokenStorageInterface{
+		return new MemoryTokenStorage($options);
 	}
 
 }

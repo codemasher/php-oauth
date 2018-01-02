@@ -49,10 +49,10 @@ abstract class TokenStorageTestAbstract extends TestCase{
 		]);
 
 		$this->token   = new Token(['accessToken' => 'foobar']);
-		$this->storage = $this->initStorage();
+		$this->storage = $this->initStorage($this->options);
 	}
 
-	abstract protected function initStorage():TokenStorageInterface;
+	abstract protected function initStorage($options):TokenStorageInterface;
 
 	public function testInterface(){
 		$this->assertInstanceOf(TokenStorageInterface::class, $this->storage);
@@ -134,13 +134,14 @@ abstract class TokenStorageTestAbstract extends TestCase{
 	 * @expectedExceptionMessage sodium extension installed/enabled?
 	 */
 	public function testMissingSodiumExtension(){
+		$this->options->useEncryption = true;
 
-		if((PHP_MINOR_VERSION >= 2 && function_exists('sodium_crypto_secretbox')) || function_exists('\\Sodium\\crypto_secretbox')){
+		if(function_exists('sodium_crypto_secretbox') || function_exists('\\Sodium\\crypto_secretbox')){
 			$this->markTestSkipped('soduim enabled');
 		}
 
-		$this->options->useEncryption = true;
-		$this->initStorage();
+
+		$this->initStorage($this->options);
 	}
 
 }

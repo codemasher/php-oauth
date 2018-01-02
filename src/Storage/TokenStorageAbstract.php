@@ -32,7 +32,7 @@ abstract class TokenStorageAbstract implements TokenStorageInterface{
 		// https://github.com/travis-ci/travis-ci/issues/8863
 		if(
 			$this->options->useEncryption === true &&
-		   ((PHP_MINOR_VERSION >= 2 && !function_exists('sodium_crypto_secretbox')) || function_exists('\\Sodium\\crypto_secretbox'))
+		   (!function_exists('sodium_crypto_secretbox') || function_exists('\\Sodium\\crypto_secretbox'))
 		){
 			throw new TokenStorageException('sodium extension installed/enabled?');
 		}

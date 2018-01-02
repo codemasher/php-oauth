@@ -61,8 +61,8 @@ class DBTest extends TokenStorageTestAbstract{
 		parent::setUp();
 	}
 
-	protected function initStorage():TokenStorageInterface{
-		return new DBTokenStorage($this->options, $this->db);
+	protected function initStorage($options):TokenStorageInterface{
+		return new DBTokenStorage($options, $this->db);
 	}
 
 	/**
@@ -71,7 +71,7 @@ class DBTest extends TokenStorageTestAbstract{
 	 */
 	public function testInvalidTable(){
 		$this->options->dbTokenTable = '';
-		$this->initStorage();
+		$this->initStorage($this->options);
 	}
 
 	/**

@@ -20,8 +20,8 @@ use chillerlan\OAuth\{
  */
 class SessionTest extends TokenStorageTestAbstract{
 
-	protected function initStorage():TokenStorageInterface{
-		return new SessionTokenStorage($this->options);
+	protected function initStorage($options):TokenStorageInterface{
+		return new SessionTokenStorage($options);
 	}
 
 	/**
