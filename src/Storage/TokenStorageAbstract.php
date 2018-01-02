@@ -25,15 +25,14 @@ abstract class TokenStorageAbstract implements TokenStorageInterface{
 	 * TokenStorageAbstract constructor.
 	 *
 	 * @param \chillerlan\OAuth\OAuthOptions|null $options
+	 *
+	 * @throws \chillerlan\OAuth\Storage\TokenStorageException
 	 */
 	public function __construct(OAuthOptions $options = null){
 		$this->options = $options ?? new OAuthOptions;
 
 		// https://github.com/travis-ci/travis-ci/issues/8863
-		if(
-			$this->options->useEncryption === true &&
-		   (!function_exists('sodium_crypto_secretbox') || function_exists('\\Sodium\\crypto_secretbox'))
-		){
+		if($this->options->useEncryption === true && !function_exists('sodium_crypto_secretbox') && !function_exists('\\Sodium\\crypto_secretbox')){
 			throw new TokenStorageException('sodium extension installed/enabled?');
 		}
 
