@@ -32,7 +32,7 @@ abstract class TokenStorageAbstract implements TokenStorageInterface{
 		$this->options = $options ?? new OAuthOptions;
 
 		// https://github.com/travis-ci/travis-ci/issues/8863
-		if($this->options->useEncryption === true && extension_loaded('sodium')){
+		if($this->options->useEncryption === true && !extension_loaded('sodium')){
 			throw new TokenStorageException('sodium extension installed/enabled?');
 		}
 
