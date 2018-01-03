@@ -8,7 +8,6 @@ php:
   - 7.0
   - 7.1
   - 7.2
-  - hhvm
 
 matrix:
   include:
@@ -18,10 +17,6 @@ matrix:
       env: setup=sodium_pecl
     - php: 7.2
       env: setup=sodium_ext
-    - php: hhvm
-      env: setup=hhvm
-  allow_failures:
-    - php: hhvm
 
 mysql:
   database: dbtest
@@ -44,21 +39,10 @@ before_install:
 #      echo "extension=sodium" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini;
 
 install:
-  - |
-    if [[ $setup = 'no_encryption' ]]; then
-      travis_retry composer install --no-interaction --prefer-source;
-    elif [[ $setup = 'sodium_pecl' ]]; then
-      travis_retry composer install --no-interaction --prefer-source;
-    elif [[ $setup = 'sodium_ext' ]]; then 
-      travis_retry composer install --no-interaction --prefer-source;
-    elif [[ $setup = 'hhvm' ]]; then
-      travis_retry composer install --no-interaction --prefer-source --ignore-platform-reqs;
-    fi
+  - travis_retry composer install --no-interaction --prefer-source
   - mysql -e 'create database dbtest;'
   - php cli/dbstorage_create.php
 
-script:
-  - vendor/bin/phpunit --configuration phpunit.xml --coverage-clover clover.xml
+script: vendor/bin/phpunit --configuration phpunit.xml --coverage-clover clover.xml
 
-after_success:
-  - bash <(curl -s https://codecov.io/bash)
+after_success: bash <(curl -s https://codecov.io/bash)
