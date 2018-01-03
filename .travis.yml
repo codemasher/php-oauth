@@ -42,17 +42,11 @@ before_install:
 install:
   - mysql -e 'create database dbtest;'
   - php cli/dbstorage_create.php
-  - |
-    if [[ $setup = 'sodium_pecl' ]]; then
-      travis_retry composer install --no-interaction --prefer-source;
-    elif [[ $setup = 'sodium_ext' ]]; then
-# disabling sodium extension for now, until the PHP7.2 build is fixed.
-# see https://github.com/travis-ci/travis-ci/issues/8863
-#      echo "extension=sodium" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini;
-      travis_retry composer install --no-interaction --prefer-source;
-    elif [[ $setup = 'hhvm' ]]; then
-      travis_retry composer install --no-interaction --prefer-source --ignore-platform-reqs;
-    fi
+  - if [[ $setup = 'sodium_pecl' ]]; then travis_retry composer install --no-interaction --prefer-source; fi
+  # disabling sodium extension for now, until the PHP7.2 build is fixed.
+  # see https://github.com/travis-ci/travis-ci/issues/8863
+  - if [[ $setup = 'sodium_ext' ]]; then travis_retry composer install --no-interaction --prefer-source;
+  - if [[ $setup = 'hhvm' ]]; then travis_retry composer install --no-interaction --prefer-source --ignore-platform-reqs; fi
 
 script:
   - vendor/bin/phpunit --configuration phpunit.xml --coverage-clover clover.xml
