@@ -1,14 +1,14 @@
 language: php
 
+env:
+  global:
+    - setup=no_encryption
+
 php:
   - 7.0
   - 7.1
   - 7.2
   - hhvm
-
-env:
-  global:
-    - setup=no_encryption
 
 matrix:
   include:
@@ -20,6 +20,7 @@ matrix:
       env: setup=sodium_ext
   allow_failures:
     - php: hhvm
+      env: setup=hhvm
 
 mysql:
   database: dbtest
@@ -34,15 +35,24 @@ before_install:
       git clone -b stable https://github.com/jedisct1/libsodium.git;
       cd libsodium && sudo ./configure && sudo make check && sudo make install && cd ..;
       pecl install libsodium;
+    elif [[ $setup = 'sodium_ext' ]]; then
+      echo "extension=sodium" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini;
     fi
 
 install:
-  - travis_retry composer install --no-interaction --prefer-source
   - mysql -e 'create database dbtest;'
   - php cli/dbstorage_create.php
-    # disabling sodium extension for now, until the PHP7.2 build is fixed.
-    # see https://github.com/travis-ci/travis-ci/issues/8863
-#  - if [[ $setup = 'sodium_ext' ]]; then echo "extension=sodium" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini; fi
+  - |
+    if [[ $setup = 'sodium_pecl' ]]; then
+      travis_retry composer install --no-interaction --prefer-source;
+    elif [[ $setup = 'sodium_ext' ]]; then
+# disabling sodium extension for now, until the PHP7.2 build is fixed.
+# see https://github.com/travis-ci/travis-ci/issues/8863
+#      echo "extension=sodium" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini;
+      travis_retry composer install --no-interaction --prefer-source;
+    elif [[ $setup = 'hhvm' ]]; then
+      travis_retry composer install --no-interaction --prefer-source --ignore-platform-reqs;
+    fi
 
 script:
   - vendor/bin/phpunit --configuration phpunit.xml --coverage-clover clover.xml
