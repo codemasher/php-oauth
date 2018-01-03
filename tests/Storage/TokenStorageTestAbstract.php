@@ -136,10 +136,9 @@ abstract class TokenStorageTestAbstract extends TestCase{
 	public function testMissingSodiumExtension(){
 		$this->options->useEncryption = true;
 
-		if(function_exists('sodium_crypto_secretbox') || function_exists('\\Sodium\\crypto_secretbox')){
+		if(extension_loaded('sodium')){
 			$this->markTestSkipped('soduim enabled');
 		}
-
 
 		$this->initStorage($this->options);
 	}

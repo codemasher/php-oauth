@@ -128,9 +128,7 @@ class OAuthOptions{
 	 */
 	public function __construct(array $properties = null){
 		// enable encryption by default if possible...
-		$this->useEncryption =
-			(PHP_MINOR_VERSION >= 2 && function_exists('sodium_crypto_secretbox')) // PHP 7.2 native
-			|| function_exists('\\Sodium\\crypto_secretbox'); // libsodium pecl
+		$this->useEncryption = extension_loaded('sodium');
 
 		// ... then load and override the settings
 		$this->containerConstruct($properties);

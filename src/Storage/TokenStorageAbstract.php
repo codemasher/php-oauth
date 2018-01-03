@@ -32,7 +32,7 @@ abstract class TokenStorageAbstract implements TokenStorageInterface{
 		$this->options = $options ?? new OAuthOptions;
 
 		// https://github.com/travis-ci/travis-ci/issues/8863
-		if($this->options->useEncryption === true && !function_exists('sodium_crypto_secretbox') && !function_exists('\\Sodium\\crypto_secretbox')){
+		if($this->options->useEncryption === true && extension_loaded('sodium')){
 			throw new TokenStorageException('sodium extension installed/enabled?');
 		}
 
@@ -72,7 +72,6 @@ abstract class TokenStorageAbstract implements TokenStorageInterface{
 	 * @param string $key
 	 *
 	 * @return string
-	 * @throws \chillerlan\OAuth\Storage\TokenStorageException
 	 */
 	public function encrypt(string $data, string $key):string {
 		$nonce = random_bytes(24);
@@ -80,12 +79,8 @@ abstract class TokenStorageAbstract implements TokenStorageInterface{
 		if(function_exists('sodium_crypto_secretbox')){
 			return sodium_bin2hex($nonce.sodium_crypto_secretbox($data, $nonce, sodium_hex2bin($key)));
 		}
-		elseif(function_exists('\\Sodium\\crypto_secretbox')){
-			return \Sodium\bin2hex($nonce.\Sodium\crypto_secretbox($data, $nonce, \Sodium\hex2bin($key)));
-		}
-		// else{ openssl encrypt? }
 
-		throw new TokenStorageException('encryption error');
+		return \Sodium\bin2hex($nonce.\Sodium\crypto_secretbox($data, $nonce, \Sodium\hex2bin($key)));
 	}
 
 	/**
@@ -93,7 +88,6 @@ abstract class TokenStorageAbstract implements TokenStorageInterface{
 	 * @param string $key
 	 *
 	 * @return string
-	 * @throws \chillerlan\OAuth\Storage\TokenStorageException
 	 */
 	public function decrypt(string $box, string $key):string {
 
@@ -102,14 +96,10 @@ abstract class TokenStorageAbstract implements TokenStorageInterface{
 
 			return sodium_crypto_secretbox_open(substr($box, 24), substr($box, 0, 24), sodium_hex2bin($key));
 		}
-		elseif(function_exists('\\Sodium\\crypto_secretbox_open')){
-			$box = \Sodium\hex2bin($box);
 
-			return \Sodium\crypto_secretbox_open(substr($box, 24), substr($box, 0, 24), \Sodium\hex2bin($key));
-		}
-		// else{ openssl decrypt? }
+		$box = \Sodium\hex2bin($box);
 
-		throw new TokenStorageException('decryption error');
+		return \Sodium\crypto_secretbox_open(substr($box, 24), substr($box, 0, 24), \Sodium\hex2bin($key));
 	}
 
 }
