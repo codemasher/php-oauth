@@ -171,6 +171,8 @@ class Twitter extends OAuth1Provider{
 	}
 
 	/**
+	 * @codeCoverageIgnore
+	 *
 	 * dm(array $body = ['user_id', 'screen_name', 'text'])
 	 *
 	 * @link https://developer.twitter.com/en/docs/direct-messages/sending-and-receiving/api-reference/new-message
@@ -184,6 +186,8 @@ class Twitter extends OAuth1Provider{
 	}
 
 	/**
+	 * @codeCoverageIgnore
+	 *
 	 * @link https://developer.twitter.com/en/docs/direct-messages/sending-and-receiving/api-reference/new-event
 	 * @link https://developer.twitter.com/en/docs/direct-messages/message-attachments/guides/attaching-media
 	 *
@@ -227,6 +231,8 @@ class Twitter extends OAuth1Provider{
 	}
 
 	/**
+	 * @codeCoverageIgnore
+	 *
 	 * tweet(array $body = ['status', 'in_reply_to_status_id', 'possibly_sensitive', 'lat', 'long', 'place_id', 'display_coordinates', 'trim_user', 'media_ids', 'enable_dm_commands', 'fail_dm_commands'])
 	 *
 	 * @param array $params
