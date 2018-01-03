@@ -44,10 +44,16 @@ before_install:
 #      echo "extension=sodium" >> ~/.phpenv/versions/$(phpenv version-name)/etc/php.ini;
 
 install:
-  - if [[ $setup = 'no_encryption' ]]; then travis_retry composer install --no-interaction --prefer-source; fi
-  - if [[ $setup = 'sodium_pecl' ]]; then travis_retry composer install --no-interaction --prefer-source; fi
-  - if [[ $setup = 'sodium_ext' ]]; then travis_retry composer install --no-interaction --prefer-source;
-  - if [[ $setup = 'hhvm' ]]; then travis_retry composer install --no-interaction --prefer-source --ignore-platform-reqs; fi
+  - |
+    if [[ $setup = 'no_encryption' ]]; then
+      travis_retry composer install --no-interaction --prefer-source;
+    elif [[ $setup = 'sodium_pecl' ]]; then
+      travis_retry composer install --no-interaction --prefer-source;
+    elif [[ $setup = 'sodium_ext' ]]; then 
+      travis_retry composer install --no-interaction --prefer-source;
+    elif [[ $setup = 'hhvm' ]]; then
+      travis_retry composer install --no-interaction --prefer-source --ignore-platform-reqs;
+    fi
   - mysql -e 'create database dbtest;'
   - php cli/dbstorage_create.php
 
