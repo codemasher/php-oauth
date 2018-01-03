@@ -4,6 +4,7 @@ php:
   - 7.0
   - 7.1
   - 7.2
+  - hhvm
 
 env:
   global:
@@ -17,6 +18,8 @@ matrix:
       env: setup=sodium_pecl
     - php: 7.2
       env: setup=sodium_ext
+    allow_failures:
+        - php: hhvm
 
 mysql:
   database: dbtest
