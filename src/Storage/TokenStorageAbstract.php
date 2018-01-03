@@ -31,7 +31,6 @@ abstract class TokenStorageAbstract implements TokenStorageInterface{
 	public function __construct(OAuthOptions $options = null){
 		$this->options = $options ?? new OAuthOptions;
 
-		// https://github.com/travis-ci/travis-ci/issues/8863
 		if($this->options->useEncryption === true && !extension_loaded('sodium')){
 			throw new TokenStorageException('sodium extension installed/enabled?');
 		}
@@ -80,7 +79,7 @@ abstract class TokenStorageAbstract implements TokenStorageInterface{
 			return sodium_bin2hex($nonce.sodium_crypto_secretbox($data, $nonce, sodium_hex2bin($key)));
 		}
 
-		return \Sodium\bin2hex($nonce.\Sodium\crypto_secretbox($data, $nonce, \Sodium\hex2bin($key)));
+		return \Sodium\bin2hex($nonce.\Sodium\crypto_secretbox($data, $nonce, \Sodium\hex2bin($key))); // @codeCoverageIgnore
 	}
 
 	/**
@@ -97,9 +96,11 @@ abstract class TokenStorageAbstract implements TokenStorageInterface{
 			return sodium_crypto_secretbox_open(substr($box, 24), substr($box, 0, 24), sodium_hex2bin($key));
 		}
 
+		// @codeCoverageIgnoreStart
 		$box = \Sodium\hex2bin($box);
 
 		return \Sodium\crypto_secretbox_open(substr($box, 24), substr($box, 0, 24), \Sodium\hex2bin($key));
+		// @codeCoverageIgnoreEnd
 	}
 
 }
