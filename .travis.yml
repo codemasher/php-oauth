@@ -18,9 +18,10 @@ matrix:
       env: setup=sodium_pecl
     - php: 7.2
       env: setup=sodium_ext
-  allow_failures:
     - php: hhvm
       env: setup=hhvm
+  allow_failures:
+    - php: hhvm
 
 mysql:
   database: dbtest
