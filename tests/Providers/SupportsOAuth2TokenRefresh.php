@@ -47,7 +47,7 @@ trait SupportsOAuth2TokenRefresh{
 	public function testRefreshAccessTokenBody(){
 		$body = $this
 			->getMethod('refreshAccessTokenBody')
-			->invokeArgs($this->provider, [new Token(['refreshToken' => 'whatever'])]);
+			->invokeArgs($this->provider, ['whatever']);
 
 		$this->assertSame('whatever', $body['refresh_token']);
 		$this->assertSame($this->options->key, $body['client_id']);

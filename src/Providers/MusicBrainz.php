@@ -39,12 +39,12 @@ class MusicBrainz extends OAuth2Provider{
 	/**
 	 * @inheritdoc
 	 */
-	public function refreshAccessTokenBody(Token $token):array{
+	protected function refreshAccessTokenBody(string $refreshToken):array{
 		return [
 			'client_id'     => $this->options->key,
 			'client_secret' => $this->options->secret,
 			'grant_type'    => 'refresh_token',
-			'refresh_token' => $token->refreshToken,
+			'refresh_token' => $refreshToken,
 		];
 	}
 

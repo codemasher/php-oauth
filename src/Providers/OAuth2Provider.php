@@ -57,6 +57,11 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	protected $accessTokenRefreshable = false;
 
 	/**
+	 * @var bool
+	 */
+	protected $useAccessTokenForRefresh = false;
+
+	/**
 	 * @var string
 	 */
 	protected $refreshTokenURL;
@@ -313,8 +318,15 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 			$token = $this->storage->retrieveAccessToken($this->serviceName);
 		}
 
-		if(!$token->refreshToken){
-			throw new ProviderException(sprintf('no refresh token available, token expired [%s]', date('Y-m-d h:i:s A', $token->expires)));
+		$refreshToken = $token->refreshToken;
+
+		if(empty($refreshToken)){
+
+			if(!$this->useAccessTokenForRefresh){
+				throw new ProviderException(sprintf('no refresh token available, token expired [%s]', date('Y-m-d h:i:s A', $token->expires)));
+			}
+
+			$refreshToken = $token->accessToken;
 		}
 
 		$newToken = $this->parseTokenResponse(
@@ -322,13 +334,13 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 				$this->refreshTokenURL ?? $this->accessTokenURL,
 				[],
 				'POST',
-				$this->refreshAccessTokenBody($token),
+				$this->refreshAccessTokenBody($refreshToken),
 				$this->refreshAccessTokenHeaders()
 			)
 		);
 
 		if(!$newToken->refreshToken){
-			$newToken->refreshToken = $token->refreshToken;
+			$newToken->refreshToken = $refreshToken;
 		}
 
 		$this->storage->storeAccessToken($this->serviceName, $newToken);
@@ -337,16 +349,16 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	}
 
 	/**
-	 * @param \chillerlan\OAuth\Token $token
+	 * @param string $refreshToken
 	 *
 	 * @return array
 	 */
-	protected function refreshAccessTokenBody(Token $token):array {
+	protected function refreshAccessTokenBody(string $refreshToken):array {
 		return [
 			'client_id'     => $this->options->key,
 			'client_secret' => $this->options->secret,
 			'grant_type'    => 'refresh_token',
-			'refresh_token' => $token->refreshToken,
+			'refresh_token' => $refreshToken,
 			'type'          => 'web_server',
 		];
 	}
