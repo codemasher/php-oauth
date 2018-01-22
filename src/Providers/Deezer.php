@@ -88,6 +88,7 @@ class Deezer extends OAuth2Provider{
 		}
 
 		$token = new Token([
+			'provider'     => $this->serviceName,
 			'accessToken'  => $data['access_token'],
 			'expires'      => $data['expires'] ?? Token::EOL_NEVER_EXPIRES,
 		]);

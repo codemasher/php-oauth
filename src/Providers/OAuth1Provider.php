@@ -91,6 +91,7 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 		}
 
 		$token = new Token([
+			'provider'           => $this->serviceName,
 			'requestToken'       => $data['oauth_token'],
 			'requestTokenSecret' => $data['oauth_token_secret'],
 			'accessToken'        => $data['oauth_token'],

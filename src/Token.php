@@ -29,6 +29,7 @@ use chillerlan\Traits\{
  * @property string $refreshToken
  * @property array  $extraParams
  * @property int    $expires
+ * @property string $provider
  */
 class Token implements ContainerInterface{
 	use Container{
@@ -84,6 +85,13 @@ class Token implements ContainerInterface{
 	 * @var array
 	 */
 	protected $extraParams = [];
+
+	/**
+	 * the provider who issued this token
+	 *
+	 * @var string
+	 */
+	protected $provider;
 
 	/**
 	 * Token constructor.
