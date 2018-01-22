@@ -12,7 +12,7 @@ A PHP7+ OAuth1/2 client with an integrated API wrapper, [loosely based](https://
 
 [packagist-badge]: https://img.shields.io/packagist/v/chillerlan/php-oauth.svg?style=flat-square
 [packagist]: https://packagist.org/packages/chillerlan/php-oauth
-[license-badge]: https://img.shields.io/packagist/l/chillerlan/php-oauth.svg?style=flat-square
+[license-badge]: https://img.shields.io/github/license/codemasher/php-oauth.svg?style=flat-square
 [license]: https://github.com/codemasher/php-oauth/blob/master/LICENSE
 [travis-badge]: https://img.shields.io/travis/codemasher/php-oauth.svg?style=flat-square
 [travis]: https://travis-ci.org/codemasher/php-oauth
@@ -402,5 +402,5 @@ property | type | default | allowed | description
 
 # Disclaimer
 OAuth tokens are secrets and should be treated as such. Store them in a safe place, 
-[consider encryption](https://github.com/defuse/php-encryption).<br/>
+[consider encryption](http://php.net/manual/book.sodium.php).<br/>
 I won't take responsibility for stolen auth tokens. Use at your own risk.
