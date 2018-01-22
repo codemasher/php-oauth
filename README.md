@@ -29,7 +29,8 @@ A PHP7+ OAuth1/2 client with an integrated API wrapper, [loosely based](https://
 
 # Documentation
 ## Requirements
-- PHP 7+
+- PHP 7.2+
+- the [Sodium](http://php.net/manual/book.sodium.php) extension for token encryption
 - cURL, PHP's stream wrapper or a HTTP client library of your choice
 
 ## Supported Providers
@@ -76,22 +77,12 @@ A PHP7+ OAuth1/2 client with an integrated API wrapper, [loosely based](https://
 ```json
 {
 	"require": {
-		"php": ">=7.0.3",
-		"chillerlan/php-oauth": "dev-master"
-	}
-}
-```
-
-if you plan to use encryption (via [libsodium](http://php.net/manual/book.sodium.php)), use the following instead:
-```json
-{
-	"require": {
 		"php": ">=7.2.0",
-		"ext-sodium": "*",
 		"chillerlan/php-oauth": "dev-master"
 	}
 }
 ```
+If you plan to use encryption (via [sodium](http://php.net/manual/book.sodium.php)), you may add `"ext-sodium": "*"`.
 
 **Manual Installation**
 
