@@ -12,7 +12,9 @@
 
 namespace chillerlan\OAuth;
 
-use chillerlan\Traits\Container;
+use chillerlan\Traits\{
+	Container, ContainerInterface
+};
 
 /**
  * Base token implementation for any OAuth version.
@@ -28,7 +30,7 @@ use chillerlan\Traits\Container;
  * @property array  $extraParams
  * @property int    $expires
  */
-class Token{
+class Token implements ContainerInterface{
 	use Container{
 		__construct as constructContainer;
 	}

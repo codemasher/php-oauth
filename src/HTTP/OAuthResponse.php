@@ -12,16 +12,24 @@
 
 namespace chillerlan\OAuth\HTTP;
 
-use chillerlan\Traits\Container;
+use chillerlan\Traits\{
+	Container, ContainerInterface
+};
 
 /**
+ * @property string    $url
  * @property \stdClass $headers
  * @property string    $body
  * @property \stdClass $json
  * @property array     $json_array
  */
-class OAuthResponse{
+class OAuthResponse implements ContainerInterface{
 	use Container;
+
+	/**
+	 * @var string
+	 */
+	protected $url;
 
 	/**
 	 * @var \stdClass

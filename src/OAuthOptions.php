@@ -12,7 +12,9 @@
 
 namespace chillerlan\OAuth;
 
-use chillerlan\Traits\Container;
+use chillerlan\Traits\{
+	Container, ContainerInterface
+};
 
 /**
  * @property string     $key
@@ -40,7 +42,7 @@ use chillerlan\Traits\Container;
  * @property string     $dbProviderTableID
  * @property string     $dbProviderTableName
  */
-class OAuthOptions{
+class OAuthOptions implements ContainerInterface{
 	use Container{
 		__construct as protected containerConstruct;
 	}

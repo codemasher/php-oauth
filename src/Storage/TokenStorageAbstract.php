@@ -43,7 +43,7 @@ abstract class TokenStorageAbstract implements TokenStorageInterface{
 	 * @return string
 	 */
 	public function toStorage(Token $token):string {
-		$data = json_encode($token->__toArray());
+		$data = $token->__toJSON();
 
 		if($this->options->useEncryption !== true){
 			return $data;
@@ -63,7 +63,7 @@ abstract class TokenStorageAbstract implements TokenStorageInterface{
 			$data = $this->decrypt($data, $this->options->storageCryptoKey);
 		}
 
-		return new Token(json_decode($data, true));
+		return (new Token)->__fromJSON($data);
 	}
 
 	/**
