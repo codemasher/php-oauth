@@ -16,6 +16,12 @@ use chillerlan\OAuth\{
 	OAuthOptions, Token
 };
 
+/**
+ * @todo: encryption?
+ *      considerations:
+ *      - the session is running through a session handler that already encrypts the session data. nothing to do here.
+ *      - the session runs in memory - i think it's silly to encrypt there. sodium_memzero() galore!
+ */
 class SessionTokenStorage extends TokenStorageAbstract{
 
 	/**
@@ -74,7 +80,7 @@ class SessionTokenStorage extends TokenStorageAbstract{
 	 * @return \chillerlan\OAuth\Storage\TokenStorageInterface
 	 */
 	public function storeAccessToken(string $service, Token $token):TokenStorageInterface{
-		$token = json_encode($token->__toArray());
+		$token = $token->__toJSON();
 
 		if(isset($_SESSION[$this->sessionVar]) && is_array($_SESSION[$this->sessionVar])){
 			$_SESSION[$this->sessionVar][$service] = $token;
@@ -95,7 +101,7 @@ class SessionTokenStorage extends TokenStorageAbstract{
 	public function retrieveAccessToken(string $service):Token{
 
 		if($this->hasAccessToken($service)){
-			return new Token(json_decode($_SESSION[$this->sessionVar][$service], true));
+			return (new Token)->__fromJSON($_SESSION[$this->sessionVar][$service]);
 		}
 
 		throw new TokenStorageException('token not found');
