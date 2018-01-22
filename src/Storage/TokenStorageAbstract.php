@@ -31,6 +31,7 @@ abstract class TokenStorageAbstract implements TokenStorageInterface{
 	public function __construct(OAuthOptions $options = null){
 		$this->options = $options ?? new OAuthOptions;
 
+		// @todo: extension_loaded() is unreliable with sodium and the current ubuntu 7.2 builds
 		if($this->options->useEncryption === true && !extension_loaded('sodium')){
 			throw new TokenStorageException('sodium extension installed/enabled?');
 		}
@@ -45,11 +46,11 @@ abstract class TokenStorageAbstract implements TokenStorageInterface{
 	public function toStorage(Token $token):string {
 		$data = $token->__toJSON();
 
-		if($this->options->useEncryption !== true){
-			return $data;
+		if($this->options->useEncryption === true){
+			return $this->encrypt($data, $this->options->storageCryptoKey);
 		}
 
-		return $this->encrypt($data, $this->options->storageCryptoKey);
+		return $data;
 	}
 
 	/**
@@ -71,6 +72,7 @@ abstract class TokenStorageAbstract implements TokenStorageInterface{
 	 * @param string $key
 	 *
 	 * @return string
+	 * @throws \chillerlan\OAuth\Storage\TokenStorageException
 	 */
 	public function encrypt(string $data, string $key):string {
 		$nonce = random_bytes(24);
@@ -79,7 +81,7 @@ abstract class TokenStorageAbstract implements TokenStorageInterface{
 			return sodium_bin2hex($nonce.sodium_crypto_secretbox($data, $nonce, sodium_hex2bin($key)));
 		}
 
-		return \Sodium\bin2hex($nonce.\Sodium\crypto_secretbox($data, $nonce, \Sodium\hex2bin($key))); // @codeCoverageIgnore
+		throw new TokenStorageException('sodium not installed'); // @codeCoverageIgnore
 	}
 
 	/**
@@ -87,6 +89,7 @@ abstract class TokenStorageAbstract implements TokenStorageInterface{
 	 * @param string $key
 	 *
 	 * @return string
+	 * @throws \chillerlan\OAuth\Storage\TokenStorageException
 	 */
 	public function decrypt(string $box, string $key):string {
 
@@ -96,11 +99,7 @@ abstract class TokenStorageAbstract implements TokenStorageInterface{
 			return sodium_crypto_secretbox_open(substr($box, 24), substr($box, 0, 24), sodium_hex2bin($key));
 		}
 
-		// @codeCoverageIgnoreStart
-		$box = \Sodium\hex2bin($box);
-
-		return \Sodium\crypto_secretbox_open(substr($box, 24), substr($box, 0, 24), \Sodium\hex2bin($key));
-		// @codeCoverageIgnoreEnd
+		throw new TokenStorageException('sodium not installed'); // @codeCoverageIgnore
 	}
 
 }
