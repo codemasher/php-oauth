@@ -45,7 +45,7 @@ class GuzzleClient extends HTTPClientAbstract{
 			$parsedURL = parse_url($url);
 			$method    = strtoupper($method ?? 'POST');
 
-			if(!isset($parsedURL['host']) || !in_array($parsedURL['scheme'], ['http', 'https'], true)){
+			if(!isset($parsedURL['host']) || $parsedURL['scheme'] !== 'https'){
 				trigger_error('invalid URL');
 			}
 

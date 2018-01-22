@@ -47,7 +47,7 @@ class CurlClient extends HTTPClientAbstract{
 		curl_setopt_array($this->http, [
 			CURLOPT_HEADER         => false,
 			CURLOPT_RETURNTRANSFER => true,
-			CURLOPT_PROTOCOLS      => CURLPROTO_HTTP|CURLPROTO_HTTPS,
+			CURLOPT_PROTOCOLS      => CURLPROTO_HTTPS,
 			CURLOPT_SSL_VERIFYPEER => true,
 			CURLOPT_SSL_VERIFYHOST => 2,
 			CURLOPT_TIMEOUT        => 5,
@@ -72,7 +72,7 @@ class CurlClient extends HTTPClientAbstract{
 		try{
 			$parsedURL = parse_url($url);
 
-			if(!isset($parsedURL['host']) || !in_array($parsedURL['scheme'], ['http', 'https'])){
+			if(!isset($parsedURL['host']) || $parsedURL['scheme'] !== 'https'){
 				trigger_error('invalid URL');
 			}
 

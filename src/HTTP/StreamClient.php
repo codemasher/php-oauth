@@ -59,7 +59,7 @@ class StreamClient extends HTTPClientAbstract{
 		try{
 			$parsedURL = parse_url($url);
 
-			if(!isset($parsedURL['host']) || !in_array($parsedURL['scheme'], ['http', 'https'])){
+			if(!isset($parsedURL['host']) || $parsedURL['scheme'] !== 'https'){
 				trigger_error('invalid URL');
 			}
 
