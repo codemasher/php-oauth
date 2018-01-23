@@ -4,6 +4,6 @@ filter:
     - examples/*
     - public/*
     - scripts/*
-    - storage/*
+    - tokenstorage/*
     - tests/*
     - vendor/*
