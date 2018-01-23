@@ -12,16 +12,16 @@ A PHP7+ OAuth1/2 client with an integrated API wrapper, [loosely based](https://
 
 [packagist-badge]: https://img.shields.io/packagist/v/chillerlan/php-oauth.svg?style=flat-square
 [packagist]: https://packagist.org/packages/chillerlan/php-oauth
-[license-badge]: https://img.shields.io/github/license/codemasher/php-oauth.svg?style=flat-square
-[license]: https://github.com/codemasher/php-oauth/blob/master/LICENSE
-[travis-badge]: https://img.shields.io/travis/codemasher/php-oauth.svg?style=flat-square
-[travis]: https://travis-ci.org/codemasher/php-oauth
-[coverage-badge]: https://img.shields.io/codecov/c/github/codemasher/php-oauth.svg?style=flat-square
-[coverage]: https://codecov.io/github/codemasher/php-oauth
-[scrutinizer-badge]: https://img.shields.io/scrutinizer/g/codemasher/php-oauth.svg?style=flat-square
-[scrutinizer]: https://scrutinizer-ci.com/g/codemasher/php-oauth
-[gemnasium-badge]: https://img.shields.io/gemnasium/codemasher/php-oauth.svg?style=flat-square
-[gemnasium]: https://gemnasium.com/github.com/codemasher/php-oauth
+[license-badge]: https://img.shields.io/github/license/chillerlan/php-oauth.svg?style=flat-square
+[license]: https://github.com/chillerlan/php-oauth/blob/master/LICENSE
+[travis-badge]: https://img.shields.io/travis/chillerlan/php-oauth.svg?style=flat-square
+[travis]: https://travis-ci.org/chillerlan/php-oauth
+[coverage-badge]: https://img.shields.io/codecov/c/github/chillerlan/php-oauth.svg?style=flat-square
+[coverage]: https://codecov.io/github/chillerlan/php-oauth
+[scrutinizer-badge]: https://img.shields.io/scrutinizer/g/chillerlan/php-oauth.svg?style=flat-square
+[scrutinizer]: https://scrutinizer-ci.com/g/chillerlan/php-oauth
+[gemnasium-badge]: https://img.shields.io/gemnasium/chillerlan/php-oauth.svg?style=flat-square
+[gemnasium]: https://gemnasium.com/github.com/chillerlan/php-oauth
 [downloads-badge]: https://img.shields.io/packagist/dt/chillerlan/php-oauth.svg?style=flat-square
 [downloads]: https://packagist.org/packages/chillerlan/php-oauth/stats
 [donate-badge]: https://img.shields.io/badge/donate-paypal-ff33aa.svg?style=flat-square
@@ -86,8 +86,8 @@ If you plan to use encryption (via [sodium](http://php.net/manual/book.sodium.ph
 
 **Manual Installation**
 
-Download the desired version of the package from [master](https://github.com/codemasher/php-oauth/archive/master.zip) or 
-[release](https://github.com/codemasher/php-oauth/releases) and extract the contents to your project folder.  After that:
+Download the desired version of the package from [master](https://github.com/chillerlan/php-oauth/archive/master.zip) or 
+[release](https://github.com/chillerlan/php-oauth/releases) and extract the contents to your project folder.  After that:
 - run `composer install` to install the required dependencies and generate `/vendor/autoload.php`.
 - if you use a custom autoloader, point the namespace `chillerlan\OAuth` to the folder `src` of the package 
 
@@ -132,7 +132,7 @@ $provider = new Provider($http, $storage, $options, $scopes);
 
 ### Authentication
 The application flow may differ slightly depending on the provider; there's a working authentication example for each supported provider in the 
-[examples folder](https://github.com/codemasher/php-oauth/tree/master/examples/get-token).
+[examples folder](https://github.com/chillerlan/php-oauth/tree/master/examples/get-token).
 
 ```php
 // step 1 (optional): display a login link
@@ -194,8 +194,8 @@ $data    = $response->json;
 
 ### The built-in API Client
 The API client is a very minimal implementation of available endpoints for the given provider, which returns the JSON responses as `\stdClass` object. 
-Please refer to the [provider class docblocks](https://github.com/codemasher/php-oauth/tree/master/src/Providers) for method names and signatures, 
-as well as to [the live API tests](https://github.com/codemasher/php-oauth/tree/master/tests/API) (which are not enabled on Travis) for usage examples.
+Please refer to the [provider class docblocks](https://github.com/chillerlan/php-oauth/tree/master/src/Providers) for method names and signatures, 
+as well as to [the live API tests](https://github.com/chillerlan/php-oauth/tree/master/tests/API) (which are not enabled on Travis) for usage examples.
 The general method scheme looks as follows:
 
  - the method name is either
@@ -216,16 +216,16 @@ $provider->endpointIdSubendpointName($id, $name, ['param1' => 'foo', 'param2' =>
 ## Extensions
 In order to use a provider, http client or storage, that is not yet supported, you'll need to implement the respective interfaces:
 
-### [`HTTPClientInterface`](https://github.com/codemasher/php-oauth/tree/master/src/HTTP/HTTPClientInterface.php)
-There's already a Guzzle client - what else do you need? :wink: Just extend `HTTPClientAbstract`! Have a look at the [built-in clients](https://github.com/codemasher/php-oauth/tree/master/tests/HTTP) and the [test http client](https://github.com/codemasher/php-oauth/blob/master/tests/API/APITestAbstract.php#L127-L161).
+### [`HTTPClientInterface`](https://github.com/chillerlan/php-oauth/tree/master/src/HTTP/HTTPClientInterface.php)
+There's already a Guzzle client - what else do you need? :wink: Just extend `HTTPClientAbstract`! Have a look at the [built-in clients](https://github.com/chillerlan/php-oauth/tree/master/tests/HTTP) and the [test http client](https://github.com/chillerlan/php-oauth/blob/master/tests/API/APITestAbstract.php#L127-L161).
 
-### [`TokenStorageInterface`](https://github.com/codemasher/php-oauth/tree/master/src/Storage/TokenStorageInterface.php)
+### [`TokenStorageInterface`](https://github.com/chillerlan/php-oauth/tree/master/src/Storage/TokenStorageInterface.php)
 There are currently 3 different `TokenStorageInterface`, refer to these for implementation details (extend `TokenStorageAbstract`):
-- [`MemoryTokenStorage`](https://github.com/codemasher/php-oauth/tree/master/src/Storage/MemoryTokenStorage.php): non-persistent, to store a token during script runtime and then discard it. 
-- [`SessionTokenStorage`](https://github.com/codemasher/php-oauth/tree/master/src/Storage/SessionTokenStorage.php): half-persistent, stores a token for as long a user's session is alive.
-- [`DBTokenStorage`](https://github.com/codemasher/php-oauth/tree/master/src/Storage/DBTokenStorage.php): persistent, multi purpose database driven storage with encryption support
+- [`MemoryTokenStorage`](https://github.com/chillerlan/php-oauth/tree/master/src/Storage/MemoryTokenStorage.php): non-persistent, to store a token during script runtime and then discard it. 
+- [`SessionTokenStorage`](https://github.com/chillerlan/php-oauth/tree/master/src/Storage/SessionTokenStorage.php): half-persistent, stores a token for as long a user's session is alive.
+- [`DBTokenStorage`](https://github.com/chillerlan/php-oauth/tree/master/src/Storage/DBTokenStorage.php): persistent, multi purpose database driven storage with encryption support
 
-### [`OAuth1Interface`](https://github.com/codemasher/php-oauth/tree/master/src/Providers/OAuth1Provider.php)
+### [`OAuth1Interface`](https://github.com/chillerlan/php-oauth/tree/master/src/Providers/OAuth1Provider.php)
 The OAuth1 implementation is close to Twitter's specs and *should* work for most other OAuth1 services.
 
 ```php
@@ -241,7 +241,7 @@ class MyOauth1Provider extends Oauth1Provider{
 }
 ```
 
-### [`OAuth2Interface`](https://github.com/codemasher/php-oauth/tree/master/src/Providers/OAuth2Provider.php)
+### [`OAuth2Interface`](https://github.com/chillerlan/php-oauth/tree/master/src/Providers/OAuth2Provider.php)
 [OAuth2 is a very straightforward... mess](https://hueniverse.com/oauth-2-0-and-the-road-to-hell-8eec45921529). Please refer to your provider's docs for implementation details.
 ```php
 use chillerlan\OAuth\Providers\OAuth2Provider;
@@ -268,7 +268,7 @@ class MyOauth2Provider extends Oauth2Provider{
 
 ### API Clients
 The API client is rather a map of endpoints than a huge blob of redundant php code.
-Simply place a `<providername>.json` in [`/src/API`](https://github.com/codemasher/php-oauth/tree/master/src/API), which then will be parsed and checked against.
+Simply place a `<providername>.json` in [`/src/API`](https://github.com/chillerlan/php-oauth/tree/master/src/API), which then will be parsed and checked against.
 
 The JSON for `https://example.com/api/endpoint/:id/subendpoint/:name?param1=foo&param2=bar` would be
 ```json
@@ -347,7 +347,7 @@ method | return
 `clearAuthorizationState(string $service)` | `TokenStorageInterface`
 `clearAllAuthorizationStates()` | `TokenStorageInterface`
 
-### [`Token`](https://github.com/codemasher/php-oauth/tree/master/src/Token.php)
+### [`Token`](https://github.com/chillerlan/php-oauth/tree/master/src/Token.php)
 method | return | description
 ------ | ------ | -----------
 `__construct(array $properties = null)` | - | 
@@ -366,7 +366,7 @@ property | type | default | allowed | description
 `$extraParams` | array | `[]` |  | 
 `$expires` | int | `Token::EOL_UNKNOWN` |  | 
 
-### [`OAuthOptions`](https://github.com/codemasher/php-oauth/tree/master/src/OAuthOptions.php)
+### [`OAuthOptions`](https://github.com/chillerlan/php-oauth/tree/master/src/OAuthOptions.php)
 property | type | default | allowed | description
 -------- | ---- | ------- | ------- | -----------
 `$key` | string | - | * | the client id from your OAuth provider
@@ -380,14 +380,14 @@ property | type | default | allowed | description
 `$dbLabelHashAlgo` | string | 'md5' | a [valid hash algorithm](http://php.net/manual/function.hash-algos.php) | only used for internal labels
 `$dbLabelFormat` | string | '%1$s@%2$s' | * | passed to [sprinf()](http://php.net/manual/function.sprintf.php)
 `$dbUserID` | int, string | null | * | the user id for the current OAuth session
-`$dbTokenTable` | string | null | * | the token storage table, see [`dbstorage_create.php`](https://github.com/codemasher/php-oauth/blob/master/cli/dbstorage_create.php)
+`$dbTokenTable` | string | null | * | the token storage table, see [`dbstorage_create.php`](https://github.com/chillerlan/php-oauth/blob/master/cli/dbstorage_create.php)
 `$dbTokenTableExpires` | string | 'expires' | * | 
 `$dbTokenTableLabel` | string | 'label' | * | 
 `$dbTokenTableProviderID` | string | 'provider_id' | * | 
 `$dbTokenTableState` | string | 'state' | * | 
 `$dbTokenTableToken` | string | 'token' | * | 
 `$dbTokenTableUser` | string | 'user_id' | * | 
-`$dbProviderTable` | string | null | * | the provider table, see [`dbstorage_create.php`](https://github.com/codemasher/php-oauth/blob/master/cli/dbstorage_create.php)
+`$dbProviderTable` | string | null | * | the provider table, see [`dbstorage_create.php`](https://github.com/chillerlan/php-oauth/blob/master/cli/dbstorage_create.php)
 `$dbProviderTableID` | string | 'provider_id' | * | 
 `$dbProviderTableName` | string | 'servicename' | * | 
 
