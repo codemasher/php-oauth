@@ -71,15 +71,6 @@ class SessionTest extends TokenStorageTestAbstract{
 	}
 
 	/**
-	 * @runInSeparateProcess
-	 * @expectedException \chillerlan\OAuth\Storage\TokenStorageException
-	 * @expectedExceptionMessage sodium extension installed/enabled?
-	 */
-	public function testMissingSodiumExtension(){
-		parent::testMissingSodiumExtension();
-	}
-
-	/**
 	 * coverage
 	 *
 	 * @runInSeparateProcess
