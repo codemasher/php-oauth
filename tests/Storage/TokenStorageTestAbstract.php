@@ -129,18 +129,4 @@ abstract class TokenStorageTestAbstract extends TestCase{
 		$this->assertEquals($this->token, $b);
 	}
 
-	/**
-	 * @expectedException \chillerlan\OAuth\Storage\TokenStorageException
-	 * @expectedExceptionMessage sodium extension installed/enabled?
-	 */
-	public function testMissingSodiumExtension(){
-		$this->options->useEncryption = true;
-
-		if(extension_loaded('sodium')){
-			$this->markTestSkipped('soduim enabled');
-		}
-
-		$this->initStorage($this->options);
-	}
-
 }
