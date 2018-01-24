@@ -19,7 +19,7 @@ use chillerlan\OAuth\{
 	OAuthOptions, Providers\OAuth2Interface, Providers\OAuthInterface, Storage\DBTokenStorage, Storage\TokenStorageInterface, Token
 };
 use chillerlan\HTTP\{
-	CurlClient, GuzzleClient, HTTPClientAbstract, HTTPClientInterface, HTTPResponse, StreamClient, TinyCurlClient
+	CurlClient, GuzzleClient, HTTPClientAbstract, HTTPClientInterface, HTTPResponse, HTTPResponseInterface, StreamClient, TinyCurlClient
 };
 use chillerlan\TinyCurl\{
 	Request, RequestOptions
@@ -134,7 +134,7 @@ abstract class APITestAbstract extends TestCase{
 				$this->client = call_user_func([$this, $client]);
 			}
 
-			public function request(string $url, array $params = null, string $method = null, $body = null, array $headers = null):HTTPResponse{
+			public function request(string $url, array $params = null, string $method = null, $body = null, array $headers = null):HTTPResponseInterface{
 				$args = func_get_args();
 #	        	print_r($args);
 				$response = $this->client->request(...$args);
