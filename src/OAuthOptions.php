@@ -12,6 +12,7 @@
 
 namespace chillerlan\OAuth;
 
+use chillerlan\HTTP\HTTPOptions;
 use chillerlan\Traits\{
 	Container, ContainerInterface
 };
@@ -41,9 +42,15 @@ use chillerlan\Traits\{
  * @property string     $dbProviderTable
  * @property string     $dbProviderTableID
  * @property string     $dbProviderTableName
+ *
+ * @property string     $user_agent
+ * @property int        $timeout
+ * @property array      $curl_options
+ * @property string     $ca_info
+ * @property int        $max_redirects
  */
 class OAuthOptions implements ContainerInterface{
-	use Container{
+	use HTTPOptions, Container{
 		__construct as protected containerConstruct;
 	}
 
