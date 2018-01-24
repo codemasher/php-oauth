@@ -12,8 +12,9 @@
 
 namespace chillerlan\OAuthTest\Providers;
 
+use chillerlan\HTTP\HTTPClientInterface;
 use chillerlan\OAuth\{
-	HTTP\HTTPClientInterface, OAuthOptions, Providers\OAuth2Interface, Providers\OAuthInterface, Storage\MemoryTokenStorage, Storage\TokenStorageInterface, Token
+	OAuthOptions, Providers\OAuth2Interface, Providers\OAuthInterface, Storage\MemoryTokenStorage, Storage\TokenStorageInterface, Token
 };
 use PHPUnit\Framework\TestCase;
 use ReflectionClass, ReflectionMethod, ReflectionProperty;

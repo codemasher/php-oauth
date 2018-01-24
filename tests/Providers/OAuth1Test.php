@@ -12,8 +12,11 @@
 
 namespace chillerlan\OAuthTest\Providers;
 
-use chillerlan\OAuth\{
-	HTTP\HTTPClientInterface, HTTP\HTTPClientAbstract, HTTP\OAuthResponse, Token
+use chillerlan\OAuth\OAuthOptions;
+use chillerlan\OAuth\Token;
+
+use chillerlan\HTTP\{
+	HTTPClientInterface, HTTPClientAbstract, HTTPResponse, HTTPResponseInterface
 };
 
 /**
@@ -38,9 +41,9 @@ abstract class OAuth1Test extends ProviderTestAbstract{
 	}
 
 	protected function initHttp():HTTPClientInterface{
-		return new class extends HTTPClientAbstract{
-			public function request(string $url, array $params = null, string $method = null, $body = null, array $headers = null):OAuthResponse{
-				return new OAuthResponse(['body' => OAuth1Test::OAUTH1_RESPONSES[$url]]);
+		return new class(new OAuthOptions) extends HTTPClientAbstract{
+			public function request(string $url, array $params = null, string $method = null, $body = null, array $headers = null):HTTPResponseInterface{
+				return new HTTPResponse(['body' => OAuth1Test::OAUTH1_RESPONSES[$url]]);
 			}
 		};
 	}
@@ -48,7 +51,7 @@ abstract class OAuth1Test extends ProviderTestAbstract{
 	public function testParseTokenResponse(){
 		$token = $this
 			->getMethod('parseTokenResponse')
-			->invokeArgs($this->provider, [new OAuthResponse(['body' => 'oauth_token=whatever&oauth_token_secret=whatever_secret&oauth_callback_confirmed=true'])]);
+			->invokeArgs($this->provider, [new HTTPResponse(['body' => 'oauth_token=whatever&oauth_token_secret=whatever_secret&oauth_callback_confirmed=true'])]);
 
 		$this->assertInstanceOf(Token::class, $token);
 		$this->assertSame('whatever', $token->accessToken);
@@ -62,7 +65,7 @@ abstract class OAuth1Test extends ProviderTestAbstract{
 	public function testParseTokenResponseCallbackUnconfirmed(){
 		$this
 			->getMethod('parseTokenResponse')
-			->invokeArgs($this->provider, [new OAuthResponse(['body' => 'oauth_token=whatever&oauth_token_secret=whatever_secret']), true]);
+			->invokeArgs($this->provider, [new HTTPResponse(['body' => 'oauth_token=whatever&oauth_token_secret=whatever_secret']), true]);
 	}
 
 	/**
@@ -72,7 +75,7 @@ abstract class OAuth1Test extends ProviderTestAbstract{
 	public function testParseTokenResponseNoData(){
 		$this
 			->getMethod('parseTokenResponse')
-			->invokeArgs($this->provider, [new OAuthResponse]);
+			->invokeArgs($this->provider, [new HTTPResponse]);
 	}
 
 	/**
@@ -82,7 +85,7 @@ abstract class OAuth1Test extends ProviderTestAbstract{
 	public function testParseTokenResponseError(){
 		$this
 			->getMethod('parseTokenResponse')
-			->invokeArgs($this->provider, [new OAuthResponse(['body' => 'error=whatever'])]);
+			->invokeArgs($this->provider, [new HTTPResponse(['body' => 'error=whatever'])]);
 	}
 
 	/**
@@ -92,7 +95,7 @@ abstract class OAuth1Test extends ProviderTestAbstract{
 	public function testParseTokenResponseNoToken(){
 		$this
 			->getMethod('parseTokenResponse')
-			->invokeArgs($this->provider, [new OAuthResponse(['body' => 'oauth_token=whatever'])]);
+			->invokeArgs($this->provider, [new HTTPResponse(['body' => 'oauth_token=whatever'])]);
 	}
 
 	public function testGetRequestTokenHeaderParams(){

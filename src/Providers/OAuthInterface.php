@@ -12,7 +12,7 @@
 
 namespace chillerlan\OAuth\Providers;
 
-use chillerlan\OAuth\HTTP\OAuthResponse;
+use chillerlan\HTTP\HTTPResponseInterface;
 use chillerlan\OAuth\Storage\TokenStorageInterface;
 
 /**
@@ -39,9 +39,9 @@ interface OAuthInterface{
 	 * @param null   $body
 	 * @param array  $headers
 	 *
-	 * @return \chillerlan\OAuth\HTTP\OAuthResponse
+	 * @return \chillerlan\HTTP\HTTPResponseInterface
 	 */
-	public function request(string $path, array $params = null, string $method = null, $body = null, array $headers = null):OAuthResponse;
+	public function request(string $path, array $params = null, string $method = null, $body = null, array $headers = null):HTTPResponseInterface;
 
 	/**
 	 * @return \chillerlan\OAuth\Storage\TokenStorageInterface

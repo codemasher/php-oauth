@@ -12,7 +12,8 @@
 
 namespace chillerlan\OAuth\Providers;
 
-use chillerlan\OAuth\{Token, HTTP\OAuthResponse};
+use chillerlan\OAuth\Token;
+use chillerlan\HTTP\HTTPResponseInterface;
 
 /**
  * @link https://musicbrainz.org/doc/Development
@@ -55,9 +56,9 @@ class MusicBrainz extends OAuth2Provider{
 	 * @param null   $body
 	 * @param array  $headers
 	 *
-	 * @return \chillerlan\OAuth\HTTP\OAuthResponse
+	 * @return \chillerlan\HTTP\HTTPResponseInterface
 	 */
-	public function request(string $path, array $params = null, string $method = null, $body = null, array $headers = null):OAuthResponse{
+	public function request(string $path, array $params = null, string $method = null, $body = null, array $headers = null):HTTPResponseInterface{
 		$token = $this->storage->retrieveAccessToken($this->serviceName);
 		$params = $params ?? [];
 

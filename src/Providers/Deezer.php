@@ -12,9 +12,8 @@
 
 namespace chillerlan\OAuth\Providers;
 
-use chillerlan\OAuth\{
-	HTTP\OAuthResponse, Token
-};
+use chillerlan\HTTP\HTTPResponseInterface;
+use chillerlan\OAuth\Token;
 
 /**
  * @link https://developers.deezer.com/api/oauth
@@ -67,12 +66,12 @@ class Deezer extends OAuth2Provider{
 	}
 
 	/**
-	 * @param OAuthResponse $response
+	 * @param \chillerlan\HTTP\HTTPResponseInterface $response
 	 *
 	 * @return \chillerlan\OAuth\Token
 	 * @throws \chillerlan\OAuth\Providers\ProviderException
 	 */
-	protected function parseTokenResponse(OAuthResponse $response):Token{
+	protected function parseTokenResponse(HTTPResponseInterface $response):Token{
 		parse_str($response->body, $data);
 
 		if(!is_array($data) || empty($data)){

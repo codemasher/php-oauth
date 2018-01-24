@@ -18,12 +18,13 @@ use chillerlan\Database\{
 use chillerlan\OAuth\{
 	OAuthOptions, Providers\OAuth2Interface, Providers\OAuthInterface, Storage\DBTokenStorage, Storage\TokenStorageInterface, Token
 };
-use chillerlan\OAuth\HTTP\{
-	CurlClient, GuzzleClient, HTTPClientAbstract, HTTPClientInterface, OAuthResponse, StreamClient, TinyCurlClient
+use chillerlan\HTTP\{
+	CurlClient, GuzzleClient, HTTPClientAbstract, HTTPClientInterface, HTTPResponse, StreamClient, TinyCurlClient
 };
 use chillerlan\TinyCurl\{
 	Request, RequestOptions
 };
+use chillerlan\Traits\ContainerInterface;
 use chillerlan\Traits\DotEnv;
 use GuzzleHttp\Client;
 use PHPUnit\Framework\TestCase;
@@ -32,7 +33,7 @@ abstract class APITestAbstract extends TestCase{
 
 	const CFGDIR        = __DIR__.'/../../config';
 	const STORAGE       = __DIR__.'/../../tokenstorage';
-	const UA            = 'chillerlanPhpOAuth/2.0.0 +https://github.com/codemasher/php-oauth';
+	const UA            = 'chillerlanPhpOAuth/2.0.0 +https://github.com/chillerlan/php-oauth';
 	const SLEEP_SECONDS = 1.0;
 	const TABLE_TOKEN    = 'storagetest';
 	const TABLE_PROVIDER = 'storagetest_providers';
@@ -48,12 +49,12 @@ abstract class APITestAbstract extends TestCase{
 	protected $provider;
 
 	/**
-	 * @var \chillerlan\OAuth\HTTP\OAuthResponse
+	 * @var \chillerlan\HTTP\HTTPResponseInterface
 	 */
 	protected $response;
 
 	/**
-	 * @var \chillerlan\OAuth\HTTP\HTTPClientInterface
+	 * @var \chillerlan\HTTP\HTTPClientInterface
 	 */
 	protected $http;
 
@@ -105,7 +106,7 @@ abstract class APITestAbstract extends TestCase{
 	}
 
 	protected function tearDown(){
-		if($this->response instanceof OAuthResponse){
+		if($this->response instanceof HTTPResponse){
 
 			$json = $this->response->json;
 
@@ -125,14 +126,15 @@ abstract class APITestAbstract extends TestCase{
 	}
 
 	protected function initHTTP($client):HTTPClientInterface{
-		return new class($client) extends HTTPClientAbstract{
+		return new class($client, $this->options) extends HTTPClientAbstract{
 			protected $client;
 
-			public function __construct($client){
+			public function __construct(ContainerInterface $options, string $client = null){
+				parent::__construct($options);
 				$this->client = call_user_func([$this, $client]);
 			}
 
-			public function request(string $url, array $params = null, string $method = null, $body = null, array $headers = null):OAuthResponse{
+			public function request(string $url, array $params = null, string $method = null, $body = null, array $headers = null):HTTPResponse{
 				$args = func_get_args();
 #	        	print_r($args);
 				$response = $this->client->request(...$args);
@@ -142,19 +144,19 @@ abstract class APITestAbstract extends TestCase{
 			}
 
 			protected function guzzle(){
-				return new GuzzleClient(new Client(['cacert' => APITestAbstract::CFGDIR.'/cacert.pem', 'headers' => ['User-Agent' => APITestAbstract::UA]]));
+				return new GuzzleClient($this->options, new Client(['cacert' => $this->options->ca_info, 'headers' => ['User-Agent' => $this->options->userAgent]]));
 			}
 
 			protected function tinycurl(){
-				return new TinyCurlClient(new Request(new RequestOptions(['ca_info' => APITestAbstract::CFGDIR.'/cacert.pem', 'userAgent' => APITestAbstract::UA])));
+				return new TinyCurlClient($this->options, new Request(new RequestOptions(['ca_info' =>  $this->options->ca_info, 'userAgent' => $this->options->userAgent])));
 			}
 
 			protected function curl(){
-				return new CurlClient([CURLOPT_CAINFO => APITestAbstract::CFGDIR.'/cacert.pem', CURLOPT_USERAGENT => APITestAbstract::UA]);
+				return new CurlClient($this->options);
 			}
 
 			protected function stream(){
-				return new StreamClient(APITestAbstract::CFGDIR.'/cacert.pem', APITestAbstract::UA);
+				return new StreamClient($this->options);
 			}
 
 		};

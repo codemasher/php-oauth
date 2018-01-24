@@ -13,7 +13,10 @@
 namespace chillerlan\OAuthTest\Providers;
 
 use chillerlan\OAuth\{
-	HTTP\HTTPClientAbstract, HTTP\HTTPClientInterface, HTTP\OAuthResponse, Providers\Deezer, Token
+	OAuthOptions, Providers\Deezer, Token
+};
+use chillerlan\HTTP\{
+	HTTPClientAbstract, HTTPClientInterface, HTTPResponse, HTTPResponseInterface
 };
 
 /**
@@ -24,10 +27,10 @@ class DeezerTest extends OAuth2Test{
 	protected $FQCN = Deezer::class;
 
 	protected function initHttp():HTTPClientInterface{
-		return new class extends HTTPClientAbstract{
-			public function request(string $url, array $params = null, string $method = null, $body = null, array $headers = null):OAuthResponse{
+		return new class(new OAuthOptions) extends HTTPClientAbstract{
+			public function request(string $url, array $params = null, string $method = null, $body = null, array $headers = null):HTTPResponseInterface{
 				$body = OAuth2Test::OAUTH2_RESPONSES[$url];
-				return new OAuthResponse([
+				return new HTTPResponse([
 					'body' => $url === 'https://localhost/oauth2/api/request' ? json_encode($body) : http_build_query($body)
 				]);
 			}
@@ -43,7 +46,7 @@ class DeezerTest extends OAuth2Test{
 	public function testParseTokenResponse(){
 		$token = $this
 			->getMethod('parseTokenResponse')
-			->invokeArgs($this->provider, [new OAuthResponse(['body' => http_build_query(['access_token' => 'whatever'])])]);
+			->invokeArgs($this->provider, [new HTTPResponse(['body' => http_build_query(['access_token' => 'whatever'])])]);
 
 		$this->assertInstanceOf(Token::class, $token);
 		$this->assertSame('whatever', $token->accessToken);
@@ -56,7 +59,7 @@ class DeezerTest extends OAuth2Test{
 	public function testParseTokenResponseError(){
 		$this
 			->getMethod('parseTokenResponse')
-			->invokeArgs($this->provider, [new OAuthResponse(['body' => http_build_query(['error_reason' => 'whatever'])])]);
+			->invokeArgs($this->provider, [new HTTPResponse(['body' => http_build_query(['error_reason' => 'whatever'])])]);
 	}
 
 	public function testGetAccessTokenBody(){

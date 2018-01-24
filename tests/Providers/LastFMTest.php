@@ -12,8 +12,11 @@
 
 namespace chillerlan\OAuthTest\Providers;
 
-use chillerlan\OAuth\{
-	HTTP\HTTPClientInterface, HTTP\HTTPClientAbstract, HTTP\OAuthResponse, Providers\LastFM
+use chillerlan\OAuth\OAuthOptions;
+use chillerlan\OAuth\Providers\LastFM;
+
+use chillerlan\HTTP\{
+	HTTPClientInterface, HTTPClientAbstract, HTTPResponse, HTTPResponseInterface
 };
 
 /**
@@ -39,9 +42,9 @@ class LastFMTest extends ProviderTestAbstract{
 	}
 
 	protected function initHttp():HTTPClientInterface{
-		return new class extends HTTPClientAbstract{
-			public function request(string $url, array $params = null, string $method = null, $body = null, array $headers = null):OAuthResponse{
-				return new OAuthResponse(['body' => json_encode(LastFMTest::LASTFM_RESPONSES[$url])]);
+		return new class(new OAuthOptions) extends HTTPClientAbstract{
+			public function request(string $url, array $params = null, string $method = null, $body = null, array $headers = null):HTTPResponseInterface{
+				return new HTTPResponse(['body' => json_encode(LastFMTest::LASTFM_RESPONSES[$url])]);
 			}
 		};
 	}
@@ -63,7 +66,7 @@ class LastFMTest extends ProviderTestAbstract{
 	public function testParseTokenResponse(){
 		$token = $this
 			->getMethod('parseTokenResponse')
-			->invokeArgs($this->provider, [new OAuthResponse(['body' => json_encode(['session' => ['key' => 'whatever']])])]);
+			->invokeArgs($this->provider, [new HTTPResponse(['body' => json_encode(['session' => ['key' => 'whatever']])])]);
 
 		$this->assertSame('whatever', $token->accessToken);
 	}
@@ -75,7 +78,7 @@ class LastFMTest extends ProviderTestAbstract{
 	public function testParseTokenResponseNoData(){
 		$this
 			->getMethod('parseTokenResponse')
-			->invokeArgs($this->provider, [new OAuthResponse]);
+			->invokeArgs($this->provider, [new HTTPResponse]);
 	}
 
 	/**
@@ -85,7 +88,7 @@ class LastFMTest extends ProviderTestAbstract{
 	public function testParseTokenResponseError(){
 		$this
 			->getMethod('parseTokenResponse')
-			->invokeArgs($this->provider, [new OAuthResponse(['body' => json_encode(['error' => 42, 'message' => 'whatever'])])]);
+			->invokeArgs($this->provider, [new HTTPResponse(['body' => json_encode(['error' => 42, 'message' => 'whatever'])])]);
 	}
 
 	/**
@@ -95,7 +98,7 @@ class LastFMTest extends ProviderTestAbstract{
 	public function testParseTokenResponseNoToken(){
 		$this
 			->getMethod('parseTokenResponse')
-			->invokeArgs($this->provider, [new OAuthResponse(['body' => json_encode(['session' => []])])]);
+			->invokeArgs($this->provider, [new HTTPResponse(['body' => json_encode(['session' => []])])]);
 	}
 
 	public function testGetAccessTokenParams(){

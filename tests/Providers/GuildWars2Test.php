@@ -12,8 +12,10 @@
 
 namespace chillerlan\OAuthTest\Providers;
 
-use chillerlan\OAuth\{
-	HTTP\HTTPClientAbstract, HTTP\HTTPClientInterface, HTTP\OAuthResponse, Providers\GuildWars2
+use chillerlan\OAuth\OAuthOptions;
+use chillerlan\OAuth\Providers\GuildWars2;
+use chillerlan\HTTP\{
+	HTTPClientAbstract, HTTPClientInterface, HTTPResponse, HTTPResponseInterface
 };
 
 /**
@@ -35,9 +37,9 @@ class GuildWars2Test extends OAuth2Test{
 	protected $FQCN = GuildWars2::class;
 
 	protected function initHttp():HTTPClientInterface{
-		return new class extends HTTPClientAbstract{
-			public function request(string $url, array $params = null, string $method = null, $body = null, array $headers = null):OAuthResponse{
-				return new OAuthResponse(['body' => json_encode(GuildWars2Test::GW2_RESPONSES[$url])]);
+		return new class(new OAuthOptions) extends HTTPClientAbstract{
+			public function request(string $url, array $params = null, string $method = null, $body = null, array $headers = null):HTTPResponseInterface{
+				return new HTTPResponse(['body' => json_encode(GuildWars2Test::GW2_RESPONSES[$url])]);
 			}
 		};
 	}

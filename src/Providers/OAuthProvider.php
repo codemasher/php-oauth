@@ -14,11 +14,10 @@ namespace chillerlan\OAuth\Providers;
 
 use chillerlan\OAuth\{
 	API\OAuthAPIClientException,
-	HTTP\HTTPClientInterface,
 	OAuthOptions,
 	Storage\TokenStorageInterface
-
 };
+use chillerlan\HTTP\HTTPClientInterface;
 use chillerlan\Traits\Magic;
 
 /**
@@ -28,7 +27,7 @@ abstract class OAuthProvider implements OAuthInterface{
 	use Magic;
 
 	/**
-	 * @var \chillerlan\OAuth\HTTP\HTTPClientInterface
+	 * @var \chillerlan\HTTP\HTTPClientInterface
 	 */
 	protected $http;
 
@@ -90,11 +89,11 @@ abstract class OAuthProvider implements OAuthInterface{
 	/**
 	 * OAuthProvider constructor.
 	 *
-	 * @param \chillerlan\OAuth\HTTP\HTTPClientInterface      $http
+	 * @param \chillerlan\HTTP\HTTPClientInterface            $http
 	 * @param \chillerlan\OAuth\Storage\TokenStorageInterface $storage
 	 * @param \chillerlan\OAuth\OAuthOptions                  $options
 	 */
-	public function __construct(HTTPClientInterface $http, TokenStorageInterface $storage, OAuthOptions $options){
+	public function __construct(HTTPClientInterface $http, TokenStorageInterface $storage, OAuthOptions $options){ // @todo: $options = null
 		$this->http    = $http;
 		$this->storage = $storage;
 		$this->options = $options;
@@ -138,7 +137,7 @@ abstract class OAuthProvider implements OAuthInterface{
 	 * @param string $name
 	 * @param array  $arguments
 	 *
-	 * @return \chillerlan\OAuth\HTTP\OAuthResponse|null
+	 * @return \chillerlan\HTTP\HTTPResponseInterface|null
 	 * @throws \chillerlan\OAuth\API\OAuthAPIClientException
 	 */
 	public function __call(string $name, array $arguments){

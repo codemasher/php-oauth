@@ -12,9 +12,8 @@
 
 namespace chillerlan\OAuth\Providers;
 
-use chillerlan\OAuth\{
-	Token, HTTP\OAuthResponse
-};
+use chillerlan\OAuth\Token;
+use chillerlan\HTTP\HTTPResponseInterface;
 use DateTime;
 
 abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
@@ -65,13 +64,13 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 	}
 
 	/**
-	 * @param \chillerlan\OAuth\HTTP\OAuthResponse $response
-	 * @param bool|null                            $checkCallbackConfirmed
+	 * @param \chillerlan\HTTP\HTTPResponseInterface $response
+	 * @param bool|null                              $checkCallbackConfirmed
 	 *
 	 * @return \chillerlan\OAuth\Token
 	 * @throws \chillerlan\OAuth\Providers\ProviderException
 	 */
-	protected function parseTokenResponse(OAuthResponse $response, bool $checkCallbackConfirmed = null):Token {
+	protected function parseTokenResponse(HTTPResponseInterface $response, bool $checkCallbackConfirmed = null):Token {
 		parse_str($response->body, $data);
 
 		if(!$data || !is_array($data)){
@@ -268,9 +267,9 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 	 * @param null   $body
 	 * @param array  $headers
 	 *
-	 * @return \chillerlan\OAuth\HTTP\OAuthResponse
+	 * @return \chillerlan\HTTP\HTTPResponseInterface
 	 */
-	public function request(string $path, array $params = null, string $method = null, $body = null, array $headers = null):OAuthResponse{
+	public function request(string $path, array $params = null, string $method = null, $body = null, array $headers = null):HTTPResponseInterface{
 		$method = $method ?? 'GET';
 
 		$headers = $this->requestHeaders(

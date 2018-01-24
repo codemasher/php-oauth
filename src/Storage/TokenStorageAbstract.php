@@ -25,17 +25,9 @@ abstract class TokenStorageAbstract implements TokenStorageInterface{
 	 * TokenStorageAbstract constructor.
 	 *
 	 * @param \chillerlan\OAuth\OAuthOptions|null $options
-	 *
-	 * @throws \chillerlan\OAuth\Storage\TokenStorageException
 	 */
 	public function __construct(OAuthOptions $options = null){
 		$this->options = $options ?? new OAuthOptions;
-
-		// @todo: extension_loaded() is unreliable with sodium and the current ubuntu 7.2 builds
-		if($this->options->useEncryption === true && !extension_loaded('sodium')){
-			throw new TokenStorageException('sodium extension installed/enabled?');
-		}
-
 	}
 
 	/**

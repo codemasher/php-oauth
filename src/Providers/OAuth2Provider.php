@@ -12,9 +12,10 @@
 
 namespace chillerlan\OAuth\Providers;
 
+use chillerlan\HTTP\{
+	HTTPClientInterface, HTTPResponseInterface
+};
 use chillerlan\OAuth\{
-	HTTP\HTTPClientInterface,
-	HTTP\OAuthResponse,
 	OAuthOptions,
 	Token,
 	Storage\TokenStorageInterface
@@ -79,7 +80,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	/**
 	 * OAuth2Provider constructor.
 	 *
-	 * @param \chillerlan\OAuth\HTTP\HTTPClientInterface      $http
+	 * @param \chillerlan\HTTP\HTTPClientInterface            $http
 	 * @param \chillerlan\OAuth\Storage\TokenStorageInterface $storage
 	 * @param \chillerlan\OAuth\OAuthOptions                  $options
 	 * @param array                                           $scopes
@@ -146,12 +147,12 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	}
 
 	/**
-	 * @param OAuthResponse $response
+	 * @param \chillerlan\HTTP\HTTPResponseInterface $response
 	 *
 	 * @return \chillerlan\OAuth\Token
 	 * @throws \chillerlan\OAuth\Providers\ProviderException
 	 */
-	protected function parseTokenResponse(OAuthResponse $response):Token{
+	protected function parseTokenResponse(HTTPResponseInterface $response):Token{
 		$data = $response->json_array;
 
 		if(!is_array($data)){
@@ -379,10 +380,10 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	 * @param null   $body
 	 * @param array  $headers
 	 *
-	 * @return \chillerlan\OAuth\HTTP\OAuthResponse
+	 * @return \chillerlan\HTTP\HTTPResponseInterface
 	 * @throws \chillerlan\OAuth\Providers\ProviderException
 	 */
-	public function request(string $path, array $params = null, string $method = null, $body = null, array $headers = null):OAuthResponse{
+	public function request(string $path, array $params = null, string $method = null, $body = null, array $headers = null):HTTPResponseInterface{
 		$token = $this->storage->retrieveAccessToken($this->serviceName);
 
 		// attempt to refresh an expired token

@@ -12,7 +12,7 @@
 
 namespace chillerlan\OAuth\Providers;
 
-use chillerlan\OAuth\HTTP\OAuthResponse;
+use chillerlan\HTTP\HTTPResponseInterface;
 
 /**
  * @link https://developer.foursquare.com/docs/
@@ -36,9 +36,9 @@ class Foursquare extends OAuth2Provider{
 	 * @param null   $body
 	 * @param array  $headers
 	 *
-	 * @return \chillerlan\OAuth\HTTP\OAuthResponse
+	 * @return \chillerlan\HTTP\HTTPResponseInterface
 	 */
-	public function request(string $path, array $params = null, string $method = null, $body = null, array $headers = null):OAuthResponse{
+	public function request(string $path, array $params = null, string $method = null, $body = null, array $headers = null):HTTPResponseInterface{
 
 		parse_str(parse_url($this->apiURL.$path, PHP_URL_QUERY), $query);
 
