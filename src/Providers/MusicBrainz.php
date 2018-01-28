@@ -76,7 +76,7 @@ class MusicBrainz extends OAuth2Provider{
 
 		$headers = array_merge($this->apiHeaders, $headers ?? [], ['Authorization' => 'Bearer '.$token->accessToken]);
 
-		return $this->http->request($this->apiURL.explode('?', $path)[0], $params, $method, $body, $headers);
+		return $this->httpRequest($this->apiURL.explode('?', $path)[0], $params, $method, $body, $headers);
 	}
 
 }

@@ -273,7 +273,7 @@ class Flickr extends OAuth1Provider{
 
 		$headers = $this->requestHeaders($this->apiURL, $params, $method, $headers, $this->storage->retrieveAccessToken($this->serviceName));
 
-		return $this->http->request($this->apiURL, $params, $method, $body, $headers);
+		return $this->httpRequest($this->apiURL, $params, $method, $body, $headers);
 	}
 
 }

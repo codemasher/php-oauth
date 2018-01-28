@@ -219,10 +219,9 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 		}
 
 		$token = $this->parseTokenResponse(
-			$this->http->request(
+			$this->httpPOST(
 				$this->accessTokenURL,
 				[],
-				'POST',
 				$this->getAccessTokenBody($code),
 				$this->getAccessTokenHeaders()
 			)
@@ -269,10 +268,9 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 		}
 
 		$token = $this->parseTokenResponse(
-			$this->http->request(
+			$this->httpPOST(
 				$this->clientCredentialsTokenURL ?? $this->accessTokenURL,
 				[],
-				'POST',
 				$this->getClientCredentialsTokenBody($scopes ?? []),
 				$this->getClientCredentialsTokenHeaders()
 			)
@@ -332,10 +330,9 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 		}
 
 		$newToken = $this->parseTokenResponse(
-			$this->http->request(
+			$this->httpPOST(
 				$this->refreshTokenURL ?? $this->accessTokenURL,
 				[],
-				'POST',
 				$this->refreshAccessTokenBody($refreshToken),
 				$this->refreshAccessTokenHeaders()
 			)
@@ -408,7 +405,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 			throw new ProviderException('invalid auth type');
 		}
 
-		return $this->http->request(
+		return $this->httpRequest(
 			$this->apiURL.explode('?', $path)[0],
 			$params,
 			$method ?? 'GET',

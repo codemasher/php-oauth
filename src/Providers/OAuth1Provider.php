@@ -50,10 +50,9 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 		$params   = $this->getRequestTokenHeaderParams();
 
 		return $this->parseTokenResponse(
-			$this->http->request(
+			$this->httpPOST(
 				$this->requestTokenURL,
 				[],
-				'POST',
 				null,
 				array_merge($this->authHeaders, [
 					'Authorization' => 'OAuth '.$this->buildHttpQuery($params, true, ', ', '"')
@@ -204,7 +203,7 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 		$body = ['oauth_verifier' => $verifier];
 
 		return $this->parseTokenResponse(
-			$this->http->request($this->accessTokenURL, [], 'POST', $body, $this->getAccessTokenHeaders($body))
+			$this->httpPOST($this->accessTokenURL, [], $body, $this->getAccessTokenHeaders($body))
 		);
 	}
 
@@ -280,7 +279,7 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 			$this->storage->retrieveAccessToken($this->serviceName)
 		);
 
-		return $this->http->request($this->apiURL.$path, $params, $method, $body, $headers);
+		return $this->httpRequest($this->apiURL.$path, $params, $method, $body, $headers);
 	}
 
 }

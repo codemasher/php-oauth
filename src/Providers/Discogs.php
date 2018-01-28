@@ -107,7 +107,7 @@ class Discogs extends OAuth1Provider{
 			$this->storage->retrieveAccessToken($this->serviceName)
 		);
 
-		return $this->http->request($this->apiURL.$path, $params, $method, $body, $headers);
+		return $this->httpRequest($this->apiURL.$path, $params, $method, $body, $headers);
 	}
 
 }

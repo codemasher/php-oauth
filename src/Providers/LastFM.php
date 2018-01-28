@@ -130,9 +130,7 @@ class LastFM extends OAuthProvider{
 	 * @return \chillerlan\OAuth\Token
 	 */
 	public function getAccessToken(string $session_token):Token {
-		return $this->parseTokenResponse(
-			$this->http->request($this->apiURL, $this->getAccessTokenParams($session_token))
-		);
+		return $this->parseTokenResponse($this->httpGET($this->apiURL, $this->getAccessTokenParams($session_token)));
 	}
 
 	/**
@@ -228,7 +226,7 @@ class LastFM extends OAuthProvider{
 			$params = [];
 		}
 
-		return $this->http->request($this->apiURL, $params, $method, $body, $headers);
+		return $this->httpRequest($this->apiURL, $params, $method, $body, $headers);
 	}
 
 	/**
