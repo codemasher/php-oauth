@@ -12,7 +12,7 @@
 
 namespace chillerlan\OAuth;
 
-use chillerlan\HTTP\HTTPOptions;
+use chillerlan\HTTP\HTTPOptionsTrait;
 use chillerlan\Traits\{
 	Container, ContainerInterface
 };
@@ -50,7 +50,7 @@ use chillerlan\Traits\{
  * @property int        $max_redirects
  */
 class OAuthOptions implements ContainerInterface{
-	use HTTPOptions, Container{
+	use HTTPOptionsTrait, Container{
 		__construct as protected containerConstruct;
 	}
 

@@ -13,7 +13,7 @@
 namespace chillerlan\OAuth;
 
 use chillerlan\Traits\{
-	Container, ContainerInterface
+	Container, ContainerInterface, Crypto\MemzeroDestructorTrait
 };
 
 /**
@@ -32,7 +32,7 @@ use chillerlan\Traits\{
  * @property string $provider
  */
 class Token implements ContainerInterface{
-	use Container{
+	use MemzeroDestructorTrait, Container{
 		__construct as constructContainer;
 	}
 
