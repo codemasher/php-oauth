@@ -13,10 +13,9 @@ namespace chillerlan\OAuthCLI;
 require_once __DIR__.'/../vendor/autoload.php';
 
 use chillerlan\Database\{
-	Connection,
-	Options,
-	Drivers\Native\MySQLiDriver,
-	Query\Dialects\MySQLQueryBuilder
+	Database,
+	DatabaseOptions,
+	Drivers\MySQLiDrv,
 };
 use chillerlan\Traits\DotEnv;
 
@@ -26,9 +25,8 @@ const TABLE_PROVIDER = 'storagetest_providers';
 
 $env = (new DotEnv(CFGDIR, file_exists(CFGDIR.'/.env') ? '.env' : '.env_travis'))->load();
 
-$db = new Connection(new Options([
-	'driver'       => MySQLiDriver::class,
-	'querybuilder' => MySQLQueryBuilder::class,
+$db = new Database(new DatabaseOptions([
+	'driver'       => MySQLiDrv::class,
 	'host'         => $env->get('MYSQL_HOST'),
 	'port'         => $env->get('MYSQL_PORT'),
 	'database'     => $env->get('MYSQL_DATABASE'),
