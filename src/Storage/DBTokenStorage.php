@@ -190,7 +190,7 @@ class DBTokenStorage extends TokenStorageAbstract{
 			throw new TokenStorageException('state not found');
 		}
 
-		return (string)$r[0]->state('trim');
+		return trim($r[0]->state);
 	}
 
 	/**
@@ -206,7 +206,7 @@ class DBTokenStorage extends TokenStorageAbstract{
 			->where($this->options->dbTokenTableLabel, $this->getLabel($service))
 			->query();
 
-		if(is_bool($r) || $r->length < 1 || empty($r[0]->state('trim'))){
+		if(is_bool($r) || $r->length < 1 || empty(trim($r[0]->state))){
 			return false;
 		}
 
