@@ -16,6 +16,8 @@ use chillerlan\OAuth\{OAuthOptions, Token};
 
 abstract class TokenStorageAbstract implements TokenStorageInterface{
 
+	protected const TOKEN_NONCE = "\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01";
+
 	/**
 	 * @var \chillerlan\OAuth\OAuthOptions
 	 */
@@ -67,10 +69,9 @@ abstract class TokenStorageAbstract implements TokenStorageInterface{
 	 * @throws \chillerlan\OAuth\Storage\TokenStorageException
 	 */
 	public function encrypt(string $data, string $key):string {
-		$nonce = random_bytes(24);
 
 		if(function_exists('sodium_crypto_secretbox')){
-			return sodium_bin2hex($nonce.sodium_crypto_secretbox($data, $nonce, sodium_hex2bin($key)));
+			return sodium_bin2hex(sodium_crypto_secretbox($data, $this::TOKEN_NONCE, sodium_hex2bin($key)));
 		}
 
 		throw new TokenStorageException('sodium not installed'); // @codeCoverageIgnore
@@ -88,7 +89,7 @@ abstract class TokenStorageAbstract implements TokenStorageInterface{
 		if(function_exists('sodium_crypto_secretbox_open')){
 			$box = sodium_hex2bin($box);
 
-			return sodium_crypto_secretbox_open(substr($box, 24), substr($box, 0, 24), sodium_hex2bin($key));
+			return sodium_crypto_secretbox_open($box, $this::TOKEN_NONCE, sodium_hex2bin($key));
 		}
 
 		throw new TokenStorageException('sodium not installed'); // @codeCoverageIgnore
