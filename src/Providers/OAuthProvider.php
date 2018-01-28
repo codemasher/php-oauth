@@ -16,7 +16,6 @@ use chillerlan\HTTP\{
 	HTTPClientTrait, HTTPClientInterface
 };
 use chillerlan\OAuth\{
-	OAuthOptions,
 	API\OAuthAPIClientException,
 	Storage\TokenStorageInterface
 };

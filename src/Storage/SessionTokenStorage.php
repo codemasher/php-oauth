@@ -12,9 +12,8 @@
 
 namespace chillerlan\OAuth\Storage;
 
-use chillerlan\OAuth\{
-	OAuthOptions, Token
-};
+use chillerlan\OAuth\Token;
+use chillerlan\Traits\ContainerInterface;
 
 /**
  * @todo: encryption?
@@ -42,9 +41,9 @@ class SessionTokenStorage extends TokenStorageAbstract{
 	/**
 	 * Session constructor.
 	 *
-	 * @param \chillerlan\OAuth\OAuthOptions|null $options
+	 * @param \chillerlan\Traits\ContainerInterface|null $options
 	 */
-	public function __construct(OAuthOptions $options = null){
+	public function __construct(ContainerInterface $options = null){
 		parent::__construct($options);
 
 		$this->sessionVar = $this->options->sessionTokenVar;

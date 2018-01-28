@@ -13,7 +13,8 @@
 namespace chillerlan\OAuth\Storage;
 
 use chillerlan\Database\Database;
-use chillerlan\OAuth\{OAuthOptions, Token};
+use chillerlan\OAuth\Token;
+use chillerlan\Traits\ContainerInterface;
 
 class DBTokenStorage extends TokenStorageAbstract{
 
@@ -25,12 +26,12 @@ class DBTokenStorage extends TokenStorageAbstract{
 	/**
 	 * DBTokenStorage constructor.
 	 *
-	 * @param \chillerlan\OAuth\OAuthOptions   $options
-	 * @param \chillerlan\Database\Database  $db
+	 * @param \chillerlan\Traits\ContainerInterface $options
+	 * @param \chillerlan\Database\Database         $db
 	 *
 	 * @throws \chillerlan\OAuth\Storage\TokenStorageException
 	 */
-	public function __construct(OAuthOptions $options, Database $db){
+	public function __construct(ContainerInterface $options, Database $db){
 		parent::__construct($options);
 
 		if(!$this->options->dbTokenTable || !$this->options->dbProviderTable){

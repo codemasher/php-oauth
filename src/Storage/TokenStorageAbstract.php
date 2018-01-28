@@ -13,6 +13,7 @@
 namespace chillerlan\OAuth\Storage;
 
 use chillerlan\OAuth\{OAuthOptions, Token};
+use chillerlan\Traits\ContainerInterface;
 
 abstract class TokenStorageAbstract implements TokenStorageInterface{
 
@@ -26,9 +27,9 @@ abstract class TokenStorageAbstract implements TokenStorageInterface{
 	/**
 	 * TokenStorageAbstract constructor.
 	 *
-	 * @param \chillerlan\OAuth\OAuthOptions|null $options
+	 * @param \chillerlan\Traits\ContainerInterface|null $options
 	 */
-	public function __construct(OAuthOptions $options = null){
+	public function __construct(ContainerInterface $options = null){
 		$this->options = $options ?? new OAuthOptions;
 	}
 

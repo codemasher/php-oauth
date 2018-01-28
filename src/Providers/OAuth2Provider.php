@@ -16,10 +16,10 @@ use chillerlan\HTTP\{
 	HTTPClientInterface, HTTPResponseInterface
 };
 use chillerlan\OAuth\{
-	OAuthOptions,
 	Token,
 	Storage\TokenStorageInterface
 };
+use chillerlan\Traits\ContainerInterface;
 
 /**
  * @property bool $supportsClientCredentials
@@ -82,10 +82,10 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	 *
 	 * @param \chillerlan\HTTP\HTTPClientInterface            $http
 	 * @param \chillerlan\OAuth\Storage\TokenStorageInterface $storage
-	 * @param \chillerlan\OAuth\OAuthOptions                  $options
+	 * @param \chillerlan\Traits\ContainerInterface           $options
 	 * @param array                                           $scopes
 	 */
-	public function __construct(HTTPClientInterface $http, TokenStorageInterface $storage, OAuthOptions $options, array $scopes = null){
+	public function __construct(HTTPClientInterface $http, TokenStorageInterface $storage, ContainerInterface $options, array $scopes = null){
 		parent::__construct($http, $storage, $options);
 
 		$this->scopes = $scopes ?? [];
