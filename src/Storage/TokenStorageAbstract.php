@@ -41,7 +41,7 @@ abstract class TokenStorageAbstract implements TokenStorageInterface{
 		$data = $token->__toJSON();
 
 		if($this->options->useEncryption === true){
-			return $this->encrypt($data, $this->options->storageCryptoKey);
+			return $this->encrypt($data);
 		}
 
 		return $data;
@@ -55,7 +55,7 @@ abstract class TokenStorageAbstract implements TokenStorageInterface{
 	public function fromStorage(string $data):Token{
 
 		if($this->options->useEncryption === true){
-			$data = $this->decrypt($data, $this->options->storageCryptoKey);
+			$data = $this->decrypt($data);
 		}
 
 		return (new Token)->__fromJSON($data);
@@ -63,15 +63,18 @@ abstract class TokenStorageAbstract implements TokenStorageInterface{
 
 	/**
 	 * @param string $data
-	 * @param string $key
 	 *
 	 * @return string
 	 * @throws \chillerlan\OAuth\Storage\TokenStorageException
 	 */
-	public function encrypt(string $data, string $key):string {
+	protected function encrypt(string &$data):string {
 
 		if(function_exists('sodium_crypto_secretbox')){
-			return sodium_bin2hex(sodium_crypto_secretbox($data, $this::TOKEN_NONCE, sodium_hex2bin($key)));
+			$box = sodium_crypto_secretbox($data, $this::TOKEN_NONCE, sodium_hex2bin($this->options->storageCryptoKey));
+
+			sodium_memzero($data);
+
+			return sodium_bin2hex($box);
 		}
 
 		throw new TokenStorageException('sodium not installed'); // @codeCoverageIgnore
@@ -79,17 +82,14 @@ abstract class TokenStorageAbstract implements TokenStorageInterface{
 
 	/**
 	 * @param string $box
-	 * @param string $key
 	 *
 	 * @return string
 	 * @throws \chillerlan\OAuth\Storage\TokenStorageException
 	 */
-	public function decrypt(string $box, string $key):string {
+	protected function decrypt(string $box):string {
 
 		if(function_exists('sodium_crypto_secretbox_open')){
-			$box = sodium_hex2bin($box);
-
-			return sodium_crypto_secretbox_open($box, $this::TOKEN_NONCE, sodium_hex2bin($key));
+			return sodium_crypto_secretbox_open(sodium_hex2bin($box), $this::TOKEN_NONCE, sodium_hex2bin($this->options->storageCryptoKey));
 		}
 
 		throw new TokenStorageException('sodium not installed'); // @codeCoverageIgnore
