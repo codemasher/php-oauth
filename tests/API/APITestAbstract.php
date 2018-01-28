@@ -13,28 +13,27 @@
 namespace chillerlan\OAuthTest\API;
 
 use chillerlan\Database\{
-	Database, DatabaseOptions, Drivers\MySQLiDrv
-};
-use chillerlan\OAuth\{
-	OAuthOptions, Providers\OAuth2Interface, Providers\OAuthInterface, Storage\DBTokenStorage, Storage\TokenStorageInterface, Token
+	Database, DatabaseOptionsTrait, Drivers\MySQLiDrv
 };
 use chillerlan\HTTP\{
 	CurlClient, GuzzleClient, HTTPClientAbstract, HTTPClientInterface, HTTPOptionsTrait, HTTPResponse, HTTPResponseInterface, StreamClient, TinyCurlClient
 };
-use chillerlan\TinyCurl\{
-	Request, RequestOptions
+use chillerlan\OAuth\{
+	OAuthOptions, Providers\OAuth2Interface, Providers\OAuthInterface, Storage\DBTokenStorage, Token
 };
-use chillerlan\Traits\ContainerInterface;
-use chillerlan\Traits\DotEnv;
+use chillerlan\TinyCurl\Request;
+use chillerlan\Traits\{
+	ContainerInterface, DotEnv
+};
 use GuzzleHttp\Client;
 use PHPUnit\Framework\TestCase;
 
 abstract class APITestAbstract extends TestCase{
 
-	const CFGDIR        = __DIR__.'/../../config';
-	const STORAGE       = __DIR__.'/../../tokenstorage';
-	const UA            = 'chillerlanPhpOAuth/2.0.0 +https://github.com/chillerlan/php-oauth';
-	const SLEEP_SECONDS = 1.0;
+	const CFGDIR         = __DIR__.'/../../config';
+	const STORAGE        = __DIR__.'/../../tokenstorage';
+	const UA             = 'chillerlanPhpOAuth/2.0.0 +https://github.com/chillerlan/php-oauth';
+	const SLEEP_SECONDS  = 1.0;
 	const TABLE_TOKEN    = 'storagetest';
 	const TABLE_PROVIDER = 'storagetest_providers';
 
@@ -88,7 +87,7 @@ abstract class APITestAbstract extends TestCase{
 
 		$this->env = (new DotEnv(self::CFGDIR, file_exists(self::CFGDIR.'/.env') ? '.env' : '.env_travis'))->load();
 
-		$this->options = new class([
+		$options = [
 			'key'              => $this->env->get($this->envvar.'_KEY'),
 			'secret'           => $this->env->get($this->envvar.'_SECRET'),
 			'callbackURL'      => $this->env->get($this->envvar.'_CALLBACK_URL'),
@@ -96,13 +95,28 @@ abstract class APITestAbstract extends TestCase{
 			'dbProviderTable'  => $this::TABLE_PROVIDER,
 			'storageCryptoKey' => '000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f',
 			'dbUserID'         => 1,
-			'ca_info' =>  $this::CFGDIR.'/cacert.pem',
-			'userAgent' => $this::UA,
-		]) extends OAuthOptions{use HTTPOptionsTrait; };
+			// HTTPOptionsTrait
+			'ca_info'          => $this::CFGDIR.'/cacert.pem',
+			'userAgent'        => $this::UA,
+			// DatabaseOptionsTrait
+			'driver'           => MySQLiDrv::class,
+			'host'             => $this->env->get('MYSQL_HOST'),
+			'port'             => $this->env->get('MYSQL_PORT'),
+			'database'         => $this->env->get('MYSQL_DATABASE'),
+			'username'         => $this->env->get('MYSQL_USERNAME'),
+			'password'         => $this->env->get('MYSQL_PASSWORD'),
+			// testHTTPClient
+			'testclient'       => 'tinycurl',
+		];
 
-		$this->storage  = $this->initStorage();
-		$this->http     = $this->initHTTP('tinycurl');
-		$this->provider = $this->initProvider();
+		$this->options  = new class($options) extends OAuthOptions{
+			use HTTPOptionsTrait, DatabaseOptionsTrait;
+
+			protected $testclient;
+		};
+		$this->storage  = new DBTokenStorage($this->options, new Database($this->options));
+		$this->http     = $this->initHTTP();
+		$this->provider = new $this->FQCN($this->http, $this->storage, $this->options, $this->scopes);
 
 		$this->storage->storeAccessToken($this->provider->serviceName, $this->getToken());
 	}
@@ -118,22 +132,13 @@ abstract class APITestAbstract extends TestCase{
 		}
 	}
 
-	protected function initProvider():OAuthInterface{
-		return  new $this->FQCN(
-			$this->http,
-			$this->storage,
-			$this->options,
-			$this->scopes
-		);
-	}
-
-	protected function initHTTP($client):HTTPClientInterface{
-		return new class($this->options, $client) extends HTTPClientAbstract{
+	protected function initHTTP():HTTPClientInterface{
+		return new class($this->options) extends HTTPClientAbstract{
 			protected $client;
 
-			public function __construct(ContainerInterface $options, string $client = null){
+			public function __construct(ContainerInterface $options){
 				parent::__construct($options);
-				$this->client = call_user_func([$this, $client]);
+				$this->client = call_user_func([$this, $this->options->testclient]);
 			}
 
 			public function request(string $url, array $params = null, string $method = null, $body = null, array $headers = null):HTTPResponseInterface{
@@ -162,19 +167,6 @@ abstract class APITestAbstract extends TestCase{
 			}
 
 		};
-	}
-
-	protected function initStorage():TokenStorageInterface{
-		$db = new Database(new DatabaseOptions([
-			'driver'       => MySQLiDrv::class,
-			'host'         => $this->env->get('MYSQL_HOST'),
-			'port'         => $this->env->get('MYSQL_PORT'),
-			'database'     => $this->env->get('MYSQL_DATABASE'),
-			'username'     => $this->env->get('MYSQL_USERNAME'),
-			'password'     => $this->env->get('MYSQL_PASSWORD'),
-		]));
-
-		return new DBTokenStorage($this->options, $db);
 	}
 
 	protected function getToken():Token{
