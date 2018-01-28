@@ -20,6 +20,7 @@ use chillerlan\OAuth\{
 	API\OAuthAPIClientException,
 	Storage\TokenStorageInterface
 };
+use chillerlan\Traits\ContainerInterface;
 use chillerlan\Traits\Magic;
 use ReflectionClass;
 
@@ -89,9 +90,9 @@ abstract class OAuthProvider implements OAuthInterface{
 	 *
 	 * @param \chillerlan\HTTP\HTTPClientInterface            $http
 	 * @param \chillerlan\OAuth\Storage\TokenStorageInterface $storage
-	 * @param \chillerlan\OAuth\OAuthOptions                  $options
+	 * @param \chillerlan\Traits\ContainerInterface           $options
 	 */
-	public function __construct(HTTPClientInterface $http, TokenStorageInterface $storage, OAuthOptions $options){ // @todo: $options = null
+	public function __construct(HTTPClientInterface $http, TokenStorageInterface $storage, ContainerInterface $options){
 		$this->setHTTPClient($http);
 
 		$this->storage = $storage;
@@ -175,18 +176,18 @@ abstract class OAuthProvider implements OAuthInterface{
 
 			}
 
-#			print_r([$endpoint,$params,$method,$body,$headers]);
+			$params = $this->checkQueryParams($params);
+			$body   = $this->checkQueryParams($body);
 
-			// uhhhh... @todo
+			// twitter is v picky
+			if($this instanceof Twitter){
+				$params = $this->checkQueryParams($params, true);
+				$body   = $this->checkQueryParams($body, true);
+			}
 
-			return $this->request(
-				$endpoint,
-				$this->checkQueryParams($params ?? []),
-				$method,
-				$this->checkQueryParams($body),
-				$headers
-			);
+#			print_r(['$endpoint' => $endpoint, '$params' => $params, '$method' => $method, '$body' => $body, '$headers' => $headers]);
 
+			return $this->request($endpoint, $params, $method, $body, $headers);
 		}
 
 		return null;
