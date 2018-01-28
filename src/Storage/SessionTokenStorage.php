@@ -134,6 +134,11 @@ class SessionTokenStorage extends TokenStorageAbstract{
 	 * @return \chillerlan\OAuth\Storage\TokenStorageInterface
 	 */
 	public function clearAllAccessTokens():TokenStorageInterface{
+
+		foreach(array_keys($_SESSION[$this->sessionVar]) as $service){
+			unset($_SESSION[$this->sessionVar][$service]); // trigger the memzero destructor
+		}
+
 		unset($_SESSION[$this->sessionVar]);
 
 		return $this;

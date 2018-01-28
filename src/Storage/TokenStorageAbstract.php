@@ -40,6 +40,8 @@ abstract class TokenStorageAbstract implements TokenStorageInterface{
 	public function toStorage(Token $token):string {
 		$data = $token->__toJSON();
 
+		unset($token);
+
 		if($this->options->useEncryption === true){
 			return $this->encrypt($data);
 		}

@@ -80,6 +80,11 @@ class MemoryTokenStorage extends TokenStorageAbstract{
 	 * @return \chillerlan\OAuth\Storage\TokenStorageInterface
 	 */
 	public function clearAllAccessTokens():TokenStorageInterface{
+
+		foreach(array_keys($this->tokens) as $service){
+			unset($this->tokens[$service]); // trigger the memzero destructor
+		}
+
 		$this->tokens = [];
 
 		return $this;
