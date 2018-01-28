@@ -12,6 +12,7 @@
 
 namespace chillerlan\OAuth\Providers;
 
+use chillerlan\HTTP\HTTPClientTrait;
 use chillerlan\HTTP\HTTPResponseInterface;
 
 /**
@@ -138,6 +139,9 @@ use chillerlan\HTTP\HTTPResponseInterface;
  * @method \chillerlan\HTTP\HTTPResponseInterface verifyCredentials(array $params = ['include_entities', 'skip_status'])
  */
 class Twitter extends OAuth1Provider{
+	use HTTPClientTrait{
+		checkQueryParams as traitCheckQueryParams;
+	}
 
 	protected $apiURL          = 'https://api.twitter.com/1.1';
 	protected $requestTokenURL = 'https://api.twitter.com/oauth/request_token';
@@ -150,21 +154,10 @@ class Twitter extends OAuth1Provider{
 	 *
 	 * @inheritdoc
 	 */
-	protected function checkParams($params){
+	protected function checkQueryParams($params, bool $booleans_as_string = null){
 
 		if(is_array($params)){
-
-			foreach($params as $key => $value){
-
-				if(is_bool($value)){
-					$params[$key] = $value ? 'true' : 'false';
-				}
-				elseif(is_null($value) || empty($value)){
-					unset($params[$key]);
-				}
-
-			}
-
+			return $this->traitCheckQueryParams($params, true);
 		}
 
 		return $params;

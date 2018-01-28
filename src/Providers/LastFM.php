@@ -102,7 +102,7 @@ class LastFM extends OAuthProvider{
 			'api_key' => $this->options->key,
 		]);
 
-		return $this->authURL.'?'.$this->buildHttpQuery($params);
+		return $this->authURL.'?'.$this->httpBuildQuery($params);
 	}
 
 	/**

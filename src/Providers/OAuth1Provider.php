@@ -40,7 +40,7 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 			['oauth_token' => $this->getRequestToken()->requestToken]
 		);
 
-		return $this->authURL.'?'.$this->buildHttpQuery($params);
+		return $this->authURL.'?'.$this->httpBuildQuery($params);
 	}
 
 	/**
@@ -55,7 +55,7 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 				[],
 				null,
 				array_merge($this->authHeaders, [
-					'Authorization' => 'OAuth '.$this->buildHttpQuery($params, true, ', ', '"')
+					'Authorization' => 'OAuth '.$this->httpBuildQuery($params, true, ', ', '"')
 				])
 			),
 			true
@@ -180,7 +180,7 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 		$data = [
 			strtoupper($method),
 			$signatureURL,
-			$this->buildHttpQuery($signatureParams),
+			$this->httpBuildQuery($signatureParams),
 		];
 
 		return implode('&', $this->rawurlencode($data));
@@ -238,7 +238,7 @@ abstract class OAuth1Provider extends OAuthProvider implements OAuth1Interface{
 		}
 
 		return array_merge($headers ?? [], $this->apiHeaders, [
-			'Authorization' => 'OAuth '.$this->buildHttpQuery($parameters, true, ', ', '"')
+			'Authorization' => 'OAuth '.$this->httpBuildQuery($parameters, true, ', ', '"')
 		]);
 	}
 

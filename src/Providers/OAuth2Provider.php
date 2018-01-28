@@ -122,7 +122,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 			$this->storage->storeAuthorizationState($this->serviceName, $params['state']);
 		}
 
-		return $this->authURL.'?'.$this->buildHttpQuery($params);
+		return $this->authURL.'?'.$this->httpBuildQuery($params);
 	}
 
 	/**

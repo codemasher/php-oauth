@@ -181,9 +181,9 @@ abstract class OAuthProvider implements OAuthInterface{
 
 			return $this->request(
 				$endpoint,
-				$this->checkParams($params ?? []),
+				$this->checkQueryParams($params ?? []),
 				$method,
-				$this->checkParams($body),
+				$this->checkQueryParams($body),
 				$headers
 			);
 
