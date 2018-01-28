@@ -16,7 +16,7 @@ use chillerlan\OAuth\{
 	OAuthOptions, Providers\OAuth2Interface, Token
 };
 use chillerlan\HTTP\{
-	HTTPClientInterface, HTTPClientAbstract, HttpResponse, HTTPResponseInterface
+	HTTPClientInterface, HTTPClientAbstract, HTTPResponse, HTTPResponseInterface
 };
 
 /**
@@ -101,7 +101,7 @@ abstract class OAuth2Test extends ProviderTestAbstract{
 	public function testParseTokenResponse(){
 		$token = $this
 			->getMethod('parseTokenResponse')
-			->invokeArgs($this->provider, [new HttpResponse(['body' => json_encode(['access_token' => 'whatever'])])]);
+			->invokeArgs($this->provider, [new HTTPResponse(['body' => json_encode(['access_token' => 'whatever'])])]);
 
 		$this->assertInstanceOf(Token::class, $token);
 		$this->assertSame('whatever', $token->accessToken);
@@ -114,7 +114,7 @@ abstract class OAuth2Test extends ProviderTestAbstract{
 	public function testParseTokenResponseNoData(){
 		$this
 			->getMethod('parseTokenResponse')
-			->invokeArgs($this->provider, [new HttpResponse(['body' => ''])]);
+			->invokeArgs($this->provider, [new HTTPResponse(['body' => ''])]);
 	}
 
 	/**
@@ -124,7 +124,7 @@ abstract class OAuth2Test extends ProviderTestAbstract{
 	public function testParseTokenResponseError(){
 		$this
 			->getMethod('parseTokenResponse')
-			->invokeArgs($this->provider, [new HttpResponse(['body' => json_encode(['error' => 'whatever'])])]);
+			->invokeArgs($this->provider, [new HTTPResponse(['body' => json_encode(['error' => 'whatever'])])]);
 	}
 
 	/**
@@ -134,7 +134,7 @@ abstract class OAuth2Test extends ProviderTestAbstract{
 	public function testParseTokenResponseNoToken(){
 		$this
 			->getMethod('parseTokenResponse')
-			->invokeArgs($this->provider, [new HttpResponse(['body' => json_encode(['foo' => 'bar'])])]);
+			->invokeArgs($this->provider, [new HTTPResponse(['body' => json_encode(['foo' => 'bar'])])]);
 	}
 
 	public function testCheckState(){
