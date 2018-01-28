@@ -13,13 +13,13 @@
 namespace chillerlan\OAuthTest\API;
 
 use chillerlan\Database\{
-	Connection, Drivers\Native\MySQLiDriver, Options, Query\Dialects\MySQLQueryBuilder
+	Database, DatabaseOptions, Drivers\MySQLiDrv
 };
 use chillerlan\OAuth\{
 	OAuthOptions, Providers\OAuth2Interface, Providers\OAuthInterface, Storage\DBTokenStorage, Storage\TokenStorageInterface, Token
 };
 use chillerlan\HTTP\{
-	CurlClient, GuzzleClient, HTTPClientAbstract, HTTPClientInterface, HTTPResponse, HTTPResponseInterface, StreamClient, TinyCurlClient
+	CurlClient, GuzzleClient, HTTPClientAbstract, HTTPClientInterface, HTTPOptionsTrait, HTTPResponse, HTTPResponseInterface, StreamClient, TinyCurlClient
 };
 use chillerlan\TinyCurl\{
 	Request, RequestOptions
@@ -88,15 +88,17 @@ abstract class APITestAbstract extends TestCase{
 
 		$this->env = (new DotEnv(self::CFGDIR, file_exists(self::CFGDIR.'/.env') ? '.env' : '.env_travis'))->load();
 
-		$this->options = new OAuthOptions([
+		$this->options = new class([
 			'key'              => $this->env->get($this->envvar.'_KEY'),
 			'secret'           => $this->env->get($this->envvar.'_SECRET'),
 			'callbackURL'      => $this->env->get($this->envvar.'_CALLBACK_URL'),
-			'dbTokenTable'     => self::TABLE_TOKEN,
-			'dbProviderTable'  => self::TABLE_PROVIDER,
+			'dbTokenTable'     => $this::TABLE_TOKEN,
+			'dbProviderTable'  => $this::TABLE_PROVIDER,
 			'storageCryptoKey' => '000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f',
 			'dbUserID'         => 1,
-		]);
+			'ca_info' =>  $this::CFGDIR.'/cacert.pem',
+			'userAgent' => $this::UA,
+		]) extends OAuthOptions{use HTTPOptionsTrait; };
 
 		$this->storage  = $this->initStorage();
 		$this->http     = $this->initHTTP('tinycurl');
@@ -126,7 +128,7 @@ abstract class APITestAbstract extends TestCase{
 	}
 
 	protected function initHTTP($client):HTTPClientInterface{
-		return new class($client, $this->options) extends HTTPClientAbstract{
+		return new class($this->options, $client) extends HTTPClientAbstract{
 			protected $client;
 
 			public function __construct(ContainerInterface $options, string $client = null){
@@ -148,7 +150,7 @@ abstract class APITestAbstract extends TestCase{
 			}
 
 			protected function tinycurl(){
-				return new TinyCurlClient($this->options, new Request(new RequestOptions(['ca_info' =>  $this->options->ca_info, 'userAgent' => $this->options->userAgent])));
+				return new TinyCurlClient($this->options, new Request($this->options));
 			}
 
 			protected function curl(){
@@ -163,9 +165,8 @@ abstract class APITestAbstract extends TestCase{
 	}
 
 	protected function initStorage():TokenStorageInterface{
-		$db = new Connection(new Options([
-			'driver'       => MySQLiDriver::class,
-			'querybuilder' => MySQLQueryBuilder::class,
+		$db = new Database(new DatabaseOptions([
+			'driver'       => MySQLiDrv::class,
 			'host'         => $this->env->get('MYSQL_HOST'),
 			'port'         => $this->env->get('MYSQL_PORT'),
 			'database'     => $this->env->get('MYSQL_DATABASE'),

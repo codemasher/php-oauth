@@ -62,7 +62,7 @@ class LastFMAPITest extends APITestAbstract{
 	public function testGetMethods(string $method, string $return, array $params){
 		$this->response = $this->provider->{$method}($params);
 
-		$this->assertTrue(isset($this->response->json->{$return}));
+		$this->assertTrue(property_exists($this->response->json, $return));
 	}
 
 
