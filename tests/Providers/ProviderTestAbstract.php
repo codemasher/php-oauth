@@ -134,42 +134,6 @@ abstract class ProviderTestAbstract extends TestCase{
 		$this->assertInstanceOf(TokenStorageInterface::class, $this->provider->getStorageInterface());
 	}
 
-	public function rawurlencodeDataProvider(){
-		return [
-			['some test string!', 'some%20test%20string%21'],
-			[['some other', 'test string', ['oh wait!', 'this', ['is an', 'array!']]], ['some%20other', 'test%20string', ['oh%20wait%21', 'this', ['is%20an', 'array%21']]]],
-		];
-	}
-
-	/**
-	 * @dataProvider rawurlencodeDataProvider
-	 */
-	public function testRawurlencode($data, $expected){
-		$m = $this->getMethod('rawurlencode');
-
-		$this->assertSame($expected, $m->invokeArgs($this->provider, [$data]));
-	}
-
-	public function testBuildHttpQuery(){
-
-		$data = ['foo' => 'bar', 'whatever?' => 'nope!'];
-
-		$this->assertSame('', $this->provider->buildHttpQuery([]));
-		$this->assertSame('foo=bar&whatever%3F=nope%21', $this->provider->buildHttpQuery($data));
-		$this->assertSame('foo=bar&whatever?=nope!', $this->provider->buildHttpQuery($data, false));
-		$this->assertSame('foo=bar, whatever?=nope!', $this->provider->buildHttpQuery($data, false, ', '));
-		$this->assertSame('foo="bar", whatever?="nope!"', $this->provider->buildHttpQuery($data, false, ', ', '"'));
-
-		$data['florps']  = ['nope', 'nope', 'nah'];
-		$this->assertSame('florps="nah", florps="nope", florps="nope", foo="bar", whatever?="nope!"', $this->provider->buildHttpQuery($data, false, ', ', '"'));
-	}
-
-	public function testCheckParams(){
-		$data = ['foo' => 'bar', 'whatever' => null, 'nope' => '', 'true' => true, 'false' => false];
-
-		$this->assertSame(['foo' => 'bar', 'true' => '1', 'false' => '0'], $this->getMethod('checkParams')->invokeArgs($this->provider, [$data]));
-	}
-
 	// @todo
 	public function testCall(){
 		$this->setProperty($this->provider, 'apiMethods', json_decode('{"test":{"path":"","method":"POST"}}'));

@@ -327,12 +327,6 @@ property | description
 `$supportsClientCredentials` | bool
 `$tokenRefreshable` | bool
 
-### `HTTPClientInterface`
-method | return 
------- | ------ 
-`request(string $url, array $params = null, string $method = null, $body = null, array $headers = null)` | `OAuthResponse` 
-`normalizeRequestHeaders(array $headers)` | array
-
 ### `TokenStorageInterface`
 method | return 
 ------ | ------ 
