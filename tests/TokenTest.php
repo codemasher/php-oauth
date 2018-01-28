@@ -25,18 +25,14 @@ class TokenTest extends TestCase{
 		$this->token = new Token;
 	}
 
-	public function testInstance(){
-		$this->assertInstanceOf(Token::class, $this->token);
-	}
-
 	public function tokenDataProvider(){
 		return [
-			['requestToken',       null, 'REQUEST_TOKEN'],
-			['requestTokenSecret', null, 'REQUEST_TOKEN_SECRET'],
-			['accessTokenSecret',  null, 'ACCESS_TOKEN'],
-			['accessToken',        null, 'ACCESS_TOKEN_SECRET'],
-			['refreshToken',       null, 'REFRESH_TOKEN'],
-			['extraParams',        []  , ['foo' => 'bar']],
+			'requestToken'       => ['requestToken',       null, 'REQUEST_TOKEN'],
+			'requestTokenSecret' => ['requestTokenSecret', null, 'REQUEST_TOKEN_SECRET'],
+			'accessTokenSecret'  => ['accessTokenSecret',  null, 'ACCESS_TOKEN'],
+			'accessToken'        => ['accessToken',        null, 'ACCESS_TOKEN_SECRET'],
+			'refreshToken'       => ['refreshToken',       null, 'REFRESH_TOKEN'],
+			'extraParams'        => ['extraParams',        []  , ['foo' => 'bar']],
 		];
 	}
 
@@ -55,12 +51,12 @@ class TokenTest extends TestCase{
 
 	public function expiryDataProvider(){
 		return [
-			[null,     Token::EOL_UNKNOWN],
-			[-9002,    Token::EOL_NEVER_EXPIRES],
-			[-9001,    Token::EOL_UNKNOWN],
-			[-1, Token::EOL_UNKNOWN],
-			[0, Token::EOL_NEVER_EXPIRES],
-			[1514309386, Token::EOL_UNKNOWN],
+			'EOL_UNKNOWN (null)'        => [null,       Token::EOL_UNKNOWN],
+			'EOL_UNKNOWN (-9001)'       => [-9001,      Token::EOL_UNKNOWN],
+			'EOL_UNKNOWN (-1)'          => [-1,         Token::EOL_UNKNOWN],
+			'EOL_UNKNOWN (1514309386)'  => [1514309386, Token::EOL_UNKNOWN],
+			'EOL_NEVER_EXPIRES (-9002)' => [-9002,      Token::EOL_NEVER_EXPIRES],
+			'EOL_NEVER_EXPIRES (0)'     => [0,          Token::EOL_NEVER_EXPIRES],
 		];
 	}
 
@@ -75,9 +71,9 @@ class TokenTest extends TestCase{
 
 	public function isExpiredDataProvider(){
 		return [
-			[0,                        false],
-			[Token::EOL_NEVER_EXPIRES, false],
-			[Token::EOL_UNKNOWN,       false],
+			'0 (f)'                 => [0,                        false],
+			'EOL_NEVER_EXPIRES (f)' => [Token::EOL_NEVER_EXPIRES, false],
+			'EOL_UNKNOWN (f)'       => [Token::EOL_UNKNOWN,       false],
 		];
 	}
 
