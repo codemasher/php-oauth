@@ -10,9 +10,9 @@
 
 namespace chillerlan\OAuthCLI;
 
-use chillerlan\Database\Connection;
+use chillerlan\Database\Database;
 
-/** @var \chillerlan\Database\Connection $db */
+/** @var \chillerlan\Database\Database $db */
 $db = null;
 
 require_once __DIR__.'/bootstrap_cli.php';
@@ -20,13 +20,13 @@ require_once __DIR__.'/bootstrap_cli.php';
 return createTable($db, TABLE_TOKEN, TABLE_PROVIDER);
 
 /**
- * @param \chillerlan\Database\Connection $db
- * @param string                          $token_table
- * @param string                          $provider_table
+ * @param \chillerlan\Database\Database $db
+ * @param string                        $token_table
+ * @param string                        $provider_table
  *
  * @return bool|\chillerlan\Database\Result
  */
-function createTable(Connection $db, string $token_table, string $provider_table){
+function createTable(Database $db, string $token_table, string $provider_table){
 	$db->connect();
 
 	$db->raw('DROP TABLE IF EXISTS '.$token_table);
@@ -39,7 +39,7 @@ function createTable(Connection $db, string $token_table, string $provider_table
 		->text('token', null, true)
 		->text('state')
 		->int('expires',10, null, false)
-		->execute();
+		->query();
 
 	$db->raw('DROP TABLE IF EXISTS '.$provider_table);
 	$db->create
@@ -47,7 +47,7 @@ function createTable(Connection $db, string $token_table, string $provider_table
 		->primaryKey('provider_id')
 		->tinyint('provider_id',10, null, false, 'UNSIGNED AUTO_INCREMENT')
 		->varchar('servicename', 30, '', false)
-		->execute();
+		->query();
 
 	$providers = [
 		 1 => 'Discogs',
@@ -84,7 +84,7 @@ function createTable(Connection $db, string $token_table, string $provider_table
 		$db->insert
 			->into($provider_table)
 			->values(['provider_id' => $i, 'servicename' => $provider])
-			->execute();
+			->query();
 	}
 
 	echo PHP_EOL.'created tables: "'.$token_table.'" and "'.$provider_table.'"'.PHP_EOL;
