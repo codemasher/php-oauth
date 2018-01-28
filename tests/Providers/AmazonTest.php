@@ -17,7 +17,7 @@ use chillerlan\OAuth\Providers\Amazon;
 /**
  * @property \chillerlan\OAuth\Providers\Amazon $provider
  */
-abstract class AmazonTest extends OAuth2Test{
+class AmazonTest extends OAuth2Test{
 	use SupportsOAuth2TokenRefresh;
 
 	protected $FQCN = Amazon::class;
