@@ -16,7 +16,7 @@ use chillerlan\Database\{
 	Database, DatabaseOptionsTrait, Drivers\MySQLiDrv
 };
 use chillerlan\HTTP\{
-	CurlClient, GuzzleClient, HTTPClientAbstract, HTTPClientInterface, HTTPOptionsTrait, HTTPResponse, HTTPResponseInterface, StreamClient, TinyCurlClient
+	CurlClient, GuzzleClient, HTTPClientAbstract, HTTPClientInterface, HTTPOptionsTrait, HTTPResponseInterface, StreamClient, TinyCurlClient
 };
 use chillerlan\OAuth\{
 	OAuthOptions, Providers\OAuth2Interface, Providers\OAuthInterface, Storage\DBTokenStorage, Token
@@ -122,7 +122,7 @@ abstract class APITestAbstract extends TestCase{
 	}
 
 	protected function tearDown(){
-		if($this->response instanceof HTTPResponse){
+		if($this->response instanceof HTTPResponseInterface){
 
 			$json = $this->response->json;
 
