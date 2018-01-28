@@ -12,13 +12,13 @@
 
 namespace chillerlan\OAuth\Storage;
 
-use chillerlan\Database\Connection;
+use chillerlan\Database\Database;
 use chillerlan\OAuth\{OAuthOptions, Token};
 
 class DBTokenStorage extends TokenStorageAbstract{
 
 	/**
-	 * @var \chillerlan\Database\Connection
+	 * @var \chillerlan\Database\Database
 	 */
 	protected $db;
 
@@ -26,11 +26,11 @@ class DBTokenStorage extends TokenStorageAbstract{
 	 * DBTokenStorage constructor.
 	 *
 	 * @param \chillerlan\OAuth\OAuthOptions   $options
-	 * @param \chillerlan\Database\Connection  $db
+	 * @param \chillerlan\Database\Database  $db
 	 *
 	 * @throws \chillerlan\OAuth\Storage\TokenStorageException
 	 */
-	public function __construct(OAuthOptions $options, Connection $db){
+	public function __construct(OAuthOptions $options, Database $db){
 		parent::__construct($options);
 
 		if(!$this->options->dbTokenTable || !$this->options->dbProviderTable){
@@ -48,7 +48,7 @@ class DBTokenStorage extends TokenStorageAbstract{
 		return $this->db->select
 			->cached()
 			->from([$this->options->dbProviderTable])
-			->execute($this->options->dbProviderTableName)
+			->query($this->options->dbProviderTableName)
 			->__toArray();
 	}
 
@@ -77,7 +77,7 @@ class DBTokenStorage extends TokenStorageAbstract{
 				->table($this->options->dbTokenTable)
 				->set($values)
 				->where($this->options->dbTokenTableLabel, $this->getLabel($service))
-				->execute();
+				->query();
 
 			return $this;
 		}
@@ -87,7 +87,7 @@ class DBTokenStorage extends TokenStorageAbstract{
 		$this->db->insert
 			->into($this->options->dbTokenTable)
 			->values($values)
-			->execute();
+			->query();
 
 		return $this;
 	}
@@ -104,7 +104,7 @@ class DBTokenStorage extends TokenStorageAbstract{
 			->cols([$this->options->dbTokenTableToken])
 			->from([$this->options->dbTokenTable])
 			->where($this->options->dbTokenTableLabel, $this->getLabel($service))
-			->execute();
+			->query();
 
 		if(is_bool($r) || $r->length < 1){
 			throw new TokenStorageException('token not found');
@@ -137,7 +137,7 @@ class DBTokenStorage extends TokenStorageAbstract{
 		$this->db->delete
 			->from($this->options->dbTokenTable)
 			->where($this->options->dbTokenTableLabel, $this->getLabel($service))
-			->execute();
+			->query();
 
 		return $this;
 	}
@@ -150,7 +150,7 @@ class DBTokenStorage extends TokenStorageAbstract{
 		$this->db->delete
 			->from($this->options->dbTokenTable)
 			->where($this->options->dbTokenTableUser, $this->options->dbUserID)
-			->execute();
+			->query();
 
 		return $this;
 	}
@@ -167,7 +167,7 @@ class DBTokenStorage extends TokenStorageAbstract{
 			->table($this->options->dbTokenTable)
 			->set([$this->options->dbTokenTableState => $state])
 			->where($this->options->dbTokenTableLabel, $this->getLabel($service))
-			->execute();
+			->query();
 
 		return $this;
 	}
@@ -184,7 +184,7 @@ class DBTokenStorage extends TokenStorageAbstract{
 			->cols([$this->options->dbTokenTableState])
 			->from([$this->options->dbTokenTable])
 			->where($this->options->dbTokenTableLabel, $this->getLabel($service))
-			->execute();
+			->query();
 
 		if(is_bool($r) || $r->length < 1){
 			throw new TokenStorageException('state not found');
@@ -204,7 +204,7 @@ class DBTokenStorage extends TokenStorageAbstract{
 			->cols([$this->options->dbTokenTableState])
 			->from([$this->options->dbTokenTable])
 			->where($this->options->dbTokenTableLabel, $this->getLabel($service))
-			->execute();
+			->query();
 
 		if(is_bool($r) || $r->length < 1 || empty($r[0]->state('trim'))){
 			return false;
@@ -224,7 +224,7 @@ class DBTokenStorage extends TokenStorageAbstract{
 			->table($this->options->dbTokenTable)
 			->set([$this->options->dbTokenTableState => null])
 			->where($this->options->dbTokenTableLabel, $this->getLabel($service))
-			->execute();
+			->query();
 
 		return $this;
 	}
@@ -238,7 +238,7 @@ class DBTokenStorage extends TokenStorageAbstract{
 			->table($this->options->dbTokenTable)
 			->set([$this->options->dbTokenTableState => null])
 			->where($this->options->dbTokenTableUser, $this->options->dbUserID)
-			->execute();
+			->query();
 
 		return $this;
 	}
