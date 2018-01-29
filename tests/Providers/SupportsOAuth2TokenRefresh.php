@@ -16,14 +16,6 @@ use chillerlan\OAuth\Token;
 
 trait SupportsOAuth2TokenRefresh{
 
-	public function testMagicTokenRefreshable(){
-		$this->assertTrue($this->provider->tokenRefreshable);
-	}
-
-	public function testTokenRefreshNotRefreshable(){
-		$this->markTestSkipped($this->provider->serviceName.' SupportsOAuth2TokenRefresh: N/A');
-	}
-
 	/**
 	 * @expectedException \chillerlan\OAuth\OAuthException
 	 * @expectedExceptionMessage no refresh token available, token expired [

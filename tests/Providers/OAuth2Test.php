@@ -13,7 +13,7 @@
 namespace chillerlan\OAuthTest\Providers;
 
 use chillerlan\OAuth\{
-	OAuthOptions, Providers\OAuth2Interface, Token
+	OAuthOptions, Providers\ClientCredentials, Providers\OAuth2Interface, Providers\TokenRefresh, Token
 };
 use chillerlan\HTTP\{
 	HTTPClientInterface, HTTPClientAbstract, HTTPResponse, HTTPResponseInterface
@@ -50,8 +50,14 @@ abstract class OAuth2Test extends ProviderTestAbstract{
 
 		$this->setProperty($this->provider, 'apiURL', 'https://localhost/oauth2/api/request');
 		$this->setProperty($this->provider, 'accessTokenURL', 'https://localhost/oauth2/access_token');
-		$this->setProperty($this->provider, 'refreshTokenURL', 'https://localhost/oauth2/refresh_token');
-		$this->setProperty($this->provider, 'clientCredentialsTokenURL', 'https://localhost/oauth2/client_credentials');
+
+		if($this->provider instanceof TokenRefresh){
+			$this->setProperty($this->provider, 'refreshTokenURL', 'https://localhost/oauth2/refresh_token');
+		}
+
+		if($this->provider instanceof ClientCredentials){
+			$this->setProperty($this->provider, 'clientCredentialsTokenURL', 'https://localhost/oauth2/client_credentials');
+		}
 
 		$this->storage->storeAuthorizationState($this->provider->serviceName, 'test_state');
 	}
@@ -62,14 +68,6 @@ abstract class OAuth2Test extends ProviderTestAbstract{
 				return new HTTPResponse(['body' => json_encode(OAuth2Test::OAUTH2_RESPONSES[$url])]);
 			}
 		};
-	}
-
-	public function testMagicSupportsClientCredentials(){
-		$this->assertFalse($this->provider->supportsClientCredentials);
-	}
-
-	public function testMagicTokenRefreshable(){
-		$this->assertFalse($this->provider->tokenRefreshable);
 	}
 
 	public function testGetAuthURL(){
@@ -174,14 +172,6 @@ abstract class OAuth2Test extends ProviderTestAbstract{
 	}
 
 	/**
-	 * @expectedException \chillerlan\OAuth\Providers\ProviderException
-	 * @expectedExceptionMessage not supported
-	 */
-	public function testGetClientCredentialsTokenNotSupported(){
-		$this->provider->getClientCredentialsToken();
-	}
-
-	/**
 	 * @expectedException \chillerlan\OAuth\OAuthException
 	 * @expectedExceptionMessage invalid auth type
 	 */
@@ -190,14 +180,6 @@ abstract class OAuth2Test extends ProviderTestAbstract{
 
 		$this->storeToken(new Token(['accessToken' => 'test_access_token_secret', 'expires' => 1]));
 		$this->provider->request('');
-	}
-
-	/**
-	 * @expectedException \chillerlan\OAuth\Providers\ProviderException
-	 * @expectedExceptionMessage Token is not refreshable
-	 */
-	public function testTokenRefreshNotRefreshable(){
-		$this->provider->refreshAccessToken();
 	}
 
 }

@@ -12,14 +12,12 @@
 
 namespace chillerlan\OAuthTest\Providers;
 
+use chillerlan\OAuth\Providers\ClientCredentials;
+
 trait SupportsOAuth2ClientCredentials{
 
-	public function testMagicSupportsClientCredentials(){
-		$this->assertTrue($this->provider->supportsClientCredentials);
-	}
-
-	public function testGetClientCredentialsTokenNotSupported(){
-		$this->markTestSkipped($this->provider->serviceName.' SupportsOAuth2ClientCredentials: N/A');
+	public function testClientCredentialsInterface(){
+		$this->assertInstanceOf(ClientCredentials::class, $this->provider);
 	}
 
 	public function testGetClientCredentialsTokenBody(){

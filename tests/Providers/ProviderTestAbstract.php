@@ -138,10 +138,6 @@ abstract class ProviderTestAbstract extends TestCase{
 	public function testCall(){
 		$this->setProperty($this->provider, 'apiMethods', json_decode('{"test":{"path":"","method":"POST"}}'));
 
-		if($this->provider instanceof OAuth2Interface){
-			$this->setProperty($this->provider, 'accessTokenRefreshable', false);
-		}
-
 		$this->assertSame('such data! much wow!', $this->provider->test()->json->data);
 		$this->assertNull($this->provider->foo());
 	}
@@ -153,9 +149,7 @@ abstract class ProviderTestAbstract extends TestCase{
 	public function testCallTooFewPathElements(){
 		$this->setProperty($this->provider, 'apiMethods', json_decode('{"test":{"path":"","path_elements":["foo"]}}'));
 
-		if($this->provider instanceof OAuth2Interface){
-			$this->setProperty($this->provider, 'accessTokenRefreshable', false);
-		}
+
 		$this->assertNull($this->provider->test());
 
 	}
