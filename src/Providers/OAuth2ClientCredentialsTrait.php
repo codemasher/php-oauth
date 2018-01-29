@@ -14,13 +14,19 @@ namespace chillerlan\OAuth\Providers;
 
 use chillerlan\OAuth\Token;
 
+/**
+ * @property array  $authHeaders
+ * @property string $scopesDelimiter
+ * @property string $clientCredentialsTokenURL
+ * @property string $accessTokenURL
+ * @property \chillerlan\OAuth\Storage\TokenStorageInterface $storage
+ */
 trait OAuth2ClientCredentialsTrait{
 
 	/**
 	 * @param array $scopes
 	 *
 	 * @return \chillerlan\OAuth\Token
-	 * @throws \chillerlan\OAuth\Providers\ProviderException
 	 */
 	public function getClientCredentialsToken(array $scopes = null):Token {
 		$token = $this->parseTokenResponse(

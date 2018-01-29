@@ -14,6 +14,13 @@ namespace chillerlan\OAuth\Providers;
 
 use chillerlan\OAuth\Token;
 
+/**
+ * @property array  $authHeaders
+ * @property string $accessTokenURL
+ * @property string $refreshTokenURL
+ * @property \chillerlan\OAuth\Storage\TokenStorageInterface $storage
+ * @property \chillerlan\OAuth\OAuthOptions $options
+ */
 trait OAuth2TokenRefreshTrait{
 
 	/**
