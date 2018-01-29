@@ -64,6 +64,11 @@ trait OAuthOptionsTrait{
 	protected $storageCryptoKey;
 
 	/**
+	 * @var bool
+	 */
+	protected $tokenAutoRefresh = false;
+
+	/**
 	 * @var string
 	 */
 	protected $dbLabelHashAlgo = 'md5';

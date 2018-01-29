@@ -29,6 +29,8 @@ use chillerlan\Traits\{
  * @property string     $sessionStateVar
  * @property bool       $useEncryption
  * @property string     $storageCryptoKey
+ * @property bool       $tokenAutoRefresh
+ *
  * @property string     $dbLabelHashAlgo
  * @property string     $dbLabelFormat
  * @property string|int $dbUserID
