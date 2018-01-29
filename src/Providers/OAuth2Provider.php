@@ -41,6 +41,11 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	/**
 	 * @var string
 	 */
+	protected $refreshTokenURL;
+
+	/**
+	 * @var string
+	 */
 	protected $clientCredentialsTokenURL;
 
 	/**

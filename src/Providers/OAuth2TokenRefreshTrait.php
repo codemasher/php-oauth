@@ -17,16 +17,6 @@ use chillerlan\OAuth\Token;
 trait OAuth2TokenRefreshTrait{
 
 	/**
-	 * @var bool
-	 */
-	protected $useAccessTokenForRefresh = false;
-
-	/**
-	 * @var string
-	 */
-	protected $refreshTokenURL;
-
-	/**
 	 * @param \chillerlan\OAuth\Token $token
 	 *
 	 * @return \chillerlan\OAuth\Token
@@ -42,7 +32,7 @@ trait OAuth2TokenRefreshTrait{
 
 		if(empty($refreshToken)){
 
-			if(!$this->useAccessTokenForRefresh){
+			if(!$this instanceof AccessTokenForRefresh){
 				throw new ProviderException(sprintf('no refresh token available, token expired [%s]', date('Y-m-d h:i:s A', $token->expires)));
 			}
 
