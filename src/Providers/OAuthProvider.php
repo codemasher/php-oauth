@@ -15,19 +15,21 @@ namespace chillerlan\OAuth\Providers;
 use chillerlan\HTTP\{
 	HTTPClientTrait, HTTPClientInterface
 };
+use chillerlan\Logger\LogTrait;
 use chillerlan\OAuth\{
 	API\OAuthAPIClientException,
 	Storage\TokenStorageInterface
 };
 use chillerlan\Traits\ContainerInterface;
 use chillerlan\Traits\Magic;
+use Psr\Log\LoggerAwareInterface;
 use ReflectionClass;
 
 /**
  * @property string $serviceName
  */
-abstract class OAuthProvider implements OAuthInterface{
-	use Magic, HTTPClientTrait;
+abstract class OAuthProvider implements OAuthInterface, LoggerAwareInterface{
+	use Magic, HTTPClientTrait, LogTrait;
 
 	/**
 	 * @var \chillerlan\OAuth\Storage\TokenStorageInterface
@@ -184,7 +186,7 @@ abstract class OAuthProvider implements OAuthInterface{
 				$body   = $this->checkQueryParams($body, true);
 			}
 
-#			print_r(['$endpoint' => $endpoint, '$params' => $params, '$method' => $method, '$body' => $body, '$headers' => $headers]);
+			$this->debug('OAuthProvider::__call() -> '.$this->serviceName.'::'.$name.'()', ['$endpoint' => $endpoint, '$params' => $params, '$method' => $method, '$body' => $body, '$headers' => $headers]);
 
 			return $this->request($endpoint, $params, $method, $body, $headers);
 		}

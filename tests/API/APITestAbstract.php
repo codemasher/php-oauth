@@ -18,6 +18,9 @@ use chillerlan\Database\{
 use chillerlan\HTTP\{
 	CurlClient, GuzzleClient, HTTPClientAbstract, HTTPClientInterface, HTTPOptionsTrait, HTTPResponseInterface, StreamClient, TinyCurlClient
 };
+use chillerlan\Logger\Log;
+use chillerlan\Logger\LogOptions;
+use chillerlan\Logger\Output\LogOutputAbstract;
 use chillerlan\OAuth\{
 	OAuthOptions, Providers\OAuth2Interface, Providers\OAuthInterface, Storage\DBTokenStorage, Token
 };
@@ -27,6 +30,7 @@ use chillerlan\Traits\{
 };
 use GuzzleHttp\Client;
 use PHPUnit\Framework\TestCase;
+use Psr\Log\LogLevel;
 
 abstract class APITestAbstract extends TestCase{
 
@@ -118,6 +122,19 @@ abstract class APITestAbstract extends TestCase{
 		$this->http     = $this->initHTTP();
 		$this->provider = new $this->FQCN($this->http, $this->storage, $this->options, $this->scopes);
 
+		$logger = (new Log)->addInstance(
+			new class (new LogOptions(['minLogLevel' => LogLevel::DEBUG])) extends LogOutputAbstract{
+
+				protected function __log(string $level, string $message, array $context = null):void{
+					echo $message.PHP_EOL.print_r($context, true).PHP_EOL;
+				}
+
+			},
+			'console'
+		);
+
+
+		$this->provider->setLogger($logger);
 		$this->storage->storeAccessToken($this->provider->serviceName, $this->getToken());
 	}
 
