@@ -15,7 +15,8 @@ namespace chillerlan\OAuth\Providers;
 /**
  * @link https://docs.patreon.com/
  */
-class Patreon extends OAuth2Provider{
+class Patreon extends OAuth2Provider implements CSRFToken, TokenExpires, TokenRefresh{
+	use OAuth2TokenRefreshTrait;
 
 	const SCOPE_USERS         = 'users';
 	const SCOPE_PLEDGES_TO_ME = 'pledges-to-me';
@@ -24,7 +25,5 @@ class Patreon extends OAuth2Provider{
 	protected $apiURL             = 'https://www.patreon.com/api/oauth2/api';
 	protected $authURL            = 'https://www.patreon.com/oauth2/authorize';
 	protected $accessTokenURL     = 'https://www.patreon.com/api/oauth2/token';
-	protected $accessTokenExpires = true;
-	protected $accessTokenRefreshable = true;
 
 }

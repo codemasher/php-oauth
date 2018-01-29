@@ -17,7 +17,7 @@ namespace chillerlan\OAuth\Providers;
  * @link https://developers.soundcloud.com/docs/api/guide#authentication
  *
  */
-class SoundCloud extends OAuth2Provider{
+class SoundCloud extends OAuth2Provider implements TokenExpires{
 
 	const SCOPE_NONEXPIRING = 'non-expiring';
 #	const SCOPE_EMAIL       = 'email'; // ???
@@ -27,7 +27,5 @@ class SoundCloud extends OAuth2Provider{
 	protected $accessTokenURL     = 'https://api.soundcloud.com/oauth2/token';
 	protected $userRevokeURL      = 'https://soundcloud.com/settings/connections';
 	protected $authMethod         = self::HEADER_OAUTH;
-	protected $accessTokenExpires = true;
-	protected $useCsrfToken       = false;
 
 }

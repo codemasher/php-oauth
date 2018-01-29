@@ -17,7 +17,7 @@ namespace chillerlan\OAuth\Providers;
  * @link https://developer.gitter.im/docs/authentication
  *
  */
-class Gitter extends OAuth2Provider{
+class Gitter extends OAuth2Provider implements CSRFToken, TokenExpires{
 
 	const SCOPE_FLOW    = 'flow';
 	const SCOPE_PRIVATE = 'private';
@@ -25,7 +25,6 @@ class Gitter extends OAuth2Provider{
 	protected $apiURL             = 'https://api.gitter.im/v1';
 	protected $authURL            = 'https://gitter.im/login/oauth/authorize';
 	protected $accessTokenURL     = 'https://gitter.im/login/oauth/token';
-	protected $accessTokenExpires = true;
 	protected $scopesDelimiter    = ',';
 
 }

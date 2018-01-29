@@ -20,7 +20,8 @@ use chillerlan\HTTP\HTTPResponseInterface;
  * @link https://musicbrainz.org/doc/Development/OAuth2
  *
  */
-class MusicBrainz extends OAuth2Provider{
+class MusicBrainz extends OAuth2Provider implements CSRFToken, TokenExpires, TokenRefresh{
+	use OAuth2TokenRefreshTrait;
 
 	const SCOPE_PROFILE        = 'profile';
 	const SCOPE_EMAIL          = 'email';
@@ -34,8 +35,6 @@ class MusicBrainz extends OAuth2Provider{
 	protected $authURL            = 'https://musicbrainz.org/oauth2/authorize';
 	protected $accessTokenURL     = 'https://musicbrainz.org/oauth2/token';
 	protected $userRevokeURL      = 'https://musicbrainz.org/account/applications';
-	protected $accessTokenExpires = true;
-	protected $accessTokenRefreshable = true;
 
 	/**
 	 * @inheritdoc

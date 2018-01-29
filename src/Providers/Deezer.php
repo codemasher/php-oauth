@@ -21,7 +21,7 @@ use chillerlan\OAuth\Token;
  * sure, you *can* use different parameter names than the standard ones... and what about JSON?
  * https://xkcd.com/927/
  */
-class Deezer extends OAuth2Provider{
+class Deezer extends OAuth2Provider implements CSRFToken{
 
 	const SCOPE_BASIC             = 'basic_access';
 	const SCOPE_EMAIL             = 'email';

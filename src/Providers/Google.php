@@ -17,7 +17,7 @@ namespace chillerlan\OAuth\Providers;
  * @link https://developers.google.com/identity/protocols/OAuth2ServiceAccount
  * @link https://developers.google.com/oauthplayground/
  */
-class Google extends OAuth2Provider{
+class Google extends OAuth2Provider implements CSRFToken, TokenExpires{
 
 	const SCOPE_EMAIL            = 'email';
 	const SCOPE_PROFILE          = 'profile';
@@ -30,6 +30,5 @@ class Google extends OAuth2Provider{
 	protected $authURL            = 'https://accounts.google.com/o/oauth2/auth';
 	protected $accessTokenURL     = 'https://accounts.google.com/o/oauth2/token';
 	protected $userRevokeURL      = 'https://myaccount.google.com/permissions';
-	protected $accessTokenExpires = true;
 
 }

@@ -17,7 +17,7 @@ namespace chillerlan\OAuth\Providers;
  * @link https://api.slack.com/docs/sign-in-with-slack
  * @link https://api.slack.com/docs/token-types
  */
-class Slack extends OAuth2Provider{
+class Slack extends OAuth2Provider implements CSRFToken{
 
 	// bot token
 	const SCOPE_BOT                 = 'bot';

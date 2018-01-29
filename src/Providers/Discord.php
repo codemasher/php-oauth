@@ -15,7 +15,8 @@ namespace chillerlan\OAuth\Providers;
 /**
  * @link https://discordapp.com/developers/docs/topics/oauth2
  */
-class Discord extends OAuth2Provider{
+class Discord extends OAuth2Provider implements ClientCredentials, CSRFToken, TokenExpires, TokenRefresh{
+	use OAuth2ClientCredentialsTrait, OAuth2TokenRefreshTrait;
 
 	const SCOPE_BOT                    = 'bot';
 	const SCOPE_CONNECTIONS            = 'connections';
@@ -34,8 +35,5 @@ class Discord extends OAuth2Provider{
 	protected $authURL            = 'https://discordapp.com/api/oauth2/authorize';
 	protected $accessTokenURL     = 'https://discordapp.com/api/oauth2/token';
 	protected $revokeURL          = 'https://discordapp.com/api/oauth2/token/revoke';
-	protected $accessTokenExpires = true;
-	protected $accessTokenRefreshable = true;
-	protected $clientCredentials  = true;
 
 }

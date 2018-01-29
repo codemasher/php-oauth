@@ -21,10 +21,6 @@ use chillerlan\OAuth\{
 };
 use chillerlan\Traits\ContainerInterface;
 
-/**
- * @property bool $supportsClientCredentials
- * @property bool $tokenRefreshable
- */
 abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 
 	/**
@@ -41,36 +37,6 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	 * @var string
 	 */
 	protected $scopesDelimiter = ' ';
-
-	/**
-	 * @var bool
-	 */
-	protected $useCsrfToken = true;
-
-	/**
-	 * @var bool
-	 */
-	protected $accessTokenExpires = false;
-
-	/**
-	 * @var bool
-	 */
-	protected $accessTokenRefreshable = false;
-
-	/**
-	 * @var bool
-	 */
-	protected $useAccessTokenForRefresh = false;
-
-	/**
-	 * @var string
-	 */
-	protected $refreshTokenURL;
-
-	/**
-	 * @var bool
-	 */
-	protected $clientCredentials = false;
 
 	/**
 	 * @var string
@@ -92,20 +58,6 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	}
 
 	/**
-	 * @return bool
-	 */
-	protected function magic_get_supportsClientCredentials():bool {
-		return $this->clientCredentials;
-	}
-
-	/**
-	 * @return bool
-	 */
-	protected function magic_get_tokenRefreshable():bool {
-		return $this->accessTokenRefreshable;
-	}
-
-	/**
 	 * @param array $params
 	 *
 	 * @return string
@@ -113,7 +65,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	public function getAuthURL(array $params = null):string{
 		$params = $this->getAuthURLParams($params ?? []);
 
-		if($this->useCsrfToken){
+		if($this instanceof CSRFToken){
 
 			if(!isset($params['state'])){
 				$params['state'] = sha1(random_bytes(256));
@@ -214,7 +166,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	 */
 	public function getAccessToken(string $code, string $state = null):Token{
 
-		if($this->useCsrfToken){
+		if($this instanceof CSRFToken){
 			$this->checkState($state);
 		}
 
@@ -248,125 +200,9 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 	}
 
 	/**
-	 * @codeCoverageIgnore
 	 * @return array
 	 */
 	protected function getAccessTokenHeaders():array {
-		return $this->authHeaders;
-	}
-
-	/**
-	 * @param array $scopes
-	 *
-	 * @return \chillerlan\OAuth\Token
-	 * @throws \chillerlan\OAuth\Providers\ProviderException
-	 */
-	public function getClientCredentialsToken(array $scopes = null):Token {
-
-		if(!$this->clientCredentials){
-			throw new ProviderException('not supported');
-		}
-
-		$token = $this->parseTokenResponse(
-			$this->httpPOST(
-				$this->clientCredentialsTokenURL ?? $this->accessTokenURL,
-				[],
-				$this->getClientCredentialsTokenBody($scopes ?? []),
-				$this->getClientCredentialsTokenHeaders()
-			)
-		);
-
-		$this->storage->storeAccessToken($this->serviceName, $token);
-
-		return $token;
-	}
-
-	/**
-	 * @param array $scopes
-	 *
-	 * @return array
-	 */
-	protected function getClientCredentialsTokenBody(array $scopes):array {
-		return [
-			'grant_type' => 'client_credentials',
-			'scope'      => implode($this->scopesDelimiter, $scopes),
-		];
-	}
-
-	/**
-	 * @return array
-	 */
-	protected function getClientCredentialsTokenHeaders():array {
-		return array_merge($this->authHeaders, [
-			'Authorization' => 'Basic '.base64_encode($this->options->key.':'.$this->options->secret),
-		]);
-	}
-
-	/**
-	 * @param \chillerlan\OAuth\Token $token
-	 *
-	 * @return \chillerlan\OAuth\Token
-	 * @throws \chillerlan\OAuth\Providers\ProviderException
-	 */
-	public function refreshAccessToken(Token $token = null):Token{
-
-		if(!$this->accessTokenRefreshable){
-			throw new ProviderException('Token is not refreshable.');
-		}
-
-		if($token === null){
-			$token = $this->storage->retrieveAccessToken($this->serviceName);
-		}
-
-		$refreshToken = $token->refreshToken;
-
-		if(empty($refreshToken)){
-
-			if(!$this->useAccessTokenForRefresh){
-				throw new ProviderException(sprintf('no refresh token available, token expired [%s]', date('Y-m-d h:i:s A', $token->expires)));
-			}
-
-			$refreshToken = $token->accessToken;
-		}
-
-		$newToken = $this->parseTokenResponse(
-			$this->httpPOST(
-				$this->refreshTokenURL ?? $this->accessTokenURL,
-				[],
-				$this->refreshAccessTokenBody($refreshToken),
-				$this->refreshAccessTokenHeaders()
-			)
-		);
-
-		if(!$newToken->refreshToken){
-			$newToken->refreshToken = $refreshToken;
-		}
-
-		$this->storage->storeAccessToken($this->serviceName, $newToken);
-
-		return $newToken;
-	}
-
-	/**
-	 * @param string $refreshToken
-	 *
-	 * @return array
-	 */
-	protected function refreshAccessTokenBody(string $refreshToken):array {
-		return [
-			'client_id'     => $this->options->key,
-			'client_secret' => $this->options->secret,
-			'grant_type'    => 'refresh_token',
-			'refresh_token' => $refreshToken,
-			'type'          => 'web_server',
-		];
-	}
-
-	/**
-	 * @codeCoverageIgnore
-	 * @return array
-	 */
-	protected function refreshAccessTokenHeaders():array{
 		return $this->authHeaders;
 	}
 
@@ -384,7 +220,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 		$token = $this->storage->retrieveAccessToken($this->serviceName);
 
 		// attempt to refresh an expired token
-		if($this->accessTokenRefreshable && ($token->isExpired() || $token->expires === $token::EOL_UNKNOWN)){
+		if($this->options->tokenAutoRefresh && $this instanceof TokenRefresh && ($token->isExpired() || $token->expires === $token::EOL_UNKNOWN)){
 			$token = $this->refreshAccessToken($token);
 		}
 

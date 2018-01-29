@@ -15,7 +15,7 @@ namespace chillerlan\OAuth\Providers;
 /**
  * @link https://developer.wordpress.com/docs/oauth2/
  */
-class Wordpress extends OAuth2Provider{
+class Wordpress extends OAuth2Provider implements CSRFToken{
 
 	const SCOPE_AUTH   = 'auth';
 	const SCOPE_GLOBAL = 'global';

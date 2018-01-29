@@ -14,10 +14,6 @@ namespace chillerlan\OAuth\Providers;
 
 use chillerlan\OAuth\Token;
 
-/**
- * @property bool $supportsClientCredentials
- * @property bool $tokenRefreshable
- */
 interface OAuth2Interface extends OAuthInterface{
 
 	const HEADER_OAUTH              = 0;
@@ -48,19 +44,5 @@ interface OAuth2Interface extends OAuthInterface{
 	 * @return \chillerlan\OAuth\Token
 	 */
 	public function getAccessToken(string $code, string $state = null):Token;
-
-	/**
-	 * @param array $scopes
-	 *
-	 * @return \chillerlan\OAuth\Token
-	 */
-	public function getClientCredentialsToken(array $scopes = null):Token;
-
-	/**
-	 * @param \chillerlan\OAuth\Token|null $token
-	 *
-	 * @return \chillerlan\OAuth\Token
-	 */
-	public function refreshAccessToken(Token $token = null):Token;
 
 }

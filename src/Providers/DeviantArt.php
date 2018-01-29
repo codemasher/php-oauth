@@ -15,7 +15,8 @@ namespace chillerlan\OAuth\Providers;
 /**
  * @link https://www.deviantart.com/developers/authentication
  */
-class DeviantArt extends OAuth2Provider{
+class DeviantArt extends OAuth2Provider implements ClientCredentials, CSRFToken, TokenExpires, TokenRefresh{
+	use OAuth2ClientCredentialsTrait, OAuth2TokenRefreshTrait;
 
 	const SCOPE_BASIC        = 'basic';
 	const SCOPE_BROWSE       = 'browse';
@@ -33,8 +34,5 @@ class DeviantArt extends OAuth2Provider{
 	protected $authURL            = 'https://www.deviantart.com/oauth2/authorize';
 	protected $accessTokenURL     = 'https://www.deviantart.com/oauth2/token';
 	protected $userRevokeURL      = 'https://www.deviantart.com/settings/applications';
-	protected $accessTokenExpires = true;
-	protected $accessTokenRefreshable = true;
-	protected $clientCredentials  = true;
 
 }

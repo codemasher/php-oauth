@@ -18,13 +18,13 @@ use chillerlan\OAuth\Token;
  * @link https://dev.twitter.com/overview/api
  * @link https://developer.twitter.com/en/docs/basics/authentication/overview/application-only
  */
-class Twitter2 extends OAuth2Provider{
+class Twitter2 extends OAuth2Provider implements ClientCredentials{
+	use OAuth2ClientCredentialsTrait;
 
 	protected $AUTH_ERRMSG = 'Twitter2 only supports Client Credentials Grant, use the Twitter OAuth1 class for authentication instead.';
 
 	protected $apiURL                    = 'https://api.twitter.com/1.1';
 	protected $clientCredentialsTokenURL = 'https://api.twitter.com/oauth2/token';
-	protected $clientCredentials         = true;
 	protected $userRevokeURL             = 'https://twitter.com/settings/applications';
 
 	/**

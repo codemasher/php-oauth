@@ -57,7 +57,8 @@ namespace chillerlan\OAuth\Providers;
  * @method \chillerlan\HTTP\HTTPResponseInterface verify()
  * @method \chillerlan\HTTP\HTTPResponseInterface videoLikes(string $video_id, array $params = ['query', 'page', 'per_page', 'sort', 'direction'])
  */
-class Vimeo extends OAuth2Provider{
+class Vimeo extends OAuth2Provider implements ClientCredentials, CSRFToken, TokenExpires{
+	use OAuth2ClientCredentialsTrait;
 
 	const SCOPE_PRIVATE     = 'private';
 	const SCOPE_PUBLIC      = 'public';
@@ -78,10 +79,8 @@ class Vimeo extends OAuth2Provider{
 	protected $accessTokenURL            = 'https://api.vimeo.com/oauth/access_token';
 	protected $userRevokeURL             = 'https://vimeo.com/settings/apps';
 	protected $revokeURL                 = 'https://api.vimeo.com/tokens';
-	protected $accessTokenExpires        = true;
 	protected $authHeaders               = ['Accept' => 'application/vnd.vimeo.*+json;version='.self::VERSION];
 	protected $apiHeaders                = ['Accept' => 'application/vnd.vimeo.*+json;version='.self::VERSION];
-	protected $clientCredentials         = true;
 	protected $clientCredentialsTokenURL = 'https://api.vimeo.com/oauth/authorize/client';
 
 }

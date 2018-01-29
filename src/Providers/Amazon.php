@@ -17,7 +17,8 @@ namespace chillerlan\OAuth\Providers;
  * @link https://images-na.ssl-images-amazon.com/images/G/01/lwa/dev/docs/website-developer-guide._TTH_.pdf
  * @link https://images-na.ssl-images-amazon.com/images/G/01/mwsportal/doc/en_US/offamazonpayments/LoginAndPayWithAmazonIntegrationGuide._V335378063_.pdf
  */
-class Amazon extends OAuth2Provider{
+class Amazon extends OAuth2Provider implements CSRFToken, TokenExpires, TokenRefresh{
+	use OAuth2TokenRefreshTrait;
 
 	const SCOPE_PROFILE         = 'profile';
 	const SCOPE_PROFILE_USER_ID = 'profile:user_id';
@@ -26,7 +27,5 @@ class Amazon extends OAuth2Provider{
 	protected $apiURL             = 'https://api.amazon.com';
 	protected $authURL            = 'https://www.amazon.com/ap/oa';
 	protected $accessTokenURL     = 'https://www.amazon.com/ap/oatoken';
-	protected $accessTokenExpires = true;
-	protected $accessTokenRefreshable = true;
 
 }

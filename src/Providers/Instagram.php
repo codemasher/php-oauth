@@ -41,7 +41,7 @@ namespace chillerlan\OAuth\Providers;
  * @method \chillerlan\HTTP\HTTPResponseInterface tags(string $tagname)
  * @method \chillerlan\HTTP\HTTPResponseInterface tagsRecentMedia(string $tagname, array $params = ['max_tag_id', 'min_tag_id', 'count'])
  */
-class Instagram extends OAuth2Provider{
+class Instagram extends OAuth2Provider implements CSRFToken{
 
 	const SCOPE_BASIC          = 'basic';
 	const SCOPE_COMMENTS       = 'comments';

@@ -17,7 +17,8 @@ namespace chillerlan\OAuth\Providers;
  * @link https://dev.twitch.tv/docs/v5/guides/authentication/
  *
  */
-class Twitch extends OAuth2Provider{
+class Twitch extends OAuth2Provider implements ClientCredentials, CSRFToken, TokenRefresh{
+	use OAuth2ClientCredentialsTrait, OAuth2TokenRefreshTrait;
 
 	const SCOPE_CHANNEL_CHECK_SUBSCRIPTION = 'channel_check_subscription';
 	const SCOPE_CHANNEL_COMMERCIAL         = 'channel_commercial';
@@ -45,14 +46,12 @@ class Twitch extends OAuth2Provider{
 	protected $userRevokeURL      = 'https://www.twitch.tv/settings/connections';
 	protected $revokeURL          = 'https://api.twitch.tv/kraken/oauth2/revoke';
 #	protected $accessTokenExpires = true;
-	protected $accessTokenRefreshable = true; // manual refresh required
 	protected $authHeaders        = ['Accept' => 'application/vnd.twitchtv.v5+json'];
 	protected $apiHeaders         = ['Accept' => 'application/vnd.twitchtv.v5+json'];
 	protected $authMethod         = self::HEADER_OAUTH; // -> https://api.twitch.tv/kraken
 #	protected $authMethod          = self::HEADER_BEARER; // -> https://api.twitch.tv/helix
 
 	// https://dev.twitch.tv/docs/authentication#oauth-client-credentials-flow-app-access-tokens
-	protected $clientCredentials   = true;
 
 	/**
 	 * @param array $scopes

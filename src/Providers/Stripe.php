@@ -19,8 +19,9 @@ namespace chillerlan\OAuth\Providers;
  * @link https://stripe.com/docs/connect/standard-accounts
  * @link https://gist.github.com/amfeng/3507366
  */
-class Stripe extends OAuth2Provider{
-
+class Stripe extends OAuth2Provider implements CSRFToken, TokenRefresh{
+	use OAuth2TokenRefreshTrait;
+	
 	const SCOPE_READ_WRITE = 'read_write';
 	const SCOPE_READ_ONLY  = 'read_only';
 
@@ -29,6 +30,5 @@ class Stripe extends OAuth2Provider{
 	protected $accessTokenURL         = 'https://connect.stripe.com/oauth/token';
 	protected $revokeURL              = 'https://connect.stripe.com/oauth/deauthorize';
 	protected $userRevokeURL          = 'https://dashboard.stripe.com/account/applications';
-	protected $accessTokenRefreshable = true;
 
 }
