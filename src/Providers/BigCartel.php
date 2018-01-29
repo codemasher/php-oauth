@@ -43,7 +43,7 @@ namespace chillerlan\OAuth\Providers;
  * @method \chillerlan\HTTP\HTTPResponseInterface updateDiscount($account_id, $discount_id, array $body = ['type', 'name', 'code', 'active_at', 'expires_at', 'requirement_type', 'expiration_type', 'reward_type', 'application_type', 'percent_discount', 'flat_rate_discount', 'use_limit', 'minimum_cart_total', 'minimum_cart_quantity'])
  * @method \chillerlan\HTTP\HTTPResponseInterface updateOrder($account_id, $order_id, array $body = ['id', 'type', 'customer_first_name', 'customer_last_name', 'customer_email', 'shipping_address_1', 'shipping_address_2', 'shipping_city', 'shipping_state', 'shipping_zip', 'shipping_country_id', 'shipping_status'])
  */
-class BigCartel extends OAuth2Provider{
+class BigCartel extends OAuth2Provider implements CSRFToken{
 
 	protected $apiURL         = 'https://api.bigcartel.com/v1';
 	protected $authURL        = 'https://my.bigcartel.com/oauth/authorize';
