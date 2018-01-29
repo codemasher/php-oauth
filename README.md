@@ -319,13 +319,16 @@ method | return
 method | return 
 ------ | ------ 
 `getAccessToken(string $code, string $state = null)` | `Token` 
-`getClientCredentialsToken(array $scopes = null)` | `Token` 
-`refreshAccessToken(Token $token = null)` | `Token` 
 
-property | description 
--------- | ----------- 
-`$supportsClientCredentials` | bool
-`$tokenRefreshable` | bool
+#### `ClientCredentials`
+method | return 
+------ | ------ 
+`getClientCredentialsToken(array $scopes = null)` | `Token` 
+
+#### `TokenRefresh`
+method | return 
+------ | ------ 
+`refreshAccessToken(Token $token = null)` | `Token` 
 
 ### `TokenStorageInterface`
 method | return 
