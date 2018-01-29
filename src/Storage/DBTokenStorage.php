@@ -38,8 +38,7 @@ class DBTokenStorage extends TokenStorageAbstract{
 			throw new TokenStorageException('invalid table config');
 		}
 
-		$this->db = $db;
-		$this->db->connect();
+		$this->db = $db->connect();
 	}
 
 	/**

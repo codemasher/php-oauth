@@ -12,10 +12,13 @@
 
 namespace chillerlan\OAuth\Storage;
 
+use chillerlan\Logger\LogTrait;
 use chillerlan\OAuth\{OAuthOptions, Token};
 use chillerlan\Traits\ContainerInterface;
+use Psr\Log\LoggerAwareInterface;
 
-abstract class TokenStorageAbstract implements TokenStorageInterface{
+abstract class TokenStorageAbstract implements TokenStorageInterface, LoggerAwareInterface{
+	use LogTrait;
 
 	protected const TOKEN_NONCE = "\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x00\x01";
 
