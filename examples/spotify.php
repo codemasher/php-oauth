@@ -13,11 +13,12 @@ namespace chillerlan\OAuthExamples;
 use chillerlan\Database\{
 	Database, DatabaseOptionsTrait, Drivers\MySQLiDrv
 };
-use chillerlan\HTTP\CurlClient;
-use chillerlan\HTTP\HTTPOptionsTrait;
-use chillerlan\OAuth\OAuthOptions;
-use chillerlan\OAuth\Providers\Spotify;
-use chillerlan\OAuth\Storage\DBTokenStorage;
+use chillerlan\HTTP\{
+	CurlClient, HTTPOptionsTrait
+};
+use chillerlan\OAuth\{
+	OAuthOptions, Providers\Spotify, Storage\DBTokenStorage
+};
 use chillerlan\Traits\DotEnv;
 
 ini_set('date.timezone', 'Europe/Amsterdam');
@@ -87,7 +88,8 @@ while(true){
 
 // now crawl the artists' new releases
 $newReleases = [];
-$since       = mktime(0, 0, 0, 3, 1, 2018);
+$since       = mktime(0, 0, 0, 1,  1, 2018);
+$until       = time();
 
 foreach($artists as $id){
 	$response = $spotify->artistAlbums($id)->json;
@@ -95,10 +97,10 @@ foreach($artists as $id){
 	foreach($response->items as $album){
 		$releaseDate = strtotime($album->release_date);
 
-		if($album->release_date_precision === 'day' && $releaseDate >= $since){
-			$newReleases[$album->id] =
+		if($album->release_date_precision === 'day' && $releaseDate >= $since && $releaseDate <= $until){
+			$newReleases[date('Y', $releaseDate)][date('m', $releaseDate)][date('d', $releaseDate)][$album->id] =
 				implode(', ', array_column($album->artists, 'name'))
-				.' - '.$album->name.' ('.$album->release_date.')';
+				.' ['.$album->name.']';
 		}
 
 	}
