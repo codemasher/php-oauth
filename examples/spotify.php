@@ -36,7 +36,7 @@ $options = [
 	'dbTokenTable'     => 'storagetest',
 	'dbProviderTable'  => 'storagetest_providers',
 	'storageCryptoKey' => '000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f',
-
+	'tokenAutoRefresh' => true,
 	// DatabaseOptions
 	'driver'           => MySQLiDrv::class,
 	'host'             => $env->get('MYSQL_HOST'),
@@ -62,7 +62,6 @@ $storage = new DBTokenStorage($options, $db);
 #$storage->storeAccessToken('Spotify', $token);
 
 $spotify = new Spotify(new CurlClient($options), $storage, $options);
-$spotify->refreshAccessToken();
 
 
 // fetch the artists i'm following
@@ -80,7 +79,7 @@ while(true){
 	}
 
 	$response = $spotify->meFollowing([
-		'type' => 'artist',
+		'type'  => 'artist',
 		'limit' => 50,
 		'after' => $response->artists->cursors->after
 	])->json;
@@ -88,24 +87,38 @@ while(true){
 
 // now crawl the artists' new releases
 $newReleases = [];
-$since       = mktime(0, 0, 0, 1,  1, 2018);
+$since       = mktime(0, 0, 0,  1,  1, 2018);
 $until       = time();
 
 foreach($artists as $id){
 	$response = $spotify->artistAlbums($id)->json;
 
-	foreach($response->items as $album){
-		$releaseDate = strtotime($album->release_date);
+	if(isset($response->items)){
 
-		if($album->release_date_precision === 'day' && $releaseDate >= $since && $releaseDate <= $until){
-			$newReleases[date('Y', $releaseDate)][date('m', $releaseDate)][date('d', $releaseDate)][$album->id] =
-				implode(', ', array_column($album->artists, 'name'))
-				.' ['.$album->name.']';
+		foreach($response->items as $album){
+			$rdate = strtotime($album->release_date);
+
+			if($album->release_date_precision === 'day' && $rdate >= $since && $rdate <= $until){
+				$newReleases[(int)date('Y', $rdate)][(int)date('m', $rdate)][(int)date('d', $rdate)][$album->id] = // $album;
+					implode(', ', array_column($album->artists, 'name')).' ['.$album->name.']';
+			}
+
 		}
 
 	}
 
 }
 
-echo 'new releases by the artists i\'m following on spotify, since '.date('d.m.Y', $since).PHP_EOL.PHP_EOL;
+// sort the array by release date (descending)
+krsort($newReleases);
+
+foreach($newReleases as $y => $year){
+	krsort($newReleases[$y]);
+
+	foreach($year as $m => $month){
+		krsort($newReleases[$y][$m]);
+	}
+}
+
+echo 'new releases by the artists i\'m following on spotify, from '.date('d.m.Y', $since).' until '.date('d.m.Y', $until).PHP_EOL.PHP_EOL;
 print_r($newReleases);
