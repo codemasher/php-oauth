@@ -18,6 +18,7 @@ namespace chillerlan\OAuth\Providers;
  * @link https://developers.google.com/oauthplayground/
  */
 class Google extends OAuth2Provider implements CSRFToken, TokenExpires{
+	use CSRFTokenTrait;
 
 	const SCOPE_EMAIL            = 'email';
 	const SCOPE_PROFILE          = 'profile';

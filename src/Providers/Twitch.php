@@ -18,7 +18,7 @@ namespace chillerlan\OAuth\Providers;
  *
  */
 class Twitch extends OAuth2Provider implements ClientCredentials, CSRFToken, TokenRefresh{
-	use OAuth2ClientCredentialsTrait, OAuth2TokenRefreshTrait;
+	use CSRFTokenTrait, OAuth2ClientCredentialsTrait, OAuth2TokenRefreshTrait;
 
 	const SCOPE_CHANNEL_CHECK_SUBSCRIPTION = 'channel_check_subscription';
 	const SCOPE_CHANNEL_COMMERCIAL         = 'channel_commercial';

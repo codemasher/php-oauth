@@ -16,7 +16,7 @@ namespace chillerlan\OAuth\Providers;
  * @link https://docs.patreon.com/
  */
 class Patreon extends OAuth2Provider implements CSRFToken, TokenExpires, TokenRefresh{
-	use OAuth2TokenRefreshTrait;
+	use CSRFTokenTrait, OAuth2TokenRefreshTrait;
 
 	const SCOPE_USERS         = 'users';
 	const SCOPE_PLEDGES_TO_ME = 'pledges-to-me';

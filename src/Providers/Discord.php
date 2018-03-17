@@ -16,7 +16,7 @@ namespace chillerlan\OAuth\Providers;
  * @link https://discordapp.com/developers/docs/topics/oauth2
  */
 class Discord extends OAuth2Provider implements ClientCredentials, CSRFToken, TokenExpires, TokenRefresh{
-	use OAuth2ClientCredentialsTrait, OAuth2TokenRefreshTrait;
+	use CSRFTokenTrait, OAuth2ClientCredentialsTrait, OAuth2TokenRefreshTrait;
 
 	const SCOPE_BOT                    = 'bot';
 	const SCOPE_CONNECTIONS            = 'connections';

@@ -22,6 +22,7 @@ use chillerlan\OAuth\Token;
  * https://xkcd.com/927/
  */
 class Deezer extends OAuth2Provider implements CSRFToken{
+	use CSRFTokenTrait;
 
 	const SCOPE_BASIC             = 'basic_access';
 	const SCOPE_EMAIL             = 'email';

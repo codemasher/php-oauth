@@ -13,7 +13,7 @@
 namespace chillerlan\OAuthTest\Providers;
 
 use chillerlan\OAuth\{
-	OAuthOptions, Providers\ClientCredentials, Providers\OAuth2Interface, Providers\TokenRefresh, Token
+	OAuthOptions, Providers\ClientCredentials, Providers\CSRFToken, Providers\OAuth2Interface, Providers\TokenRefresh, Token
 };
 use chillerlan\HTTP\{
 	HTTPClientInterface, HTTPClientAbstract, HTTPResponse, HTTPResponseInterface
@@ -136,6 +136,11 @@ abstract class OAuth2Test extends ProviderTestAbstract{
 	}
 
 	public function testCheckState(){
+
+		if(!$this->provider instanceof CSRFToken){
+			$this->markTestSkipped('N/A');
+		}
+
 		$provider = $this
 			->getMethod('checkState')
 			->invokeArgs($this->provider, ['test_state']);
@@ -148,6 +153,11 @@ abstract class OAuth2Test extends ProviderTestAbstract{
 	 * @expectedExceptionMessage invalid state
 	 */
 	public function testCheckStateInvalid(){
+
+		if(!$this->provider instanceof CSRFToken){
+			$this->markTestSkipped('N/A');
+		}
+
 		$this
 			->getMethod('checkState')
 			->invoke($this->provider);
@@ -158,6 +168,11 @@ abstract class OAuth2Test extends ProviderTestAbstract{
 	 * @expectedExceptionMessage invalid authorization state
 	 */
 	public function testCheckStateInvalidAuth(){
+
+		if(!$this->provider instanceof CSRFToken){
+			$this->markTestSkipped('N/A');
+		}
+
 		$this
 			->getMethod('checkState')
 			->invokeArgs($this->provider, ['invalid_test_state']);

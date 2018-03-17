@@ -44,6 +44,7 @@ namespace chillerlan\OAuth\Providers;
  * @method \chillerlan\HTTP\HTTPResponseInterface updateOrder($account_id, $order_id, array $body = ['id', 'type', 'customer_first_name', 'customer_last_name', 'customer_email', 'shipping_address_1', 'shipping_address_2', 'shipping_city', 'shipping_state', 'shipping_zip', 'shipping_country_id', 'shipping_status'])
  */
 class BigCartel extends OAuth2Provider implements CSRFToken{
+	use CSRFTokenTrait;
 
 	protected $apiURL         = 'https://api.bigcartel.com/v1';
 	protected $authURL        = 'https://my.bigcartel.com/oauth/authorize';

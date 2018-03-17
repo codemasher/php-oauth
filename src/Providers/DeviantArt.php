@@ -16,7 +16,7 @@ namespace chillerlan\OAuth\Providers;
  * @link https://www.deviantart.com/developers/authentication
  */
 class DeviantArt extends OAuth2Provider implements ClientCredentials, CSRFToken, TokenExpires, TokenRefresh{
-	use OAuth2ClientCredentialsTrait, OAuth2TokenRefreshTrait;
+	use CSRFTokenTrait, OAuth2ClientCredentialsTrait, OAuth2TokenRefreshTrait;
 
 	const SCOPE_BASIC        = 'basic';
 	const SCOPE_BROWSE       = 'browse';

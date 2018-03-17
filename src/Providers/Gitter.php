@@ -18,6 +18,7 @@ namespace chillerlan\OAuth\Providers;
  *
  */
 class Gitter extends OAuth2Provider implements CSRFToken, TokenExpires{
+	use CSRFTokenTrait;
 
 	const SCOPE_FLOW    = 'flow';
 	const SCOPE_PRIVATE = 'private';

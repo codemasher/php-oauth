@@ -20,8 +20,8 @@ namespace chillerlan\OAuth\Providers;
  * @link https://gist.github.com/amfeng/3507366
  */
 class Stripe extends OAuth2Provider implements CSRFToken, TokenRefresh{
-	use OAuth2TokenRefreshTrait;
-	
+	use CSRFTokenTrait, OAuth2TokenRefreshTrait;
+
 	const SCOPE_READ_WRITE = 'read_write';
 	const SCOPE_READ_ONLY  = 'read_only';
 

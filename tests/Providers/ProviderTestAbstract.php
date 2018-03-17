@@ -127,7 +127,7 @@ abstract class ProviderTestAbstract extends TestCase{
 	public function testGetUserRevokeURL(){
 		$this->setProperty($this->provider, 'userRevokeURL', '/oauth/revoke');
 
-		$this->assertSame('/oauth/revoke', $this->provider->getUserRevokeURL());
+		$this->assertSame('/oauth/revoke', $this->provider->userRevokeURL);
 	}
 
 	public function testGetStorageInterface(){

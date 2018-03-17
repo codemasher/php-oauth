@@ -18,7 +18,7 @@ namespace chillerlan\OAuth\Providers;
  * @link https://images-na.ssl-images-amazon.com/images/G/01/mwsportal/doc/en_US/offamazonpayments/LoginAndPayWithAmazonIntegrationGuide._V335378063_.pdf
  */
 class Amazon extends OAuth2Provider implements CSRFToken, TokenExpires, TokenRefresh{
-	use OAuth2TokenRefreshTrait;
+	use CSRFTokenTrait, OAuth2TokenRefreshTrait;
 
 	const SCOPE_PROFILE         = 'profile';
 	const SCOPE_PROFILE_USER_ID = 'profile:user_id';

@@ -16,11 +16,15 @@ use chillerlan\HTTP\{
 	HTTPClientInterface, HTTPResponseInterface
 };
 use chillerlan\OAuth\{
-	Token,
-	Storage\TokenStorageInterface
+	Token, Storage\TokenStorageInterface
 };
 use chillerlan\Traits\ContainerInterface;
 
+/**
+ * from CSRFTokenTrait:
+ * @method array setState(array $params)
+ * @method \chillerlan\OAuth\Providers\OAuth2Interface checkState(string $state = null)
+ */
 abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 
 	/**
@@ -71,12 +75,7 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 		$params = $this->getAuthURLParams($params ?? []);
 
 		if($this instanceof CSRFToken){
-
-			if(!isset($params['state'])){
-				$params['state'] = sha1(random_bytes(256));
-			}
-
-			$this->storage->storeAuthorizationState($this->serviceName, $params['state']);
+			$params = $this->setState($params);
 		}
 
 		return $this->authURL.'?'.$this->httpBuildQuery($params);
@@ -140,27 +139,6 @@ abstract class OAuth2Provider extends OAuthProvider implements OAuth2Interface{
 		$token->extraParams = $data;
 
 		return $token;
-	}
-
-	/**
-	 * @param string|null $state
-	 *
-	 * @return \chillerlan\OAuth\Providers\OAuth2Interface
-	 * @throws \chillerlan\OAuth\Providers\ProviderException
-	 */
-	protected function checkState(string $state = null):OAuth2Interface{
-
-		if(empty($state) || !$this->storage->hasAuthorizationState($this->serviceName)){
-			throw new ProviderException('invalid state for '.$this->serviceName);
-		}
-
-		$knownState = $this->storage->retrieveAuthorizationState($this->serviceName);
-
-		if(!hash_equals($knownState, $state)){
-			throw new ProviderException('invalid authorization state: '.$this->serviceName.' '.$state);
-		}
-
-		return $this;
 	}
 
 	/**

@@ -16,7 +16,7 @@ namespace chillerlan\OAuth\Providers;
  * @link https://developer.yahoo.com/oauth2/guide/
  */
 abstract class Yahoo extends OAuth2Provider implements CSRFToken, TokenExpires, TokenRefresh{
-	use OAuth2TokenRefreshTrait;
+	use CSRFTokenTrait, OAuth2TokenRefreshTrait;
 
 	protected $authURL            = 'https://api.login.yahoo.com/oauth2/request_auth';
 	protected $accessTokenURL     = 'https://api.login.yahoo.com/oauth2/get_token';

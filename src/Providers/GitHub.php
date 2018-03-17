@@ -18,6 +18,7 @@ namespace chillerlan\OAuth\Providers;
  *
  */
 class GitHub extends OAuth2Provider implements CSRFToken{
+	use CSRFTokenTrait;
 
 	const SCOPE_USER             = 'user';
 	const SCOPE_USER_EMAIL       = 'user:email';

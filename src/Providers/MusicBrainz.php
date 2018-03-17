@@ -21,7 +21,7 @@ use chillerlan\HTTP\HTTPResponseInterface;
  *
  */
 class MusicBrainz extends OAuth2Provider implements CSRFToken, TokenExpires, TokenRefresh{
-	use OAuth2TokenRefreshTrait;
+	use CSRFTokenTrait, OAuth2TokenRefreshTrait;
 
 	const SCOPE_PROFILE        = 'profile';
 	const SCOPE_EMAIL          = 'email';
