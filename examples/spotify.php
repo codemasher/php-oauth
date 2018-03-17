@@ -13,9 +13,7 @@ namespace chillerlan\OAuthExamples;
 use chillerlan\Database\{
 	Database, DatabaseOptionsTrait, Drivers\MySQLiDrv
 };
-use chillerlan\HTTP\{
-	CurlClient, HTTPOptionsTrait
-};
+use chillerlan\HTTP\CurlClient;
 use chillerlan\OAuth\{
 	OAuthOptions, Providers\Spotify, Storage\DBTokenStorage
 };
@@ -37,6 +35,7 @@ $options = [
 	'dbProviderTable'  => 'storagetest_providers',
 	'storageCryptoKey' => '000102030405060708090a0b0c0d0e0f101112131415161718191a1b1c1d1e1f',
 	'tokenAutoRefresh' => true,
+
 	// DatabaseOptions
 	'driver'           => MySQLiDrv::class,
 	'host'             => $env->get('MYSQL_HOST'),
@@ -51,7 +50,7 @@ $options = [
 ];
 
 $options = new class($options) extends OAuthOptions{
-	use DatabaseOptionsTrait, HTTPOptionsTrait;
+	use DatabaseOptionsTrait;
 };
 
 $db      = new Database($options);
@@ -87,8 +86,8 @@ while(true){
 
 // now crawl the artists' new releases
 $newReleases = [];
-$since       = mktime(0, 0, 0,  1,  1, 2018);
-$until       = time();
+$since       = mktime(0, 0, 0, 1, 1, 2017);
+$until       = mktime(0, 0, 0, 12, 31, 2017);
 
 foreach($artists as $id){
 	$response = $spotify->artistAlbums($id)->json;

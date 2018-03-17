@@ -8,8 +8,9 @@
  */
 
 use chillerlan\OAuth\{
-	OAuthOptions, HTTP\CurlClient, Storage\SessionTokenStorage, Token
+	OAuthOptions, Storage\SessionTokenStorage, Token
 };
+use chillerlan\HTTP\CurlClient;
 use chillerlan\Traits\DotEnv;
 
 error_reporting(E_ALL);
@@ -34,19 +35,15 @@ function getProvider(string $name, array $scopes = []){
 	$envvar = strtoupper($name);
 	$provider = '\\chillerlan\\OAuth\\Providers\\'.$name;
 
-	return new $provider(
-		new CurlClient([
-			CURLOPT_CAINFO => __DIR__.'/../config/cacert.pem',
-			CURLOPT_USERAGENT => 'chillerlan-php-oauth-test',
-		]),
-		$storage,
-		new OAuthOptions([
-			'key'         => $_ENV[$envvar.'_KEY'],
-			'secret'      => $_ENV[$envvar.'_SECRET'],
-			'callbackURL' => $_ENV[$envvar.'_CALLBACK_URL'],
-		]),
-		$scopes
-	);
+	$options = new OAuthOptions([
+		'key'         => $_ENV[$envvar.'_KEY'],
+		'secret'      => $_ENV[$envvar.'_SECRET'],
+		'callbackURL' => $_ENV[$envvar.'_CALLBACK_URL'],
+		'ca_info'     => __DIR__.'/../config/cacert.pem',
+		'userAgent'   => 'chillerlanPhpOAuth/2.0.0 +https://github.com/codemasher/php-oauth',
+	]);
+
+	return new $provider(new CurlClient($options), $storage, $options, $scopes);
 }
 
 /**
