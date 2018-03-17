@@ -17,6 +17,7 @@ use chillerlan\OAuth\Storage\TokenStorageInterface;
 
 /**
  * @property string $serviceName
+ * @property string $userRevokeURL
  */
 interface OAuthInterface{
 
@@ -26,11 +27,6 @@ interface OAuthInterface{
 	 * @return string
 	 */
 	public function getAuthURL(array $params = null):string;
-
-	/**
-	 * @return string
-	 */
-	public function getUserRevokeURL():string;
 
 	/**
 	 * @param string $path

@@ -27,6 +27,7 @@ use ReflectionClass;
 
 /**
  * @property string $serviceName
+ * @property string $userRevokeURL
  */
 abstract class OAuthProvider implements OAuthInterface, LoggerAwareInterface{
 	use Magic, HTTPClientTrait, LogTrait;
@@ -120,7 +121,7 @@ abstract class OAuthProvider implements OAuthInterface, LoggerAwareInterface{
 	/**
 	 * @return string
 	 */
-	public function getUserRevokeURL():string{
+	protected function magic_get_userRevokeURL():string{
 		return $this->userRevokeURL;
 	}
 
