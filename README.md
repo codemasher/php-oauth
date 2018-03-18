@@ -1,5 +1,5 @@
 # chillerlan/php-oauth
-A PHP7+ OAuth1/2 client with an integrated API wrapper, [loosely based](https://github.com/codemasher/PHPoAuthLib) on [Lusitanian/PHPoAuthLib](https://github.com/Lusitanian/PHPoAuthLib). 
+A PHP7.2+ OAuth1/2 client with an integrated API wrapper, [loosely based](https://github.com/codemasher/PHPoAuthLib) on [Lusitanian/PHPoAuthLib](https://github.com/Lusitanian/PHPoAuthLib).
 
 [![Packagist version][packagist-badge]][packagist]
 [![License][license-badge]][license]
@@ -86,10 +86,10 @@ If you plan to use encryption (via [sodium](http://php.net/manual/book.sodium.ph
 
 **Manual Installation**
 
-Download the desired version of the package from [master](https://github.com/chillerlan/php-oauth/archive/master.zip) or 
+Download the desired version of the package from [master](https://github.com/chillerlan/php-oauth/archive/master.zip) or
 [release](https://github.com/chillerlan/php-oauth/releases) and extract the contents to your project folder.  After that:
 - run `composer install` to install the required dependencies and generate `/vendor/autoload.php`.
-- if you use a custom autoloader, point the namespace `chillerlan\OAuth` to the folder `src` of the package 
+- if you use a custom autoloader, point the namespace `chillerlan\OAuth` to the folder `src` of the package
 
 Profit!
 
@@ -99,27 +99,29 @@ In order to instance a provider you you'll need to init a `HTTPClientInterface`,
 ```php
 use chillerlan\OAuth\{
 	Providers\<PROVIDER> as Provider,
-	OAuthOptions, 
-	HTTP\CurlClient, 
+	OAuthOptions,
 	Storage\SessionTokenStorage
 };
-
-// init a HTTPClientInterface
-$http = new CurlClient([
-	CURLOPT_CAINFO    => '/path/to/cacert.pem', // https://curl.haxx.se/ca/cacert.pem
-	CURLOPT_USERAGENT => 'my-awesome-oauth-app',
-]);
-
-// init a TokenStorageInterface
-// a persistent storage is required for authentication!
-$storage = new SessionTokenStorage;
+use chillerlan\HTTP\CurlClient;
 
 // set OAuthOptions
 $options = new OAuthOptions([
+	// OAuthOptions
 	'key'         => '<API_KEY>',
 	'secret'      => '<API_SECRET>',
 	'callbackURL' => '<API_CALLBACK_URL>',
+
+	// HTTPOptions
+	'ca_info'          => '/path/to/cacert.pem', // https://curl.haxx.se/ca/cacert.pem
+	'userAgent'        => 'my-awesome-oauth-app',
 ]);
+
+// init a HTTPClientInterface
+$http = new CurlClient($options);
+
+// init a TokenStorageInterface
+// a persistent storage is required for authentication!
+$storage = new SessionTokenStorage($options);
 
 // optional scopes for OAuth2 providers
 $scopes = [
@@ -131,7 +133,7 @@ $provider = new Provider($http, $storage, $options, $scopes);
 ```
 
 ### Authentication
-The application flow may differ slightly depending on the provider; there's a working authentication example for each supported provider in the 
+The application flow may differ slightly depending on the provider; there's a working authentication example for each supported provider in the
 [examples folder](https://github.com/chillerlan/php-oauth/tree/master/examples/get-token).
 
 ```php
@@ -189,12 +191,12 @@ $response = $provider->request('/some/endpoint', ['q' => 'param'], 'POST', ['dat
 
 // use the data
 $headers = $response->headers;
-$data    = $response->json; 
-``` 
+$data    = $response->json;
+```
 
 ### The built-in API Client
-The API client is a very minimal implementation of available endpoints for the given provider, which returns the JSON responses as `\stdClass` object. 
-Please refer to the [provider class docblocks](https://github.com/chillerlan/php-oauth/tree/master/src/Providers) for method names and signatures, 
+The API client is a very minimal implementation of available endpoints for the given provider, which returns the JSON responses as `\stdClass` object.
+Please refer to the [provider class docblocks](https://github.com/chillerlan/php-oauth/tree/master/src/Providers) for method names and signatures,
 as well as to [the live API tests](https://github.com/chillerlan/php-oauth/tree/master/tests/API) (which are not enabled on Travis) for usage examples.
 The general method scheme looks as follows:
 
@@ -204,14 +206,14 @@ The general method scheme looks as follows:
  - `:path` elements become required parameters
  - `?query=` parameters become a `[$k => $v]` array
  - `POST|PUT|PATCH|DELETE` body parameters become a `[$k => $v]` array
- 
+
 ```php
 // the general signature
-function endpointName([$path_element_n, ... , ] $query_params = null, $body_params = null):OAuthResponse;
+function endpointName([$path_element_n, ... , ] $query_params = null, $body_params = null):HTTPResponseInterface;
 
 // https://example.com/api/endpoint/:id/subendpoint/:name?param1=foo&param2=bar
 $provider->endpointIdSubendpointName($id, $name, ['param1' => 'foo', 'param2' => 'bar']);
-``` 
+```
 
 ## Extensions
 In order to use a provider, http client or storage, that is not yet supported, you'll need to implement the respective interfaces:
@@ -221,7 +223,7 @@ There's already a Guzzle client - what else do you need? :wink: Just extend `HTT
 
 ### [`TokenStorageInterface`](https://github.com/chillerlan/php-oauth/tree/master/src/Storage/TokenStorageInterface.php)
 There are currently 3 different `TokenStorageInterface`, refer to these for implementation details (extend `TokenStorageAbstract`):
-- [`MemoryTokenStorage`](https://github.com/chillerlan/php-oauth/tree/master/src/Storage/MemoryTokenStorage.php): non-persistent, to store a token during script runtime and then discard it. 
+- [`MemoryTokenStorage`](https://github.com/chillerlan/php-oauth/tree/master/src/Storage/MemoryTokenStorage.php): non-persistent, to store a token during script runtime and then discard it.
 - [`SessionTokenStorage`](https://github.com/chillerlan/php-oauth/tree/master/src/Storage/SessionTokenStorage.php): half-persistent, stores a token for as long a user's session is alive.
 - [`DBTokenStorage`](https://github.com/chillerlan/php-oauth/tree/master/src/Storage/DBTokenStorage.php): persistent, multi purpose database driven storage with encryption support
 
@@ -232,12 +234,12 @@ The OAuth1 implementation is close to Twitter's specs and *should* work for most
 use chillerlan\OAuth\Providers\OAuth1Provider;
 
 class MyOauth1Provider extends Oauth1Provider{
-	
+
 	protected $apiURL          = 'https://api.example.com';
 	protected $requestTokenURL = 'https://example.com/oauth/request_token';
 	protected $authURL         = 'https://example.com/oauth/authorize';
 	protected $accessTokenURL  = 'https://example.com/oauth/access_token';
-	
+
 }
 ```
 
@@ -246,7 +248,8 @@ class MyOauth1Provider extends Oauth1Provider{
 ```php
 use chillerlan\OAuth\Providers\OAuth2Provider;
 
-class MyOauth2Provider extends Oauth2Provider{
+class MyOauth2Provider extends Oauth2Provider implements ClientCredentials, CSRFToken, TokenExpires, TokenRefresh{
+	use OAuth2ClientCredentialsTrait, OAuth2TokenRefreshTrait;
 
 	const SCOPE_WHATEVER = 'whatever';
 
@@ -258,10 +261,6 @@ class MyOauth2Provider extends Oauth2Provider{
 	protected $authHeaders               = ['Accept' => 'application/json'];
 	protected $apiHeaders                = ['Accept' => 'application/json'];
 	protected $scopesDelimiter           = ',';
-	protected $accessTokenExpires        = true;  
-	protected $accessTokenRefreshable    = true;  // a token refresh will be performed
-	protected $useCsrfToken              = false; // disables <state> parameter creation & check.
-	protected $clientCredentials         = true;  // enables/allows fetching of Client Credentials Token
 
 }
 ```
@@ -277,7 +276,7 @@ The JSON for `https://example.com/api/endpoint/:id/subendpoint/:name?param1=foo&
         "path": "\/endpoint\/%1$s\/subendpoint\/%2$s",
         "method": "GET",
         "query": [
-            "param1", 
+            "param1",
             "param2"
         ],
         "path_elements": [
@@ -296,43 +295,50 @@ The JSON for `https://example.com/api/endpoint/:id/subendpoint/:name?param1=foo&
 ### `OAuthInterface`
 method | return
 ------ | ------
-`__construct(HTTPClientInterface $http, TokenStorageInterface $storage, OAuthOptions $options)` | - 
-`__call(string $name, array $arguments)` | `OAuthResponse`, returns `null` if the method was not found
-`buildHttpQuery(array $params, bool $urlencode = null, string $delimiter = null, string $enclosure = null)` | `string` 
-`getAuthURL(array $params = null)` | string 
-`getUserRevokeURL()` | string 
-`getStorageInterface()` | `TokenStorageInterface` 
-`request(string $path, array $params = null, string $method = null, $body = null, array $headers = null)` | `OAuthResponse` 
+`__construct(HTTPClientInterface $http, TokenStorageInterface $storage, OAuthOptions $options)` | -
+`__call(string $name, array $arguments)` | `HTTPResponseInterface`, returns `null` if the method was not found
+`getAuthURL(array $params = null)` | string
+`getStorageInterface()` | `TokenStorageInterface`
+`request(string $path, array $params = null, string $method = null, $body = null, array $headers = null)` | `HTTPResponseInterface`
 
-property | description 
--------- | ----------- 
+property | description
+-------- | -----------
 `$serviceName` | the classname for the current provider
+`$userRevokeURL` | an optional link to the provider's user control panel where they can revoke the current token
 
 ### `OAuth1Interface`
-method | return 
------- | ------ 
-`getAccessToken(string $token, string $verifier, string $tokenSecret = null)` | `Token` 
-`getRequestToken()` | `Token` 
-`getSignature(string $url, array $params, string $method = null)` | string 
+method | return
+------ | ------
+`getAccessToken(string $token, string $verifier, string $tokenSecret = null)` | `Token`
+`getRequestToken()` | `Token`
+`getSignature(string $url, array $params, string $method = null)` | string
 
 ### `OAuth2Interface`
-method | return 
------- | ------ 
-`getAccessToken(string $code, string $state = null)` | `Token` 
+method | return
+------ | ------
+`getAccessToken(string $code, string $state = null)` | `Token`
 
 #### `ClientCredentials`
-method | return 
------- | ------ 
-`getClientCredentialsToken(array $scopes = null)` | `Token` 
+method | return
+------ | ------
+`getClientCredentialsToken(array $scopes = null)` | `Token`
+
+#### `CSRFToken`
+method | return
+------ | ------
+
+#### `TokenExpires`
+method | return
+------ | ------
 
 #### `TokenRefresh`
-method | return 
------- | ------ 
-`refreshAccessToken(Token $token = null)` | `Token` 
+method | return
+------ | ------
+`refreshAccessToken(Token $token = null)` | `Token`
 
 ### `TokenStorageInterface`
-method | return 
------- | ------ 
+method | return
+------ | ------
 `storeAccessToken(string $service, Token $token)` | `TokenStorageInterface`
 `retrieveAccessToken(string $service)` | `Token`
 `hasAccessToken(string $service)` | `Token`
@@ -347,21 +353,21 @@ method | return
 ### [`Token`](https://github.com/chillerlan/php-oauth/tree/master/src/Token.php)
 method | return | description
 ------ | ------ | -----------
-`__construct(array $properties = null)` | - | 
+`__construct(array $properties = null)` | - |
 `__set(string $property, $value)` | void | overrides `chillerlan\Traits\Container`
 `__toArray()` | array | from `chillerlan\Traits\Container`
-`setExpiry(int $expires = null)` | `Token` | 
-`isExpired()` | `bool` | 
+`setExpiry(int $expires = null)` | `Token` |
+`isExpired()` | `bool` |
 
 property | type | default | allowed | description
 -------- | ---- | ------- | ------- | -----------
 `$requestToken` | string | null | * | OAuth1 only
 `$requestTokenSecret` | string | null | * | OAuth1 only
 `$accessTokenSecret` | string | null | * | OAuth1 only
-`$accessToken` | string | null | * | 
-`$refreshToken` | string | null | * | 
-`$extraParams` | array | `[]` |  | 
-`$expires` | int | `Token::EOL_UNKNOWN` |  | 
+`$accessToken` | string | null | * |
+`$refreshToken` | string | null | * |
+`$extraParams` | array | `[]` |  |
+`$expires` | int | `Token::EOL_UNKNOWN` |  |
 
 ### [`OAuthOptions`](https://github.com/chillerlan/php-oauth/tree/master/src/OAuthOptions.php)
 property | type | default | allowed | description
@@ -372,23 +378,24 @@ property | type | default | allowed | description
 `$sessionStart` | bool | `true` | - | whether to start the session when using the `SessionTokenStorage`
 `$sessionTokenVar` | string | 'chillerlan-oauth-token' | * | name of the token array in `$_SESSION`
 `$sessionStateVar` | string | 'chillerlan-oauth-state' | * | name of the csrf state array in `$_SESSION`
-`$useEncryption` | bool | ? | - | `true` if PHP >= 7.2 & sodium extension enabled, `false` otherwise 
+`$useEncryption` | bool | ? | - | `true` if PHP >= 7.2 & sodium extension enabled, `false` otherwise
 `$storageCryptoKey` | string | null | a 64 character hex string (32 byte) | see [`sodium_crypto_box_secretkey()`](http://php.net/manual/function.sodium-crypto-box-secretkey.php)
+`$tokenAutoRefresh` | bool | false | - | allows automatic refreshing of OAuth2 tokens
 `$dbLabelHashAlgo` | string | 'md5' | a [valid hash algorithm](http://php.net/manual/function.hash-algos.php) | only used for internal labels
 `$dbLabelFormat` | string | '%1$s@%2$s' | * | passed to [sprinf()](http://php.net/manual/function.sprintf.php)
 `$dbUserID` | int, string | null | * | the user id for the current OAuth session
 `$dbTokenTable` | string | null | * | the token storage table, see [`dbstorage_create.php`](https://github.com/chillerlan/php-oauth/blob/master/cli/dbstorage_create.php)
-`$dbTokenTableExpires` | string | 'expires' | * | 
-`$dbTokenTableLabel` | string | 'label' | * | 
-`$dbTokenTableProviderID` | string | 'provider_id' | * | 
-`$dbTokenTableState` | string | 'state' | * | 
-`$dbTokenTableToken` | string | 'token' | * | 
-`$dbTokenTableUser` | string | 'user_id' | * | 
+`$dbTokenTableExpires` | string | 'expires' | * |
+`$dbTokenTableLabel` | string | 'label' | * |
+`$dbTokenTableProviderID` | string | 'provider_id' | * |
+`$dbTokenTableState` | string | 'state' | * |
+`$dbTokenTableToken` | string | 'token' | * |
+`$dbTokenTableUser` | string | 'user_id' | * |
 `$dbProviderTable` | string | null | * | the provider table, see [`dbstorage_create.php`](https://github.com/chillerlan/php-oauth/blob/master/cli/dbstorage_create.php)
-`$dbProviderTableID` | string | 'provider_id' | * | 
-`$dbProviderTableName` | string | 'servicename' | * | 
+`$dbProviderTableID` | string | 'provider_id' | * |
+`$dbProviderTableName` | string | 'servicename' | * |
 
 # Disclaimer
-OAuth tokens are secrets and should be treated as such. Store them in a safe place, 
+OAuth tokens are secrets and should be treated as such. Store them in a safe place,
 [consider encryption](http://php.net/manual/book.sodium.php).<br/>
 I won't take responsibility for stolen auth tokens. Use at your own risk.
