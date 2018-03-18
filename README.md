@@ -200,12 +200,12 @@ Please refer to the [provider class docblocks](https://github.com/chillerlan/php
 as well as to [the live API tests](https://github.com/chillerlan/php-oauth/tree/master/tests/API) (which are not enabled on Travis) for usage examples.
 The general method scheme looks as follows:
 
- - the method name is either
-   - the actual API method name if available
-   - substituted from the path element names
- - `:path` elements become required parameters
- - `?query=` parameters become a `[$k => $v]` array
- - `POST|PUT|PATCH|DELETE` body parameters become a `[$k => $v]` array
+- the method name is either
+	- the actual API method name if available
+	- substituted from the path element names
+		- `:path` elements become required parameters
+		- `?query=` parameters become a `[$k => $v]` array
+		- `POST|PUT|PATCH|DELETE` body parameters become a `[$k => $v]` array
 
 ```php
 // the general signature
