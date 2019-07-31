@@ -143,7 +143,7 @@ abstract class OAuthProvider implements OAuthInterface, LoggerAwareInterface{
 	 * @throws \chillerlan\OAuth\API\OAuthAPIClientException
 	 */
 	public function __call(string $name, array $arguments){
-		if(array_key_exists($name, $this->apiMethods)){
+		if(property_exists($this->apiMethods, $name)){
 
 			$m = $this->apiMethods->{$name};
 
