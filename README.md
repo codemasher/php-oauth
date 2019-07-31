@@ -6,7 +6,6 @@ A PHP7.2+ OAuth1/2 client with an integrated API wrapper, [loosely based](https:
 [![Travis CI][travis-badge]][travis]
 [![CodeCov][coverage-badge]][coverage]
 [![Scrunitizer CI][scrutinizer-badge]][scrutinizer]
-[![Gemnasium][gemnasium-badge]][gemnasium]
 [![Packagist downloads][downloads-badge]][downloads]
 [![PayPal donate][donate-badge]][donate]
 
@@ -20,8 +19,6 @@ A PHP7.2+ OAuth1/2 client with an integrated API wrapper, [loosely based](https:
 [coverage]: https://codecov.io/github/chillerlan/php-oauth
 [scrutinizer-badge]: https://img.shields.io/scrutinizer/g/chillerlan/php-oauth.svg?style=flat-square
 [scrutinizer]: https://scrutinizer-ci.com/g/chillerlan/php-oauth
-[gemnasium-badge]: https://img.shields.io/gemnasium/chillerlan/php-oauth.svg?style=flat-square
-[gemnasium]: https://gemnasium.com/github.com/chillerlan/php-oauth
 [downloads-badge]: https://img.shields.io/packagist/dt/chillerlan/php-oauth.svg?style=flat-square
 [downloads]: https://packagist.org/packages/chillerlan/php-oauth/stats
 [donate-badge]: https://img.shields.io/badge/donate-paypal-ff33aa.svg?style=flat-square
