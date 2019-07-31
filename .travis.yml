@@ -1,18 +1,15 @@
+services:
+  - mysql
+
 language: php
-
-env:
-  global:
-    - setup=no_encryption
-
-php:
-  - 7.2
 
 matrix:
   include:
     - php: 7.2
-      env: setup=no_encryption
-    - php: 7.2
-      env: setup=sodium_ext
+    - php: 7.3
+    - php: nightly
+  allow_failures:
+    - php: nightly
 
 install:
   - travis_retry composer install --no-interaction --prefer-source
