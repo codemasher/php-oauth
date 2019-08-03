@@ -59,18 +59,6 @@ abstract class DBStorageTestAbstract extends StorageTestAbstract{
 		$this->db      = new Database($this->options, new MemoryCache, $this->logger);
 	}
 
-	public function testStoreWithExistingToken(){
-		$this->storage->storeAccessToken($this->tsn, $this->token);
-
-		$this->token->extraParams = array_merge($this->token->extraParams, ['q' => 'u here?']);
-
-		$this->storage->storeAccessToken($this->tsn, $this->token);
-
-		$token = $this->storage->getAccessToken($this->tsn);
-
-		$this->assertSame('u here?', $token->extraParams['q']);
-	}
-
 	public function testStoreTokenUnknownServiceException(){
 		$this->expectException(OAuthStorageException::class);
 		$this->expectExceptionMessage('unknown service');
