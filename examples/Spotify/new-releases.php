@@ -19,6 +19,8 @@ use chillerlan\HTTP\Psr7;
 
 /** @var \chillerlan\OAuth\Providers\Spotify\Spotify $spotify */
 $spotify = null;
+/** @var \Psr\Log\LoggerInterface $logger */
+$logger = null;
 
 require_once __DIR__.'/spotify-common.php';
 
