@@ -11,8 +11,6 @@ namespace chillerlan\OAuthCLI;
 
 use chillerlan\Database\Database;
 
-require_once __DIR__.'/../vendor/chillerlan/php-oauth-providers/examples/functions.php';
-
 function createDB(Database $db, string $tableProviders, string $tableTokens){
 	$db->connect();
 
@@ -27,13 +25,13 @@ function createDB(Database $db, string $tableProviders, string $tableTokens){
 		->tinytext('class', null, false)
 		->query();
 
-	$providers = \chillerlan\OAuthExamples\getProviders();
+	$providers = \chillerlan\OAuth\Providers\getProviders();
 
 	$db->insert
 		->into($tableProviders, 'IGNORE')
 		->values([['provider_id' => '?', 'name' => '?', 'class' => '?']])
 		->callback($providers, function(array $val, string $id):array{
-			return [$id, $val[0], $val[1]];
+			return [$id, $val['name'], $val['fqcn']];
 		});
 
 	$db->drop->table($tableTokens)->ifExists()->query();
