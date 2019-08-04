@@ -7,6 +7,7 @@
  * @copyright    2019 smiley
  * @license      MIT
  */
+namespace chillerlan\OAuthAppExamples\Spotify;
 
 use chillerlan\OAuth\Core\AccessToken;
 use chillerlan\OAuth\Providers\Spotify\Spotify;

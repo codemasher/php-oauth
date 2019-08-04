@@ -7,7 +7,7 @@
  * @license      MIT
  */
 
-namespace chillerlan\OAuthExamples;
+namespace chillerlan\OAuthAppExamples;
 
 use chillerlan\Database\{Database, Drivers\MySQLiDrv};
 use chillerlan\OAuthApp\{OAuthAppOptions, Storage\DBStorage};

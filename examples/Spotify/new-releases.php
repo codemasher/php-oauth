@@ -13,7 +13,7 @@
  * @license      MIT
  */
 
-namespace chillerlan\OAuthExamples\Spotify;
+namespace chillerlan\OAuthAppExamples\Spotify;
 
 use chillerlan\HTTP\Psr7;
 
