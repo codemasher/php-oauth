@@ -18,6 +18,9 @@ use chillerlan\OAuth\Storage\{OAuthStorageAbstract, OAuthStorageException, OAuth
 use chillerlan\Settings\SettingsContainerInterface;
 use Psr\Log\LoggerInterface;
 
+use function extension_loaded, is_bool, sha1, sodium_bin2hex, sodium_crypto_secretbox,
+	sodium_crypto_secretbox_open, sodium_hex2bin, sprintf, trim;
+
 /**
  * @property \chillerlan\OAuthApp\OAuthAppOptions $options
  */
@@ -25,7 +28,7 @@ class DBStorage extends OAuthStorageAbstract{
 
 	/** @var \chillerlan\Database\Database */
 	protected $db;
-
+	/** @var array */
 	protected $providers;
 
 	/**
@@ -39,7 +42,7 @@ class DBStorage extends OAuthStorageAbstract{
 	 */
 	public function __construct(Database $db, SettingsContainerInterface $options, LoggerInterface $logger = null){
 
-		if(!\extension_loaded('sodium')){
+		if(!extension_loaded('sodium')){
 			throw new OAuthStorageException('sodium extension missing'); // @codeCoverageIgnore
 		}
 
@@ -73,7 +76,6 @@ class DBStorage extends OAuthStorageAbstract{
 			throw new OAuthStorageException('unknown service');
 		}
 
-		// @todo: token type (cc/ac), refreshable
 		$values = [
 			'user_id'     => $this->options->db_user_id,
 			'provider_id' => $this->providers[$service]['provider_id'],
@@ -119,7 +121,7 @@ class DBStorage extends OAuthStorageAbstract{
 			->limit(1)
 			->query();
 
-		if(\is_bool($r) || $r->length < 1){
+		if(is_bool($r) || $r->length < 1){
 			throw new OAuthStorageException('token not found');
 		}
 
@@ -201,7 +203,7 @@ class DBStorage extends OAuthStorageAbstract{
 			->limit(1)
 			->query();
 
-		if(\is_bool($r) || $r->length < 1){
+		if(is_bool($r) || $r->length < 1){
 			throw new OAuthStorageException('state not found');
 		}
 
@@ -222,7 +224,7 @@ class DBStorage extends OAuthStorageAbstract{
 			->limit(1)
 			->query();
 
-		if(\is_bool($r) || $r->length < 1 || empty(\trim($r[0]->state))){
+		if(is_bool($r) || $r->length < 1 || empty(trim($r[0]->state))){
 			return false;
 		}
 
@@ -265,7 +267,7 @@ class DBStorage extends OAuthStorageAbstract{
 	 * @return string
 	 */
 	protected function getLabel(string $service):string{
-		return \sha1(\sprintf('%s@%s', $this->options->db_user_id, $service));
+		return sha1(sprintf('%s@%s', $this->options->db_user_id, $service));
 	}
 
 	/**
@@ -293,6 +295,7 @@ class DBStorage extends OAuthStorageAbstract{
 			$data = $this->decrypt($data);
 		}
 
+		/** @noinspection PhpIncompatibleReturnTypeInspection */
 		return (new AccessToken)->fromJSON($data);
 	}
 	/**
@@ -301,9 +304,9 @@ class DBStorage extends OAuthStorageAbstract{
 	 * @return string
 	 */
 	protected function encrypt(string $data):string {
-		$box = \sodium_crypto_secretbox($data, $this->options->storageCryptoNonce, $this->options->storageCryptoKey);
+		$box = sodium_crypto_secretbox($data, $this->options->storageCryptoNonce, $this->options->storageCryptoKey);
 
-		return \sodium_bin2hex($box);
+		return sodium_bin2hex($box);
 	}
 	/**
 	 * @param string $box
@@ -311,6 +314,6 @@ class DBStorage extends OAuthStorageAbstract{
 	 * @return string
 	 */
 	protected function decrypt(string $box):string {
-		return \sodium_crypto_secretbox_open(\sodium_hex2bin($box), $this->options->storageCryptoNonce, $this->options->storageCryptoKey);
+		return sodium_crypto_secretbox_open(sodium_hex2bin($box), $this->options->storageCryptoNonce, $this->options->storageCryptoKey);
 	}
 }

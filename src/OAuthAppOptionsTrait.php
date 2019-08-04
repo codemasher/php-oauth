@@ -14,6 +14,10 @@ namespace chillerlan\OAuthApp;
 
 use chillerlan\OAuth\OAuthException;
 
+use function preg_match, sodium_hex2bin, strlen;
+
+use const SODIUM_CRYPTO_SECRETBOX_KEYBYTES, SODIUM_CRYPTO_SECRETBOX_NONCEBYTES;
+
 trait OAuthAppOptionsTrait{
 
 	/**
@@ -53,11 +57,11 @@ trait OAuthAppOptionsTrait{
 	 */
 	protected function set_storageCryptoKey(string $key):void{
 
-		if(\preg_match('/[a-f\d]/i',$key)){
-			$key = \sodium_hex2bin($key);
+		if(preg_match('/[a-f\d]/i', $key)){
+			$key = sodium_hex2bin($key);
 		}
 
-		if(\strlen($key) !== \SODIUM_CRYPTO_SECRETBOX_KEYBYTES){
+		if(strlen($key) !== SODIUM_CRYPTO_SECRETBOX_KEYBYTES){
 			throw new OAuthException('invalid sodium cryptobox key');
 		}
 
@@ -71,11 +75,11 @@ trait OAuthAppOptionsTrait{
 	 */
 	protected function storageCryptoNonce(string $nonce):void{
 
-		if(\preg_match('/[a-f\d]/i',$nonce)){
-			$nonce = \sodium_hex2bin($nonce);
+		if(preg_match('/[a-f\d]/i', $nonce)){
+			$nonce = sodium_hex2bin($nonce);
 		}
 
-		if(\strlen($nonce) !== \SODIUM_CRYPTO_SECRETBOX_NONCEBYTES){
+		if(strlen($nonce) !== SODIUM_CRYPTO_SECRETBOX_NONCEBYTES){
 			throw new OAuthException('invalid sodium cryptobox nonce');
 		}
 
