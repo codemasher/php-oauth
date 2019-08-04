@@ -39,7 +39,7 @@ try{
 	$rows      = max(0, min(intval($request->height), 10));
 	$cols      = max(0, min(intval($request->width), 10));
 	$imageSize = max(30, min(intval($request->imagesize), 150));
-	$limit = $rows * $cols + 10;
+	$limit     = $rows * $cols + 10;
 
 	// doesn't necessarily need session auth, api key alone is sufficient
 	$response = $lfm->userGetTopAlbums(['user' => $request->username, 'period' => $request->period, 'limit' => $limit]);
@@ -78,20 +78,13 @@ try{
 			continue;
 		}
 
-		// @todo: cache images
 		$path = getImage($img[count($img) - 1]->{'#text'}, $urlcache);
 		$ext  = substr($path, strlen($path) - 3);
 
 		switch($ext){
-			case 'jpg':
-				$res[] = imagecreatefromjpeg($path);
-				break;
-			case 'png':
-				$res[] = imagecreatefrompng($path);
-				break;
-			case 'gif':
-				$res[] = imagecreatefromgif($path);
-				break;
+			case 'jpg': $res[] = imagecreatefromjpeg($path); break;
+			case 'png': $res[] = imagecreatefrompng($path); break;
+			case 'gif': $res[] = imagecreatefromgif($path);break;
 		}
 
 	}
@@ -114,7 +107,7 @@ try{
 	}
 
 	// save the image into a file
-	imagejpeg($patchwork, $imagefile, 70);
+	imagejpeg($patchwork, $imagefile, 85);
 	imagedestroy($patchwork);
 
 	if(file_exists($imagefile)){
@@ -139,16 +132,18 @@ function getImage(string $url, string $urlcache):string{
 		return realpath($urlcache.$path);
 	}
 
-	$dir       = $urlcache.dirname($path);
+	$dir       = realpath($urlcache.dirname($path));
 	$imagedata = file_get_contents($url);
 
 	if(!file_exists($dir)){
 		mkdir($dir, 0777, true);
 	}
 
-	file_put_contents($urlcache.$path, $imagedata);
+	$img = realpath($urlcache.$path);
 
-	return $urlcache.$path;
+	file_put_contents($img, $imagedata);
+
+	return $img;
 }
 
 function send_json_response(array $r){
