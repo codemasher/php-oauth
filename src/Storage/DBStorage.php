@@ -14,7 +14,7 @@ namespace chillerlan\OAuthApp\Storage;
 
 use chillerlan\Database\Database;
 use chillerlan\OAuth\Core\AccessToken;
-use chillerlan\OAuth\Storage\{OAuthStorageAbstract, OAuthStorageException, OAuthStorageInterface};
+use chillerlan\OAuth\Storage\{OAuthStorageAbstract, OAuthStorageException};
 use chillerlan\Settings\SettingsContainerInterface;
 use Psr\Log\LoggerInterface;
 
@@ -64,13 +64,9 @@ class DBStorage extends OAuthStorageAbstract{
 	}
 
 	/**
-	 * @param string                             $service
-	 * @param \chillerlan\OAuth\Core\AccessToken $token
-	 *
-	 * @return \chillerlan\OAuth\Storage\OAuthStorageInterface
-	 * @throws \chillerlan\OAuth\Storage\OAuthStorageException
+	 * @inheritDoc
 	 */
-	public function storeAccessToken(string $service, AccessToken $token):OAuthStorageInterface{
+	public function storeAccessToken(string $service, AccessToken $token):bool{
 
 		if(!isset($this->providers[$service])){
 			throw new OAuthStorageException('unknown service');
@@ -87,30 +83,23 @@ class DBStorage extends OAuthStorageAbstract{
 		$label = $this->getLabel($service);
 
 		if($this->hasAccessToken($service)){
-			$this->db->update
+			return (bool)$this->db->update
 				->table($this->options->db_table_token)
 				->set($values)
 				->where('label', $label)
 				->query();
-
-			return $this;
 		}
 
 		$values['label'] = $label;
 
-		$this->db->insert
+		return (bool)$this->db->insert
 			->into($this->options->db_table_token)
 			->values($values)
 			->query();
-
-		return $this;
 	}
 
 	/**
-	 * @param string $service
-	 *
-	 * @return \chillerlan\OAuth\Core\AccessToken
-	 * @throws \chillerlan\OAuth\Storage\OAuthStorageException
+	 * @inheritDoc
 	 */
 	public function getAccessToken(string $service):AccessToken{
 
@@ -129,9 +118,7 @@ class DBStorage extends OAuthStorageAbstract{
 	}
 
 	/**
-	 * @param string $service
-	 *
-	 * @return bool
+	 * @inheritDoc
 	 */
 	public function hasAccessToken(string $service):bool{
 
@@ -144,55 +131,41 @@ class DBStorage extends OAuthStorageAbstract{
 	}
 
 	/**
-	 * @param string $service
-	 *
-	 * @return \chillerlan\OAuth\Storage\OAuthStorageInterface
+	 * @inheritDoc
 	 */
-	public function clearAccessToken(string $service):OAuthStorageInterface{
+	public function clearAccessToken(string $service):bool{
 
-		$this->db->delete
+		return (bool)$this->db->delete
 			->from($this->options->db_table_token)
 			->where('label', $this->getLabel($service))
 			->query();
-
-		return $this;
 	}
 
 	/**
-	 * @return \chillerlan\OAuth\Storage\OAuthStorageInterface
+	 * @inheritDoc
 	 */
-	public function clearAllAccessTokens():OAuthStorageInterface{
+	public function clearAllAccessTokens():bool{
 
-		$this->db->delete
+		return (bool)$this->db->delete
 			->from($this->options->db_table_token)
 			->where('user_id', $this->options->db_user_id)
 			->query();
-
-		return $this;
 	}
 
 	/**
-	 * @param string $service
-	 * @param string $state
-	 *
-	 * @return \chillerlan\OAuth\Storage\OAuthStorageInterface
+	 * @inheritDoc
 	 */
-	public function storeCSRFState(string $service, string $state):OAuthStorageInterface{
+	public function storeCSRFState(string $service, string $state):bool{
 
-		$this->db->update
+		return (bool)$this->db->update
 			->table($this->options->db_table_token)
 			->set(['state' => $state])
 			->where('label', $this->getLabel($service))
 			->query();
-
-		return $this;
 	}
 
 	/**
-	 * @param string $service
-	 *
-	 * @return string
-	 * @throws \chillerlan\OAuth\Storage\OAuthStorageException
+	 * @inheritDoc
 	 */
 	public function getCSRFState(string $service):string{
 
@@ -211,9 +184,7 @@ class DBStorage extends OAuthStorageAbstract{
 	}
 
 	/**
-	 * @param string $service
-	 *
-	 * @return bool
+	 * @inheritDoc
 	 */
 	public function hasCSRFState(string $service):bool{
 
@@ -232,33 +203,27 @@ class DBStorage extends OAuthStorageAbstract{
 	}
 
 	/**
-	 * @param string $service
-	 *
-	 * @return \chillerlan\OAuth\Storage\OAuthStorageInterface
+	 * @inheritDoc
 	 */
-	public function clearCSRFState(string $service):OAuthStorageInterface{
+	public function clearCSRFState(string $service):bool{
 
-		$this->db->update
+		return (bool)$this->db->update
 			->table($this->options->db_table_token)
 			->set(['state' => null])
 			->where('label', $this->getLabel($service))
 			->query();
-
-		return $this;
 	}
 
 	/**
-	 * @return \chillerlan\OAuth\Storage\OAuthStorageInterface
+	 * @inheritDoc
 	 */
-	public function clearAllCSRFStates():OAuthStorageInterface{
+	public function clearAllCSRFStates():bool{
 
-		$this->db->update
+		return (bool)$this->db->update
 			->table($this->options->db_table_token)
 			->set(['state' => null])
 			->where('user_id', $this->options->db_user_id)
 			->query();
-
-		return $this;
 	}
 
 	/**
@@ -271,11 +236,9 @@ class DBStorage extends OAuthStorageAbstract{
 	}
 
 	/**
-	 * @param \chillerlan\OAuth\Core\AccessToken $token
-	 *
-	 * @return string
+	 * @inheritDoc
 	 */
-	public function toStorage(AccessToken $token):string {
+	public function toStorage(AccessToken $token):string{
 		$data = $token->toJSON();
 
 		if($this->options->storageEncryption === true){
@@ -285,11 +248,9 @@ class DBStorage extends OAuthStorageAbstract{
 		return $data;
 	}
 	/**
-	 * @param string $data
-	 *
-	 * @return \chillerlan\OAuth\Core\AccessToken
+	 * @inheritDoc
 	 */
-	public function fromStorage(string $data):AccessToken{
+	public function fromStorage($data):AccessToken{
 
 		if($this->options->storageEncryption === true){
 			$data = $this->decrypt($data);
@@ -298,6 +259,7 @@ class DBStorage extends OAuthStorageAbstract{
 		/** @noinspection PhpIncompatibleReturnTypeInspection */
 		return (new AccessToken)->fromJSON($data);
 	}
+
 	/**
 	 * @param string $data
 	 *
@@ -308,6 +270,7 @@ class DBStorage extends OAuthStorageAbstract{
 
 		return sodium_bin2hex($box);
 	}
+
 	/**
 	 * @param string $box
 	 *
@@ -316,4 +279,5 @@ class DBStorage extends OAuthStorageAbstract{
 	protected function decrypt(string $box):string {
 		return sodium_crypto_secretbox_open(sodium_hex2bin($box), $this->options->storageCryptoNonce, $this->options->storageCryptoKey);
 	}
+
 }
