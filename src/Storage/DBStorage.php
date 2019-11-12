@@ -48,7 +48,7 @@ class DBStorage extends OAuthStorageAbstract{
 
 		parent::__construct($options, $logger);
 
-		if(!$this->options->db_table_token || !$this->options->db_table_provider){
+		if(!isset($this->options->db_table_token) || !isset($this->options->db_table_provider)){
 			throw new OAuthStorageException('invalid table config');
 		}
 

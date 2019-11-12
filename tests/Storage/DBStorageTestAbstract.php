@@ -75,4 +75,8 @@ abstract class DBStorageTestAbstract extends StorageTestAbstract{
 		new DBStorage($this->db, $this->options);
 	}
 
+	public function testFromStorageInvalidInputException(){
+		$this->markTestSkipped();
+	}
+
 }
