@@ -28,7 +28,7 @@ A PHP7.2+ OAuth1/2 client with an integrated API wrapper, [loosely based](https:
 ## Requirements
 - PHP 7.2+
 - the [Sodium](http://php.net/manual/book.sodium.php) extension for token encryption
-- a [PSR-18](https://www.php-fig.org/psr/psr-18/) compatible HTTP client library of your choice
+- a [PSR-18](https://www.php-fig.org/psr/psr-18/) compatible HTTP client library of your choice ([there is one included](https://github.com/chillerlan/php-httpinterface), though)
   - optional [PSR-17](https://www.php-fig.org/psr/psr-17/) compatible Request-, Response- and UriFactories
 
 For documentation of the core components, see [`chillerlan/php-oauth-core`](https://github.com/chillerlan/php-oauth-core)
@@ -43,7 +43,7 @@ For documentation of the core components, see [`chillerlan/php-oauth-core`](http
 ## Installation
 **requires [composer](https://getcomposer.org)**
 
-`composer.json` (note: replace `dev-master` with a version boundary)
+`composer.json` (note: replace `dev-master` with a [version boundary](https://getcomposer.org/doc/articles/versions.md))
 ```json
 {
 	"require": {
@@ -52,13 +52,6 @@ For documentation of the core components, see [`chillerlan/php-oauth-core`](http
 	}
 }
 ```
-
-**Manual Installation**
-
-Download the desired version of the package from [master](https://github.com/chillerlan/php-oauth/archive/master.zip) or
-[release](https://github.com/chillerlan/php-oauth/releases) and extract the contents to your project folder.  After that:
-- run `composer install` to install the required dependencies and generate `/vendor/autoload.php`.
-- if you use a custom autoloader, point the namespace `chillerlan\OAuth` to the folder `src` of the package
 
 Profit!
 
