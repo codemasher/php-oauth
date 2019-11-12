@@ -14,23 +14,23 @@
 
 namespace chillerlan\OAuthAppExamples\Spotify;
 
-use chillerlan\HTTP\Psr7;
+use function chillerlan\HTTP\Psr7\get_json;
 
-/** @var \chillerlan\OAuth\Providers\Spotify\Spotify $spotify */
-$spotify = null;
-/** @var \Psr\Log\LoggerInterface $logger */
-$logger = null;
+/**
+ * @var \chillerlan\OAuth\Providers\Spotify\Spotify $spotify
+ * @var \Psr\Log\LoggerInterface $logger
+ */
 
 require_once __DIR__.'/spotify-common.php';
 
-$me      = Psr7\get_json($spotify->me());
+$me      = get_json($spotify->me());
 $market  = $me->country; // market???
 
 // @todo: fetch from URI, $me or given user (list public playlists)
 $playlist_user = 'chillerlan';
 $playlist_id   = '72UW68EZzeXY8FnLmrBpA9'; // 2018
 
-$userPlaylist = Psr7\get_json($spotify->userPlaylist($playlist_user, $playlist_id, ['fields' => 'name,description', 'market' => $market]));
+$userPlaylist = get_json($spotify->userPlaylist($playlist_user, $playlist_id, ['fields' => 'name,description', 'market' => $market]));
 
 $offset    = 0;
 $limit     = 100; // API max = 100 tracks
@@ -44,7 +44,7 @@ $sleeptimer = 250000; // sleep between requests (µs)
 
 // fetch all tracks of a given playlist, including artist & album ids
 while(true){
-	$userPlaylistTracks = Psr7\get_json($spotify->userPlaylistTracks($playlist_user, $playlist_id, [
+	$userPlaylistTracks = get_json($spotify->userPlaylistTracks($playlist_user, $playlist_id, [
 		'fields' => 'total,items(track(id,name,album(id),artists(id,name)))',
 		'offset' => $offset,
 		'limit'  => $limit,
@@ -76,7 +76,7 @@ while(true){
 
 // now fetch the tracklist for each track's album
 foreach(array_chunk($oldalbums, 20, true) as $chunk){ // API max = 20 albums
-	$albums = Psr7\get_json($spotify->albums(['ids' => implode(',', $chunk), 'market' => $market]));
+	$albums = get_json($spotify->albums(['ids' => implode(',', $chunk), 'market' => $market]));
 
 	if(!isset($albums->albums)){
 		$logger->error('expected album list, got nothing');
@@ -107,7 +107,7 @@ foreach(array_chunk($oldalbums, 20, true) as $chunk){ // API max = 20 albums
 		// @todo: skip the "Various Artists"
 
 		// WTB bulk endpoint /artists/albums?ids=artist_id1,artist_id2,...
-		$artistAlbums = Psr7\get_json($spotify->artistAlbums($artists[$oldtrack_id], ['market' => $market]));
+		$artistAlbums = get_json($spotify->artistAlbums($artists[$oldtrack_id], ['market' => $market]));
 
 		usleep($sleeptimer);
 
@@ -126,7 +126,7 @@ foreach(array_chunk($oldalbums, 20, true) as $chunk){ // API max = 20 albums
 		shuffle($artistAlbums);
 
 		// WTB bulk endpoint /albums/tracks?ids=album_id1,album_id2,...
-		$albumTracks = Psr7\get_json($spotify->albumTracks(array_shift($artistAlbums), ['market' => $market]));
+		$albumTracks = get_json($spotify->albumTracks(array_shift($artistAlbums), ['market' => $market]));
 
 		if(isset($albumTracks->items)){
 			shuffle($albumTracks->items);
@@ -147,7 +147,7 @@ foreach(array_chunk($oldalbums, 20, true) as $chunk){ // API max = 20 albums
 $hash         = sha1(implode(array_keys($newtracks)).implode(array_values($newtracks)));
 $playlistname = $userPlaylist->name.' morphed-'.substr($hash, 0, 8);
 
-$playlistCreate = Psr7\get_json($spotify->playlistCreate($me->id, [
+$playlistCreate = get_json($spotify->playlistCreate($me->id, [
 	'name'          => $playlistname,
 	'public'        => false,
 	'collaborative' => false,
@@ -170,7 +170,7 @@ foreach($uris as $i => $chunk){
 	$playlistAddTracks = $spotify->playlistAddTracks($me->id, $playlistCreate->id, ['uris' => $chunk]);
 
 	$playlistAddTracks->getStatusCode() === 201
-		? $logger->info('added tracks '.++$i.'/'.count($uris).' ['.Psr7\get_json($playlistAddTracks)->snapshot_id.']')
+		? $logger->info('added tracks '.++$i.'/'.count($uris).' ['.get_json($playlistAddTracks)->snapshot_id.']')
 		: $logger->error($playlistAddTracks->getReasonPhrase()); // idc
 	usleep($sleeptimer);
 }

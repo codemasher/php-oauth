@@ -17,11 +17,10 @@ require_once __DIR__.'/../vendor/autoload.php';
 
 $CFGDIR = __DIR__.'/../config';
 
-/** @var \chillerlan\DotEnv\DotEnv $env */
-$env = null;
-
-/** @var \Psr\Log\LoggerInterface $logger */
-$logger = null;
+/**
+ * @var \chillerlan\DotEnv\DotEnv $env
+ * @var \Psr\Log\LoggerInterface $logger
+ */
 
 require_once __DIR__.'/../vendor/chillerlan/php-oauth-core/examples/oauth-example-common.php';
 

@@ -16,11 +16,10 @@ use chillerlan\HTTP\Psr7;
 
 $ENVVAR = 'LASTFM';
 
-/** @var \Psr\Log\LoggerInterface $logger */
-$logger = null;
-
-/** @var \chillerlan\OAuth\Providers\LastFM\LastFM $lfm */
-$lfm = null;
+/**
+ * @var \Psr\Log\LoggerInterface $logger
+ * @var \chillerlan\OAuth\Providers\LastFM\LastFM $lfm
+ */
 
 require_once __DIR__.'/lastfm-common.php';
 
@@ -129,21 +128,19 @@ function getImage(string $url, string $urlcache):string{
 	$path = parse_url($url, PHP_URL_PATH);
 
 	if(file_exists($urlcache.$path)){
-		return realpath($urlcache.$path);
+		return $urlcache.$path;
 	}
 
-	$dir       = realpath($urlcache.dirname($path));
+	$dir       = $urlcache.dirname($path);
 	$imagedata = file_get_contents($url);
 
 	if(!file_exists($dir)){
 		mkdir($dir, 0777, true);
 	}
 
-	$img = realpath($urlcache.$path);
+	file_put_contents($urlcache.$path, $imagedata);
 
-	file_put_contents($img, $imagedata);
-
-	return $img;
+	return $urlcache.$path;
 }
 
 function send_json_response(array $r){

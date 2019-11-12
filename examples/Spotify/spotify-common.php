@@ -15,17 +15,12 @@ use chillerlan\OAuth\Providers\Spotify\Spotify;
 $ENVVAR = 'SPOTIFY';
 $CFGDIR = null;
 
-/** @var \chillerlan\Settings\SettingsContainerInterface $options */
-$options = null;
-
-/** @var \Psr\Log\LoggerInterface $logger */
-$logger = null;
-
-/** @var \Psr\Http\Client\ClientInterface $http */
-$http = null;
-
-/** @var \chillerlan\OAuth\Storage\OAuthStorageInterface $storage */
-$storage = null;
+/**
+ * @var \Psr\Http\Client\ClientInterface $http
+ * @var \chillerlan\Settings\SettingsContainerInterface $options
+ * @var \chillerlan\OAuth\Storage\OAuthStorageInterface $storage
+ * @var \Psr\Log\LoggerInterface $logger
+ */
 
 require_once __DIR__.'/../provider-example-common.php';
 

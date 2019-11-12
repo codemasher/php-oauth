@@ -15,16 +15,16 @@
 
 namespace chillerlan\OAuthAppExamples\Spotify;
 
-use chillerlan\HTTP\Psr7;
+use function chillerlan\HTTP\Psr7\get_json;
 
-/** @var \chillerlan\OAuth\Providers\Spotify\Spotify $spotify */
-$spotify = null;
-/** @var \Psr\Log\LoggerInterface $logger */
-$logger = null;
+/**
+ * @var \chillerlan\OAuth\Providers\Spotify\Spotify $spotify
+ * @var \Psr\Log\LoggerInterface $logger
+ */
 
 require_once __DIR__.'/spotify-common.php';
 
-$me      = Psr7\get_json($spotify->me());
+$me      = get_json($spotify->me());
 $market  = $me->country; // market???
 $now     = time();
 $since   = $now - 7 * 86400; // last week
@@ -48,7 +48,7 @@ while(true){
 		'after' => $after
 	]);
 
-	$data = Psr7\get_json($meFollowing);
+	$data = get_json($meFollowing);
 
 	if($meFollowing->getStatusCode() === 200){
 
@@ -75,7 +75,7 @@ while(true){
 // now crawl the artists' new releases
 foreach($artists as $id){
 	// WTB bulk endpoint /artists/albums?ids=artist_id1,artist_id2,...
-	$artistAlbums = Psr7\get_json($spotify->artistAlbums($id, ['market' => $market]));
+	$artistAlbums = get_json($spotify->artistAlbums($id, ['market' => $market]));
 
 	foreach($artistAlbums->items ?? [] as $album){
 		$rdate = strtotime($album->release_date);
@@ -100,7 +100,7 @@ foreach($artists as $id){
 
 // fetch the album tracks (why aren't the tracks in the artistAlbums response???)
 foreach(array_chunk($newalbums, 20, true) as $chunk){ // API max = 20 albums
-	$albums = Psr7\get_json($spotify->albums(['ids' => implode(',', $chunk), 'market' => $market]));
+	$albums = get_json($spotify->albums(['ids' => implode(',', $chunk), 'market' => $market]));
 
 	foreach($albums->albums ?? [] as $album){
 		$tracks = array_column($album->tracks->items, 'id');
@@ -113,7 +113,7 @@ foreach(array_chunk($newalbums, 20, true) as $chunk){ // API max = 20 albums
 }
 
 // create a new playlist
-$playlistCreate = Psr7\get_json($spotify->playlistCreate($me->id, [
+$playlistCreate = get_json($spotify->playlistCreate($me->id, [
 	'name'          => 'new releases '.$datestr,
 	'public'        => false,
 	'collaborative' => false,
@@ -136,7 +136,7 @@ foreach($uris as $i => $chunk){
 	$playlistAddTracks = $spotify->playlistAddTracks($me->id, $playlistCreate->id, ['uris' => $chunk]);
 
 	$playlistAddTracks->getStatusCode() === 201
-		? $logger->info('added tracks '.++$i.'/'.count($uris).' ['.Psr7\get_json($playlistAddTracks)->snapshot_id.']')
+		? $logger->info('added tracks '.++$i.'/'.count($uris).' ['.get_json($playlistAddTracks)->snapshot_id.']')
 		: $logger->error($playlistAddTracks->getStatusCode()); // idc
 }
 
