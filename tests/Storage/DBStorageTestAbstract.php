@@ -20,19 +20,21 @@ use chillerlan\OAuthApp\OAuthAppOptions;
 use chillerlan\OAuthApp\Storage\DBStorage;
 use chillerlan\OAuthTest\OAuthTestLogger;
 use chillerlan\OAuthTest\Storage\StorageTestAbstract;
+use chillerlan\Settings\SettingsContainerInterface;
 use chillerlan\SimpleCache\MemoryCache;
+use Psr\Log\LoggerInterface;
 
 abstract class DBStorageTestAbstract extends StorageTestAbstract{
 
-	protected $tsn = 'Spotify'; // a service name from the provider table
+	protected string $tsn = 'Spotify'; // a service name from the provider table
 
-	protected $CFGDIR = __DIR__.'/../../config';
-	/** @var \chillerlan\OAuthApp\OAuthAppOptions */
-	protected $options;
-	/** @var \chillerlan\OAuthTest\OAuthTestLogger */
-	protected $logger;
-	/** @var \chillerlan\Database\Database */
-	protected $db;
+	protected string $CFGDIR = __DIR__.'/../../config';
+	/** @var \chillerlan\OAuthApp\OAuthAppOptions|\chillerlan\Settings\SettingsContainerInterface */
+	protected SettingsContainerInterface $options;
+
+	protected LoggerInterface $logger;
+
+	protected Database $db;
 
 	protected function setUp():void{
 		parent::setUp();
@@ -59,14 +61,14 @@ abstract class DBStorageTestAbstract extends StorageTestAbstract{
 		$this->db      = new Database($this->options, new MemoryCache, $this->logger);
 	}
 
-	public function testStoreTokenUnknownServiceException(){
+	public function testStoreTokenUnknownServiceException():void{
 		$this->expectException(OAuthStorageException::class);
 		$this->expectExceptionMessage('unknown service');
 
 		$this->storage->storeAccessToken('foo', $this->token);
 	}
 
-	public function testConstructWithInvalidTable(){
+	public function testConstructWithInvalidTable():void{
 		$this->expectException(OAuthStorageException::class);
 		$this->expectExceptionMessage('invalid table config');
 
@@ -75,7 +77,7 @@ abstract class DBStorageTestAbstract extends StorageTestAbstract{
 		new DBStorage($this->db, $this->options);
 	}
 
-	public function testFromStorageInvalidInputException(){
+	public function testFromStorageInvalidInputException():void{
 		$this->markTestSkipped();
 	}
 

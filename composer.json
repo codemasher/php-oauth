@@ -4,7 +4,7 @@
 	"homepage": "https://github.com/chillerlan/php-oauth",
 	"license": "MIT",
 	"type": "library",
-	"minimum-stability": "stable",
+	"minimum-stability": "dev",
 	"keywords": [
 		"oauth", "oauth1", "oauth2", "client", "core", "psr-7", "psr-17", "psr-18", "rfc5849", "rfc6749"
 	],
@@ -20,11 +20,11 @@
 		"source": "https://github.com/chillerlan/php-oauth"
 	},
 	"require": {
-		"php": "^7.2",
+		"php": "^7.4",
 		"ext-sodium": "*",
 		"psr/log": "^1.1",
 		"chillerlan/php-database": "^3.1",
-		"chillerlan/php-oauth-providers": "^1.0"
+		"chillerlan/php-oauth-providers": "dev-php-7.4"
 	},
 	"require-dev": {
 		"chillerlan/php-cache": "^3.0",

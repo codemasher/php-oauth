@@ -1,9 +1,5 @@
 filter:
   excluded_paths:
     - config/*
-    - examples/*
-    - public/*
-    - scripts/*
-    - tokenstorage/*
     - tests/*
     - vendor/*

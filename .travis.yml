@@ -7,9 +7,7 @@ language: php
 
 matrix:
   include:
-    - php: 7.2
-    - php: 7.3
-    - php: 7.4snapshot
+    - php: 7.4
     - php: nightly
   allow_failures:
     - php: 7.4snapshot
@@ -21,6 +19,6 @@ install:
   - mysql -e 'create database oauth;'
   - php cli/dbstorage_create.php
 
-script: vendor/bin/phpunit --configuration phpunit.xml --coverage-clover clover.xml
+script: vendor/bin/phpunit --configuration phpunit.dist.xml
 
 after_success: bash <(curl -s https://codecov.io/bash)

@@ -26,10 +26,9 @@ use function extension_loaded, is_bool, sha1, sodium_bin2hex, sodium_crypto_secr
  */
 class DBStorage extends OAuthStorageAbstract{
 
-	/** @var \chillerlan\Database\Database */
-	protected $db;
-	/** @var array */
-	protected $providers;
+	protected Database $db;
+
+	protected array $providers;
 
 	/**
 	 * DBStorage constructor.
