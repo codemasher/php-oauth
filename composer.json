@@ -5,6 +5,7 @@
 	"license": "MIT",
 	"type": "library",
 	"minimum-stability": "dev",
+	"prefer-stable": true,
 	"keywords": [
 		"oauth", "oauth1", "oauth2", "client", "core", "psr-7", "psr-17", "psr-18", "rfc5849", "rfc6749"
 	],
@@ -27,10 +28,10 @@
 		"chillerlan/php-oauth-providers": "dev-php-7.4"
 	},
 	"require-dev": {
-		"chillerlan/php-cache": "^3.0",
+		"chillerlan/php-cache": "^3.1",
 		"chillerlan/php-dotenv": "^1.0",
 		"chillerlan/php-httpinterface": "^4.0",
-		"phpunit/phpunit": "^8.4"
+		"phpunit/phpunit": "^9.1"
 	},
 	"autoload": {
 		"psr-4": {
